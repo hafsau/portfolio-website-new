@@ -1,0 +1,79 @@
+---
+interface Props {
+  beforeImage: string;
+  afterImage: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  aspectRatio?: string;
+}
+
+const {
+  beforeImage,
+  afterImage,
+  beforeLabel = 'Before',
+  afterLabel = 'After',
+  aspectRatio = '9/16'
+} = Astro.props;
+---
+
+<div class="ba-slider" data-ba-slider style={`aspect-ratio: ${aspectRatio}`}>
+  <div class="ba-before">
+    <img src={beforeImage} alt={beforeLabel} loading="lazy" />
+    <span class="ba-label ba-label-before">{beforeLabel}</span>
+  </div>
+  <div class="ba-after">
+    <img src={afterImage} alt={afterLabel} loading="lazy" />
+    <span class="ba-label ba-label-after">{afterLabel}</span>
+  </div>
+  <div class="ba-handle">
+    <div class="ba-handle-line"></div>
+    <div class="ba-handle-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 12H16M8 12L11 9M8 12L11 15M16 12L13 9M16 12L13 15"/>
+      </svg>
+    </div>
+    <div class="ba-handle-line"></div>
+  </div>
+</div>
+
+<script>
+  // Before/After Slider functionality
+  document.querySelectorAll('[data-ba-slider]').forEach(slider => {
+    const before = slider.querySelector('.ba-before') as HTMLElement;
+    const handle = slider.querySelector('.ba-handle') as HTMLElement;
+    let isDragging = false;
+
+    function updatePosition(x: number) {
+      const rect = slider.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      if (before) before.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+      if (handle) handle.style.left = `${percentage}%`;
+    }
+
+    slider.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updatePosition((e as MouseEvent).clientX);
+    });
+
+    slider.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      updatePosition((e as TouchEvent).touches[0].clientX);
+    }, { passive: true });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) updatePosition(e.clientX);
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (isDragging) updatePosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+  });
+</script>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" fill="none">
+  <rect width="375" height="812" fill="#1a1a2e"/>
+  <rect x="20" y="50" width="120" height="24" rx="4" fill="#2d2d44"/>
+  <rect x="280" y="50" width="75" height="30" rx="15" fill="#4a5ee4"/>
+  <text x="187" y="120" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Log Meal</text>
+  <rect x="20" y="160" width="335" height="120" rx="16" fill="#2d2d44"/>
+  <rect x="40" y="180" width="80" height="12" rx="4" fill="#4a5ee4" opacity="0.6"/>
+  <rect x="40" y="200" width="295" height="60" rx="8" fill="#3d3d54"/>
+  <rect x="20" y="300" width="335" height="80" rx="16" fill="#2d2d44"/>
+  <rect x="40" y="320" width="60" height="12" rx="4" fill="#4a5ee4" opacity="0.6"/>
+  <circle cx="80" cy="360" r="15" fill="#3d3d54"/>
+  <circle cx="130" cy="360" r="15" fill="#3d3d54"/>
+  <circle cx="180" cy="360" r="15" fill="#4a5ee4" opacity="0.5"/>
+  <circle cx="230" cy="360" r="15" fill="#3d3d54"/>
+  <rect x="20" y="400" width="335" height="80" rx="16" fill="#2d2d44"/>
+  <rect x="20" y="500" width="335" height="100" rx="16" fill="#2d2d44"/>
+  <rect x="40" y="520" width="295" height="60" rx="8" fill="#3d3d54"/>
+  <rect x="20" y="700" width="335" height="56" rx="28" fill="#4a5ee4"/>
+  <text x="187" y="735" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="16" font-weight="600">Save Entry</text>
+  <text x="187" y="780" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="12">Meal Logging</text>
+</svg>

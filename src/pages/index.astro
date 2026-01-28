@@ -1,0 +1,618 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AmbientBackground from '../components/AmbientBackground.astro';
+import MobileNav from '../components/MobileNav.astro';
+
+const projects = [
+  {
+    number: '01',
+    title: 'MedRec',
+    description: 'Streamlined diabetes management with unified cross-platform experience',
+    metric: '40% faster daily logging',
+    year: '2025',
+    href: '/work/medrec',
+    image: '/images/medrec/hero-medrec.png'
+  },
+  {
+    number: '02',
+    title: 'FitStart',
+    description: 'Beginner-friendly fitness app focused on habit-building over metrics',
+    metric: '45% improved task completion',
+    year: '2025',
+    href: '/work/fitstart',
+    image: '/images/fitstart/hero-image.png'
+  },
+  {
+    number: '03',
+    title: 'Folio',
+    description: 'B2B client portal helping freelancers manage proposals, projects, and payments',
+    metric: '60% less admin time',
+    year: '2026',
+    href: '/work/folio',
+    image: '/images/folio/hero-image.png'
+  },
+  {
+    number: '04',
+    title: 'Immunization Tracker',
+    description: 'Mobile monitoring system tracking 4,000+ medical officers across 36 districts',
+    metric: '22% to 98% attendance rate',
+    year: '2015',
+    href: '/work/immunization',
+    image: '/images/immunization/hero-image.png'
+  }
+];
+
+const skillCategories = [
+  {
+    category: 'Design',
+    skills: ['UI/UX Design', 'Interaction Design', 'Prototyping', 'Design Systems', 'Visual Design', 'Wireframing']
+  },
+  {
+    category: 'Research',
+    skills: ['User Research', 'Usability Testing', 'Data Analysis', 'A/B Testing', 'User Interviews', 'Journey Mapping']
+  },
+  {
+    category: 'Technical',
+    skills: ['HTML/CSS', 'JavaScript', 'Python', 'SQL', 'React', 'Git']
+  },
+  {
+    category: 'AI & Automation',
+    skills: ['Claude AI', 'Prompt Engineering', 'AI-Assisted Design', 'ChatGPT', 'Workflow Automation', 'AI Prototyping']
+  }
+];
+
+const tools = [
+  { name: 'Figma', icon: 'figma' },
+  { name: 'Framer', icon: 'framer' },
+  { name: 'Sketch', icon: 'sketch' },
+  { name: 'VS Code', icon: 'visualstudiocode' },
+  { name: 'GitHub', icon: 'github' },
+  { name: 'Notion', icon: 'notion' },
+  { name: 'Jira', icon: 'jira' },
+  { name: 'Miro', icon: 'miro' },
+  { name: 'Python', icon: 'python' },
+  { name: 'React', icon: 'react' },
+  { name: 'Claude AI', icon: 'anthropic' },
+  { name: 'ChatGPT', icon: 'openai' }
+];
+---
+
+<BaseLayout title="Home">
+  <!-- Ambient Background -->
+  <AmbientBackground variant="subtle" />
+
+  <!-- Cursor Dot Follower -->
+  <div class="cursor-dot" id="cursor-dot">
+    <div class="cursor-ring"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav-fixed">
+    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="container py-5 flex items-center justify-between">
+      <a href="#home" class="signature-logo">
+        <!-- HU. Logo matching reference style -->
+        <svg class="signature-svg" viewBox="0 0 90 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- H -->
+          <path class="sig-letter" d="M2 2v24M2 14h14M16 2v24"/>
+          <!-- U - one continuous path: down, curve, up -->
+          <path class="sig-letter" d="M30 2 L30 20 Q30 26 44 26 L44 2"/>
+          <!-- Blue dot -->
+          <circle class="sig-dot" cx="62" cy="22" r="5"/>
+        </svg>
+      </a>
+      <!-- Desktop Navigation -->
+      <div class="nav-links-desktop">
+        <a href="#home" class="link text-sm">Home</a>
+        <a href="#work" class="link text-sm">Work</a>
+        <a href="#about" class="link text-sm">About</a>
+        <a href="#contact" class="link text-sm">Contact</a>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <MobileNav links={[
+        { href: '#home', label: 'Home' },
+        { href: '#work', label: 'Work' },
+        { href: '#about', label: 'About' },
+        { href: '#contact', label: 'Contact' }
+      ]} />
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main id="main-content">
+  <section id="home" class="min-h-screen flex items-center relative">
+    <div class="container">
+      <div class="max-w-4xl">
+        <!-- Warm Intro with Photo -->
+        <div class="flex items-center gap-4 mb-4 reveal delay-1">
+          <div class="hero-photo">
+            <img src="/images/headshot.png" alt="Hafsa Usmani" />
+          </div>
+          <p class="hero-intro">Hey, I'm Hafsa.</p>
+        </div>
+
+        <!-- Main Title with Rotating Text -->
+        <h1 class="hero-title reveal delay-2">
+          I'm a
+          <span class="rotating-text-container">
+            <span class="rotating-text">
+              <span>Designer</span>
+              <span>Builder</span>
+              <span>Maker</span>
+            </span>
+          </span>
+        </h1>
+
+        <!-- Tagline -->
+        <p class="hero-tagline words-reveal delay-3">
+          <span class="word">where</span> <span class="word">design</span> <span class="word">meets</span> <span class="word">data.</span>
+        </p>
+
+        <!-- Description -->
+        <p class="hero-description reveal delay-4">
+          Product designer with an MS in Computer Science. I create healthcare
+          and wellness experiences that improve user efficiency by 30-45%.
+        </p>
+
+        <!-- CTAs - Pill buttons -->
+        <div class="flex gap-4 mt-12 reveal delay-5">
+          <a href="#work" class="btn-pill btn-pill-primary">See My Work</a>
+          <a href="#contact" class="btn-pill btn-pill-outline">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 reveal delay-6">
+      <div class="flex flex-col items-center gap-4">
+        <span class="text-mono text-muted text-xs uppercase tracking-widest">Scroll</span>
+        <div class="w-px h-16 bg-muted/30 relative overflow-hidden">
+          <div class="scroll-line absolute top-0 left-0 w-full bg-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section - Horizontal Scroll -->
+  <section id="work" class="section">
+    <div class="container">
+      <!-- Section Header -->
+      <div class="flex items-center justify-between mb-12 reveal">
+        <div class="flex items-center gap-8">
+          <div class="divider-short"></div>
+          <span class="text-mono text-muted">Selected Work</span>
+        </div>
+        <span class="text-mono text-muted text-xs">Scroll horizontally →</span>
+      </div>
+    </div>
+
+    <!-- Horizontal Scroll Container -->
+    <div class="projects-horizontal pl-[clamp(1.5rem,5vw,5rem)] reveal-group">
+      {projects.map((project, index) => (
+        <a href={project.href} class="project-card-horizontal card-3d">
+          <!-- 3D Shine Effect -->
+          <div class="card-shine"></div>
+
+          <!-- Project Number & Year -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="project-number">{project.number}</span>
+            <span class="text-mono text-muted text-xs">{project.year}</span>
+          </div>
+
+          <!-- Project Image -->
+          <div class="aspect-[4/3] bg-border mb-6 flex items-center justify-center rounded-lg overflow-hidden">
+            {project.image ? (
+              <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
+            ) : (
+              <span class="text-muted text-sm">Project Preview</span>
+            )}
+          </div>
+
+          <!-- Project Title -->
+          <h2 class="text-title mb-2">
+            {project.title}
+          </h2>
+
+          <!-- Project Description -->
+          <p class="text-body text-muted mb-4">
+            {project.description}
+          </p>
+
+          <!-- Project Metric -->
+          <p class="text-small text-accent">
+            {project.metric}
+          </p>
+        </a>
+      ))}
+      <!-- Spacer for scroll -->
+      <div class="w-12 flex-shrink-0"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <!-- Section Header -->
+      <div class="flex items-center gap-8 mb-16 reveal">
+        <div class="divider-short"></div>
+        <span class="text-mono text-muted">About</span>
+      </div>
+
+      <div class="about-grid">
+        <!-- About Content -->
+        <div class="about-content">
+          <p class="text-display reveal delay-1">
+            Designer who speaks engineering.
+          </p>
+
+          <div class="mt-10 space-y-6 reveal delay-2">
+            <p class="text-body-lg text-muted">
+              With an MS in Computer Science and experience building healthcare
+              apps that scaled to millions of users, I bring a unique technical
+              perspective to product design.
+            </p>
+            <p class="text-body text-muted">
+              I've led cross-functional teams, worked with government stakeholders
+              and international organizations, and shipped products with measurable
+              real-world impact.
+            </p>
+          </div>
+
+          <!-- Location -->
+          <div class="mt-10 reveal delay-3">
+            <span class="text-mono text-muted text-xs uppercase tracking-wider">Based in</span>
+            <p class="text-body mt-1">San Francisco Bay Area</p>
+          </div>
+        </div>
+
+        <!-- Skills by Category -->
+        <div class="about-skills stagger-grid delay-2">
+          {skillCategories.map((cat) => (
+            <div class="skill-category">
+              <h3 class="skill-category-title">{cat.category}</h3>
+              <p class="skill-list">
+                {cat.skills.map((skill, i) => (
+                  <>
+                    <span>{skill}</span>
+                    {i < cat.skills.length - 1 && <span class="skill-separator">·</span>}
+                  </>
+                ))}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools Marquee -->
+    <div class="marquee-wrapper mt-20 reveal">
+      <div class="marquee" id="marquee">
+        {[...tools, ...tools].map((tool) => (
+          <span class="marquee-item">
+            <img
+              src={`https://cdn.simpleicons.org/${tool.icon}/718096`}
+              alt={tool.name}
+              class="tool-icon"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+            {tool.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="max-w-3xl">
+        <!-- Section Header -->
+        <div class="flex items-center gap-8 mb-16 reveal">
+          <div class="divider-short"></div>
+          <span class="text-mono text-muted">Contact</span>
+        </div>
+
+        <!-- Contact Content -->
+        <h2 class="text-display reveal delay-1">
+          Let's work together
+        </h2>
+
+        <!-- Status Badge -->
+        <div class="status-badge reveal delay-2">
+          <span class="status-dot"></span>
+          <span>Open to Work</span>
+        </div>
+
+        <p class="text-body-lg text-muted mt-6 reveal delay-2">
+          Product Designer turning complex workflows into intuitive experiences—with measurable 30-45% efficiency improvements.
+        </p>
+
+        <!-- Contact Icons -->
+        <div class="contact-icons reveal delay-3">
+          <a href="mailto:hafsa.usmani2@gmail.com" class="contact-icon-btn" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M22 6L12 13L2 6"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/hafsausmani/" target="_blank" rel="noopener noreferrer" class="contact-icon-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="https://dribbble.com/hafsausmani" target="_blank" rel="noopener noreferrer" class="contact-icon-btn" aria-label="Dribbble">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/>
+              <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/>
+              <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>
+            </svg>
+          </a>
+          <a href="/resume.pdf" target="_blank" class="contact-icon-btn" aria-label="Resume">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-8">
+    <div class="container">
+      <div class="divider mb-8"></div>
+      <div class="flex items-center justify-between">
+        <span class="text-small text-muted">&copy; 2026 Hafsa Usmani</span>
+
+        <!-- Footer Icons -->
+        <div class="footer-icons">
+          <a href="mailto:hafsa.usmani2@gmail.com" class="footer-icon" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M22 6L12 13L2 6"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/hafsausmani/" target="_blank" rel="noopener noreferrer" class="footer-icon" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="https://dribbble.com/hafsausmani" target="_blank" rel="noopener noreferrer" class="footer-icon" aria-label="Dribbble">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/>
+              <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/>
+              <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle (Fixed) -->
+  <button
+    id="theme-toggle"
+    class="theme-toggle fixed bottom-6 right-6 z-50"
+    aria-label="Toggle theme"
+  >
+    <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5" stroke-width="1.5"/>
+      <path stroke-width="1.5" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </svg>
+    <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-width="1.5" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <script>
+    // Scroll Progress
+    const scrollProgress = document.getElementById('scroll-progress');
+
+    function updateScrollProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTop / docHeight;
+      if (scrollProgress) {
+        scrollProgress.style.transform = `scaleX(${progress})`;
+      }
+    }
+
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress();
+
+    // Scroll Reveal (enhanced with reveal-group support)
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-group, .reveal-fade, .reveal-scale, .reveal-slide-left, .reveal-slide-right, .words-reveal, .text-reveal, .chars-reveal, .stagger-grid').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+    const html = document.documentElement;
+
+    function updateIcons() {
+      const isLight = html.classList.contains('light');
+      if (sunIcon && moonIcon) {
+        sunIcon.classList.toggle('hidden', !isLight);
+        moonIcon.classList.toggle('hidden', isLight);
+      }
+    }
+
+    updateIcons();
+
+    themeToggle?.addEventListener('click', () => {
+      const isLight = html.classList.contains('light');
+
+      if (isLight) {
+        html.classList.remove('light');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.classList.add('light');
+        localStorage.setItem('theme', 'light');
+      }
+
+      updateIcons();
+    });
+
+    // Cursor Dot Follower
+    const cursorDot = document.getElementById('cursor-dot');
+    let mouseX = 0;
+    let mouseY = 0;
+    let dotX = 0;
+    let dotY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (cursorDot && !cursorDot.classList.contains('visible')) {
+        cursorDot.classList.add('visible');
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      if (cursorDot) {
+        cursorDot.classList.remove('visible');
+      }
+    });
+
+    // Smooth cursor following
+    function animateCursor() {
+      dotX += (mouseX - dotX) * 0.15;
+      dotY += (mouseY - dotY) * 0.15;
+
+      if (cursorDot) {
+        cursorDot.style.left = dotX + 'px';
+        cursorDot.style.top = dotY + 'px';
+      }
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Hover effect on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .project-card-horizontal, .capability-card');
+
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorDot?.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorDot?.classList.remove('hover');
+      });
+    });
+
+    // Horizontal scroll with mouse wheel
+    const projectsContainer = document.querySelector('.projects-horizontal');
+    if (projectsContainer) {
+      projectsContainer.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          projectsContainer.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
+
+    // 3D Card Tilt Effect
+    document.querySelectorAll('.card-3d').forEach(card => {
+      const maxRotation = 8; // degrees
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = (e as MouseEvent).clientX - rect.left;
+        const y = (e as MouseEvent).clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -maxRotation;
+        const rotateY = ((x - centerX) / centerX) * maxRotation;
+
+        (card as HTMLElement).style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        (card as HTMLElement).style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+        (card as HTMLElement).style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        (card as HTMLElement).style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      });
+    });
+
+    // Parallax Effect
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
+    let parallaxTicking = false;
+
+    function updateParallax() {
+      const scrollY = window.scrollY;
+
+      parallaxElements.forEach(el => {
+        const speed = parseFloat((el as HTMLElement).dataset.parallax || '0.5');
+        const rect = el.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight && rect.bottom > 0;
+
+        if (inView) {
+          const yOffset = (scrollY - (el as HTMLElement).offsetTop + window.innerHeight) * speed * 0.1;
+          (el as HTMLElement).style.transform = `translate3d(0, ${yOffset}px, 0)`;
+        }
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!parallaxTicking) {
+        requestAnimationFrame(() => {
+          updateParallax();
+          parallaxTicking = false;
+        });
+        parallaxTicking = true;
+      }
+    });
+
+    updateParallax();
+  </script>
+
+  <style>
+    /* Scroll line animation */
+    .scroll-line {
+      height: 30%;
+      animation: scrollLine 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% {
+        transform: translateY(-100%);
+      }
+      50% {
+        transform: translateY(200%);
+      }
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+  </style>
+</BaseLayout>

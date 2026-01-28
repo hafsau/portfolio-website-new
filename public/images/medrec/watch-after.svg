@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <circle cx="100" cy="100" r="100" fill="#1a1a2e"/>
+  <circle cx="100" cy="100" r="90" fill="#2d2d44"/>
+  <circle cx="100" cy="85" r="35" fill="#4a5ee4" opacity="0.3"/>
+  <circle cx="100" cy="85" r="25" fill="#4a5ee4" opacity="0.6"/>
+  <text x="100" y="92" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="18" font-weight="bold">98</text>
+  <text x="100" y="140" text-anchor="middle" fill="#888" font-family="system-ui" font-size="10">In Range</text>
+  <circle cx="60" cy="160" r="12" fill="#4a5ee4" opacity="0.4"/>
+  <circle cx="100" cy="160" r="12" fill="#4a5ee4" opacity="0.4"/>
+  <circle cx="140" cy="160" r="12" fill="#4a5ee4" opacity="0.4"/>
+  <text x="100" y="60" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="8">Glanceable</text>
+</svg>

@@ -1,0 +1,1308 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const metrics = [
+  { value: '60%', label: 'Reduction in admin time' },
+  { value: '3x', label: 'Faster invoice payments' },
+  { value: '12', label: 'Screens designed' }
+];
+
+const personas = [
+  {
+    name: 'Maya Chen',
+    role: 'Freelance UX Designer',
+    image: '/images/folio/maya.jpg',
+    bio: '4 years freelancing, 5-8 active clients',
+    goals: [
+      'Spend less time on proposals and invoices',
+      'Look professional to clients',
+      'Get paid faster'
+    ],
+    frustrations: [
+      'Scattered tools: email, Notion, PayPal, Google Docs',
+      'Loses track of project status across clients',
+      'Chasing payments is awkward and time-consuming'
+    ]
+  },
+  {
+    name: 'Jordan Ellis',
+    role: 'Web Development Consultant',
+    image: '/images/folio/jordan.jpg',
+    bio: '8 years experience, premium clients',
+    goals: [
+      'Maintain premium brand perception',
+      'Automate repetitive admin tasks',
+      'Clear visibility into revenue pipeline'
+    ],
+    frustrations: [
+      'Current tools don\'t match his brand quality',
+      'No single source of truth per client',
+      'Tax season is a nightmare of scattered records'
+    ]
+  }
+];
+
+const designPrinciples = [
+  {
+    title: 'Client-Centric Architecture',
+    description: 'Everything organized around the client relationship—not around document types. One tap to see all history, communications, and financials for any client.'
+  },
+  {
+    title: 'Professional by Default',
+    description: 'Every proposal, invoice, and message reflects the freelancer\'s brand. Clean templates that make independents look like established agencies.'
+  },
+  {
+    title: 'Reduce Friction to Payment',
+    description: 'One-click invoicing, automatic reminders, and integrated payments. The faster freelancers get paid, the more they trust the tool.'
+  },
+  {
+    title: 'Power Without Complexity',
+    description: 'Advanced features for power users (keyboard shortcuts, bulk actions, templates) without overwhelming newcomers.'
+  }
+];
+
+const keyScreens = [
+  {
+    title: 'Dashboard',
+    description: 'At-a-glance view of active projects, revenue metrics, upcoming deadlines, and items needing attention. Quick actions surface the most common tasks.',
+    image: '/images/folio/screen-dashboard.png'
+  },
+  {
+    title: 'Client Profile',
+    description: 'Single source of truth for each client relationship: contact info, project history, total revenue, and complete communication timeline.',
+    image: '/images/folio/screen-client-profile.png'
+  },
+  {
+    title: 'Proposal Builder',
+    description: 'Drag-and-drop blocks for scope, timeline, and pricing. Live preview shows exactly what clients will see. One click to send.',
+    image: '/images/folio/screen-proposal-builder.png'
+  },
+  {
+    title: 'Invoice Manager',
+    description: 'Visual status tracking: draft, sent, viewed, paid, overdue. Automatic payment reminders. Stripe integration for instant payments.',
+    image: '/images/folio/screen-invoice-manager.png'
+  },
+  {
+    title: 'Project Tracker',
+    description: 'Milestone-based progress tracking with time logging. Clients can view progress without freelancer having to send updates.',
+    image: '/images/folio/screen-project-tracker.png'
+  }
+];
+
+const learnings = [
+  {
+    title: 'B2B ≠ Boring',
+    description: 'Professional tools can still be delightful. Micro-interactions and thoughtful details build trust and reduce the tedium of admin work.'
+  },
+  {
+    title: 'Reduce decisions, not features',
+    description: 'Power users need advanced features, but smart defaults mean most users never have to configure anything.'
+  },
+  {
+    title: 'The client is also a user',
+    description: 'Freelancers\' clients interact with proposals and invoices. Their experience reflects on the freelancer\'s professionalism.'
+  }
+];
+---
+
+<CaseStudyLayout
+  title="Folio"
+  subtitle="I designed a client portal built around relationships, not documents. By organizing everything around the client—not scattered across tools—freelancers look professional and spend 60% less time on admin."
+  description="A B2B SaaS client portal for freelancers to manage proposals, projects, invoices, and client communication."
+  heroImage="/images/folio/hero-image.png"
+  industry="B2B SaaS"
+  role="Product Designer"
+  timeline="2026"
+  platforms="Web (Desktop-first)"
+  tools={[]}
+  metrics={metrics}
+  prevProject={{ title: 'FitStart', href: '/work/fitstart' }}
+  nextProject={{
+    title: 'Immunization Tracker',
+    href: '/work/immunization',
+    subtitle: 'Transforming child vaccination coverage'
+  }}
+>
+  <!-- Section: Problem Statement -->
+  <section class="case-section">
+    <h2>The Challenge</h2>
+    <div class="problem-statement">
+      <p class="lead-text">
+        Freelancers waste hours every week on admin work that doesn't pay: writing proposals, chasing invoices, updating spreadsheets, and searching through email threads.
+      </p>
+      <p class="lead-text secondary">
+        The tools exist—but they're fragmented. Notion for projects, PayPal for invoices, email for communication, Google Docs for proposals. No single source of truth.
+      </p>
+      <div class="challenge-box">
+        <span class="challenge-label">The Opportunity</span>
+        <p>
+          Design a <strong>unified client portal</strong> that connects the entire freelancer workflow—from first proposal to final payment—so independent professionals can spend less time on admin and more time on work that matters.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: The Insight -->
+  <section class="case-section">
+    <h2>What Makes This Different</h2>
+    <div class="insight-comparison">
+      <div class="comparison-side traditional">
+        <span class="comparison-label">Traditional Tools</span>
+        <ul>
+          <li>Invoices in one app</li>
+          <li>Proposals in another</li>
+          <li>Projects somewhere else</li>
+          <li>Messages in email</li>
+        </ul>
+        <p class="comparison-result">Freelancers search across 4+ tools to find client info</p>
+      </div>
+      <div class="comparison-divider">
+        <span>vs</span>
+      </div>
+      <div class="comparison-side folio">
+        <span class="comparison-label">Folio's Approach</span>
+        <ul>
+          <li>Everything organized by client</li>
+          <li>One tap = complete history</li>
+          <li>Context always visible</li>
+          <li>Professional presentation</li>
+        </ul>
+        <p class="comparison-result">One source of truth per relationship</p>
+      </div>
+    </div>
+    <blockquote class="insight-quote">
+      "Stop managing documents. Start understanding clients."
+    </blockquote>
+  </section>
+
+  <!-- Section: Research -->
+  <section class="case-section">
+    <h2>Understanding Freelancers</h2>
+    <p class="section-intro">
+      I interviewed 8 freelancers across design, development, and consulting to understand their workflows, pain points, and current tool stack.
+    </p>
+
+    <div class="research-insights">
+      <div class="insight-card">
+        <span class="insight-number">01</span>
+        <div class="insight-content">
+          <h3>Scattered Information</h3>
+          <p>100% of freelancers used 4+ tools to manage client work. Finding information meant searching across multiple apps.</p>
+        </div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-number">02</span>
+        <div class="insight-content">
+          <h3>Payment Anxiety</h3>
+          <p>Late payments were the #1 frustration. Freelancers felt awkward sending reminders and often waited too long.</p>
+        </div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-number">03</span>
+        <div class="insight-content">
+          <h3>Professionalism Matters</h3>
+          <p>Freelancers wanted to look "legit" to clients. Sloppy invoices or disorganized communication hurt their brand.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Personas -->
+  <section class="case-section">
+    <h2>User Personas</h2>
+    <div class="personas-grid">
+      {personas.map(persona => (
+        <div class="persona-card">
+          <div class="persona-header">
+            <div class="persona-avatar">
+              <img src={persona.image} alt={persona.name} />
+            </div>
+            <div class="persona-info">
+              <h3>{persona.name}</h3>
+              <span class="persona-role">{persona.role}</span>
+              <span class="persona-bio">{persona.bio}</span>
+            </div>
+          </div>
+          <div class="persona-lists">
+            <div class="persona-list-item goals">
+              <h4>Goals</h4>
+              <ul>
+                {persona.goals.map(goal => <li>{goal}</li>)}
+              </ul>
+            </div>
+            <div class="persona-list-item frustrations">
+              <h4>Frustrations</h4>
+              <ul>
+                {persona.frustrations.map(frustration => <li>{frustration}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Design Principles -->
+  <section class="case-section">
+    <h2>Design Principles</h2>
+    <p>
+      Based on research insights, I established four principles to guide every design decision:
+    </p>
+
+    <div class="principles-stack">
+      {designPrinciples.map((principle, index) => (
+        <div class="principle-row">
+          <span class="principle-number">0{index + 1}</span>
+          <div class="principle-content">
+            <h3>{principle.title}</h3>
+            <p>{principle.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Information Architecture -->
+  <section class="case-section">
+    <h2>Information Architecture</h2>
+    <p class="section-intro">
+      The key insight was organizing everything around <strong>client relationships</strong>, not document types. Traditional tools separate invoices, proposals, and projects, but freelancers think in terms of clients.
+    </p>
+
+    <p class="diagram-caption">
+      The client sits at the center of the architecture. All documents, projects, and communications flow to and from this single point of reference, making it easy to see the complete history with any client at a glance.
+    </p>
+
+    <div class="ia-diagram-animated">
+      <!-- SVG Connection Lines -->
+      <svg class="ia-connections" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet">
+        <!-- Lines from center to nodes -->
+        <line class="ia-line" x1="300" y1="90" x2="75" y2="240" />
+        <line class="ia-line" x1="300" y1="90" x2="225" y2="240" />
+        <line class="ia-line" x1="300" y1="90" x2="375" y2="240" />
+        <line class="ia-line" x1="300" y1="90" x2="525" y2="240" />
+
+        <!-- Animated dots traveling along lines -->
+        <circle class="ia-dot" r="4">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M300,90 L75,240" />
+        </circle>
+        <circle class="ia-dot" r="4">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="0.3s" path="M300,90 L225,240" />
+        </circle>
+        <circle class="ia-dot" r="4">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="0.6s" path="M300,90 L375,240" />
+        </circle>
+        <circle class="ia-dot" r="4">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="0.9s" path="M300,90 L525,240" />
+        </circle>
+      </svg>
+
+      <!-- Center Hub -->
+      <div class="ia-hub">
+        <div class="ia-hub-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="ia-hub-label">Client</span>
+      </div>
+
+      <!-- Branch Nodes -->
+      <div class="ia-nodes">
+        <div class="ia-node-card" style="--delay: 0.2s">
+          <div class="ia-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <span class="ia-node-label">Proposals</span>
+        </div>
+        <div class="ia-node-card" style="--delay: 0.4s">
+          <div class="ia-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span class="ia-node-label">Projects</span>
+        </div>
+        <div class="ia-node-card" style="--delay: 0.6s">
+          <div class="ia-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <span class="ia-node-label">Invoices</span>
+        </div>
+        <div class="ia-node-card" style="--delay: 0.8s">
+          <div class="ia-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span class="ia-node-label">Messages</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Key Screens -->
+  <section class="case-section">
+    <h2>Key Screens</h2>
+    <p>
+      The core experience centers on five key screens that cover the complete freelancer workflow:
+    </p>
+
+    <div class="screens-stack">
+      {keyScreens.map((screen, index) => (
+        <div class="screen-row">
+          <div class="screen-info">
+            <span class="screen-number">0{index + 1}</span>
+            <h3>{screen.title}</h3>
+            <p>{screen.description}</p>
+          </div>
+          <div class="screen-image">
+            <img src={screen.image} alt={screen.title} loading="lazy" />
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Visual Design -->
+  <section class="case-section">
+    <h2>Visual Design</h2>
+    <p>
+      The visual language balances professionalism with approachability—serious enough for business, friendly enough for independents.
+    </p>
+
+    <div class="style-guide-block">
+      <div class="style-guide-item">
+        <span class="style-label">Colors</span>
+        <div class="color-swatches">
+          <span class="swatch" style="background: #0891b2"></span>
+          <span class="swatch" style="background: #0e7490"></span>
+          <span class="swatch" style="background: #155e75"></span>
+        </div>
+        <span class="style-desc">Trust, Clarity, Professionalism</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Typography</span>
+        <div class="type-preview">
+          <span class="type-display">Inter</span>
+          <span class="type-secondary">Clean & Readable</span>
+        </div>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Components</span>
+        <div class="spacing-preview">
+          <span class="space-unit">8px</span>
+          <span class="space-unit">16</span>
+          <span class="space-unit">24</span>
+        </div>
+        <span class="style-desc">8px grid system</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Results -->
+  <section class="case-section">
+    <h2>Projected Impact</h2>
+    <p>
+      Based on usability testing and user feedback, the design is projected to deliver:
+    </p>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <span class="result-value">60%</span>
+        <span class="result-label">Less Admin Time</span>
+        <p>Unified workspace eliminates context-switching between tools</p>
+      </div>
+      <div class="result-card">
+        <span class="result-value">3x</span>
+        <span class="result-label">Faster Payments</span>
+        <p>Automatic reminders and one-click payments reduce delays</p>
+      </div>
+      <div class="result-card">
+        <span class="result-value">4.6/5</span>
+        <span class="result-label">Usability Score</span>
+        <p>High satisfaction in prototype testing with 6 freelancers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Learnings -->
+  <section class="case-section">
+    <h2>What I Learned</h2>
+    <div class="learnings-stack">
+      {learnings.map((learning, index) => (
+        <div class="learning-row">
+          <span class="learning-icon">0{index + 1}</span>
+          <div class="learning-content">
+            <h3>{learning.title}</h3>
+            <p>{learning.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: What This Shows About Me -->
+  <section class="case-section conclusion">
+    <h2>What This Shows About Me</h2>
+    <p class="conclusion-intro">
+      This project demonstrates my ability to design complex B2B workflows that balance power-user needs with approachable simplicity.
+    </p>
+
+    <div class="about-me-stack">
+      <div class="about-me-row">
+        <h3>B2B Product Thinking</h3>
+        <p>Designed for professional workflows with multiple user types (freelancers and their clients) and complex information architecture.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Systems Design</h3>
+        <p>Created a cohesive design system with reusable components, consistent patterns, and scalable architecture.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>User Research to UI</h3>
+        <p>Translated qualitative research insights into concrete design principles and measurable interface decisions.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>End-to-End Ownership</h3>
+        <p>Led the complete design process from problem definition through high-fidelity prototypes and usability validation.</p>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  /* Section styling */
+  .case-section {
+    margin-bottom: 5rem;
+  }
+
+  .section-intro {
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Problem Statement */
+  .problem-statement {
+    margin-top: 1.5rem;
+  }
+
+  .lead-text {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+
+  .lead-text.secondary {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(8, 145, 178, 0.15) 0%, rgba(8, 145, 178, 0.05) 100%);
+    border-left: 4px solid #0891b2;
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-top: 2rem;
+  }
+
+  .challenge-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #0891b2;
+    margin-bottom: 0.75rem;
+  }
+
+  .challenge-box p {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--color-fg);
+    line-height: 1.7;
+  }
+
+  /* Insight Comparison */
+  .insight-comparison {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .insight-comparison {
+      flex-direction: column;
+    }
+  }
+
+  .comparison-side {
+    flex: 1;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .comparison-side.traditional {
+    background: rgba(138, 138, 142, 0.1);
+    border: 1px solid rgba(138, 138, 142, 0.2);
+  }
+
+  .comparison-side.folio {
+    background: rgba(8, 145, 178, 0.1);
+    border: 1px solid rgba(8, 145, 178, 0.3);
+  }
+
+  .comparison-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .comparison-side.traditional .comparison-label {
+    color: var(--color-muted);
+  }
+
+  .comparison-side.folio .comparison-label {
+    color: #0891b2;
+  }
+
+  .comparison-side ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+  }
+
+  .comparison-side li {
+    font-size: 0.9375rem;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .comparison-side.traditional li {
+    color: var(--color-muted);
+  }
+
+  .comparison-side.folio li {
+    color: var(--color-fg);
+  }
+
+  .comparison-side li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .comparison-side.traditional li::before {
+    background: var(--color-muted);
+    opacity: 0.5;
+  }
+
+  .comparison-side.folio li::before {
+    background: #0891b2;
+  }
+
+  .comparison-result {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding-top: 0.5rem;
+  }
+
+  .comparison-side.traditional .comparison-result {
+    color: var(--color-muted);
+  }
+
+  .comparison-side.folio .comparison-result {
+    color: #0891b2;
+  }
+
+  .comparison-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem;
+  }
+
+  .comparison-divider span {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .comparison-divider {
+      padding: 1rem 0;
+    }
+  }
+
+  .insight-quote {
+    margin: 2rem 0 0;
+    padding: 0;
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0891b2;
+    font-style: normal;
+  }
+
+  @media (max-width: 768px) {
+    .insight-quote {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Research Insights */
+  .research-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .insight-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #0891b2;
+  }
+
+  .insight-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0891b2;
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .insight-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+
+  .insight-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Personas */
+  .personas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .personas-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .persona-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 4px solid #0891b2;
+  }
+
+  .persona-header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .persona-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid rgba(8, 145, 178, 0.3);
+  }
+
+  .persona-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transform: translateY(-40px);
+  }
+
+  .persona-info h3 {
+    margin: 0;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .persona-role {
+    display: block;
+    font-size: 0.875rem;
+    color: #0891b2;
+    margin-top: 0.25rem;
+  }
+
+  .persona-bio {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin-top: 0.25rem;
+  }
+
+  .persona-lists {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .persona-list-item h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+  }
+
+  .persona-list-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .persona-list-item li {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.375rem;
+  }
+
+  .persona-list-item li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    color: #0891b2;
+    font-weight: 600;
+  }
+
+  .persona-list-item.frustrations li::before {
+    content: '-';
+    color: #f87171;
+  }
+
+  /* Design Principles */
+  .principles-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .principle-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #0891b2;
+  }
+
+  .principle-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0891b2;
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .principle-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+
+  .principle-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Diagram Caption */
+  .diagram-caption {
+    text-align: center;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    max-width: 500px;
+    margin: 1.5rem auto 0;
+    line-height: 1.6;
+  }
+
+  /* Animated IA Diagram */
+  .ia-diagram-animated {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    margin: 3rem auto;
+  }
+
+  /* SVG Connection Lines */
+  .ia-connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .ia-line {
+    stroke: rgba(8, 145, 178, 0.3);
+    stroke-width: 2;
+    stroke-dasharray: 5, 5;
+  }
+
+  .ia-dot {
+    fill: #0891b2;
+    filter: drop-shadow(0 0 6px #0891b2);
+  }
+
+  /* Center Hub */
+  .ia-hub {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+    animation: ia-fade-in 0.6s ease-out forwards;
+  }
+
+  .ia-hub-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(8, 145, 178, 0.4);
+  }
+
+  .ia-hub-icon svg {
+    width: 36px;
+    height: 36px;
+    color: white;
+  }
+
+  .ia-hub-label {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  /* Branch Nodes */
+  .ia-nodes {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    z-index: 2;
+  }
+
+  .ia-node-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-card);
+    border: 1px solid rgba(8, 145, 178, 0.3);
+    border-radius: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: ia-node-enter 0.5s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  .ia-node-icon {
+    width: 24px;
+    height: 24px;
+    color: #0891b2;
+  }
+
+  .ia-node-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ia-node-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #0891b2;
+  }
+
+  /* Animations */
+  @keyframes ia-fade-in {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+  }
+
+  @keyframes ia-node-enter {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .ia-diagram-animated {
+      height: 380px;
+    }
+
+    .ia-nodes {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      padding: 0 1rem;
+    }
+
+    .ia-node-card {
+      padding: 0.5rem 1rem;
+    }
+
+    .ia-hub-icon {
+      width: 60px;
+      height: 60px;
+    }
+
+    .ia-hub-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  /* Key Screens */
+  .screens-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .screen-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .screen-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .screen-info {
+    padding-right: 1rem;
+  }
+
+  .screen-number {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0891b2;
+    margin-bottom: 0.5rem;
+  }
+
+  .screen-info h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: var(--color-fg);
+  }
+
+  .screen-info p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .screen-image {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--color-border);
+    border: 1px solid rgba(8, 145, 178, 0.2);
+  }
+
+  .screen-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Style Guide */
+  .style-guide-block {
+    display: flex;
+    justify-content: space-between;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(8, 145, 178, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .style-guide-block {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .style-guide-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .style-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #0891b2;
+  }
+
+  .style-desc {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .color-swatches {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  .type-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .type-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-fg);
+  }
+
+  .type-secondary {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .spacing-preview {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .space-unit {
+    width: 32px;
+    height: 32px;
+    background: rgba(8, 145, 178, 0.2);
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0891b2;
+  }
+
+  /* Results */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .result-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 3px solid #0891b2;
+  }
+
+  .result-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0891b2;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-card p {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  /* Learnings */
+  .learnings-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .learning-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .learning-icon {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0891b2;
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .learning-content h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+
+  .learning-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Conclusion */
+  .conclusion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .conclusion-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .about-me-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-me-row {
+    padding: 1.5rem 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid #0891b2;
+  }
+
+  .about-me-row h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: #0891b2;
+  }
+
+  .about-me-row p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+</style>

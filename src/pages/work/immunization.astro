@@ -1,0 +1,796 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const metrics = [
+  { value: '22% → 98%', label: 'Vaccinator attendance increase' },
+  { value: '4,000+', label: 'Medical officers monitored' },
+  { value: '3M', label: 'Children\'s records digitized' }
+];
+
+const contributions = [
+  {
+    label: 'Research',
+    metrics: [
+      { value: '3', text: 'government departments' },
+      { value: '36', text: 'districts analyzed' },
+      { value: '4,000+', text: 'medical officers studied' },
+      { value: '2', text: 'pilot programs run' }
+    ]
+  },
+  {
+    label: 'Leadership',
+    metrics: [
+      { value: '3', text: 'departments coordinated' },
+      { value: '1', text: 'CM Roadmap Team partnership' },
+      { value: '£250k', text: 'DFID funding secured' },
+      { value: '2', text: 'major products delivered' }
+    ]
+  },
+  {
+    label: 'Impact',
+    metrics: [
+      { value: '76%', text: 'attendance improvement' },
+      { value: '3M', text: 'children\'s records digitized' },
+      { value: '36', text: 'districts deployed' },
+      { value: '4,000+', text: 'officers monitored' }
+    ]
+  }
+];
+
+const impactPoints = [
+  {
+    title: 'Two Products, One Mission',
+    description: 'Led development of eVaccs 2.0 for real-time monitoring AND redesigned the national Child Vaccination Card with a companion Android app—digitizing records for 3 million children.'
+  },
+  {
+    title: 'Designing for Constraints',
+    description: 'Users had low literacy, basic phones, and spotty connectivity. Advocated for radical simplicity: one tap, GPS verification, offline-first. No typing required.'
+  },
+  {
+    title: 'Cross-Department Coordination',
+    description: 'Worked with Health, Irrigation, and Education departments plus the Chief Minister\'s Roadmap Team—gathering requirements, developing action plans, and meeting deadlines across multiple stakeholder groups.'
+  },
+  {
+    title: 'Securing International Funding',
+    description: 'The Child Vaccination Card project was awarded £250k by DFID (UK Department for International Development)—validating our approach and enabling province-wide rollout.'
+  }
+];
+
+const constraints = [
+  {
+    constraint: 'Low Literacy',
+    detail: 'Many vaccinators couldn\'t read — interfaces had to rely on icons, colors, and visual cues instead of text'
+  },
+  {
+    constraint: 'Basic Devices',
+    detail: 'Low-end Android phones with limited memory and processing power — every feature had to be lightweight'
+  },
+  {
+    constraint: 'Unreliable Connectivity',
+    detail: 'Rural areas with spotty network coverage — the app needed to work offline and sync when possible'
+  },
+  {
+    constraint: 'Minimal Training',
+    detail: 'No time for extensive onboarding — the interface had to be intuitive from first use'
+  },
+  {
+    constraint: 'Resistance to Monitoring',
+    detail: 'Vaccinators were wary of surveillance — the tool needed to feel helpful, not punitive'
+  }
+];
+
+const designDecisions = [
+  {
+    title: 'Single-Tap Check-In',
+    description: 'The core interaction was one tap at each vaccination site. GPS verification confirmed location automatically — no manual entry needed. Under 30 seconds per stop.'
+  },
+  {
+    title: 'Visual-First Interface',
+    description: 'Icons and color-coding replaced text wherever possible. Green checkmarks for completed stops, red alerts for missed ones. The interface worked for users who couldn\'t read.'
+  },
+  {
+    title: 'Offline-First Architecture',
+    description: 'All data stored locally and synced when connectivity was available. Essential for rural areas where network coverage was unpredictable.'
+  },
+  {
+    title: 'Real-Time Supervisor Dashboard',
+    description: 'District supervisors could see live maps of vaccinator locations, identify non-compliance immediately, and dispatch follow-ups the same day.'
+  }
+];
+
+const learnings = [
+  {
+    title: 'Context beats features',
+    description: 'The most sophisticated solution would have failed here. What worked was radical simplicity designed for real-world constraints.'
+  },
+  {
+    title: 'Cross-department work requires translation',
+    description: 'Working with Health, Irrigation, Education, and the CM Roadmap Team meant constantly translating technical capabilities into policy outcomes.'
+  },
+  {
+    title: 'International funding validates approach',
+    description: 'Securing £250k from DFID proved our methodology was sound—external validation that opened doors for province-wide expansion.'
+  }
+];
+---
+
+<CaseStudyLayout
+  title="Immunization Tracker"
+  subtitle="I led the redesign and development of eVaccs 2.0—a mobile monitoring system that transformed child vaccination coverage across Punjab, Pakistan's most populous province, increasing vaccinator attendance from 22% to 98%."
+  description="Led development of eVaccs 2.0 and the national Child Vaccination Card digitization, monitoring 4,000+ medical officers and digitizing records for 3 million children."
+  heroImage="/images/immunization/hero-image.png"
+  industry="Public Health"
+  role="Assistant Program Manager"
+  timeline="2014-2015"
+  platforms="Android Mobile, Web Dashboard"
+  tools={[]}
+  metrics={metrics}
+  prevProject={{ title: 'Folio', href: '/work/folio' }}
+  nextProject={{
+    title: 'MedRec',
+    href: '/work/medrec',
+    subtitle: 'Diabetes management with clarity, calm, and control'
+  }}
+>
+  <!-- Section: The Challenge -->
+  <section class="case-section">
+    <h2>The Challenge</h2>
+    <div class="problem-statement">
+      <p class="lead-text">
+        Child immunization in Punjab—Pakistan's most populous province—was failing. Only 22% of the 4,000+ medical officers were showing up to their assigned routes, and there was no way to track field activities.
+      </p>
+      <p class="lead-text secondary">
+        Paper-based reporting was unreliable, easily falsified, and arrived weeks late. Meanwhile, children's vaccination records existed only on paper cards that were frequently lost or damaged.
+      </p>
+      <div class="challenge-box">
+        <span class="challenge-label">The Problem</span>
+        <p>
+          The government needed <strong>real-time visibility into field operations</strong> and a way to digitize immunization records for millions of children—a dual challenge requiring coordination across Health, Irrigation, and Education departments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: My Contributions -->
+  <section class="case-section">
+    <h2>My Contributions</h2>
+    <div class="contributions-stack">
+      {contributions.map((contribution, index) => (
+        <div class="contribution-row reveal">
+          <span class="contribution-number">0{index + 1}</span>
+          <div class="contribution-content">
+            <h3 class="contribution-label">{contribution.label}</h3>
+            <div class="contribution-metrics">
+              {contribution.metrics.map((metric) => (
+                <div class="contribution-metric">
+                  <span class="metric-value">{metric.value}</span>
+                  <span class="metric-text">{metric.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: How I Made an Impact -->
+  <section class="case-section">
+    <h2>How I Made an Impact</h2>
+    <div class="impact-stack">
+      {impactPoints.map((point, index) => (
+        <div class="impact-row">
+          <span class="impact-number">0{index + 1}</span>
+          <div class="impact-content">
+            <h3>{point.title}</h3>
+            <p>{point.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Understanding Constraints -->
+  <section class="case-section">
+    <h2>Understanding Constraints</h2>
+    <p class="section-intro">
+      Before building anything, we needed to understand our users—vaccinators in rural areas with very different contexts than our own:
+    </p>
+
+    <div class="constraints-grid">
+      {constraints.map(item => (
+        <div class="constraint-card">
+          <h3>{item.constraint}</h3>
+          <p>{item.detail}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Key Decisions -->
+  <section class="case-section">
+    <h2>Key Decisions</h2>
+    <p>
+      Based on field research and stakeholder needs, we advocated for these core product decisions:
+    </p>
+
+    <div class="decisions-stack">
+      {designDecisions.map((decision, index) => (
+        <div class="decision-row">
+          <span class="decision-number">0{index + 1}</span>
+          <div class="decision-content">
+            <h3>{decision.title}</h3>
+            <p>{decision.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Stakeholder Management -->
+  <section class="case-section">
+    <h2>Stakeholder Management</h2>
+    <blockquote class="stakeholder-quote">
+      <p>
+        "A critical part of this project was navigating government bureaucracy—translating technical capabilities into policy outcomes that politicians and bureaucrats could understand and champion."
+      </p>
+    </blockquote>
+
+    <div class="stakeholder-details">
+      <div class="stakeholder-item">
+        <h3>Chief Minister Office</h3>
+        <p>Prepared data-driven presentations demonstrating ROI and public health impact. Secured executive sponsorship for province-wide rollout.</p>
+      </div>
+      <div class="stakeholder-item">
+        <h3>World Bank (PPMR Program)</h3>
+        <p>Aligned project outcomes with funding requirements. Demonstrated measurable results that justified additional budget allocation.</p>
+      </div>
+      <div class="stakeholder-item">
+        <h3>District Health Officers</h3>
+        <p>Trained supervisors on dashboard usage and established feedback loops for continuous improvement.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Results -->
+  <section class="case-section">
+    <h2>Results</h2>
+    <p>
+      The impact was dramatic and measurable:
+    </p>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <span class="result-value">22% → 98%</span>
+        <span class="result-label">Vaccinator Attendance</span>
+        <p>Real-time GPS tracking created accountability that paper reports never could</p>
+      </div>
+      <div class="result-card">
+        <span class="result-value">3M</span>
+        <span class="result-label">Children's Records Digitized</span>
+        <p>National Child Vaccination Card redesign enabled province-wide digital records</p>
+      </div>
+      <div class="result-card">
+        <span class="result-value">£250k</span>
+        <span class="result-label">DFID Funding Awarded</span>
+        <p>International validation of our approach from UK Department for International Development</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Reflection -->
+  <section class="case-section">
+    <h2>Reflection</h2>
+    <div class="reflections-container">
+      <blockquote class="reflection-quote">
+        <p>
+          "This project taught me that great design isn't about features—it's about understanding constraints and designing within them. The technology was invisible; the outcome was what mattered."
+        </p>
+      </blockquote>
+
+      <div class="learnings-stack">
+        {learnings.map((learning, index) => (
+          <div class="learning-row">
+            <span class="learning-icon">0{index + 1}</span>
+            <div class="learning-content">
+              <h3>{learning.title}</h3>
+              <p>{learning.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: What This Shows About Me -->
+  <section class="case-section conclusion">
+    <h2>What This Shows About Me</h2>
+    <p class="conclusion-intro">
+      This project demonstrates my ability to lead complex, high-stakes initiatives from concept to scale—working with diverse stakeholders, constrained environments, and real-world impact.
+    </p>
+
+    <div class="about-me-stack">
+      <div class="about-me-row">
+        <h3>Cross-Functional Leadership</h3>
+        <p>Led development of two major products (eVaccs 2.0 and Child Vaccination Card app) coordinating across Health, Irrigation, and Education departments.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Designing for Constraints</h3>
+        <p>Advocated for radical simplicity based on user research. The solution worked because it was designed for real-world limitations, not ideal conditions.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Stakeholder Management</h3>
+        <p>Worked with CM Roadmap Team consultants, secured £250k DFID funding, and coordinated requirements gathering across multiple government departments.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Measurable Impact at Scale</h3>
+        <p>Delivered results that mattered: 76% improvement in attendance (22% → 98%), 3 million children's records digitized, 4,000+ medical officers monitored.</p>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  /* Section styling */
+  .case-section {
+    margin-bottom: 5rem;
+  }
+
+  .case-section.no-margin {
+    margin-bottom: 0;
+  }
+
+  .section-intro {
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Context Note */
+  .context-note {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid #10B981;
+  }
+
+  .context-icon {
+    flex-shrink: 0;
+    color: #10B981;
+    opacity: 0.7;
+  }
+
+  .context-note p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  /* Problem Statement */
+  .problem-statement {
+    margin-top: 1.5rem;
+  }
+
+  .lead-text {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+
+  .lead-text.secondary {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+    border-left: 4px solid #10B981;
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-top: 2rem;
+  }
+
+  .challenge-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #10B981;
+    margin-bottom: 0.75rem;
+  }
+
+  .challenge-box p {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--color-fg);
+    line-height: 1.7;
+  }
+
+  /* Contributions Stack */
+  .contributions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .contribution-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #10B981;
+  }
+
+  .contribution-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10B981;
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .contribution-content {
+    flex: 1;
+  }
+
+  .contribution-label {
+    margin: 0 0 1rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .contribution-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .contribution-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contribution-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contribution-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contribution-metric .metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10B981;
+    line-height: 1;
+  }
+
+  .contribution-metric .metric-text {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* Impact Stack */
+  .impact-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .impact-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #10B981;
+  }
+
+  .impact-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10B981;
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .impact-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .impact-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Constraints Grid */
+  .constraints-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .constraints-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .constraint-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-top: 3px solid #10B981;
+  }
+
+  .constraint-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: #10B981;
+  }
+
+  .constraint-card p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Decisions Stack */
+  .decisions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .decision-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #10B981;
+  }
+
+  .decision-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10B981;
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .decision-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .decision-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Stakeholder Quote */
+  .stakeholder-quote {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+    border-left: 4px solid #10B981;
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin: 0 0 2rem;
+  }
+
+  .stakeholder-quote p {
+    font-size: 1.125rem;
+    color: var(--color-fg);
+    font-style: italic;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .stakeholder-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .stakeholder-details {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .stakeholder-item {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .stakeholder-item h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    color: #10B981;
+  }
+
+  .stakeholder-item p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Results Grid */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .result-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 3px solid #10B981;
+  }
+
+  .result-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #10B981;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-card p {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  /* Reflections */
+  .reflections-container {
+    margin-top: 1.5rem;
+  }
+
+  .reflection-quote {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+    border-left: 4px solid #10B981;
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .reflection-quote p {
+    font-size: 1.25rem;
+    color: var(--color-fg);
+    font-style: italic;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .learnings-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .learning-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .learning-icon {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #10B981;
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .learning-content h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+
+  .learning-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Conclusion */
+  .conclusion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .conclusion-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .about-me-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-me-row {
+    padding: 1.5rem 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid #10B981;
+  }
+
+  .about-me-row h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: #10B981;
+  }
+
+  .about-me-row p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+// Lightbox component - include once in layout
+---
+
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close lightbox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <div class="lightbox-content">
+    <img id="lightbox-img" src="" alt="" />
+    <p id="lightbox-caption" class="lightbox-caption"></p>
+  </div>
+  <button class="lightbox-nav lightbox-prev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
+  <button class="lightbox-nav lightbox-next" aria-label="Next image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 18l6-6-6-6"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  let currentGallery: { src: string; caption: string }[] = [];
+  let currentIndex = 0;
+
+  function openLightbox(gallery: { src: string; caption: string }[], index: number) {
+    currentGallery = gallery;
+    currentIndex = index;
+    updateLightboxImage();
+    lightbox?.classList.add('active');
+    lightbox?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox?.classList.remove('active');
+    lightbox?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightboxImage() {
+    const item = currentGallery[currentIndex];
+    if (lightboxImg) {
+      lightboxImg.src = item.src;
+      lightboxImg.alt = item.caption || '';
+    }
+    if (lightboxCaption) {
+      lightboxCaption.textContent = item.caption || '';
+    }
+  }
+
+  function navigate(direction: number) {
+    currentIndex = (currentIndex + direction + currentGallery.length) % currentGallery.length;
+    updateLightboxImage();
+  }
+
+  // Event listeners
+  lightbox?.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+  lightbox?.querySelector('.lightbox-prev')?.addEventListener('click', () => navigate(-1));
+  lightbox?.querySelector('.lightbox-next')?.addEventListener('click', () => navigate(1));
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigate(-1);
+    if (e.key === 'ArrowRight') navigate(1);
+  });
+
+  // Initialize galleries
+  document.querySelectorAll('[data-lightbox-gallery]').forEach(gallery => {
+    const items = gallery.querySelectorAll('.gallery-item');
+    const galleryData = Array.from(items).map(item => ({
+      src: (item.querySelector('img') as HTMLImageElement)?.src || (item as HTMLElement).dataset.src || '',
+      caption: item.querySelector('.gallery-caption')?.textContent || (item as HTMLElement).dataset.caption || ''
+    }));
+
+    items.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(galleryData, index));
+    });
+  });
+</script>

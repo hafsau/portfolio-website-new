@@ -1,0 +1,1539 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BeforeAfterSlider from '../../components/BeforeAfterSlider.astro';
+
+const metrics = [
+  { value: '100%', label: 'WCAG AA Compliance' },
+  { value: '45%', label: 'Faster task completion' },
+  { value: '40%', label: 'Higher routine adherence potential' }
+];
+
+const contributions = [
+  {
+    label: 'Research',
+    metrics: [
+      { value: '8', text: 'user interviews conducted' },
+      { value: '1', text: 'primary persona developed' },
+      { value: '5', text: 'competitor apps analyzed' },
+      { value: '50+', text: 'survey responses' }
+    ]
+  },
+  {
+    label: 'Design',
+    metrics: [
+      { value: '3', text: 'fidelity stages (low to high)' },
+      { value: '3', text: 'breakpoints (mobile, tablet, desktop)' },
+      { value: '1', text: 'design system built' },
+      { value: '20+', text: 'reusable components' }
+    ]
+  },
+  {
+    label: 'Validation',
+    metrics: [
+      { value: '100%', text: 'WCAG AA compliance' },
+      { value: '45%', text: 'faster task completion' },
+      { value: '40%', text: 'higher adherence potential' },
+      { value: '3', text: 'iteration cycles' }
+    ]
+  }
+];
+
+const impactPoints = [
+  {
+    title: 'Reframing the Goal',
+    description: 'Shifted focus from performance metrics to habit-building. Success isn\'t measured in pounds lifted—it\'s measured in days of showing up.'
+  },
+  {
+    title: 'Reducing First-Time Friction',
+    description: 'Created simplified five-step onboarding that aligns users with personalized goals instantly. No account required to browse—reduce friction to first value.'
+  },
+  {
+    title: 'Designing for Motivation',
+    description: 'Built gamified progress systems promoting intrinsic motivation through streaks, milestones, and gentle celebrations rather than competitive leaderboards.'
+  },
+  {
+    title: 'Cross-Device Consistency',
+    description: 'Established responsive design system ensuring users can plan, track, and follow workouts seamlessly across mobile, tablet, and desktop.'
+  }
+];
+
+const researchInsights = [
+  {
+    finding: 'Intimidation factor',
+    detail: 'Users felt overwhelmed by complex workout terminology and equipment requirements'
+  },
+  {
+    finding: 'Progress paradox',
+    detail: 'Tracking was either too detailed (overwhelming) or too vague (unmotivating)'
+  },
+  {
+    finding: 'Assumption gap',
+    detail: 'Most apps assumed users already had fitness habits—onboarding didn\'t help form them'
+  },
+  {
+    finding: 'Scheduling afterthought',
+    detail: 'Reminders and scheduling were secondary features, not core to the experience'
+  }
+];
+
+const designPrinciples = [
+  {
+    title: 'Habit-First Design',
+    description: 'Every feature supports forming habits, not just tracking metrics. Progress is measured in consistency, not performance.'
+  },
+  {
+    title: 'Calm Confidence',
+    description: 'Clear hierarchy, supportive colors (blue, purple, green), and minimal clutter. The palette communicates trust, progress, and vitality.'
+  },
+  {
+    title: 'Progressive Complexity',
+    description: 'Start simple, reveal depth gradually. Beginners see what they need; advanced users discover more over time.'
+  }
+];
+
+const responsiveFeatures = [
+  {
+    device: 'Mobile',
+    features: ['Quick actions', 'Thumb-friendly patterns', 'Simplified navigation', 'Workout reminders']
+  },
+  {
+    device: 'Tablet',
+    features: ['Expanded visual content', 'Guided routine display', 'Larger touch targets', 'Side-by-side layouts']
+  },
+  {
+    device: 'Desktop',
+    features: ['Multi-column layouts', 'Detailed progress insights', 'Weekly planning view', 'Long-term analytics']
+  }
+];
+---
+
+<CaseStudyLayout
+  title="FitStart"
+  subtitle="A beginner-friendly fitness application focused on building habits, not tracking metrics."
+  description="Reimagining fitness for the real world - designing for beginners who struggle with consistency."
+  heroImage="/images/fitstart/hero-image.png"
+  industry="Health & Fitness Tech"
+  role="Product Designer"
+  timeline="3 weeks"
+  platforms="Web (Responsive)"
+  tools={[]}
+  metrics={metrics}
+  prevProject={{ title: 'MedRec', href: '/work/medrec' }}
+  nextProject={{
+    title: 'Folio',
+    href: '/work/folio',
+    subtitle: 'Client portal for freelancers'
+  }}
+>
+  <!-- Section: Problem Statement -->
+  <section class="case-section">
+    <h2>The Challenge</h2>
+    <div class="problem-statement">
+      <p class="lead-text">
+        Staying fit is one of the most common goals — and one of the hardest to sustain.
+        Beginners often start strong but lose motivation when progress feels unclear or tracking becomes tedious.
+      </p>
+      <div class="challenge-box">
+        <span class="challenge-label">The Problem</span>
+        <p>
+          Most fitness apps focus on <strong>performance metrics or advanced training</strong>,
+          not on helping beginners stay consistent, confident, and motivated. Design an experience
+          that prioritizes habit-building over hitting PRs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: My Contributions -->
+  <section class="case-section">
+    <h2>My Contributions</h2>
+    <div class="contributions-stack">
+      {contributions.map((contribution, index) => (
+        <div class="contribution-row reveal">
+          <span class="contribution-number">0{index + 1}</span>
+          <div class="contribution-content">
+            <h3 class="contribution-label">{contribution.label}</h3>
+            <div class="contribution-metrics">
+              {contribution.metrics.map((metric) => (
+                <div class="contribution-metric">
+                  <span class="metric-value">{metric.value}</span>
+                  <span class="metric-text">{metric.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: How I Made an Impact -->
+  <section class="case-section">
+    <h2>How I Made an Impact</h2>
+    <div class="impact-stack">
+      {impactPoints.map((point, index) => (
+        <div class="impact-row">
+          <span class="impact-number">0{index + 1}</span>
+          <div class="impact-content">
+            <h3>{point.title}</h3>
+            <p>{point.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Hero Images Grid -->
+  <section class="case-section">
+    <div class="hero-images-grid">
+      <div class="hero-image-item phones">
+        <img src="/images/fitstart/hero-image-1.png" alt="FitStart App Preview - Mobile" loading="lazy" />
+      </div>
+      <div class="hero-image-item tablet">
+        <img src="/images/fitstart/hero-image-2.png" alt="FitStart App Preview - Tablet" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Research & Discovery -->
+  <section class="case-section">
+    <h2>Research & Discovery</h2>
+    <p class="section-intro">
+      I conducted user interviews, surveys, and analyzed competitor apps to understand
+      the pain points and needs of fitness beginners.
+    </p>
+
+    <div class="insights-grid">
+      {researchInsights.map(insight => (
+        <div class="insight-card">
+          <h3>{insight.finding}</h3>
+          <p>{insight.detail}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Persona -->
+    <div class="persona-highlight">
+      <div class="persona-header">
+        <div class="persona-avatar">
+          <img src="/images/fitstart/rebecca.png" alt="Rebecca" />
+        </div>
+        <div class="persona-title">
+          <h3>Rebecca</h3>
+          <span class="persona-type">The Motivated Beginner · Age 28</span>
+        </div>
+      </div>
+      <p class="persona-context">
+        Rebecca wants to lose weight and get in shape but struggles with consistency.
+        She needs an engaging, beginner-friendly app with scheduling features that fit her busy lifestyle.
+      </p>
+      <div class="persona-details">
+        <div class="persona-detail">
+          <span class="persona-label">Goal</span>
+          <p>Build sustainable fitness habits without feeling overwhelmed</p>
+        </div>
+        <div class="persona-detail">
+          <span class="persona-label">Frustration</span>
+          <p>Has tried multiple apps but always abandons them within weeks</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Design Evolution -->
+  <section class="case-section">
+    <h2>Design Evolution</h2>
+    <p>
+      Key screens evolved through a three-stage fidelity approach. Drag the slider to compare before and after:
+    </p>
+
+    <div class="evolution-section">
+      <h3 class="evolution-title">Welcome Screen</h3>
+      <div class="evolution-slider-container">
+        <BeforeAfterSlider
+          beforeImage="/images/fitstart/welcome-before.png"
+          afterImage="/images/fitstart/welcome-after.png"
+          beforeLabel="Initial wireframe"
+          afterLabel="Final design"
+          aspectRatio="9/24"
+        />
+      </div>
+      <p class="evolution-description">First impressions matter—from basic wireframe to an inviting, confidence-building welcome experience.</p>
+    </div>
+
+    <div class="evolution-section">
+      <h3 class="evolution-title">Home Screen</h3>
+      <div class="evolution-slider-container">
+        <BeforeAfterSlider
+          beforeImage="/images/fitstart/mobile-before.png"
+          afterImage="/images/fitstart/mobile-after.png"
+          beforeLabel="Initial wireframe"
+          afterLabel="Final design"
+          aspectRatio="9/24"
+        />
+      </div>
+      <p class="evolution-description">The central hub evolved into a clear, motivating dashboard with progress at a glance.</p>
+    </div>
+
+  </section>
+
+  <!-- Section: Design Philosophy -->
+  <section class="case-section">
+    <h2>Design Philosophy</h2>
+    <p>
+      Three core principles guided every design decision:
+    </p>
+
+    <div class="philosophy-stack">
+      {designPrinciples.map((principle, index) => (
+        <div class="philosophy-row">
+          <span class="philosophy-number">0{index + 1}</span>
+          <div class="philosophy-content">
+            <h3>{principle.title}</h3>
+            <p>{principle.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Visual Direction -->
+  <section class="case-section">
+    <h2>Visual Direction</h2>
+    <p>
+      Once the structure was set, I developed a moodboard to define the visual tone: energetic yet calm, modern yet friendly.
+    </p>
+
+    <div class="style-guide-block">
+      <div class="style-guide-item">
+        <span class="style-label">Colors</span>
+        <div class="color-swatches">
+          <span class="swatch" style="background: #155dfc"></span>
+          <span class="swatch" style="background: #9333ea"></span>
+          <span class="swatch" style="background: #16a34a"></span>
+        </div>
+        <span class="style-desc">Trust, Progress, Vitality</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Typography</span>
+        <div class="type-preview">
+          <span class="type-display">Lato</span>
+          <span class="type-secondary">Geometric Sans</span>
+        </div>
+        <span class="style-desc">Clarity + Energy</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Spacing</span>
+        <div class="spacing-preview">
+          <span class="space-unit">8</span>
+          <span class="space-unit">16</span>
+          <span class="space-unit">24</span>
+        </div>
+        <span class="style-desc">Consistent Rhythm</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Responsive Design -->
+  <section class="case-section">
+    <h2>Responsive Design</h2>
+    <p>
+      A major part of this project was designing for three key breakpoints, each optimized for specific use cases:
+    </p>
+
+    <div class="responsive-devices">
+      <div class="device-card mobile">
+        <div class="device-mockup">
+          <img src="/images/fitstart/responsive-mobile.png" alt="Mobile View" />
+        </div>
+        <div class="device-info">
+          <h3>Mobile</h3>
+          <span class="device-columns">1 Column Layout</span>
+          <ul>
+            <li>Quick actions</li>
+            <li>Thumb-friendly patterns</li>
+            <li>Simplified navigation</li>
+            <li>Workout reminders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="device-card tablet">
+        <div class="device-mockup">
+          <img src="/images/fitstart/responsive-tablet.png" alt="Tablet View" />
+        </div>
+        <div class="device-info">
+          <h3>Tablet</h3>
+          <span class="device-columns">2 Column Layout</span>
+          <ul>
+            <li>Expanded visual content</li>
+            <li>Guided routine display</li>
+            <li>Larger touch targets</li>
+            <li>Side-by-side layouts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="device-card desktop">
+        <div class="device-mockup">
+          <img src="/images/fitstart/responsive-desktop.png" alt="Desktop View" />
+        </div>
+        <div class="device-info">
+          <h3>Desktop</h3>
+          <span class="device-columns">3 Column Layout</span>
+          <ul>
+            <li>Multi-column dashboard</li>
+            <li>Detailed progress insights</li>
+            <li>Weekly planning view</li>
+            <li>Long-term analytics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Deliverables - Onboarding Flow -->
+  <section class="case-section">
+    <h2>Deliverables</h2>
+    <p>
+      A key part of FitStart's habit-first approach is a <strong>simplified five-step onboarding flow</strong> that
+      personalizes the experience from the very first interaction. Instead of overwhelming users with forms or
+      skipping personalization entirely, this flow gathers just enough information to create a tailored starting point.
+    </p>
+
+    <div class="deliverables-section">
+      <h3>Onboarding Flow</h3>
+      <p class="onboarding-intro">
+        The onboarding asks users five simple questions to build their personalized fitness plan:
+      </p>
+
+      <div class="onboarding-steps">
+        <div class="onboarding-step">
+          <span class="step-number">01</span>
+          <div class="step-info">
+            <h4>Your Name</h4>
+            <p>A personal touch from the start—addressing users by name throughout the app builds connection and accountability.</p>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-number">02</span>
+          <div class="step-info">
+            <h4>Skill Level</h4>
+            <p>Beginner, intermediate, or advanced? This determines workout intensity and complexity recommendations.</p>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-number">03</span>
+          <div class="step-info">
+            <h4>Daily Time Available</h4>
+            <p>How much time can you dedicate each day? 10 minutes, 30 minutes, or an hour—workouts adapt to fit real schedules.</p>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-number">04</span>
+          <div class="step-info">
+            <h4>Workout Interests</h4>
+            <p>What do you enjoy? Cardio, Yoga, HIIT, Pilates, Strength Training—selecting preferences ensures engagement from day one.</p>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-number">05</span>
+          <div class="step-info">
+            <h4>Fitness Goals</h4>
+            <p>What are you working toward? Weight loss, muscle building, general wellness, flexibility—goals shape the entire journey.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="deliverable-gallery onboarding-gallery" data-lightbox-gallery>
+        <div class="gallery-item" data-src="/images/fitstart/onboarding-name.png" data-caption="Step 1: Name">
+          <img src="/images/fitstart/onboarding-name.png" alt="Onboarding - Name" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Name</p>
+        </div>
+        <div class="gallery-item" data-src="/images/fitstart/onboarding-skills.png" data-caption="Step 2: Skill Level">
+          <img src="/images/fitstart/onboarding-skills.png" alt="Onboarding - Skill Level" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Skill Level</p>
+        </div>
+        <div class="gallery-item" data-src="/images/fitstart/onboarding-time.png" data-caption="Step 3: Daily Time">
+          <img src="/images/fitstart/onboarding-time.png" alt="Onboarding - Daily Time" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Daily Time</p>
+        </div>
+        <div class="gallery-item" data-src="/images/fitstart/onboarding-interests.png" data-caption="Step 4: Workout Interests">
+          <img src="/images/fitstart/onboarding-interests.png" alt="Onboarding - Workout Interests" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Interests</p>
+        </div>
+        <div class="gallery-item" data-src="/images/fitstart/onboarding-goals.png" data-caption="Step 5: Fitness Goals">
+          <img src="/images/fitstart/onboarding-goals.png" alt="Onboarding - Fitness Goals" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Goals</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Splash Screen Animation -->
+  <section class="case-section">
+    <div class="deliverables-section">
+      <h3>First Impressions Matter</h3>
+      <p>
+        Before users even begin onboarding, they're greeted with a <strong>branded splash screen animation</strong> that sets the tone for the entire experience. This brief moment of delight establishes FitStart's personality—energetic yet approachable—while the app loads in the background.
+      </p>
+      <p class="splash-subtext">
+        The animation uses the brand's signature purple gradient with smooth, fluid motion that hints at the journey ahead: progress, momentum, and transformation.
+      </p>
+      <div class="splash-animation-container">
+        <img src="/images/fitstart/animation.gif" alt="FitStart Splash Screen Animation" class="splash-animation" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Results -->
+  <section class="case-section">
+    <h2>Results</h2>
+    <p>
+      Usability testing with target users showed significant improvements:
+    </p>
+
+    <div class="results-grid stagger-grid">
+      <div class="result-card">
+        <span class="result-value counter" data-target="100%">100%</span>
+        <span class="result-label">WCAG AA Compliance</span>
+        <p>Full accessibility across all screens and interactions</p>
+      </div>
+      <div class="result-card">
+        <span class="result-value counter" data-target="45%">45%</span>
+        <span class="result-label">Faster Task Completion</span>
+        <p>Compared to competitor app benchmarks</p>
+      </div>
+      <div class="result-card">
+        <span class="result-value counter" data-target="40%">40%</span>
+        <span class="result-label">Higher Adherence</span>
+        <p>Projected routine adherence based on user feedback</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Reflections -->
+  <section class="case-section">
+    <h2>Conclusion & Learning</h2>
+    <div class="reflections-container">
+      <blockquote class="reflection-quote">
+        <p>
+          "Designing this fitness web app reinforced one key insight: people don't just need workouts—they need clarity, motivation, and a sense of progress."
+        </p>
+      </blockquote>
+
+      <div class="learnings-stack">
+        <div class="learning-row">
+          <span class="learning-icon">01</span>
+          <div class="learning-content">
+            <h3>Habits over metrics</h3>
+            <p>Fitness apps should help users build routines, not just track data. Consistency beats intensity.</p>
+          </div>
+        </div>
+        <div class="learning-row">
+          <span class="learning-icon">02</span>
+          <div class="learning-content">
+            <h3>True responsiveness matters</h3>
+            <p>Designing for three breakpoints ensured users could plan, track, and follow workouts seamlessly across devices.</p>
+          </div>
+        </div>
+        <div class="learning-row">
+          <span class="learning-icon">03</span>
+          <div class="learning-content">
+            <h3>Reduce friction to first value</h3>
+            <p>No account required to browse. Get users to experience value before asking for commitment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: What This Shows About Me -->
+  <section class="case-section conclusion">
+    <h2>What This Shows About Me</h2>
+    <p class="conclusion-intro">
+      This project demonstrates my ability to design habit-building experiences—not just interfaces,
+      but systems that help users stay consistent through simple flows, supportive visuals, and intuitive progress tracking.
+    </p>
+
+    <div class="about-me-stack">
+      <div class="about-me-row">
+        <h3>Clear, Motivating Fitness Experiences</h3>
+        <p>Designed interfaces that inspire action rather than overwhelm, focusing on emotional needs alongside functional requirements.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Responsive, Cross-Device UI Systems</h3>
+        <p>Created a cohesive experience across mobile, tablet, and desktop, ensuring each device serves its optimal use case.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Simplified Complex Flows</h3>
+        <p>Transformed multi-step processes into intuitive, goal-driven interactions that guide users toward success.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>End-to-End Product Design</h3>
+        <p>Led the complete design process from research to final prototypes with a user-first mindset at every stage.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Final Recording -->
+  <section class="case-section no-margin">
+    <div class="deliverables-section">
+      <h3>FitStart in Action</h3>
+      <p>
+        See how FitStart brings together personalized onboarding, habit tracking,
+        and motivating progress feedback into a seamless fitness experience.
+      </p>
+    </div>
+    <div class="recording-container reveal">
+      <video class="recording-video" controls playsinline>
+        <source src="/images/fitstart/recording-9.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  /* Section styling */
+  .case-section {
+    margin-bottom: 5rem;
+  }
+
+  .case-section.no-margin {
+    margin-bottom: 0;
+  }
+
+  /* Recording Section */
+  .recording-container {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .recording-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+  }
+
+  .section-intro {
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Problem Statement */
+  .problem-statement {
+    margin-top: 1.5rem;
+  }
+
+  .lead-text {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-left: 4px solid #8b5cf6;
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-top: 2rem;
+  }
+
+  .challenge-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8b5cf6;
+    margin-bottom: 0.75rem;
+  }
+
+  .challenge-box p {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--color-fg);
+    line-height: 1.7;
+  }
+
+  /* Contributions Stack */
+  .contributions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .contribution-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .contribution-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .contribution-content {
+    flex: 1;
+  }
+
+  .contribution-label {
+    margin: 0 0 1rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .contribution-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .contribution-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .contribution-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contribution-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contribution-metric .metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    line-height: 1;
+  }
+
+  .contribution-metric .metric-text {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* Hero Images Grid - Centered and Balanced */
+  .hero-images-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4rem;
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero-images-grid {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+
+  .hero-image-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .hero-image-item img {
+    height: auto;
+    object-fit: contain;
+  }
+
+  .hero-image-item.phones img {
+    width: 320px;
+    max-width: 100%;
+  }
+
+  .hero-image-item.tablet img {
+    width: 500px;
+    max-width: 100%;
+  }
+
+  /* Impact Stack */
+  .impact-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .impact-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .impact-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .impact-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .impact-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Research Insights Grid */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .insights-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .insight-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-top: 3px solid #8b5cf6;
+  }
+
+  .insight-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: #8b5cf6;
+  }
+
+  .insight-card p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Persona Highlight */
+  .persona-highlight {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    border-left: 4px solid #8b5cf6;
+  }
+
+  .persona-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .persona-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #8b5cf6;
+  }
+
+  .persona-avatar img {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    object-fit: cover;
+    transform: translateY(-40px);
+  }
+
+  .persona-title h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-fg);
+  }
+
+  .persona-type {
+    font-size: 0.875rem;
+    color: #8b5cf6;
+    font-weight: 500;
+  }
+
+  .persona-context {
+    font-size: 1rem;
+    color: var(--color-muted);
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .persona-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .persona-details {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .persona-detail .persona-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8b5cf6;
+    margin-bottom: 0.5rem;
+  }
+
+  .persona-detail p {
+    margin: 0;
+    color: var(--color-fg);
+    font-size: 0.9375rem;
+  }
+
+  /* Evolution Sections */
+  .evolution-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .evolution-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .evolution-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #8b5cf6;
+    margin: 0 0 1.5rem;
+  }
+
+  .evolution-slider-container {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .evolution-slider-container.tablet {
+    max-width: 400px;
+  }
+
+  .evolution-slider-container.wide {
+    max-width: 100%;
+  }
+
+  .evolution-description {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-top: 1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Philosophy Stack */
+  .philosophy-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .philosophy-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .philosophy-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .philosophy-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .philosophy-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Style Guide Block */
+  .style-guide-block {
+    display: flex;
+    justify-content: space-between;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .style-guide-block {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .style-guide-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .style-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8b5cf6;
+  }
+
+  .style-desc {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  /* Color Swatches */
+  .color-swatches {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  /* Typography Preview */
+  .type-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .type-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-fg);
+  }
+
+  .type-secondary {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Spacing Preview */
+  .spacing-preview {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .space-unit {
+    width: 32px;
+    height: 32px;
+    background: rgba(139, 92, 246, 0.2);
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #8b5cf6;
+  }
+
+  /* Responsive Devices */
+  .responsive-devices {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 900px) {
+    .responsive-devices {
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+
+  .device-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .device-card.mobile {
+    max-width: 140px;
+  }
+
+  .device-card.tablet {
+    max-width: 260px;
+  }
+
+  .device-card.desktop {
+    max-width: 380px;
+  }
+
+  @media (max-width: 900px) {
+    .device-card.mobile,
+    .device-card.tablet,
+    .device-card.desktop {
+      max-width: 300px;
+    }
+  }
+
+  .device-mockup {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .device-mockup img {
+    display: block;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: auto;
+  }
+
+  .device-info {
+    margin-top: 1.5rem;
+    width: 100%;
+    min-width: 180px;
+    text-align: center;
+  }
+
+  .device-info h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.125rem;
+    color: #8b5cf6;
+  }
+
+  .device-columns {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .device-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .device-info li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .device-info li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 8px;
+    height: 8px;
+    background: #8b5cf6;
+    border-radius: 50%;
+  }
+
+  /* Splash Animation */
+  .splash-subtext {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    margin-top: 1rem;
+  }
+
+  .splash-animation-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .splash-animation {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+  }
+
+  /* Deliverables */
+  .deliverables-section {
+    margin-top: 2.5rem;
+  }
+
+  .deliverables-section h3 {
+    font-size: 1rem;
+    color: #8b5cf6;
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+
+  .onboarding-intro {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Onboarding Steps */
+  .onboarding-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .onboarding-step {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .onboarding-step .step-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+    line-height: 1;
+  }
+
+  .onboarding-step .step-info h4 {
+    margin: 0 0 0.375rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  .onboarding-step .step-info p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .deliverable-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .deliverable-gallery.single {
+    grid-template-columns: 1fr;
+  }
+
+  .deliverable-gallery.onboarding-gallery {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .deliverable-gallery.onboarding-gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .deliverable-gallery.onboarding-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .deliverable-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Placeholder styles for gallery images */
+  .gallery-image.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-border) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border: 2px dashed rgba(139, 92, 246, 0.3);
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .gallery-image.placeholder span {
+    opacity: 0.7;
+  }
+
+  /* Onboarding gallery - show full images without cropping */
+  .onboarding-gallery .gallery-image.mobile {
+    aspect-ratio: auto;
+    object-fit: contain;
+    height: auto;
+  }
+
+  .gallery-item {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+  }
+
+  .gallery-item.wide {
+    grid-column: 1 / -1;
+  }
+
+  .gallery-image {
+    width: 100%;
+    border-radius: 0.75rem;
+    background: var(--color-border);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .gallery-item:hover .gallery-image {
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+  }
+
+  .gallery-image.mobile {
+    aspect-ratio: 9/16;
+    object-fit: cover;
+  }
+
+  .gallery-image.desktop {
+    aspect-ratio: 16/10;
+    object-fit: cover;
+  }
+
+  .gallery-caption {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin-top: 0.75rem;
+  }
+
+  /* Results Grid */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .result-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 3px solid #8b5cf6;
+  }
+
+  .result-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-card p {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  /* Reflections */
+  .reflections-container {
+    margin-top: 1.5rem;
+  }
+
+  .reflection-quote {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-left: 4px solid #8b5cf6;
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .reflection-quote p {
+    font-size: 1.25rem !important;
+    color: var(--color-fg) !important;
+    font-style: italic;
+    margin: 0 !important;
+    line-height: 1.6;
+  }
+
+  .learnings-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .learning-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .learning-icon {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .learning-content h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+
+  .learning-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Conclusion */
+  .conclusion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .conclusion-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .about-me-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-me-row {
+    padding: 1.5rem 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .about-me-row h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: #8b5cf6;
+  }
+
+  .about-me-row p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+</style>

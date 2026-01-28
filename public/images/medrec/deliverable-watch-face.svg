@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <circle cx="100" cy="100" r="100" fill="#1a1a2e"/>
+  <circle cx="100" cy="100" r="90" fill="#2d2d44"/>
+  <circle cx="100" cy="75" r="35" fill="#4a5ee4" opacity="0.2"/>
+  <circle cx="100" cy="75" r="28" fill="#4a5ee4" opacity="0.4"/>
+  <circle cx="100" cy="75" r="20" fill="#4a5ee4" opacity="0.7"/>
+  <text x="100" y="82" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="16" font-weight="bold">98</text>
+  <text x="100" y="125" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="10">In Range</text>
+  <text x="100" y="145" text-anchor="middle" fill="#888" font-family="system-ui" font-size="8">Updated 2m ago</text>
+  <circle cx="70" cy="165" r="10" fill="#3d3d54"/>
+  <circle cx="100" cy="165" r="10" fill="#4a5ee4" opacity="0.6"/>
+  <circle cx="130" cy="165" r="10" fill="#3d3d54"/>
+</svg>

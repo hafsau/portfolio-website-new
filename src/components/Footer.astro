@@ -1,0 +1,46 @@
+---
+const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  {
+    href: 'mailto:hafsa.usmani2@gmail.com',
+    label: 'Email',
+    icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+  },
+  {
+    href: 'https://www.linkedin.com/in/hafsausmani/',
+    label: 'LinkedIn',
+    icon: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z'
+  }
+];
+---
+
+<footer class="border-t border-[var(--color-border)] mt-24">
+  <div class="max-w-[1200px] mx-auto px-6 py-12">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- Left side -->
+      <div class="text-center md:text-left">
+        <p class="text-sm text-[var(--color-muted)]">
+          &copy; {currentYear} Hafsa Usmani. All rights reserved.
+        </p>
+      </div>
+
+      <!-- Right side - Social links -->
+      <div class="flex items-center gap-4">
+        {socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            class="p-2 text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-border)] rounded-lg transition-colors"
+            aria-label={link.label}
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={link.icon} />
+            </svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>

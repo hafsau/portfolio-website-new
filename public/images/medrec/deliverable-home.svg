@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" fill="none">
+  <rect width="375" height="812" fill="#1a1a2e"/>
+  <rect x="20" y="50" width="200" height="24" rx="4" fill="#2d2d44"/>
+  <circle cx="340" cy="62" r="20" fill="#2d2d44"/>
+  <circle cx="187" cy="200" r="90" fill="#4a5ee4" opacity="0.2"/>
+  <circle cx="187" cy="200" r="70" fill="#4a5ee4" opacity="0.4"/>
+  <circle cx="187" cy="200" r="50" fill="#4a5ee4" opacity="0.7"/>
+  <text x="187" y="208" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="28" font-weight="bold">105</text>
+  <text x="187" y="235" text-anchor="middle" fill="#888" font-family="system-ui" font-size="12">mg/dL</text>
+  <rect x="20" y="320" width="335" height="100" rx="16" fill="#2d2d44"/>
+  <rect x="40" y="340" width="100" height="12" rx="4" fill="#4a5ee4" opacity="0.6"/>
+  <rect x="40" y="360" width="200" height="8" rx="4" fill="#3d3d54"/>
+  <rect x="40" y="380" width="150" height="8" rx="4" fill="#3d3d54"/>
+  <rect x="20" y="440" width="335" height="100" rx="16" fill="#2d2d44"/>
+  <rect x="20" y="560" width="335" height="100" rx="16" fill="#2d2d44"/>
+  <rect x="20" y="680" width="160" height="60" rx="12" fill="#2d2d44"/>
+  <rect x="195" y="680" width="160" height="60" rx="12" fill="#4a5ee4"/>
+  <text x="187" y="770" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="12">Daily Overview</text>
+</svg>

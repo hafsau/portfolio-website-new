@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" fill="none">
+  <rect width="375" height="812" fill="#1a1a2e"/>
+  <rect x="20" y="60" width="335" height="40" rx="8" fill="#2d2d44"/>
+  <circle cx="187" cy="220" r="80" fill="#4a5ee4" opacity="0.3"/>
+  <circle cx="187" cy="220" r="60" fill="#4a5ee4" opacity="0.5"/>
+  <text x="187" y="225" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="24" font-weight="bold">98</text>
+  <text x="187" y="250" text-anchor="middle" fill="#888" font-family="system-ui" font-size="12">mg/dL</text>
+  <rect x="20" y="340" width="335" height="80" rx="12" fill="#2d2d44"/>
+  <rect x="40" y="360" width="120" height="12" rx="4" fill="#4a5ee4" opacity="0.5"/>
+  <rect x="40" y="385" width="80" height="8" rx="4" fill="#444"/>
+  <rect x="20" y="440" width="335" height="80" rx="12" fill="#2d2d44"/>
+  <rect x="20" y="540" width="335" height="80" rx="12" fill="#2d2d44"/>
+  <rect x="20" y="750" width="335" height="50" rx="25" fill="#4a5ee4"/>
+  <text x="187" y="420" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="14">Clean Design</text>
+</svg>

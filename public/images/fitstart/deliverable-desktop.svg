@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#1a1a2e"/>
+  <rect x="0" y="0" width="80" height="750" fill="#2d2d44"/>
+  <circle cx="40" cy="40" r="20" fill="#8b5cf6"/>
+  <text x="40" y="46" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="14" font-weight="bold">F</text>
+  <rect x="20" y="80" width="40" height="40" rx="10" fill="#8b5cf6" opacity="0.3"/>
+  <rect x="20" y="140" width="40" height="40" rx="10" fill="#3d3d54"/>
+  <rect x="20" y="200" width="40" height="40" rx="10" fill="#3d3d54"/>
+  <rect x="20" y="260" width="40" height="40" rx="10" fill="#3d3d54"/>
+  <rect x="20" y="320" width="40" height="40" rx="10" fill="#3d3d54"/>
+  <rect x="100" y="20" width="1080" height="60" rx="12" fill="#2d2d44"/>
+  <rect x="120" y="35" width="200" height="30" rx="6" fill="#3d3d54"/>
+  <rect x="900" y="35" width="120" height="30" rx="6" fill="#8b5cf6" opacity="0.2"/>
+  <circle cx="1140" cy="50" r="20" fill="#8b5cf6" opacity="0.2"/>
+  <text x="1140" y="56" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="14">R</text>
+  <text x="120" y="125" fill="#fff" font-family="system-ui" font-size="28" font-weight="bold">Dashboard</text>
+  <text x="120" y="155" fill="#888" font-family="system-ui" font-size="14">Welcome back, Rebecca! Ready to train?</text>
+  <rect x="100" y="180" width="480" height="260" rx="20" fill="url(#dashGrad)"/>
+  <text x="140" y="225" fill="rgba(255,255,255,0.8)" font-family="system-ui" font-size="12" font-weight="600">TODAY'S WORKOUT</text>
+  <text x="140" y="275" fill="#fff" font-family="system-ui" font-size="28" font-weight="bold">Full Body Strength</text>
+  <text x="140" y="310" fill="rgba(255,255,255,0.9)" font-family="system-ui" font-size="14">45 minutes · Intermediate · 12 exercises</text>
+  <rect x="140" y="350" width="150" height="50" rx="25" fill="rgba(255,255,255,0.2)"/>
+  <text x="215" y="382" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="14" font-weight="600">Start Workout</text>
+  <rect x="310" y="350" width="120" height="50" rx="25" fill="rgba(255,255,255,0.1)"/>
+  <text x="370" y="382" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="system-ui" font-size="14">Preview</text>
+  <rect x="600" y="180" width="180" height="120" rx="16" fill="#2d2d44"/>
+  <text x="630" y="215" fill="#8b5cf6" font-family="system-ui" font-size="11" font-weight="600">STREAK</text>
+  <text x="630" y="275" fill="#fff" font-family="system-ui" font-size="48" font-weight="bold">12</text>
+  <text x="710" y="275" fill="#888" font-family="system-ui" font-size="16">days</text>
+  <rect x="800" y="180" width="180" height="120" rx="16" fill="#2d2d44"/>
+  <text x="830" y="215" fill="#10b981" font-family="system-ui" font-size="11" font-weight="600">THIS WEEK</text>
+  <text x="830" y="275" fill="#fff" font-family="system-ui" font-size="48" font-weight="bold">3/4</text>
+  <circle cx="940" cy="250" r="30" fill="#10b981" opacity="0.2"/>
+  <rect x="1000" y="180" width="180" height="120" rx="16" fill="#2d2d44"/>
+  <text x="1030" y="215" fill="#f59e0b" font-family="system-ui" font-size="11" font-weight="600">CALORIES</text>
+  <text x="1030" y="275" fill="#fff" font-family="system-ui" font-size="48" font-weight="bold">847</text>
+  <text x="1125" y="275" fill="#888" font-family="system-ui" font-size="12">kcal</text>
+  <rect x="600" y="320" width="580" height="120" rx="16" fill="#2d2d44"/>
+  <text x="630" y="360" fill="#fff" font-family="system-ui" font-size="16" font-weight="600">Weekly Progress</text>
+  <rect x="630" y="390" width="520" height="30" rx="8" fill="#3d3d54"/>
+  <rect x="630" y="390" width="350" height="30" rx="8" fill="#8b5cf6" opacity="0.6"/>
+  <text x="1130" y="412" fill="#888" font-family="system-ui" font-size="12">75%</text>
+  <rect x="100" y="460" width="380" height="270" rx="16" fill="#2d2d44"/>
+  <text x="130" y="500" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Schedule</text>
+  <rect x="130" y="530" width="320" height="50" rx="10" fill="#8b5cf6" opacity="0.15"/>
+  <text x="160" y="562" fill="#8b5cf6" font-family="system-ui" font-size="13" font-weight="600">Today</text>
+  <text x="280" y="562" fill="#fff" font-family="system-ui" font-size="13">Morning Yoga · 7:00 AM</text>
+  <rect x="130" y="590" width="320" height="50" rx="10" fill="#3d3d54"/>
+  <text x="160" y="622" fill="#888" font-family="system-ui" font-size="13">Tomorrow</text>
+  <text x="280" y="622" fill="#888" font-family="system-ui" font-size="13">HIIT Training · 6:30 PM</text>
+  <rect x="130" y="650" width="320" height="50" rx="10" fill="#3d3d54"/>
+  <text x="160" y="682" fill="#888" font-family="system-ui" font-size="13">Thursday</text>
+  <text x="280" y="682" fill="#888" font-family="system-ui" font-size="13">Rest Day</text>
+  <rect x="500" y="460" width="380" height="270" rx="16" fill="#2d2d44"/>
+  <text x="530" y="500" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Activity Trends</text>
+  <polyline points="530,680 580,640 640,660 700,600 760,620 820,560 850,580" stroke="#8b5cf6" stroke-width="3" fill="none"/>
+  <circle cx="850" cy="580" r="6" fill="#8b5cf6"/>
+  <text x="530" y="530" fill="#888" font-family="system-ui" font-size="12">Last 7 days</text>
+  <rect x="900" y="460" width="280" height="270" rx="16" fill="#2d2d44"/>
+  <text x="930" y="500" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Achievements</text>
+  <rect x="930" y="530" width="220" height="60" rx="10" fill="#3d3d54"/>
+  <text x="960" y="567" fill="#f59e0b" font-family="system-ui" font-size="20">🏆</text>
+  <text x="1000" y="562" fill="#fff" font-family="system-ui" font-size="13">First Week Complete</text>
+  <rect x="930" y="600" width="220" height="60" rx="10" fill="#3d3d54"/>
+  <text x="960" y="637" fill="#10b981" font-family="system-ui" font-size="20">💪</text>
+  <text x="1000" y="632" fill="#fff" font-family="system-ui" font-size="13">10-Day Streak</text>
+  <rect x="930" y="670" width="220" height="50" rx="10" fill="#8b5cf6" opacity="0.2"/>
+  <text x="1040" y="702" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="13">View All →</text>
+  <defs>
+    <linearGradient id="dashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#6366f1"/>
+    </linearGradient>
+  </defs>
+</svg>

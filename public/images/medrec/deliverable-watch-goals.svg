@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <circle cx="100" cy="100" r="100" fill="#1a1a2e"/>
+  <circle cx="100" cy="100" r="90" fill="#2d2d44"/>
+  <text x="100" y="50" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="11" font-weight="600">Daily Goals</text>
+  <circle cx="100" cy="95" r="40" fill="none" stroke="#3d3d54" stroke-width="8"/>
+  <circle cx="100" cy="95" r="40" fill="none" stroke="#4a5ee4" stroke-width="8" stroke-dasharray="200" stroke-dashoffset="50" transform="rotate(-90 100 95)"/>
+  <text x="100" y="100" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="18" font-weight="bold">75%</text>
+  <text x="100" y="115" text-anchor="middle" fill="#888" font-family="system-ui" font-size="8">Complete</text>
+  <rect x="30" y="150" width="40" height="30" rx="6" fill="#3d3d54"/>
+  <text x="50" y="168" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="10">3/4</text>
+  <text x="50" y="178" text-anchor="middle" fill="#888" font-family="system-ui" font-size="6">Meals</text>
+  <rect x="80" y="150" width="40" height="30" rx="6" fill="#3d3d54"/>
+  <text x="100" y="168" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="10">5k</text>
+  <text x="100" y="178" text-anchor="middle" fill="#888" font-family="system-ui" font-size="6">Steps</text>
+  <rect x="130" y="150" width="40" height="30" rx="6" fill="#3d3d54"/>
+  <text x="150" y="168" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="10">2/2</text>
+  <text x="150" y="178" text-anchor="middle" fill="#888" font-family="system-ui" font-size="6">Meds</text>
+</svg>

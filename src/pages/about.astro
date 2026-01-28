@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const experience = [
+  {
+    title: 'Product Design Program',
+    company: 'CareerFoundry',
+    period: '2024 - 2025',
+    description: 'Intensive program covering end-to-end product design: user research, wireframing, prototyping, usability testing, and visual design.'
+  },
+  {
+    title: 'Assistant Program Manager',
+    company: 'IT Board, Government of Punjab',
+    period: '2014 - 2015',
+    description: 'Co-led development of child immunization monitoring app deployed across 36 cities. Increased vaccinator attendance from 21% to 91%.'
+  },
+  {
+    title: 'Research Assistant',
+    company: 'IT Board, Government of Punjab',
+    period: '2013 - 2014',
+    description: 'Prototyped water conservation system and conducted user research with 250+ participants, achieving 36% increase in satisfaction scores.'
+  }
+];
+
+const education = [
+  {
+    degree: 'MS in Computer Science',
+    school: 'Information Technology University, Lahore',
+    period: '2013 - 2015',
+    note: 'Magna Cum Laude, 3.6 GPA'
+  },
+  {
+    degree: 'BS in Electrical Engineering',
+    school: 'NUCES, Lahore',
+    period: '2008 - 2012',
+    note: 'Concentration in Telecommunication, 3.3 GPA'
+  }
+];
+
+const skills = {
+  design: ['Figma', 'FigJam', 'Miro', 'Wireframing', 'Prototyping', 'User Research', 'Usability Testing', 'Visual Design'],
+  technical: ['HTML/CSS', 'JavaScript', 'Python', 'AWS', 'GCP', 'API Integration', 'Git'],
+  methods: ['User Interviews', 'Competitive Analysis', 'Persona Development', 'Journey Mapping', 'A/B Testing'],
+  ai: ['Claude', 'ChatGPT', 'Replit Agent', 'v0 by Vercel', 'Midjourney', 'Prompt Engineering']
+};
+---
+
+<BaseLayout title="About" currentPath="/about">
+  <section class="max-w-[680px] mx-auto px-6 py-16">
+    <!-- Header -->
+    <div class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 reveal">About</h1>
+    </div>
+
+    <!-- Photo placeholder + Bio -->
+    <div class="mb-16">
+      <div class="about-photo reveal">
+        <img src="/images/headshot.png" alt="Hafsa Usmani" />
+      </div>
+
+      <div class="space-y-4 text-lg text-[var(--color-muted)] reveal reveal-2">
+        <p>
+          I'm a <strong class="text-[var(--color-foreground)]">Product Designer who speaks both design and engineering</strong>.
+          With an MS in Computer Science and hands-on development experience, I bring a unique perspective
+          to design challenges.
+        </p>
+        <p>
+          Before transitioning to design, I led a cross-functional team that built a healthcare app
+          increasing vaccination coverage across 36 cities in Pakistan. I've launched products that
+          scaled to 190 countries and won awards in Google's developer contests.
+        </p>
+        <p>
+          I recently completed CareerFoundry's Product Design program to formalize my UX expertise,
+          combining it with my technical foundation to design solutions that are both
+          <strong class="text-[var(--color-foreground)]">user-centered and technically sound</strong>.
+        </p>
+        <p>
+          Currently based in the San Francisco Bay Area, I'm looking for Product Designer roles
+          where I can apply this unique blend of design thinking and engineering understanding.
+        </p>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="mb-16">
+      <h2 class="text-sm uppercase tracking-wider text-[var(--color-muted)] mb-6 reveal">Experience</h2>
+      <div class="space-y-8">
+        {experience.map((job, index) => (
+          <div class={`reveal reveal-${index + 1}`}>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
+              <div>
+                <h3 class="font-semibold">{job.title}</h3>
+                <p class="text-[var(--color-muted)]">{job.company}</p>
+              </div>
+              <p class="text-sm text-[var(--color-muted)] md:text-right">{job.period}</p>
+            </div>
+            <p class="text-[var(--color-muted)] text-sm">{job.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="mb-16">
+      <h2 class="text-sm uppercase tracking-wider text-[var(--color-muted)] mb-6 reveal">Education</h2>
+      <div class="space-y-6">
+        {education.map((edu, index) => (
+          <div class={`reveal reveal-${index + 1}`}>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-1">
+              <div>
+                <h3 class="font-semibold">{edu.degree}</h3>
+                <p class="text-[var(--color-muted)]">{edu.school}</p>
+              </div>
+              <p class="text-sm text-[var(--color-muted)] md:text-right">{edu.period}</p>
+            </div>
+            <p class="text-sm text-[var(--color-muted)]">{edu.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="mb-16">
+      <h2 class="text-sm uppercase tracking-wider text-[var(--color-muted)] mb-6 reveal">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="reveal reveal-1">
+          <h3 class="font-semibold mb-3">Design</h3>
+          <div class="flex flex-wrap gap-2">
+            {skills.design.map((skill) => (
+              <span class="text-sm px-3 py-1 bg-[var(--color-card)] border border-[var(--color-border)] rounded-full">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="reveal reveal-2">
+          <h3 class="font-semibold mb-3">Technical</h3>
+          <div class="flex flex-wrap gap-2">
+            {skills.technical.map((skill) => (
+              <span class="text-sm px-3 py-1 bg-[var(--color-card)] border border-[var(--color-border)] rounded-full">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="reveal reveal-3">
+          <h3 class="font-semibold mb-3">Research Methods</h3>
+          <div class="flex flex-wrap gap-2">
+            {skills.methods.map((skill) => (
+              <span class="text-sm px-3 py-1 bg-[var(--color-card)] border border-[var(--color-border)] rounded-full">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="reveal reveal-4">
+          <h3 class="font-semibold mb-3">AI & Emerging Tools</h3>
+          <div class="flex flex-wrap gap-2">
+            {skills.ai.map((skill) => (
+              <span class="text-sm px-3 py-1 bg-[var(--color-card)] border border-[var(--color-border)] rounded-full">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download Resume -->
+    <div class="reveal">
+      <a
+        href="/resume.pdf"
+        target="_blank"
+        class="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white rounded-lg font-medium hover:bg-[var(--color-accent-hover)] transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Download Resume
+      </a>
+    </div>
+  </section>
+</BaseLayout>

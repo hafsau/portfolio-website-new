@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" fill="none">
+  <rect width="375" height="812" fill="#1a1a2e"/>
+  <rect x="20" y="50" width="120" height="24" rx="4" fill="#2d2d44"/>
+  <text x="187" y="120" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Insights</text>
+  <rect x="20" y="160" width="335" height="200" rx="16" fill="#2d2d44"/>
+  <polyline points="40,320 80,280 120,300 160,250 200,270 240,220 280,240 320,200" stroke="#4a5ee4" stroke-width="3" fill="none"/>
+  <circle cx="320" cy="200" r="6" fill="#4a5ee4"/>
+  <rect x="40" y="180" width="60" height="12" rx="4" fill="#4a5ee4" opacity="0.6"/>
+  <rect x="20" y="380" width="160" height="120" rx="16" fill="#2d2d44"/>
+  <text x="100" y="430" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="24" font-weight="bold">85%</text>
+  <text x="100" y="460" text-anchor="middle" fill="#888" font-family="system-ui" font-size="11">Time in Range</text>
+  <rect x="195" y="380" width="160" height="120" rx="16" fill="#2d2d44"/>
+  <text x="275" y="430" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="24" font-weight="bold">6.2</text>
+  <text x="275" y="460" text-anchor="middle" fill="#888" font-family="system-ui" font-size="11">Avg A1C Est.</text>
+  <rect x="20" y="520" width="335" height="100" rx="16" fill="#2d2d44"/>
+  <rect x="40" y="540" width="80" height="12" rx="4" fill="#4a5ee4" opacity="0.6"/>
+  <rect x="20" y="640" width="335" height="100" rx="16" fill="#2d2d44"/>
+  <text x="187" y="780" text-anchor="middle" fill="#4a5ee4" font-family="system-ui" font-size="12">Progress Trends</text>
+</svg>

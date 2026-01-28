@@ -1,0 +1,1619 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BeforeAfterSlider from '../../components/BeforeAfterSlider.astro';
+
+const metrics = [
+  { value: '35%', label: 'Decrease in error rates' },
+  { value: '40%', label: 'Increase in task efficiency by reducing data logging steps' },
+  { value: '3', label: 'Platforms supported' }
+];
+
+const contributions = [
+  {
+    label: 'Research',
+    metrics: [
+      { value: '12', text: 'user interviews conducted' },
+      { value: '3', text: 'personas developed' },
+      { value: '2', text: 'journey maps created' },
+      { value: '5', text: 'competitor analyses' }
+    ]
+  },
+  {
+    label: 'Design',
+    metrics: [
+      { value: '47', text: 'screens designed' },
+      { value: '3', text: 'platforms (mobile, web, watch)' },
+      { value: '1', text: 'design system built' },
+      { value: '50+', text: 'reusable components' }
+    ]
+  },
+  {
+    label: 'Validation',
+    metrics: [
+      { value: '6', text: 'usability tests' },
+      { value: '89%', text: 'task completion rate' },
+      { value: '3', text: 'iteration cycles' },
+      { value: '15', text: 'total participants' }
+    ]
+  }
+];
+
+const impactPoints = [
+  {
+    title: 'Framing the Problem',
+    description: 'Identified that users weren\'t overwhelmed by diabetes—they were overwhelmed by fragmented tools. Reframed the challenge from "more features" to "unified experience."'
+  },
+  {
+    title: 'Designing for Motivation',
+    description: 'Shifted from clinical data dumps to supportive guidance. Progress celebrations and gentle nudges replaced harsh alerts and judgmental metrics.'
+  },
+  {
+    title: 'Simplifying Complexity',
+    description: 'Reduced 12+ daily manual inputs to 3-4 through CGM and smartwatch integration. Progressive disclosure reveals features only when users are ready.'
+  },
+  {
+    title: 'Building Visual Trust',
+    description: 'Created calm, accessible interfaces that feel like a supportive companion rather than a medical device. Color psychology and typography choices reinforce emotional safety.'
+  }
+];
+
+const personas = [
+  {
+    name: 'Sarah',
+    type: 'Newly Diagnosed',
+    image: '/images/medrec/sarah.png',
+    age: '34',
+    context: 'Recently diagnosed with Type 2 diabetes. Feeling anxious and overwhelmed by the lifestyle changes ahead.',
+    goal: 'Learn diabetes basics without feeling overwhelmed or judged',
+    needs: ['Step-by-step guidance', 'Simple visual trends', 'Reassurance and positive reinforcement'],
+    frustrations: ['Medical jargon', 'Complex data visualizations', 'Apps that feel clinical and cold']
+  },
+  {
+    name: 'Davis',
+    type: 'Long-term Manager',
+    image: '/images/medrec/davis.png',
+    age: '67',
+    context: 'Managing Type 2 diabetes for 15+ years. Values independence but finds new technology intimidating.',
+    goal: 'Maintain independence and avoid complexity',
+    needs: ['Intuitive interface', 'Minimal steps', 'Large text and clear icons', 'Automated logging'],
+    frustrations: ['Small touch targets', 'Too many screens to navigate', 'Features he\'ll never use']
+  },
+  {
+    name: 'Zack',
+    type: 'Tech-Savvy Teen',
+    image: '/images/medrec/zack.png',
+    age: '16',
+    context: 'Type 1 diabetic since age 8. Wants technology that fits his active, social lifestyle.',
+    goal: 'Use technology to maintain health without feeling different',
+    needs: ['Smartwatch integration', 'Gamified engagement', 'Discreet alerts', 'Social sharing options'],
+    frustrations: ['Outdated app designs', 'No smartwatch support', 'Apps that make diabetes his identity']
+  }
+];
+
+const usabilityFindings = [
+  {
+    issue: 'Calendar icon visibility',
+    problem: 'Users couldn\'t find date navigation—icon was too small and unlabeled',
+    solution: 'Increased icon size by 40% and added "History" label below'
+  },
+  {
+    issue: 'Onboarding swipe mechanics',
+    problem: 'Tutorial screens needed explicit cues for navigation',
+    solution: 'Added progress dots, gesture hints, and "Swipe to continue" text'
+  },
+  {
+    issue: 'Card interaction confusion',
+    problem: 'Home screen cards were confused with tappable buttons',
+    solution: 'Refined visual hierarchy—cards now have subtle depth, buttons have clear affordances'
+  }
+];
+
+const designPrinciples = [
+  {
+    title: 'Calm Visuals',
+    description: 'Soft color palette with purposeful accent colors. White space creates breathing room. Animations are subtle and never jarring.'
+  },
+  {
+    title: 'Accessibility First',
+    description: 'WCAG 2.1 AA compliance. High contrast ratios, scalable text, touch targets exceeding 44px, screen reader optimization.'
+  },
+  {
+    title: 'Empathy in Tone',
+    description: 'Copy avoids medical jargon and judgment. Celebrates small wins. Acknowledges the emotional weight of daily management.'
+  }
+];
+---
+
+<CaseStudyLayout
+  title="MedRec"
+  subtitle="I set out to design a diabetes management app that would bring clarity, calm, and control to users navigating a complex, emotionally demanding health journey."
+  description="A human-centered UX design project for a diabetes management application integrating continuous glucose monitors and smartwatches."
+  heroImage="/images/medrec/hero-medrec.png"
+  industry="Health Tech"
+  role="Product Designer"
+  timeline="2025"
+  platforms="Web, Mobile, Smartwatch"
+  tools={[]}
+  metrics={metrics}
+  prevProject={{ title: 'Immunization Tracker', href: '/work/immunization' }}
+  nextProject={{
+    title: 'FitStart',
+    href: '/work/fitstart',
+    subtitle: 'Habit-building fitness app for beginners',
+    image: '/images/fitstart/hero-image.png'
+  }}
+>
+  <!-- Section: Problem Statement -->
+  <section class="case-section">
+    <h2>The Challenge</h2>
+    <div class="problem-statement">
+      <p class="lead-text">
+        Managing diabetes is a lifelong responsibility that requires constant vigilance: glucose logging, meal tracking, medication management, and exercise monitoring.
+      </p>
+      <p class="lead-text secondary">
+        In healthcare tech, usability directly impacts patient retention, daily active use, and reduced support costs.
+      </p>
+      <div class="challenge-box">
+        <span class="challenge-label">The Problem</span>
+        <p>
+          Design an interface that feels <strong>supportive rather than burdensome</strong>,
+          turning a daily chore into a moment of self-care while reducing error rates and improving task efficiency across three platforms.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: My Contributions -->
+  <section class="case-section">
+    <h2>My Contributions</h2>
+    <div class="contributions-stack">
+      {contributions.map((contribution, index) => (
+        <div class="contribution-row reveal">
+          <span class="contribution-number">0{index + 1}</span>
+          <div class="contribution-content">
+            <h3 class="contribution-label">{contribution.label}</h3>
+            <div class="contribution-metrics">
+              {contribution.metrics.map((metric) => (
+                <div class="contribution-metric">
+                  <span class="metric-value">{metric.value}</span>
+                  <span class="metric-text">{metric.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: How I Made an Impact -->
+  <section class="case-section">
+    <h2>How I Made an Impact</h2>
+    <div class="impact-stack">
+      {impactPoints.map((point, index) => (
+        <div class="impact-row">
+          <span class="impact-number">0{index + 1}</span>
+          <div class="impact-content">
+            <h3>{point.title}</h3>
+            <p>{point.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Hero Images Grid -->
+  <section class="case-section">
+    <div class="hero-images-grid">
+      <div class="hero-image-item phones">
+        <img src="/images/medrec/hero-image-1.png" alt="MedRec App Preview 1" loading="lazy" />
+      </div>
+      <div class="hero-image-item watch">
+        <img src="/images/medrec/hero-image-2.png" alt="MedRec App Preview 2" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Understanding the Users -->
+  <section class="case-section">
+    <h2>Understanding the Users</h2>
+    <p class="section-intro">
+      I conducted user interviews, surveys, and analyzed in-app analytics to understand who our users were and what they truly needed.
+      Three distinct personas emerged to guide design decisions:
+    </p>
+
+    <div class="persona-stack">
+      {personas.map(persona => (
+        <div class="persona-card">
+          <div class="persona-header">
+            <div class="persona-avatar">
+              <img src={persona.image} alt={persona.name} />
+            </div>
+            <div class="persona-title">
+              <h3>{persona.name}</h3>
+              <span class="persona-type">{persona.type} · Age {persona.age}</span>
+            </div>
+          </div>
+          <p class="persona-context">{persona.context}</p>
+          <div class="persona-goal">
+            <span class="persona-label">Goal</span>
+            <p>{persona.goal}</p>
+          </div>
+          <div class="persona-lists">
+            <div class="persona-list-item">
+              <span class="persona-label">Key Needs</span>
+              <ul>
+                {persona.needs.map(need => <li>{need}</li>)}
+              </ul>
+            </div>
+            <div class="persona-list-item">
+              <span class="persona-label">Frustrations</span>
+              <ul class="frustrations">
+                {persona.frustrations.map(f => <li>{f}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Wireframing & Iteration -->
+  <section class="case-section">
+    <h2>Wireframing & Iteration</h2>
+    <p>
+      I followed a <strong>three-stage fidelity approach</strong> to iterate quickly while validating assumptions at each stage:
+    </p>
+
+    <div class="fidelity-stages">
+      <div class="fidelity-stage">
+        <div class="stage-header">
+          <span class="stage-label">Stage 1</span>
+          <h3>Low-Fidelity</h3>
+        </div>
+        <div class="stage-image">
+          <img src="/images/medrec/low-fidelity.png" alt="Low-fidelity sketches showing initial layout exploration" loading="lazy" />
+        </div>
+        <p>Fast sketching to explore layout options and core navigation structure.</p>
+      </div>
+
+      <div class="fidelity-connector">
+        <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+          <path d="M0 12h36M28 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="fidelity-stage">
+        <div class="stage-header">
+          <span class="stage-label">Stage 2</span>
+          <h3>Mid-Fidelity</h3>
+        </div>
+        <div class="stage-image">
+          <img src="/images/medrec/mid-fidelity.png" alt="Mid-fidelity Figma wireframes in grayscale" loading="lazy" />
+        </div>
+        <p>Grayscale wireframes built in Figma to test flow without visual distraction.</p>
+      </div>
+
+      <div class="fidelity-connector">
+        <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+          <path d="M0 12h36M28 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="fidelity-stage">
+        <div class="stage-header">
+          <span class="stage-label">Stage 3</span>
+          <h3>High-Fidelity</h3>
+        </div>
+        <div class="stage-image">
+          <img src="/images/medrec/high-fidelity.png" alt="High-fidelity polished UI with colors and icons" loading="lazy" />
+        </div>
+        <p>Polished UI with colors, icons, and realistic content.</p>
+      </div>
+    </div>
+
+    <div class="key-learnings">
+      <h3>Key Learnings from Wireframing</h3>
+      <div class="learnings-grid">
+        <div class="learning-item">
+          <span class="learning-number">01</span>
+          <p>Early sketches helped us eliminate a cluttered onboarding flow before investing in code.</p>
+        </div>
+        <div class="learning-item">
+          <span class="learning-number">02</span>
+          <p>Mid-fidelity testing revealed that users preferred a bottom nav over a hamburger menu.</p>
+        </div>
+        <div class="learning-item">
+          <span class="learning-number">03</span>
+          <p>High-fidelity prototypes validated that calming colors reduced reported anxiety during glucose tracking.</p>
+        </div>
+        <div class="learning-item">
+          <span class="learning-number">04</span>
+          <p>Iterating on micro-interactions early helped us prioritize meaningful feedback over flashy animations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Design Evolution -->
+  <section class="case-section">
+    <h2>Design Evolution</h2>
+    <p>
+      Key screens evolved significantly through iteration and user feedback. Drag the slider to compare before and after:
+    </p>
+
+    <div class="evolution-section">
+      <h3 class="evolution-title">Mobile App</h3>
+      <div class="evolution-slider-container">
+        <BeforeAfterSlider
+          beforeImage="/images/medrec/mobile-before.png"
+          afterImage="/images/medrec/mobile-after.png"
+          beforeLabel="Cluttered dashboard"
+          afterLabel="Unified daily view"
+          aspectRatio="9/21"
+        />
+      </div>
+      <p class="evolution-description">Reduced cognitive load by consolidating 12+ visible metrics into progressive disclosure patterns.</p>
+    </div>
+
+    <div class="evolution-section">
+      <h3 class="evolution-title">Web Dashboard</h3>
+      <div class="evolution-slider-container wide">
+        <BeforeAfterSlider
+          beforeImage="/images/medrec/web-before.png"
+          afterImage="/images/medrec/web-after.png"
+          beforeLabel="Dense data tables"
+          afterLabel="Visual-first dashboard"
+          aspectRatio="4/3"
+        />
+      </div>
+      <p class="evolution-description">Transformed clinical data dumps into intuitive visualizations with exportable reports.</p>
+    </div>
+
+    <div class="evolution-section">
+      <h3 class="evolution-title">Smartwatch</h3>
+      <div class="evolution-slider-container watch">
+        <BeforeAfterSlider
+          beforeImage="/images/medrec/watch-before.png"
+          afterImage="/images/medrec/watch-after.png"
+          beforeLabel="Too much info"
+          afterLabel="Glanceable"
+          aspectRatio="2/3"
+        />
+      </div>
+      <p class="evolution-description">Optimized for at-a-glance information with haptic feedback for critical alerts.</p>
+    </div>
+  </section>
+
+  <!-- Section: Usability Testing -->
+  <section class="case-section">
+    <h2>Usability Testing</h2>
+    <p>
+      Usability testing with <strong>6 potential users</strong> across all three personas revealed critical issues that shaped the final design:
+    </p>
+
+    <div class="validation-grid">
+      {usabilityFindings.map(finding => (
+        <div class="validation-card">
+          <div class="validation-header">
+            <span class="validation-issue">{finding.issue}</span>
+          </div>
+          <div class="validation-content">
+            <div class="validation-problem">
+              <span class="validation-label">Problem</span>
+              <p>{finding.problem}</p>
+            </div>
+            <div class="validation-solution">
+              <span class="validation-label">Solution</span>
+              <p>{finding.solution}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Deliverables -->
+  <section class="case-section">
+    <h2>Deliverables</h2>
+    <p>
+      The final design system spans three platforms with consistent visual language and interaction patterns:
+    </p>
+
+    <div class="deliverables-section">
+      <h3>Mobile App</h3>
+      <div class="deliverable-gallery" data-lightbox-gallery>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-home.png" data-caption="Daily Overview">
+          <img src="/images/medrec/deliverable-home.png" alt="Daily Overview" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Daily Overview</p>
+        </div>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-challenges.png" data-caption="Challenges">
+          <img src="/images/medrec/deliverable-challenges.png" alt="Challenges" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Challenges</p>
+        </div>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-insights.png" data-caption="Progress Trends">
+          <img src="/images/medrec/deliverable-insights.png" alt="Progress Trends" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Progress Trends</p>
+        </div>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-settings.png" data-caption="Preferences">
+          <img src="/images/medrec/deliverable-settings.png" alt="Preferences" class="gallery-image mobile" loading="lazy" />
+          <p class="gallery-caption">Preferences</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deliverables-section">
+      <h3>Web Dashboard</h3>
+      <div class="deliverable-gallery single" data-lightbox-gallery>
+        <div class="gallery-item wide" data-src="/images/medrec/deliverable-web-dashboard.png" data-caption="Blog page for health tips and community updates">
+          <img src="/images/medrec/deliverable-web-dashboard.png" alt="Web Dashboard Blog" class="gallery-image desktop" loading="lazy" />
+          <p class="gallery-caption">Blog page for health tips and community updates</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deliverables-section">
+      <h3>Smartwatch</h3>
+      <div class="deliverable-gallery watch-gallery" data-lightbox-gallery>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-watch-face.png" data-caption="Watch Face">
+          <img src="/images/medrec/deliverable-watch-face.png" alt="Watch Face" class="gallery-image watch" loading="lazy" />
+          <p class="gallery-caption">Watch Face</p>
+        </div>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-watch-goals.png" data-caption="Goals">
+          <img src="/images/medrec/deliverable-watch-goals.png" alt="Goals" class="gallery-image watch" loading="lazy" />
+          <p class="gallery-caption">Goals</p>
+        </div>
+        <div class="gallery-item" data-src="/images/medrec/deliverable-watch-progress.png" data-caption="Progress">
+          <img src="/images/medrec/deliverable-watch-progress.png" alt="Progress" class="gallery-image watch" loading="lazy" />
+          <p class="gallery-caption">Progress</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Design Philosophy -->
+  <section class="case-section">
+    <h2>Design Philosophy</h2>
+    <p>
+      Three core principles guided every design decision:
+    </p>
+
+    <div class="philosophy-stack">
+      {designPrinciples.map((principle, index) => (
+        <div class="philosophy-row">
+          <span class="philosophy-number">0{index + 1}</span>
+          <div class="philosophy-content">
+            <h3>{principle.title}</h3>
+            <p>{principle.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Visual Direction -->
+  <section class="case-section">
+    <h2>Visual Direction</h2>
+    <p>
+      The visual system was designed to feel calming and supportive—never clinical or alarming.
+    </p>
+
+    <div class="style-guide-block">
+      <div class="style-guide-item">
+        <span class="style-label">Colors</span>
+        <div class="color-swatches">
+          <span class="swatch" style="background: #E6D3FF"></span>
+          <span class="swatch" style="background: #B87EFF"></span>
+          <span class="swatch" style="background: #5F6366"></span>
+        </div>
+        <span class="style-desc">Soft, Vibrant, Grounded</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Typography</span>
+        <div class="type-preview">
+          <span class="type-display">Estedad</span>
+          <span class="type-secondary">Variable Font</span>
+        </div>
+        <span class="style-desc">Clarity + Trust</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Spacing</span>
+        <div class="spacing-preview">
+          <span class="space-unit">8</span>
+          <span class="space-unit">16</span>
+          <span class="space-unit">24</span>
+        </div>
+        <span class="style-desc">Breathing Room</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Website Walkthrough -->
+  <section class="case-section">
+    <div class="deliverables-section">
+      <h3>Website Experience</h3>
+      <p>
+        The web dashboard provides caregivers and healthcare providers with comprehensive insights,
+        exportable reports, and long-term trend analysis—all accessible from any browser.
+      </p>
+    </div>
+    <div class="recording-container reveal">
+      <img src="/images/medrec/website_recording.gif" alt="MedRec website walkthrough" class="recording-gif" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- Section: Conclusion & Learnings -->
+  <section class="case-section">
+    <h2>Conclusion & Learnings</h2>
+    <div class="reflections-container">
+      <blockquote class="reflection-quote">
+        <p>
+          "Designing for healthcare goes beyond usability—it's about addressing the emotional weight users carry every day."
+        </p>
+      </blockquote>
+
+      <div class="learnings-grid">
+        <div class="learning-card">
+          <h3>Emotional needs come first</h3>
+          <p>Healthcare design requires understanding feelings before features. Users need to feel supported, not surveilled.</p>
+        </div>
+        <div class="learning-card">
+          <h3>Progressive disclosure prevents overwhelm</h3>
+          <p>Start simple, reveal complexity gradually. Power users get depth; beginners get clarity.</p>
+        </div>
+        <div class="learning-card">
+          <h3>Cross-platform consistency builds trust</h3>
+          <p>When the mobile, web, and watch experiences feel unified, users feel confident in the entire ecosystem.</p>
+        </div>
+        <div class="learning-card">
+          <h3>Test early, test often</h3>
+          <p>Every assumption I had was challenged by real users. The best designs emerged from listening, not guessing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: What This Shows About Me -->
+  <section class="case-section conclusion">
+    <h2>What This Shows About Me</h2>
+    <p class="conclusion-intro">
+      This project shows that I can take a deeply personal, emotionally-charged topic and translate it into a design that's both functional and human.
+    </p>
+
+    <div class="about-me-stack">
+      <div class="about-me-row">
+        <h3>Empathy-Driven Design</h3>
+        <p>I approach health tech with sensitivity, understanding that users aren't just completing tasks—they're managing their lives.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>End-to-End Ownership</h3>
+        <p>From research to final UI, I led the full design process, ensuring consistency and intentionality at every step.</p>
+      </div>
+      <div class="about-me-row">
+        <h3>Design System Expertise</h3>
+        <p>I built scalable, accessible components that can grow with the product and serve as a foundation for future features.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Mobile App Demo -->
+  <section class="case-section no-margin">
+    <div class="deliverables-section">
+      <h3>Mobile App in Action</h3>
+      <p>
+        See how the mobile app brings together glucose tracking, medication reminders,
+        and progress insights into a seamless daily experience.
+      </p>
+    </div>
+    <div class="recording-container reveal">
+      <video class="recording-video" controls playsinline>
+        <source src="/images/medrec/recording-6.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  /* Section styling */
+  .case-section {
+    margin-bottom: 5rem;
+  }
+
+  .case-section.no-margin {
+    margin-bottom: 0;
+  }
+
+  /* Hero Images Grid - Centered and Balanced */
+  .hero-images-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4rem;
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero-images-grid {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+
+  .hero-image-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .hero-image-item img {
+    height: auto;
+    object-fit: contain;
+  }
+
+  .hero-image-item.phones img {
+    width: 320px;
+    max-width: 100%;
+  }
+
+  .hero-image-item.watch img {
+    width: 260px;
+    max-width: 100%;
+  }
+
+  .section-intro {
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Problem Statement */
+  .problem-statement {
+    margin-top: 1.5rem;
+  }
+
+  .lead-text {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+
+  .lead-text.secondary {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(74, 94, 228, 0.15) 0%, rgba(74, 94, 228, 0.05) 100%);
+    border-left: 4px solid var(--color-accent);
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-top: 2rem;
+  }
+
+  .challenge-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .challenge-box p {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--color-fg);
+    line-height: 1.7;
+  }
+
+  /* Contributions Stack - Matches Impact Row Pattern */
+  .contributions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .contribution-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .contribution-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .contribution-content {
+    flex: 1;
+  }
+
+  .contribution-label {
+    margin: 0 0 1rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .contribution-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .contribution-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contribution-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contribution-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contribution-metric .metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .contribution-metric .metric-text {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* Impact Stack (4 rows) */
+  .impact-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .impact-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .impact-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .impact-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .impact-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Persona Stack (3 rows) - Simplified */
+  .persona-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .persona-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    border-left: 4px solid var(--color-accent);
+  }
+
+  .persona-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .persona-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .persona-avatar img {
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    object-position: center bottom;
+    transform: translateY(-40%);
+  }
+
+  .persona-title h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-fg);
+  }
+
+  .persona-type {
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .persona-context {
+    font-size: 1rem;
+    color: var(--color-muted);
+    font-style: italic;
+    margin: 0 0 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .persona-goal {
+    margin-bottom: 1.5rem;
+  }
+
+  .persona-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .persona-goal p {
+    margin: 0;
+    color: var(--color-fg);
+    font-size: 1rem;
+  }
+
+  .persona-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .persona-lists {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .persona-list-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .persona-list-item li {
+    color: var(--color-muted);
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.375rem;
+    font-size: 0.9375rem;
+  }
+
+  .persona-list-item li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .persona-list-item .frustrations li::before {
+    content: '-';
+    color: #e57373;
+  }
+
+  /* Fidelity Stages */
+  .fidelity-stages {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .fidelity-stages {
+      flex-direction: column;
+      align-items: center;
+    }
+    .fidelity-connector {
+      transform: rotate(90deg);
+    }
+  }
+
+  .fidelity-stage {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+  }
+
+  .stage-header {
+    margin-bottom: 1rem;
+  }
+
+  .stage-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .stage-header h3 {
+    margin: 0.25rem 0 0;
+    font-size: 1.125rem;
+    color: var(--color-fg);
+  }
+
+  .stage-image {
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .stage-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .stage-image .image-placeholder {
+    aspect-ratio: 3/4;
+  }
+
+  .fidelity-stage > p {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .fidelity-connector {
+    color: var(--color-accent);
+    opacity: 0.5;
+    flex-shrink: 0;
+    margin-top: 4rem;
+  }
+
+  /* Key Learnings from Wireframing */
+  .key-learnings {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .key-learnings h3 {
+    font-size: 1rem;
+    color: var(--color-accent);
+    margin: 0 0 1.5rem;
+    font-weight: 600;
+  }
+
+  .learnings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .learnings-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .learning-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .learning-item .learning-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .learning-item p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Evolution Sections with Before/After Slider */
+  .evolution-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .evolution-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .evolution-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin: 0 0 1.5rem;
+  }
+
+  .evolution-slider-container {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .evolution-slider-container.wide {
+    max-width: 100%;
+  }
+
+  .evolution-slider-container.watch {
+    max-width: 280px;
+  }
+
+  .evolution-slider-container.watch :global(.ba-slider) {
+    border-radius: 1.5rem;
+  }
+
+  .evolution-description {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-top: 1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Validation Grid */
+  .validation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .validation-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .validation-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .validation-header {
+    background: rgba(74, 94, 228, 0.15);
+    padding: 1rem 1.25rem;
+  }
+
+  .validation-issue {
+    font-weight: 600;
+    color: var(--color-fg);
+    font-size: 0.9375rem;
+  }
+
+  .validation-content {
+    padding: 1.25rem;
+  }
+
+  .validation-problem,
+  .validation-solution {
+    margin-bottom: 1rem;
+  }
+
+  .validation-solution {
+    margin-bottom: 0;
+  }
+
+  .validation-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .validation-solution .validation-label {
+    color: var(--color-accent);
+  }
+
+  .validation-content p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .validation-solution p {
+    color: var(--color-fg);
+  }
+
+  /* Deliverables */
+  .deliverables-section {
+    margin-top: 2.5rem;
+  }
+
+  .deliverables-section h3 {
+    font-size: 1rem;
+    color: var(--color-accent);
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+
+  .deliverable-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .deliverable-gallery.single {
+    grid-template-columns: 1fr;
+  }
+
+  .deliverable-gallery.watch-gallery {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 700px;
+    gap: 2rem;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .deliverable-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .gallery-item {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+  }
+
+  .gallery-item.wide {
+    grid-column: 1 / -1;
+  }
+
+  .gallery-image {
+    width: 100%;
+    border-radius: 0.75rem;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .gallery-item:hover .gallery-image {
+    box-shadow: 0 8px 30px rgba(74, 94, 228, 0.2);
+  }
+
+  .gallery-image.mobile {
+    width: 100%;
+    height: auto;
+  }
+
+  .gallery-image.desktop {
+    width: 100%;
+    height: auto;
+  }
+
+  .gallery-image.watch {
+    width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+    margin: 0 auto;
+  }
+
+  .gallery-caption {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin-top: 0.75rem;
+  }
+
+  /* Image Placeholders */
+  .image-placeholder {
+    background: linear-gradient(135deg, var(--color-border) 0%, rgba(74, 94, 228, 0.1) 100%);
+    border: 1px dashed var(--color-muted);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+  }
+
+  .image-placeholder.mobile {
+    aspect-ratio: 9/16;
+  }
+
+  .image-placeholder.desktop {
+    aspect-ratio: 16/10;
+  }
+
+  .image-placeholder.watch {
+    width: 120px;
+    height: 120px;
+    border-radius: 1.5rem;
+    margin: 0 auto;
+  }
+
+  /* Philosophy Stack (3 rows) */
+  .philosophy-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .philosophy-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .philosophy-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .philosophy-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-fg);
+  }
+
+  .philosophy-content p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Recording Section */
+  .recording-container {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .recording-gif {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+  }
+
+  .recording-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+  }
+
+  /* Reflections Section */
+  .reflections-container {
+    margin-top: 1.5rem;
+  }
+
+  .reflection-quote {
+    background: linear-gradient(135deg, rgba(74, 94, 228, 0.15) 0%, rgba(74, 94, 228, 0.05) 100%);
+    border-left: 4px solid var(--color-accent);
+    padding: 1.5rem 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .reflection-quote p {
+    font-size: 1.25rem !important;
+    color: var(--color-fg) !important;
+    font-style: italic;
+    margin: 0 !important;
+    line-height: 1.6;
+  }
+
+  .learnings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .learnings-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .learning-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .learning-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .learning-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Conclusion / What This Shows About Me */
+  .conclusion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .conclusion-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .about-me-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-me-row {
+    padding: 1.5rem 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .about-me-row h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-accent);
+  }
+
+  .about-me-row p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Blockquote (general) */
+  blockquote {
+    background: linear-gradient(135deg, rgba(74, 94, 228, 0.1) 0%, transparent 100%);
+    padding: 2rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin: 2rem 0;
+  }
+
+  blockquote p {
+    font-size: 1.25rem !important;
+    color: var(--color-fg) !important;
+    font-style: italic;
+    margin: 0 !important;
+  }
+
+  /* Style Guide Block */
+  .style-guide-block {
+    display: flex;
+    justify-content: space-between;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(74, 94, 228, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .style-guide-block {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  .style-guide-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .style-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .style-desc {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  /* Color Swatches */
+  .color-swatches {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  /* Typography Preview */
+  .type-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .type-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-fg);
+  }
+
+  .type-secondary {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Spacing Preview */
+  .spacing-preview {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .space-unit {
+    width: 32px;
+    height: 32px;
+    background: rgba(74, 94, 228, 0.2);
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  /* Onboarding Steps */
+  .onboarding-intro {
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .onboarding-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .onboarding-step {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .onboarding-step .step-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.6;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 30px;
+  }
+
+  .onboarding-step .step-info h4 {
+    margin: 0 0 0.375rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .onboarding-step .step-info p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Onboarding Demo */
+  .onboarding-demo {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .demo-label {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+</style>

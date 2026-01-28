@@ -1,0 +1,93 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/work', label: 'Work' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-background)]/80 backdrop-blur-md border-b border-[var(--color-border)]">
+  <nav class="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo / Name -->
+    <a href="/" class="font-semibold text-lg hover:text-[var(--color-accent)] transition-colors">
+      Hafsa Usmani
+    </a>
+
+    <!-- Navigation Links -->
+    <div class="flex items-center gap-8">
+      <ul class="hidden md:flex items-center gap-6">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'text-sm transition-colors link-hover',
+                currentPath === link.href
+                  ? 'text-[var(--color-foreground)]'
+                  : 'text-[var(--color-muted)] hover:text-[var(--color-foreground)]'
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Theme Toggle -->
+      <ThemeToggle />
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="md:hidden p-2 hover:bg-[var(--color-border)] rounded-lg transition-colors"
+        aria-label="Open menu"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-[var(--color-border)] bg-[var(--color-background)]"
+  >
+    <ul class="px-6 py-4 space-y-4">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'block text-sm transition-colors',
+              currentPath === link.href
+                ? 'text-[var(--color-foreground)]'
+                : 'text-[var(--color-muted)] hover:text-[var(--color-foreground)]'
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

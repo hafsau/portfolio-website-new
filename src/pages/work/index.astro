@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'MedRec',
+    subtitle: 'Diabetes management app with unified cross-platform experience',
+    metric: '40%',
+    metricLabel: 'faster logging',
+    href: '/work/medrec',
+    tags: ['Health Tech', 'UX Design', 'Mobile', 'Smartwatch']
+  },
+  {
+    title: 'FitStart',
+    subtitle: 'Beginner-friendly fitness app with habit-building focus',
+    metric: '45%',
+    metricLabel: 'task completion',
+    href: '/work/fitstart',
+    tags: ['Fitness', 'Web App', 'Responsive', 'WCAG AA']
+  },
+  {
+    title: 'Folio',
+    subtitle: 'B2B client portal for freelancers to manage projects and payments',
+    metric: '60%',
+    metricLabel: 'less admin time',
+    href: '/work/folio',
+    tags: ['B2B SaaS', 'Web App', 'Desktop-first']
+  },
+  {
+    title: 'Immunization Tracker',
+    subtitle: 'Mobile monitoring system for 4,000+ medical officers across 36 districts',
+    metric: '22% → 98%',
+    metricLabel: 'attendance',
+    href: '/work/immunization',
+    tags: ['Healthcare', 'Government', 'Mobile', 'Impact']
+  }
+];
+---
+
+<BaseLayout title="Work" currentPath="/work">
+  <section class="max-w-[1200px] mx-auto px-6 py-16">
+    <div class="max-w-[680px] mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 reveal">Work</h1>
+      <p class="text-xl text-[var(--color-muted)] reveal reveal-2">
+        A collection of projects where I've applied user-centered design to solve real problems.
+        Each case study showcases my process from research to implementation.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project, index) => (
+        <div class={`reveal reveal-${index + 1}`}>
+          <ProjectCard {...project} />
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
