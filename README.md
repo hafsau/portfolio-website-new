@@ -2,7 +2,7 @@
 
 A personal portfolio website showcasing UX/Product Design case studies. Built with Astro and deployed on Vercel.
 
-**Live Site:** [portfolio-website.vercel.app](https://portfolio-website.vercel.app)
+**Live Site:** [portfolio-website-three-alpha-44.vercel.app](https://portfolio-website-three-alpha-44.vercel.app/)
 
 ## Tech Stack
 
