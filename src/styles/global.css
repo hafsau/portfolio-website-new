@@ -451,13 +451,14 @@
   gap: 3rem;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  /* Use proximity instead of mandatory for smoother scrolling */
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 2rem;
   /* Ensure proper touch handling */
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
+  touch-action: pan-x pan-y;
   /* Ensure element is interactive */
   position: relative;
   z-index: 1;
