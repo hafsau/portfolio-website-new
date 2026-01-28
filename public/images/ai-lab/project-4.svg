@@ -1,0 +1,40 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#1a1a24"/>
+
+  <!-- Code editor mockup -->
+  <rect x="150" y="80" width="500" height="340" rx="12" fill="#252532" stroke="#333" stroke-width="2"/>
+
+  <!-- Editor header -->
+  <rect x="150" y="80" width="500" height="35" rx="12" fill="#1f1f2a"/>
+  <rect x="150" y="103" width="500" height="12" fill="#1f1f2a"/>
+  <circle cx="175" cy="98" r="5" fill="#ff5f56"/>
+  <circle cx="192" cy="98" r="5" fill="#ffbd2e"/>
+  <circle cx="209" cy="98" r="5" fill="#27ca40"/>
+
+  <!-- Line numbers -->
+  <text x="170" y="145" fill="#555" font-family="monospace" font-size="12">1</text>
+  <text x="170" y="165" fill="#555" font-family="monospace" font-size="12">2</text>
+  <text x="170" y="185" fill="#555" font-family="monospace" font-size="12">3</text>
+  <text x="170" y="205" fill="#555" font-family="monospace" font-size="12">4</text>
+  <text x="170" y="225" fill="#555" font-family="monospace" font-size="12">5</text>
+  <text x="170" y="245" fill="#555" font-family="monospace" font-size="12">6</text>
+  <text x="170" y="265" fill="#555" font-family="monospace" font-size="12">7</text>
+  <text x="170" y="285" fill="#555" font-family="monospace" font-size="12">8</text>
+
+  <!-- Code lines -->
+  <rect x="195" y="135" width="80" height="12" rx="2" fill="#c792ea"/>
+  <rect x="285" y="135" width="120" height="12" rx="2" fill="#82aaff"/>
+  <rect x="195" y="155" width="40" height="12" rx="2" fill="#f97316"/>
+  <rect x="245" y="155" width="200" height="12" rx="2" fill="#c3e88d"/>
+  <rect x="195" y="175" width="60" height="12" rx="2" fill="#89ddff"/>
+  <rect x="265" y="175" width="150" height="12" rx="2" fill="#ffcb6b"/>
+  <rect x="195" y="195" width="100" height="12" rx="2" fill="#82aaff"/>
+  <rect x="195" y="215" width="30" height="12" rx="2" fill="#89ddff"/>
+  <rect x="195" y="235" width="180" height="12" rx="2" fill="#c3e88d"/>
+  <rect x="195" y="255" width="50" height="12" rx="2" fill="#c792ea"/>
+  <rect x="255" y="255" width="100" height="12" rx="2" fill="#f97316"/>
+  <rect x="195" y="275" width="30" height="12" rx="2" fill="#89ddff"/>
+
+  <!-- Label -->
+  <text x="400" y="470" text-anchor="middle" fill="#8a8a8e" font-family="system-ui" font-size="14">Project Four</text>
+</svg>

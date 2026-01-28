@@ -1,0 +1,138 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#0a0a0f"/>
+
+  <!-- Ambient glow -->
+  <ellipse cx="600" cy="400" rx="400" ry="300" fill="url(#ambientGlow)" opacity="0.3"/>
+
+  <!-- Neural network connections -->
+  <g opacity="0.4">
+    <line x1="200" y1="200" x2="400" y2="300" stroke="#f97316" stroke-width="1"/>
+    <line x1="400" y1="300" x2="600" y2="250" stroke="#f97316" stroke-width="1"/>
+    <line x1="600" y1="250" x2="800" y2="350" stroke="#f97316" stroke-width="1"/>
+    <line x1="800" y1="350" x2="1000" y2="200" stroke="#f97316" stroke-width="1"/>
+    <line x1="300" y1="500" x2="500" y2="400" stroke="#f97316" stroke-width="1"/>
+    <line x1="500" y1="400" x2="700" y2="450" stroke="#f97316" stroke-width="1"/>
+    <line x1="700" y1="450" x2="900" y2="500" stroke="#f97316" stroke-width="1"/>
+    <line x1="400" y1="300" x2="500" y2="400" stroke="#f97316" stroke-width="1"/>
+    <line x1="600" y1="250" x2="700" y2="450" stroke="#f97316" stroke-width="1"/>
+    <line x1="800" y1="350" x2="700" y2="450" stroke="#f97316" stroke-width="1"/>
+    <line x1="200" y1="600" x2="400" y2="550" stroke="#f97316" stroke-width="1"/>
+    <line x1="400" y1="550" x2="600" y2="600" stroke="#f97316" stroke-width="1"/>
+    <line x1="600" y1="600" x2="900" y2="500" stroke="#f97316" stroke-width="1"/>
+    <line x1="1000" y1="600" x2="900" y2="500" stroke="#f97316" stroke-width="1"/>
+  </g>
+
+  <!-- Neural network nodes -->
+  <g>
+    <circle cx="200" cy="200" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="400" cy="300" r="8" fill="#f97316" opacity="0.8"/>
+    <circle cx="600" cy="250" r="6" fill="#f97316" opacity="0.7"/>
+    <circle cx="800" cy="350" r="8" fill="#f97316" opacity="0.8"/>
+    <circle cx="1000" cy="200" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="300" cy="500" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="500" cy="400" r="8" fill="#f97316" opacity="0.8"/>
+    <circle cx="700" cy="450" r="10" fill="#f97316"/>
+    <circle cx="900" cy="500" r="8" fill="#f97316" opacity="0.8"/>
+    <circle cx="200" cy="600" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="400" cy="550" r="6" fill="#f97316" opacity="0.7"/>
+    <circle cx="600" cy="600" r="6" fill="#f97316" opacity="0.6"/>
+    <circle cx="1000" cy="600" r="6" fill="#f97316" opacity="0.6"/>
+  </g>
+
+  <!-- Central Claude Code Terminal -->
+  <g transform="translate(350, 220)">
+    <!-- Terminal window -->
+    <rect width="500" height="360" rx="16" fill="#1a1a24" stroke="#333" stroke-width="2"/>
+
+    <!-- Terminal header -->
+    <rect width="500" height="40" rx="16" fill="#252532"/>
+    <rect y="28" width="500" height="12" fill="#252532"/>
+    <circle cx="24" cy="20" r="6" fill="#ff5f56"/>
+    <circle cx="44" cy="20" r="6" fill="#ffbd2e"/>
+    <circle cx="64" cy="20" r="6" fill="#27ca40"/>
+    <text x="250" y="25" text-anchor="middle" fill="#8a8a8e" font-family="monospace" font-size="12">claude-code</text>
+
+    <!-- Terminal content -->
+    <g transform="translate(20, 60)">
+      <!-- Prompt line 1 -->
+      <text y="20" fill="#f97316" font-family="monospace" font-size="13">$</text>
+      <text x="20" y="20" fill="#82aaff" font-family="monospace" font-size="13">claude</text>
+      <text x="75" y="20" fill="#c3e88d" font-family="monospace" font-size="13">"Build an iOS app for quick voice notes"</text>
+
+      <!-- Response -->
+      <text y="55" fill="#8a8a8e" font-family="monospace" font-size="12">I'll help you build that. Let me create the project structure...</text>
+
+      <!-- Code output -->
+      <text y="90" fill="#c792ea" font-family="monospace" font-size="12">Creating</text>
+      <text x="70" y="90" fill="#ffcb6b" font-family="monospace" font-size="12">QuickThink/</text>
+
+      <text y="115" fill="#89ddff" font-family="monospace" font-size="12">  ├──</text>
+      <text x="45" y="115" fill="#c3e88d" font-family="monospace" font-size="12">App.swift</text>
+
+      <text y="140" fill="#89ddff" font-family="monospace" font-size="12">  ├──</text>
+      <text x="45" y="140" fill="#c3e88d" font-family="monospace" font-size="12">VoiceRecorder.swift</text>
+
+      <text y="165" fill="#89ddff" font-family="monospace" font-size="12">  ├──</text>
+      <text x="45" y="165" fill="#c3e88d" font-family="monospace" font-size="12">TranscriptionService.swift</text>
+
+      <text y="190" fill="#89ddff" font-family="monospace" font-size="12">  └──</text>
+      <text x="45" y="190" fill="#c3e88d" font-family="monospace" font-size="12">ContentView.swift</text>
+
+      <!-- Status -->
+      <text y="230" fill="#27ca40" font-family="monospace" font-size="12">✓</text>
+      <text x="20" y="230" fill="#8a8a8e" font-family="monospace" font-size="12">Project created. Building...</text>
+
+      <!-- Cursor -->
+      <rect y="255" width="10" height="18" fill="#f97316" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+
+  <!-- Floating code snippets -->
+  <g opacity="0.6" transform="translate(100, 120)">
+    <rect width="180" height="80" rx="8" fill="#1a1a24" stroke="#333"/>
+    <text x="15" y="30" fill="#c792ea" font-family="monospace" font-size="10">func</text>
+    <text x="45" y="30" fill="#82aaff" font-family="monospace" font-size="10">captureVoice()</text>
+    <text x="15" y="50" fill="#89ddff" font-family="monospace" font-size="10">  let recorder =</text>
+    <text x="15" y="70" fill="#ffcb6b" font-family="monospace" font-size="10">    AVAudioRecorder()</text>
+  </g>
+
+  <g opacity="0.6" transform="translate(920, 450)">
+    <rect width="180" height="80" rx="8" fill="#1a1a24" stroke="#333"/>
+    <text x="15" y="30" fill="#c792ea" font-family="monospace" font-size="10">struct</text>
+    <text x="55" y="30" fill="#ffcb6b" font-family="monospace" font-size="10">Note</text>
+    <text x="15" y="50" fill="#89ddff" font-family="monospace" font-size="10">  var text: String</text>
+    <text x="15" y="70" fill="#89ddff" font-family="monospace" font-size="10">  var timestamp: Date</text>
+  </g>
+
+  <!-- AI sparkles -->
+  <g fill="#f97316">
+    <circle cx="320" cy="180" r="2" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="880" cy="220" r="2" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="400" r="2" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1050" cy="350" r="2" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="280" cy="650" r="2" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="950" cy="680" r="2" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.1;0.7" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Gradient definitions -->
+  <defs>
+    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

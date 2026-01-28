@@ -1,0 +1,25 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#1a1a24"/>
+
+  <!-- Browser window mockup -->
+  <rect x="150" y="80" width="500" height="340" rx="12" fill="#252532" stroke="#333" stroke-width="2"/>
+
+  <!-- Browser header -->
+  <rect x="150" y="80" width="500" height="40" rx="12" fill="#333"/>
+  <rect x="150" y="108" width="500" height="12" fill="#333"/>
+  <circle cx="175" cy="100" r="6" fill="#ff5f56"/>
+  <circle cx="195" cy="100" r="6" fill="#ffbd2e"/>
+  <circle cx="215" cy="100" r="6" fill="#27ca40"/>
+
+  <!-- Content placeholder -->
+  <rect x="180" y="150" width="200" height="20" rx="4" fill="#f97316" opacity="0.3"/>
+  <rect x="180" y="185" width="440" height="12" rx="4" fill="#333"/>
+  <rect x="180" y="210" width="380" height="12" rx="4" fill="#333"/>
+  <rect x="180" y="235" width="420" height="12" rx="4" fill="#333"/>
+
+  <rect x="180" y="280" width="200" height="100" rx="8" fill="#333"/>
+  <rect x="400" y="280" width="200" height="100" rx="8" fill="#333"/>
+
+  <!-- Label -->
+  <text x="400" y="470" text-anchor="middle" fill="#8a8a8e" font-family="system-ui" font-size="14">Project Two</text>
+</svg>
