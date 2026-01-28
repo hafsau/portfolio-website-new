@@ -450,10 +450,17 @@
   display: flex;
   gap: 3rem;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 2rem;
+  /* Ensure proper touch handling */
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  /* Ensure element is interactive */
+  position: relative;
+  z-index: 1;
 }
 
 .projects-horizontal::-webkit-scrollbar {

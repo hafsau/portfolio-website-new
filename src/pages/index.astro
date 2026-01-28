@@ -536,10 +536,19 @@ const tools = [
     });
 
     // Horizontal scroll with mouse wheel
-    const projectsContainer = document.querySelector('.projects-horizontal');
+    const projectsContainer = document.querySelector('.projects-horizontal') as HTMLElement;
     if (projectsContainer) {
-      projectsContainer.addEventListener('wheel', (e) => {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      // Use document-level listener to catch all wheel events
+      document.addEventListener('wheel', (e) => {
+        // Check if mouse is over the projects section
+        const rect = projectsContainer.getBoundingClientRect();
+        const isOverContainer =
+          e.clientX >= rect.left &&
+          e.clientX <= rect.right &&
+          e.clientY >= rect.top &&
+          e.clientY <= rect.bottom;
+
+        if (isOverContainer && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
           e.preventDefault();
           projectsContainer.scrollLeft += e.deltaY;
         }
