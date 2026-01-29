@@ -24,8 +24,10 @@ src/
 │   ├── index.astro              # Homepage with hero, work, about, contact
 │   ├── about.astro              # About page
 │   └── work/
+│       ├── ai-lab.astro         # AI Lab (multi-project showcase)
 │       ├── medrec.astro         # MedRec case study (diabetes app)
 │       ├── fitstart.astro       # FitStart case study (fitness app)
+│       ├── folio.astro          # Folio case study (freelancer portal)
 │       └── immunization.astro   # Immunization case study
 └── styles/
     └── global.css               # All global styles and CSS variables
@@ -54,7 +56,48 @@ src/
 --color-accent: #4a5ee4
 ```
 
-## Current Work - MedRec Case Study
+## Project Order (Homepage)
+1. **AI Lab** (#01) - Multi-project showcase of Claude Code experiments
+2. **MedRec** (#02) - Diabetes management app
+3. **FitStart** (#03) - Beginner fitness app
+4. **Folio** (#04) - Freelancer client portal
+5. **Immunization Tracker** (#05) - Medical officer tracking system
+
+## AI Lab Case Study (New)
+The AI Lab (`src/pages/work/ai-lab.astro`) is a **multi-project template** showcasing work built with Claude Code.
+
+### Key Differences from Other Case Studies
+- Contains multiple projects in one page (card grid + detail sections)
+- Uses `labProjects` array instead of single project data
+- Each project has: id, title, tags, image, problem, solution, insight
+- Orange accent color (#f97316)
+- Scoped CSS for project cards and detail sections
+
+### Images Location
+All AI Lab images are in `/public/images/ai-lab/`:
+- `hero-image.svg` - Neural network + Claude Code terminal visualization
+- `quickthink.svg` - Phone mockup with voice waveform
+- `project-2.svg`, `project-3.svg`, `project-4.svg` - Placeholder mockups
+
+### Data Structure
+```javascript
+const labProjects = [
+  {
+    id: 'quickthink',
+    number: '01',
+    title: 'QuickThink',
+    tags: ['iOS App', 'Voice UI', 'Claude Code'],
+    image: '/images/ai-lab/quickthink.svg',
+    problem: '...',
+    solution: '...',
+    insight: '...',
+    screenshots: []
+  },
+  // ... more projects
+];
+```
+
+## MedRec Case Study
 The MedRec case study (`src/pages/work/medrec.astro`) is the most developed:
 
 ### Content Synced from Framer Template
@@ -120,6 +163,15 @@ Tests are in `/tests/`:
 - Persona avatars use images instead of initial letters
 - Image scaling for hero-image-1 (phones) and hero-image-2 (watch) needs balancing
 
+## Case Study Accent Colors
+- **AI Lab**: Orange (#f97316)
+- **MedRec**: Blue (#4a5ee4) - default
+- **FitStart**: Purple (#8b5cf6)
+- **Folio**: Cyan (#0891b2)
+- **Immunization**: Blue (#4a5ee4) - default
+
 ## Pending Improvements
+- AI Lab: Fill in project details (problem, solution, insight) for all 4 projects
+- AI Lab: Replace placeholder SVG images with actual project screenshots
 - Hero images (phones vs watch) may need further visual balance adjustments
 - Consider cropping persona source images to headshots for simpler styling in future
