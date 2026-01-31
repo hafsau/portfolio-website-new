@@ -5,9 +5,9 @@ Personal portfolio website for Hafsa Usmani, a Product Designer. Built with Astr
 
 ## Tech Stack
 - **Framework**: Astro 5.16.11
-- **Styling**: Custom CSS with CSS variables (in `src/styles/global.css`)
+- **Styling**: Custom CSS with CSS variables (in `src/styles/global.css`), Tailwind CSS 4.1 available
 - **Fonts**: Space Grotesk (Google Fonts)
-- **Testing**: Vitest
+- **Testing**: Vitest 4.0, Testing Library, jsdom
 
 ## Project Structure
 ```
@@ -15,8 +15,13 @@ src/
 ├── components/
 │   ├── AmbientBackground.astro  # Floating orb animations
 │   ├── BeforeAfterSlider.astro  # Image comparison slider
+│   ├── Footer.astro             # Site footer with social links
+│   ├── Header.astro             # Site header with navigation
 │   ├── Lightbox.astro           # Image lightbox with keyboard nav
-│   └── MobileNav.astro          # Hamburger menu for mobile
+│   ├── MetricCard.astro         # Animated metric/stat display
+│   ├── MobileNav.astro          # Hamburger menu for mobile
+│   ├── ProjectCard.astro        # Project card with 3D tilt effect
+│   └── ThemeToggle.astro        # Dark/light theme switcher
 ├── layouts/
 │   ├── BaseLayout.astro         # Base HTML structure
 │   └── CaseStudyLayout.astro    # Layout for case study pages
@@ -24,6 +29,7 @@ src/
 │   ├── index.astro              # Homepage with hero, work, about, contact
 │   ├── about.astro              # About page
 │   └── work/
+│       ├── index.astro          # Work listing page
 │       ├── ai-lab.astro         # AI Lab (multi-project showcase)
 │       ├── medrec.astro         # MedRec case study (diabetes app)
 │       ├── fitstart.astro       # FitStart case study (fitness app)
@@ -171,7 +177,6 @@ Tests are in `/tests/`:
 - **Immunization**: Blue (#4a5ee4) - default
 
 ## Pending Improvements
-- AI Lab: Fill in project details (problem, solution, insight) for all 4 projects
-- AI Lab: Replace placeholder SVG images with actual project screenshots
-- Hero images (phones vs watch) may need further visual balance adjustments
-- Consider cropping persona source images to headshots for simpler styling in future
+- AI Lab: Add more projects with real screenshots (currently using placeholder SVGs)
+- AI Lab: Fill in detailed problem/solution/insight content for projects
+- Consider cropping persona source images to headshots for simpler styling
