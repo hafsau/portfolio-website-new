@@ -4,14 +4,21 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const {
   title,
   description = 'Product Designer with engineering precision. Designing health & wellness experiences that improve user efficiency by 30-45%.',
+  ogImage = '/images/headshot.png',
+  ogType = 'website',
 } = Astro.props;
 
 const fullTitle = title === 'Home' ? 'Hafsa Usmani | Product Designer' : `${title} | Hafsa Usmani`;
+const siteUrl = 'https://hafsausmani.com';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
 <!DOCTYPE html>
@@ -21,11 +28,22 @@ const fullTitle = title === 'Home' ? 'Hafsa Usmani | Product Designer' : `${titl
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content="Hafsa Usmani" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:site_name" content="Hafsa Usmani" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -51,6 +69,22 @@ const fullTitle = title === 'Home' ? 'Hafsa Usmani | Product Designer' : `${titl
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hafsa Usmani",
+      "jobTitle": "Product Designer",
+      "url": siteUrl,
+      "image": `${siteUrl}/images/headshot.png`,
+      "sameAs": [
+        "https://www.linkedin.com/in/hafsausmani/",
+        "https://dribbble.com/hafsausmani",
+        "https://github.com/hafsau"
+      ],
+      "email": "hafsa.usmani2@gmail.com"
+    })} />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>

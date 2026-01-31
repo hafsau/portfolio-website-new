@@ -45,9 +45,40 @@ const {
   prevProject,
   nextProject
 } = Astro.props;
+
+const siteUrl = 'https://hafsausmani.com';
+const fullHeroImage = heroImage ? (heroImage.startsWith('http') ? heroImage : `${siteUrl}${heroImage}`) : undefined;
+
+// JSON-LD Schemas
+const creativeWorkSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": title,
+  "description": description,
+  "image": fullHeroImage,
+  "author": {
+    "@type": "Person",
+    "name": "Hafsa Usmani"
+  },
+  "datePublished": timeline
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+    { "@type": "ListItem", "position": 2, "name": "Work", "item": `${siteUrl}/work` },
+    { "@type": "ListItem", "position": 3, "name": title }
+  ]
+};
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage={heroImage} ogType="article">
+  <!-- JSON-LD Structured Data for Case Study -->
+  <script type="application/ld+json" set:html={JSON.stringify(creativeWorkSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
   <!-- Ambient Background -->
   <AmbientBackground variant="subtle" />
 
