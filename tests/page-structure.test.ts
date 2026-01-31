@@ -79,7 +79,7 @@ describe('Page Structure', () => {
     });
 
     it('should have location', () => {
-      expect(indexContent).toContain('SF Bay Area');
+      expect(indexContent).toContain('San Francisco Bay Area');
     });
   });
 });
