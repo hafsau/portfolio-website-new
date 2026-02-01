@@ -119,9 +119,10 @@
   opacity: 0.6;
 }
 
-/* Hide cursor dot on mobile */
+/* Hide cursor dot and scroll indicator on mobile */
 @media (max-width: 768px) {
-  .cursor-dot {
+  .cursor-dot,
+  .scroll-indicator {
     display: none;
   }
 }
@@ -443,11 +444,11 @@
   }
 }
 
-/* Faster marquee on mobile */
+/* Adjust marquee on mobile */
 @media (max-width: 768px) {
   .marquee {
     gap: 2rem;
-    animation-duration: 10s;
+    animation-duration: 20s;
   }
 }
 
