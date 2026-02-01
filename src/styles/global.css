@@ -408,6 +408,7 @@
 .marquee {
   display: flex;
   gap: 4rem;
+  width: max-content;
   animation: marquee 30s linear infinite;
 }
 
@@ -445,7 +446,8 @@
 /* Faster marquee on mobile */
 @media (max-width: 768px) {
   .marquee {
-    animation-duration: 8s;
+    gap: 2rem;
+    animation-duration: 10s;
   }
 }
 
