@@ -73,7 +73,15 @@ const { links = [
     document.body.style.overflow = '';
   }
 
-  toggle?.addEventListener('click', openMenu);
+  function toggleMenu() {
+    if (menu?.classList.contains('active')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
+
+  toggle?.addEventListener('click', toggleMenu);
   closeBtn?.addEventListener('click', closeMenu);
 
   // Close on link click
@@ -132,12 +140,18 @@ const { links = [
     transform: translateY(-7px) rotate(-45deg);
   }
 
+  /* Hide hamburger when menu is open - only show close button */
+  .mobile-menu-toggle[aria-expanded="true"] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   /* Mobile Menu Overlay */
   .mobile-menu {
     position: fixed;
     inset: 0;
     z-index: 99;
-    background: rgba(0, 0, 0, 0.95);
+    background: var(--color-bg);
     backdrop-filter: blur(10px);
     opacity: 0;
     visibility: hidden;
