@@ -309,7 +309,7 @@ const tools = [
     <!-- Tools Marquee -->
     <div class="marquee-wrapper mt-20 reveal">
       <div class="marquee" id="marquee">
-        {[...tools, ...tools].map((tool) => (
+        {[...tools, ...tools, ...tools].map((tool) => (
           <span class="marquee-item">
             {tool.icon === 'chatgpt' ? (
               <svg class="tool-icon" viewBox="0 0 24 24" fill="#718096" xmlns="http://www.w3.org/2000/svg">

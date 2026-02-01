@@ -438,14 +438,14 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
 /* Faster marquee on mobile */
 @media (max-width: 768px) {
   .marquee {
-    animation-duration: 12s;
+    animation-duration: 8s;
   }
 }
 
