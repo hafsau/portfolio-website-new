@@ -88,6 +88,15 @@ const tools = [
 ---
 
 <BaseLayout title="Home" ogImage="/images/headshot.png">
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <svg class="preloader-logo" viewBox="0 0 90 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="sig-letter" d="M2 2v24M2 14h14M16 2v24"/>
+      <path class="sig-letter" d="M30 2 L30 20 Q30 26 44 26 L44 2"/>
+      <circle class="sig-dot" cx="62" cy="22" r="5"/>
+    </svg>
+  </div>
+
   <!-- Ambient Background -->
   <AmbientBackground variant="subtle" />
 
@@ -136,10 +145,12 @@ const tools = [
       <div class="max-w-4xl">
         <!-- Warm Intro with Photo -->
         <div class="flex items-center gap-4 mb-4 reveal delay-1">
-          <div class="hero-photo">
+          <div class="hero-photo img-reveal">
             <img src="/images/headshot.png" alt="Hafsa Usmani" />
           </div>
-          <p class="hero-intro">Hey, I'm Hafsa.</p>
+          <p class="hero-intro hero-text-split">
+            <span class="char">H</span><span class="char">e</span><span class="char">y</span><span class="char">,</span><span class="char">&nbsp;</span><span class="char">I</span><span class="char">'</span><span class="char">m</span><span class="char">&nbsp;</span><span class="char">H</span><span class="char">a</span><span class="char">f</span><span class="char">s</span><span class="char">a</span><span class="char">.</span>
+          </p>
         </div>
 
         <!-- Main Title with Rotating Text -->
@@ -165,10 +176,10 @@ const tools = [
           and wellness experiences that improve user efficiency by 30-45%.
         </p>
 
-        <!-- CTAs - Pill buttons -->
+        <!-- CTAs - Pill buttons with magnetic effect -->
         <div class="flex gap-4 mt-12 reveal delay-5">
-          <a href="#work" class="btn-pill btn-pill-primary">See My Work</a>
-          <a href="#contact" class="btn-pill btn-pill-outline">Let's Talk</a>
+          <a href="#work" class="btn-pill btn-pill-primary magnetic-btn">See My Work</a>
+          <a href="#contact" class="btn-pill btn-pill-outline magnetic-btn">Let's Talk</a>
         </div>
       </div>
     </div>
@@ -641,6 +652,85 @@ const tools = [
     });
 
     updateParallax();
+
+    // Preloader
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+        }, 1800); // Wait for logo animation to complete
+      });
+    }
+
+    // Magnetic Buttons
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      if (window.innerWidth > 768) {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = (btn as HTMLElement).getBoundingClientRect();
+          const x = (e as MouseEvent).clientX - rect.left - rect.width / 2;
+          const y = (e as MouseEvent).clientY - rect.top - rect.height / 2;
+          (btn as HTMLElement).style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+          (btn as HTMLElement).style.transform = 'translate(0, 0)';
+        });
+      }
+    });
+
+    // Image Reveal Observer
+    const imgRevealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.img-reveal, .img-clip-reveal').forEach(el => {
+      imgRevealObserver.observe(el);
+    });
+
+    // Animated Counter
+    function animateCounter(el: HTMLElement, target: number, duration: number = 2000) {
+      const start = 0;
+      const startTime = performance.now();
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+
+      function update(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+        const current = Math.floor(start + (target - start) * easeProgress);
+        el.textContent = prefix + current + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    // Counter Observer
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.count || '0', 10);
+          if (!el.classList.contains('counted')) {
+            el.classList.add('counted');
+            animateCounter(el, target);
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => {
+      counterObserver.observe(el);
+    });
   </script>
 
   <style>

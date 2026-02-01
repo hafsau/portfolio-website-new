@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AmbientBackground from '../components/AmbientBackground.astro';
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist.">
+  <AmbientBackground variant="subtle" />
+
+  <main class="error-page">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page not found</h1>
+    <p class="error-description">
+      Oops! The page you're looking for seems to have wandered off. Let's get you back on track.
+    </p>
+    <a href="/" class="error-home-link magnetic-btn">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
+      Back to Home
+    </a>
+  </main>
+
+  <script>
+    // Magnetic button effect
+    const magneticBtn = document.querySelector('.magnetic-btn') as HTMLElement;
+
+    if (magneticBtn && window.innerWidth > 768) {
+      magneticBtn.addEventListener('mousemove', (e) => {
+        const rect = magneticBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        magneticBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+
+      magneticBtn.addEventListener('mouseleave', () => {
+        magneticBtn.style.transform = 'translate(0, 0)';
+      });
+    }
+  </script>
+</BaseLayout>

@@ -22,7 +22,9 @@ describe('Page Structure', () => {
 
   describe('Hero Section', () => {
     it('should have personal greeting', () => {
-      expect(indexContent).toContain("Hey, I'm Hafsa");
+      // Text is now split into character spans for animation
+      expect(indexContent).toContain('hero-text-split');
+      expect(indexContent).toContain('<span class="char">H</span>');
     });
 
     it('should have rotating text with Designer, Builder, Maker', () => {

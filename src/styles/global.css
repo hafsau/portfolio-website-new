@@ -1697,3 +1697,246 @@ nav a.link::after {
     animation: none;
   }
 }
+
+/* ============================================
+   LENIS SMOOTH SCROLL
+   ============================================ */
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ============================================
+   MAGNETIC BUTTONS
+   ============================================ */
+
+.magnetic-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.magnetic-btn-inner {
+  transition: transform 0.3s var(--ease-out);
+}
+
+/* ============================================
+   IMAGE REVEAL EFFECTS
+   ============================================ */
+
+.img-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-reveal img {
+  transform: scale(1.2);
+  filter: blur(10px);
+  opacity: 0;
+  transition: transform 1s var(--ease-out), filter 0.8s ease, opacity 0.5s ease;
+}
+
+.img-reveal.visible img {
+  transform: scale(1);
+  filter: blur(0);
+  opacity: 1;
+}
+
+/* Clip-path reveal variant */
+.img-clip-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-clip-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.img-clip-reveal.visible::after {
+  transform: scaleX(0);
+}
+
+/* ============================================
+   ANIMATED COUNTER
+   ============================================ */
+
+.counter-animate {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   PRELOADER
+   ============================================ */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-logo {
+  width: 120px;
+  height: 40px;
+}
+
+.preloader-logo .sig-letter {
+  stroke: var(--color-fg);
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: preloaderDraw 1.5s ease forwards;
+}
+
+.preloader-logo .sig-dot {
+  fill: var(--color-accent);
+  opacity: 0;
+  animation: preloaderDot 0.4s ease forwards 1.2s;
+}
+
+@keyframes preloaderDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes preloaderDot {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   ENHANCED HERO TEXT ANIMATION
+   ============================================ */
+
+.hero-text-split .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(50px) rotateX(-90deg);
+  transform-origin: center bottom;
+  animation: charReveal 0.6s var(--ease-out) forwards;
+}
+
+@keyframes charReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+/* Staggered delays for chars */
+.hero-text-split .char:nth-child(1) { animation-delay: 0.1s; }
+.hero-text-split .char:nth-child(2) { animation-delay: 0.15s; }
+.hero-text-split .char:nth-child(3) { animation-delay: 0.2s; }
+.hero-text-split .char:nth-child(4) { animation-delay: 0.25s; }
+.hero-text-split .char:nth-child(5) { animation-delay: 0.3s; }
+.hero-text-split .char:nth-child(6) { animation-delay: 0.35s; }
+.hero-text-split .char:nth-child(7) { animation-delay: 0.4s; }
+.hero-text-split .char:nth-child(8) { animation-delay: 0.45s; }
+.hero-text-split .char:nth-child(9) { animation-delay: 0.5s; }
+.hero-text-split .char:nth-child(10) { animation-delay: 0.55s; }
+.hero-text-split .char:nth-child(11) { animation-delay: 0.6s; }
+.hero-text-split .char:nth-child(12) { animation-delay: 0.65s; }
+.hero-text-split .char:nth-child(13) { animation-delay: 0.7s; }
+.hero-text-split .char:nth-child(14) { animation-delay: 0.75s; }
+.hero-text-split .char:nth-child(15) { animation-delay: 0.8s; }
+
+/* ============================================
+   404 PAGE STYLES
+   ============================================ */
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-code {
+  font-size: clamp(8rem, 25vw, 15rem);
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.error-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.error-description {
+  color: var(--color-muted);
+  font-size: 1.125rem;
+  max-width: 400px;
+  margin-bottom: 2rem;
+}
+
+.error-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--color-accent);
+  color: white;
+  border-radius: 100px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.error-home-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(74, 94, 228, 0.3);
+}
+
+.error-home-link svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
