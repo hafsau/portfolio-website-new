@@ -119,11 +119,15 @@
   opacity: 0.6;
 }
 
-/* Hide cursor dot and scroll indicator on mobile */
+/* Hide cursor dot on mobile */
 @media (max-width: 768px) {
-  .cursor-dot,
-  .scroll-indicator {
+  .cursor-dot {
     display: none;
+  }
+
+  /* Move scroll indicator down to avoid button overlap */
+  .scroll-indicator {
+    bottom: 1.5rem;
   }
 }
 
