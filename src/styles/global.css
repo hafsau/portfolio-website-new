@@ -1028,13 +1028,6 @@ button:active,
   color: var(--color-accent);
 }
 
-/* Move theme toggle up on mobile to avoid contact icons overlap */
-@media (max-width: 768px) {
-  .theme-toggle {
-    bottom: 5rem !important;
-  }
-}
-
 /* ============================================
    DIVIDER LINE
    ============================================ */
