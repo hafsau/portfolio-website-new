@@ -574,24 +574,23 @@ const tools = [
     const projectsContainer = document.querySelector('.projects-horizontal') as HTMLElement;
     if (projectsContainer) {
       const scrollMultiplier = 1.5;
-      const lenis = (window as any).lenis;
 
-      // Stop Lenis when entering horizontal scroll area
-      projectsContainer.addEventListener('mouseenter', () => {
-        if (lenis) lenis.stop();
-      });
+      // Use document-level listener to catch all wheel events
+      document.addEventListener('wheel', (e) => {
+        const rect = projectsContainer.getBoundingClientRect();
+        const padding = 20;
+        const isOverContainer =
+          e.clientX >= rect.left - padding &&
+          e.clientX <= rect.right + padding &&
+          e.clientY >= rect.top - padding &&
+          e.clientY <= rect.bottom + padding;
 
-      projectsContainer.addEventListener('mouseleave', () => {
-        if (lenis) lenis.start();
-      });
-
-      // Handle horizontal scroll
-      projectsContainer.addEventListener('wheel', (e) => {
-        const delta = e.deltaY !== 0 ? e.deltaY : e.deltaX;
-        if (delta !== 0) {
-          e.preventDefault();
-          e.stopPropagation();
-          projectsContainer.scrollLeft += delta * scrollMultiplier;
+        if (isOverContainer) {
+          const delta = e.deltaY !== 0 ? e.deltaY : e.deltaX;
+          if (delta !== 0) {
+            e.preventDefault();
+            projectsContainer.scrollLeft += delta * scrollMultiplier;
+          }
         }
       }, { passive: false });
     }
