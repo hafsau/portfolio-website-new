@@ -27,16 +27,6 @@ const { links = [
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <div class="mobile-menu-content">
-    <button
-      class="mobile-menu-close"
-      id="mobile-menu-close"
-      aria-label="Close menu"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
-
     <nav class="mobile-nav-links">
       {links.map((link, index) => (
         <a
@@ -54,7 +44,6 @@ const { links = [
 <script>
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
-  const closeBtn = document.getElementById('mobile-menu-close');
   const links = document.querySelectorAll('.mobile-nav-link');
 
   function openMenu() {
@@ -82,7 +71,6 @@ const { links = [
   }
 
   toggle?.addEventListener('click', toggleMenu);
-  closeBtn?.addEventListener('click', closeMenu);
 
   // Close on link click
   links.forEach(link => {
@@ -140,12 +128,6 @@ const { links = [
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* Hide hamburger when menu is open - only show close button */
-  .mobile-menu-toggle[aria-expanded="true"] {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
   /* Mobile Menu Overlay */
   .mobile-menu {
     position: fixed;
@@ -170,27 +152,6 @@ const { links = [
     justify-content: center;
     height: 100%;
     padding: 2rem;
-  }
-
-  /* Close Button */
-  .mobile-menu-close {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: var(--color-fg);
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-
-  .mobile-menu-close:hover {
-    color: var(--color-accent);
   }
 
   /* Navigation Links */

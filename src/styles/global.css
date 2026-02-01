@@ -442,6 +442,13 @@
   }
 }
 
+/* Faster marquee on mobile */
+@media (max-width: 768px) {
+  .marquee {
+    animation-duration: 12s;
+  }
+}
+
 /* ============================================
    HORIZONTAL SCROLL PROJECTS
    ============================================ */
