@@ -145,7 +145,7 @@ const tools = [
       <div class="max-w-4xl">
         <!-- Warm Intro with Photo -->
         <div class="flex items-center gap-4 mb-4 reveal delay-1">
-          <div class="hero-photo img-reveal">
+          <div class="hero-photo">
             <img src="/images/headshot.png" alt="Hafsa Usmani" />
           </div>
           <p class="hero-intro hero-text-split">
@@ -209,7 +209,7 @@ const tools = [
     </div>
 
     <!-- Horizontal Scroll Container -->
-    <div class="projects-horizontal pl-[clamp(1.5rem,5vw,5rem)] reveal-group">
+    <div class="projects-horizontal pl-[clamp(1.5rem,5vw,5rem)] reveal-group" data-lenis-prevent>
       {projects.map((project, index) => (
         <a href={project.href} class="project-card-horizontal card-3d">
           <!-- 3D Shine Effect -->
