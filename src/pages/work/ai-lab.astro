@@ -2,71 +2,9 @@
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 
 const metrics = [
-  { value: '4', label: 'Projects built' },
-  { value: '10x', label: 'Faster development' },
+  { value: '4+', label: 'Projects planned' },
+  { value: '2026', label: 'Launch year' },
   { value: '100%', label: 'AI-assisted' }
-];
-
-const labProjects = [
-  {
-    id: 'quickthink',
-    number: '01',
-    title: 'QuickThink',
-    tags: ['iOS App', 'Voice UI', 'Claude Code'],
-    image: '/images/ai-lab/quickthink.svg',
-    problem: 'Placeholder - describe the problem you wanted to solve',
-    solution: 'Placeholder - how Claude Code helped solve it',
-    insight: 'Placeholder - key learning or outcome',
-    screenshots: []
-  },
-  {
-    id: 'project-two',
-    number: '02',
-    title: 'Project Two',
-    tags: ['Tag 1', 'Tag 2'],
-    image: '/images/ai-lab/project-2.svg',
-    problem: 'Placeholder - describe the problem',
-    solution: 'Placeholder - how Claude Code helped',
-    insight: 'Placeholder - key learning',
-    screenshots: []
-  },
-  {
-    id: 'project-three',
-    number: '03',
-    title: 'Project Three',
-    tags: ['Tag 1', 'Tag 2'],
-    image: '/images/ai-lab/project-3.svg',
-    problem: 'Placeholder - describe the problem',
-    solution: 'Placeholder - how Claude Code helped',
-    insight: 'Placeholder - key learning',
-    screenshots: []
-  },
-  {
-    id: 'project-four',
-    number: '04',
-    title: 'Project Four',
-    tags: ['Tag 1', 'Tag 2'],
-    image: '/images/ai-lab/project-4.svg',
-    problem: 'Placeholder - describe the problem',
-    solution: 'Placeholder - how Claude Code helped',
-    insight: 'Placeholder - key learning',
-    screenshots: []
-  }
-];
-
-const reflections = [
-  {
-    title: 'AI as a Design Partner',
-    description: 'Claude Code doesn\'t replace design thinking—it amplifies it. The best results come from clear problem framing and iterative refinement.'
-  },
-  {
-    title: 'Speed Enables Experimentation',
-    description: 'When building takes hours instead of weeks, you can explore more ideas. Failed experiments become cheap learning opportunities.'
-  },
-  {
-    title: 'New Skills, Same Principles',
-    description: 'The fundamentals of good UX still matter. AI just changes how fast you can test and validate those principles.'
-  }
 ];
 ---
 
@@ -87,316 +25,175 @@ const reflections = [
     subtitle: 'Streamlined diabetes management'
   }}
 >
-  <!-- Section: Introduction -->
-  <section class="case-section">
-    <h2>The Experiment</h2>
-    <div class="problem-statement">
-      <p class="lead-text">
-        What happens when a product designer with technical curiosity gets access to an AI coding assistant? This lab is the answer.
-      </p>
-      <p class="lead-text secondary">
-        Each project here was built with Claude Code—from initial concept to working prototype. Some solve real problems; others are pure exploration. All taught me something about the future of design and development.
-      </p>
-      <div class="challenge-box">
-        <span class="challenge-label">The Question</span>
-        <p>
-          How does AI change the design process when you can <strong>build and test ideas in hours</strong> instead of weeks?
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section: Projects Overview Grid -->
-  <section class="case-section">
-    <h2>Projects</h2>
-    <p class="section-intro">
-      Click any project to jump to its details below.
-    </p>
-    <div class="lab-projects-grid">
-      {labProjects.map(project => (
-        <a href={`#${project.id}`} class="lab-project-card">
-          <div class="lab-card-image">
-            <img src={project.image} alt={project.title} />
-          </div>
-          <div class="lab-card-content">
-            <h3>{project.title}</h3>
-            <div class="lab-card-tags">
-              {project.tags.map(tag => (
-                <span class="lab-tag">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- Individual Project Sections -->
-  {labProjects.map(project => (
-    <section id={project.id} class="case-section project-detail-section">
-      <div class="project-detail-header">
-        <span class="project-detail-number">{project.number}</span>
-        <h2>{project.title}</h2>
-      </div>
-      <div class="project-detail-tags">
-        {project.tags.map(tag => (
-          <span class="lab-tag">{tag}</span>
-        ))}
+  <!-- Work in Progress Section -->
+  <section class="case-section wip-section">
+    <div class="wip-container">
+      <!-- Lab Icon -->
+      <div class="wip-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6v2H9zM10 5v4.5l-4 6V21h12v-5.5l-4-6V5"/>
+          <path d="M8.5 14h7"/>
+          <circle cx="10" cy="17" r="1"/>
+          <circle cx="14" cy="17" r="1"/>
+        </svg>
       </div>
 
-      <div class="project-detail-grid">
-        <div class="project-detail-item">
-          <h4>Problem</h4>
-          <p>{project.problem}</p>
-        </div>
-        <div class="project-detail-item">
-          <h4>Solution</h4>
-          <p>{project.solution}</p>
-        </div>
-        <div class="project-detail-item">
-          <h4>Key Insight</h4>
-          <p>{project.insight}</p>
-        </div>
-      </div>
+      <!-- WIP Badge -->
+      <span class="wip-badge">Work in Progress</span>
 
-      {project.screenshots.length > 0 && (
-        <div class="project-screenshots">
-          {project.screenshots.map(screenshot => (
-            <img src={screenshot} alt={`${project.title} screenshot`} />
-          ))}
-        </div>
-      )}
-    </section>
-  ))}
+      <!-- Main Message -->
+      <h2 class="wip-heading">Experiments Coming Soon</h2>
 
-  <!-- Section: Reflections -->
-  <section class="case-section">
-    <h2>Reflections</h2>
-    <p class="section-intro">
-      After building these projects with AI, here's what I've learned about the intersection of design and AI-assisted development.
-    </p>
-    <div class="reflections-grid">
-      {reflections.map((reflection, index) => (
-        <div class="reflection-card">
-          <span class="reflection-number">0{index + 1}</span>
-          <div class="reflection-content">
-            <h3>{reflection.title}</h3>
-            <p>{reflection.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- Section: What's Next -->
-  <section class="case-section">
-    <h2>What's Next</h2>
-    <div class="problem-statement">
-      <p class="lead-text">
-        This lab is ongoing. New experiments get added as curiosity strikes and Claude Code evolves.
+      <p class="wip-description">
+        This space is being prepared to showcase experiments in AI-assisted design and development.
+        Each project explores what's possible when a product designer collaborates with tools like Claude Code.
       </p>
-      <p class="lead-text secondary">
-        Have an idea for what I should build next? <a href="/#contact">Let me know.</a>
+
+      <p class="wip-description secondary">
+        Check back soon to see the full collection of projects, insights, and learnings.
       </p>
+
+      <!-- Divider -->
+      <div class="wip-divider"></div>
+
+      <!-- CTA -->
+      <p class="wip-cta-text">In the meantime, explore my other work:</p>
+      <a href="/work/medrec" class="wip-cta-button">
+        View Case Studies
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
     </div>
   </section>
 </CaseStudyLayout>
 
 <style>
-  /* Orange accent color override for AI Lab */
+  /* Orange accent color for AI Lab */
   :global(:root) {
     --ai-lab-accent: #f97316;
   }
 
-  /* Override accent color for this page */
-  h2 {
-    color: var(--color-fg);
+  /* WIP Section */
+  .wip-section {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
   }
 
-  .challenge-label,
-  .project-detail-number,
-  .reflection-number,
-  .lab-tag {
-    color: #f97316;
-  }
-
-  .challenge-box {
-    border-left-color: #f97316;
-  }
-
-  /* Projects Grid */
-  .lab-projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .lab-project-card {
+  .wip-container {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem;
     background: var(--color-border);
-    border-radius: 1rem;
-    overflow: hidden;
-    text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: block;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(249, 115, 22, 0.2);
   }
 
-  .lab-project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  }
-
-  .lab-card-image {
-    aspect-ratio: 16/10;
-    overflow: hidden;
-  }
-
-  .lab-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .lab-project-card:hover .lab-card-image img {
-    transform: scale(1.05);
-  }
-
-  .lab-card-content {
-    padding: 1.25rem;
-  }
-
-  .lab-card-content h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.75rem;
-    color: var(--color-fg);
-  }
-
-  .lab-card-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .lab-tag {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    background: rgba(249, 115, 22, 0.1);
-    border-radius: 1rem;
+  .wip-icon {
     color: #f97316;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
   }
 
-  /* Project Detail Sections */
-  .project-detail-section {
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
+  .wip-icon svg {
+    width: 64px;
+    height: 64px;
   }
 
-  .project-detail-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
+  .wip-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 1rem;
+    background: rgba(249, 115, 22, 0.1);
+    color: #f97316;
+    border-radius: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .wip-heading {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    margin-bottom: 1.5rem;
+  }
+
+  .wip-description {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-muted);
     margin-bottom: 1rem;
   }
 
-  .project-detail-number {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: #f97316;
-  }
-
-  .project-detail-header h2 {
-    margin: 0;
-  }
-
-  .project-detail-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+  .wip-description.secondary {
     margin-bottom: 2rem;
   }
 
-  .project-detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .project-detail-item h4 {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-muted);
-    margin-bottom: 0.5rem;
-  }
-
-  .project-detail-item p {
-    color: var(--color-fg);
-    line-height: 1.6;
-  }
-
-  .project-screenshots {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .project-screenshots img {
-    width: 100%;
-    border-radius: 0.75rem;
-    border: 1px solid var(--color-border);
-  }
-
-  /* Reflections Grid */
-  .reflections-grid {
-    display: grid;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .reflection-card {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem;
+  .wip-divider {
+    width: 60px;
+    height: 1px;
     background: var(--color-border);
-    border-radius: 1rem;
-    border-left: 3px solid #f97316;
+    margin: 2rem auto;
   }
 
-  .reflection-number {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: #f97316;
-    flex-shrink: 0;
-  }
-
-  .reflection-content h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-fg);
-  }
-
-  .reflection-content p {
+  .wip-cta-text {
+    font-size: 0.9375rem;
     color: var(--color-muted);
-    line-height: 1.6;
-    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  .wip-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: #f97316;
+    color: white;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+  }
+
+  .wip-cta-button:hover {
+    background: #ea580c;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+  }
+
+  .wip-cta-button svg {
+    transition: transform 0.3s ease;
+  }
+
+  .wip-cta-button:hover svg {
+    transform: translateX(4px);
   }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .lab-projects-grid {
-      grid-template-columns: 1fr;
+    .wip-container {
+      padding: 2rem 1.5rem;
+      margin: 0 1rem;
     }
 
-    .project-detail-grid {
-      grid-template-columns: 1fr;
+    .wip-icon svg {
+      width: 48px;
+      height: 48px;
     }
 
-    .reflection-card {
-      flex-direction: column;
-      gap: 0.75rem;
+    .wip-heading {
+      font-size: 1.5rem;
+    }
+
+    .wip-description {
+      font-size: 1rem;
     }
   }
 </style>
