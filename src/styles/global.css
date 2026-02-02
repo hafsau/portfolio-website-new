@@ -1028,14 +1028,6 @@ button:active,
   color: var(--color-accent);
 }
 
-/* Move theme toggle to left side on mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    right: auto !important;
-    left: 1.5rem;
-  }
-}
-
 /* ============================================
    DIVIDER LINE
    ============================================ */
@@ -1662,10 +1654,11 @@ nav a.link::after {
   height: 24px;
 }
 
-/* Smaller contact icons on mobile with spacing for theme toggle */
+/* Contact icons on mobile - wrap to avoid theme toggle */
 @media (max-width: 768px) {
   .contact-icons {
-    padding-right: 4rem;
+    flex-wrap: wrap;
+    max-width: calc(100% - 5rem);
   }
   .contact-icon-btn {
     width: 44px;
