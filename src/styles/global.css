@@ -1654,8 +1654,11 @@ nav a.link::after {
   height: 24px;
 }
 
-/* Smaller contact icons on mobile */
+/* Smaller contact icons on mobile with spacing for theme toggle */
 @media (max-width: 768px) {
+  .contact-icons {
+    padding-right: 4rem;
+  }
   .contact-icon-btn {
     width: 44px;
     height: 44px;
