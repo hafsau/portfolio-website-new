@@ -1028,6 +1028,14 @@ button:active,
   color: var(--color-accent);
 }
 
+/* Move theme toggle to left side on mobile */
+@media (max-width: 768px) {
+  .theme-toggle {
+    right: auto !important;
+    left: 1.5rem;
+  }
+}
+
 /* ============================================
    DIVIDER LINE
    ============================================ */
