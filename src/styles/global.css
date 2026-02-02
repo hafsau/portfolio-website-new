@@ -1654,21 +1654,6 @@ nav a.link::after {
   height: 24px;
 }
 
-/* Contact icons on mobile - wrap to avoid theme toggle */
-@media (max-width: 768px) {
-  .contact-icons {
-    flex-wrap: wrap;
-    max-width: calc(100% - 5rem);
-  }
-  .contact-icon-btn {
-    width: 44px;
-    height: 44px;
-  }
-  .contact-icon-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-}
 
 /* Footer Social Icons */
 .footer-icons {
@@ -1698,6 +1683,21 @@ nav a.link::after {
 .footer-icon svg {
   width: 18px;
   height: 18px;
+}
+
+/* Footer icons on mobile - avoid theme toggle overlap */
+@media (max-width: 768px) {
+  .footer-icons {
+    margin-right: 4rem;
+  }
+  .footer-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .footer-icon svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* Reduce motion for accessibility */
