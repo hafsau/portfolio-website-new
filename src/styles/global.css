@@ -1654,6 +1654,18 @@ nav a.link::after {
   height: 24px;
 }
 
+/* Smaller contact icons on mobile */
+@media (max-width: 768px) {
+  .contact-icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .contact-icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 /* Footer Social Icons */
 .footer-icons {
   display: flex;
