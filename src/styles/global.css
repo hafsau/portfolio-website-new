@@ -193,8 +193,8 @@
   position: relative;
   height: 1.2em;
   overflow: hidden;
-  vertical-align: bottom;
-  transform: translateY(-0.08em);
+  vertical-align: baseline;
+  transform: translateY(0.25em);
 }
 
 .rotating-text {
