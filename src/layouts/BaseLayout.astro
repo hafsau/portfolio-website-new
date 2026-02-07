@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -97,5 +98,8 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
       console.log('%c✨ This portfolio was crafted with Astro, custom CSS, and a lot of attention to detail.', 'font-size: 12px; color: #888;');
       console.log('%c📧 Want to chat? hafsa.usmani2@gmail.com', 'font-size: 12px; color: #4a5ee4;');
     </script>
+
+    <!-- Vercel Analytics -->
+    <Analytics />
   </body>
 </html>
