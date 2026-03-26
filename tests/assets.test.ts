@@ -114,7 +114,10 @@ describe('Image Performance', () => {
   it('should have all referenced images', () => {
     const requiredImages = [
       'ai-lab/hero-image.svg',
-      'ai-lab/quickthink.svg',
+      'ai-lab/equaltales.png',
+      'ai-lab/portfolio.png',
+      'ai-lab/interview-sage.png',
+      'ai-lab/headshot-ai.png',
       'medrec/hero-medrec.png',
       'medrec/hero-image-1.png',
       'fitstart/hero-image.png',
@@ -150,7 +153,7 @@ describe('Image Performance', () => {
   });
 
   it('should have resume PDF', () => {
-    const resumePath = resolve(__dirname, '../public/Hafsa_Usmani_Resume.pdf');
+    const resumePath = resolve(__dirname, '../public/Hafsa Usmani - Resume.pdf');
     expect(existsSync(resumePath)).toBe(true);
   });
 });
