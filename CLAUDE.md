@@ -40,7 +40,7 @@ Each case study page (`src/pages/work/*.astro`) follows this structure:
 3. Pass props to layout: `title`, `subtitle`, `heroImage`, `industry`, `role`, `timeline`, `tools`, `metrics`
 4. Content goes in `<slot />` with semantic HTML (h2, h3, p, ul)
 
-**Exception**: `ai-lab.astro` uses a multi-project template with `labProjects` array instead of single project data.
+**Exception**: `ai-lab.astro` uses a multi-project template (see AI Lab section below).
 
 ### CSS Architecture
 Global styles in `src/styles/global.css` use `@theme` block for CSS variables:
@@ -75,6 +75,24 @@ Tests in `/tests/` check:
 - `portfolio-data.test.ts` - Data consistency
 
 Tests read `.astro` files directly and check for expected strings. When adding new content, update tests if they verify specific text.
+
+## AI Lab (`src/pages/work/ai-lab.astro`)
+
+Multi-project showcase with `labProjects` array. Each project has:
+- `id`, `number`, `title`, `tags`, `image`, `url`
+- `problem`, `solution`, `insight` (displayed in 3-column grid)
+- `screenshots` (optional array)
+
+**Current Projects:**
+| # | Project | Tags | Live URL |
+|---|---------|------|----------|
+| 01 | EqualTales | Claude, DALL-E, Hackathon Winner | equaltales.vercel.app |
+| 02 | HafsaUsmani.com | Cursor, Claude Code, Astro | hafsausmani.com |
+| 03 | Interview Sage | Replit Agent, AI Tool | interview-sage--hafsausmani.replit.app |
+| 04 | HeadshotAI | Lovable, Image Gen | heatshot-ai.lovable.app |
+
+**Images:** `/public/images/ai-lab/*.png`
+**Accent color:** Orange (#f97316)
 
 ## Key Implementation Details
 - `tools={[]}` hides the tools section in CaseStudyLayout
