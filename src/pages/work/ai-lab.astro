@@ -120,7 +120,7 @@ const reflections = [
       {labProjects.map(project => (
         <a href={`#${project.id}`} class="lab-project-card">
           <div class="lab-card-image">
-            <img src={project.image} alt={project.title} />
+            <img src={project.image} alt={`${project.title} - AI-assisted project preview showing ${project.tags.join(', ')}`} />
           </div>
           <div class="lab-card-content">
             <h3>{project.title}</h3>
@@ -174,7 +174,7 @@ const reflections = [
       {project.screenshots.length > 0 && (
         <div class="project-screenshots">
           {project.screenshots.map(screenshot => (
-            <img src={screenshot} alt={`${project.title} screenshot`} />
+            <img src={screenshot} alt={`${project.title} interface screenshot showing application in use`} />
           ))}
         </div>
       )}

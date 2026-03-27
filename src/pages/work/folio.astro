@@ -215,7 +215,7 @@ const learnings = [
         <div class="persona-card">
           <div class="persona-header">
             <div class="persona-avatar">
-              <img src={persona.image} alt={persona.name} />
+              <img src={persona.image} alt={`${persona.name}, ${persona.role}`} />
             </div>
             <div class="persona-info">
               <h3>{persona.name}</h3>
@@ -366,7 +366,7 @@ const learnings = [
             <p>{screen.description}</p>
           </div>
           <div class="screen-image">
-            <img src={screen.image} alt={screen.title} loading="lazy" />
+            <img src={screen.image} alt={`Folio ${screen.title} screen - ${screen.description}`} loading="lazy" />
           </div>
         </div>
       ))}

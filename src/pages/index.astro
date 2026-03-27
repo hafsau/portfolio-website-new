@@ -146,7 +146,7 @@ const tools = [
         <!-- Warm Intro with Photo -->
         <div class="flex items-center gap-4 mb-4 reveal delay-1">
           <div class="hero-photo">
-            <img src="/images/headshot.png" alt="Hafsa Usmani" />
+            <img src="/images/headshot.png" alt="Hafsa Usmani, Product Designer" />
           </div>
           <p class="hero-intro hero-text-split">
             <span class="char">H</span><span class="char">e</span><span class="char">y</span><span class="char">,</span><span class="char">&nbsp;</span><span class="char">I</span><span class="char">'</span><span class="char">m</span><span class="char">&nbsp;</span><span class="char">H</span><span class="char">a</span><span class="char">f</span><span class="char">s</span><span class="char">a</span><span class="char">.</span>
@@ -224,7 +224,7 @@ const tools = [
           <!-- Project Image -->
           <div class="aspect-[4/3] bg-border mb-6 flex items-center justify-center rounded-lg overflow-hidden">
             {project.image ? (
-              <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
+              <img src={project.image} alt={`${project.title} - ${project.description}`} class="w-full h-full object-cover" />
             ) : (
               <span class="text-muted text-sm">Project Preview</span>
             )}
