@@ -558,6 +558,17 @@ const tools = [
     const projectsContainer = document.querySelector('.projects-horizontal') as HTMLElement;
     if (projectsContainer) {
       projectsContainer.onwheel = function(e) {
+        const maxScrollLeft = this.scrollWidth - this.clientWidth;
+        const atStart = this.scrollLeft <= 0;
+        const atEnd = this.scrollLeft >= maxScrollLeft - 1;
+        const scrollingDown = e.deltaY > 0;
+        const scrollingUp = e.deltaY < 0;
+
+        // Allow vertical scroll-through when at edges
+        if ((atEnd && scrollingDown) || (atStart && scrollingUp)) {
+          return; // Let the page scroll vertically
+        }
+
         e.preventDefault();
         this.scrollLeft += e.deltaY * 1.5;
       };
