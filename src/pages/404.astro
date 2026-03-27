@@ -7,18 +7,41 @@ import AmbientBackground from '../components/AmbientBackground.astro';
   <AmbientBackground variant="subtle" />
 
   <main class="error-page">
-    <div class="error-code">404</div>
-    <h1 class="error-title">Page not found</h1>
+    <div class="error-code" aria-hidden="true">404</div>
+    <h1 class="error-title">Well, this is awkward.</h1>
     <p class="error-description">
-      Oops! The page you're looking for seems to have wandered off. Let's get you back on track.
+      This page doesn't exist—but I promise the rest of my work does.
     </p>
-    <a href="/" class="error-home-link magnetic-btn">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-      </svg>
-      Back to Home
-    </a>
+    <div class="error-actions">
+      <a href="/" class="error-home-link magnetic-btn">
+        Back to Home
+      </a>
+      <a href="/#work" class="error-work-link">
+        See My Work
+      </a>
+    </div>
   </main>
+
+  <style>
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .error-work-link {
+      color: var(--color-muted);
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .error-work-link:hover {
+      color: var(--color-accent);
+    }
+  </style>
 
   <script>
     // Magnetic button effect
