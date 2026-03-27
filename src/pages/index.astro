@@ -561,6 +561,21 @@ const tools = [
         const maxScrollLeft = this.scrollWidth - this.clientWidth;
         const atStart = this.scrollLeft <= 0;
         const atEnd = this.scrollLeft >= maxScrollLeft - 1;
+
+        // Handle native horizontal scroll (trackpad swipe)
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+          // User is swiping horizontally - let native scroll handle it
+          // But check edges for scroll-through
+          const scrollingRight = e.deltaX > 0;
+          const scrollingLeft = e.deltaX < 0;
+          if ((atEnd && scrollingRight) || (atStart && scrollingLeft)) {
+            return; // Allow page to handle it
+          }
+          // Native horizontal scroll works fine, no need to preventDefault
+          return;
+        }
+
+        // Handle vertical wheel → convert to horizontal (mouse users)
         const scrollingDown = e.deltaY > 0;
         const scrollingUp = e.deltaY < 0;
 
