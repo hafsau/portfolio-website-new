@@ -78,18 +78,49 @@ Tests read `.astro` files directly and check for expected strings. When adding n
 
 ## AI Lab (`src/pages/work/ai-lab.astro`)
 
-Multi-project showcase with `labProjects` array. Each project has:
-- `id`, `number`, `title`, `tags`, `image`, `url`
-- `problem`, `solution`, `insight` (displayed in 3-column grid)
-- `screenshots` (optional array)
+"Creative Playground" page showcasing AI-assisted projects with emphasis on process and decision-making.
+
+### Page Sections
+1. **CodeTerminal** - Animated typing terminal showing Claude prompts
+2. **Philosophy** - Three pillars: Intent First, Fast Loops, Ship & Learn
+3. **Featured Project** (EqualTales) - Deep dive with "what worked/didn't work" narrative
+4. **Other Experiments** - Compact cards for other projects
+5. **AI Toolbox** - Interactive tool cards (Claude Code, Cursor, Replit Agent, Lovable)
+6. **What I've Learned** - Reflections with before/after prompt examples
+7. **Currently Exploring** - WIP experiments with status badges
+
+### Data Structure
+```javascript
+// Featured project (detailed)
+const featuredProject = {
+  id, title, tags, image, url,
+  question,        // Framing question
+  buildTime,       // e.g., "24 hours"
+  tool: { name, why },
+  challenge,
+  triedAndFailed: [], // What didn't work
+  whatWorked: [],     // What succeeded
+  keyTradeoff,
+  outcome: { award, reach }
+};
+
+// Other experiments (compact)
+const labProjects = [{
+  id, title, tags, image, url,
+  question, buildTime, tool, keyLearning
+}];
+```
+
+### Components
+- `CodeTerminal.astro` - Animated terminal with typing effect
 
 **Current Projects:**
-| # | Project | Tags | Live URL |
-|---|---------|------|----------|
-| 01 | EqualTales | Claude, DALL-E, Hackathon Winner | equaltales.vercel.app |
-| 02 | HafsaUsmani.com | Cursor, Claude Code, Astro | hafsausmani.com |
-| 03 | Interview Sage | Replit Agent, AI Tool | interview-sage--hafsausmani.replit.app |
-| 04 | HeadshotAI | Lovable, Image Gen | heatshot-ai.lovable.app |
+| Project | Build Time | Tool | Live URL |
+|---------|------------|------|----------|
+| EqualTales (Featured) | 24 hours | Claude + DALL-E | equaltales.vercel.app |
+| HafsaUsmani.com | 1 week | Claude Code + Cursor | hafsausmani.com |
+| Interview Sage | 4 hours | Replit Agent | interview-sage--hafsausmani.replit.app |
+| HeadshotAI | 1 weekend | Lovable | heatshot-ai.lovable.app |
 
 **Images:** `/public/images/ai-lab/*.png`
 **Accent color:** Orange (#f97316)

@@ -1,88 +1,176 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CodeTerminal from '../../components/CodeTerminal.astro';
 
 const metrics = [
-  { value: '4', label: 'Projects built' },
-  { value: '1', label: 'Hackathon won' },
-  { value: '100%', label: 'AI-assisted' }
+  { value: '4', label: 'Projects Shipped' },
+  { value: '1', label: 'Hackathon Won' },
+  { value: '48hrs', label: 'Avg Build Time' }
 ];
 
+// Featured project with detailed "messy middle" narrative
+const featuredProject = {
+  id: 'equaltales',
+  title: 'EqualTales',
+  tags: ['Claude', 'DALL-E', 'Next.js', 'Hackathon Winner'],
+  image: '/images/ai-lab/equaltales.png',
+  url: 'https://equaltales.vercel.app/',
+  question: "Can AI create meaningful children's content that challenges stereotypes?",
+  buildTime: '24 hours',
+  tool: { name: 'Claude + DALL-E', why: 'Needed both text generation and image creation' },
+  challenge: "24-hour hackathon with a mission: create something that helps close the gender gap in STEM.",
+  triedAndFailed: [
+    "Generating unique characters per story—faces were inconsistent across pages",
+    "Using photorealistic image style—uncanny valley, scared kids in testing",
+    "Generic fictional role models—felt hollow without authenticity"
+  ],
+  whatWorked: [
+    "Real historical women (Marie Curie, Mae Jemison) = instant authenticity",
+    "Watercolor illustration style = cohesive, warm, kid-friendly",
+    "Child's name woven into narrative = emotional connection"
+  ],
+  keyTradeoff: "Chose authenticity over flexibility—real historical figures limit story variety but create deeper emotional impact.",
+  outcome: {
+    award: "🏆 Best AI/ML — #75HER Hackathon",
+    reach: "Demo'd to 200+ attendees"
+  }
+};
+
+// Other experiments (compact format)
 const labProjects = [
   {
-    id: 'equaltales',
-    number: '01',
-    title: 'EqualTales',
-    tags: ['Claude', 'DALL-E', 'Hackathon Winner'],
-    image: '/images/ai-lab/equaltales.png',
-    url: 'https://equaltales.vercel.app/',
-    problem: 'Research shows that by age six, girls already rate themselves as less talented than boys. Children absorb gender stereotypes early through the stories they consume, limiting how they envision their futures.',
-    solution: 'Built an AI storybook generator where parents input a stereotype to challenge (e.g., "Girls can\'t be scientists") along with their child\'s name. The app generates a personalized 5-page watercolor-illustrated story featuring a real woman from history who defied that stereotype.',
-    insight: 'Won "Best AI/ML" at the #75HER Hackathon. The combination of personalization and authenticity—real historical women, not fictional characters—created emotional resonance that connected with judges and test users.',
-    screenshots: []
-  },
-  {
     id: 'portfolio',
-    number: '02',
     title: 'HafsaUsmani.com',
     tags: ['Cursor', 'Claude Code', 'Astro'],
     image: '/images/ai-lab/portfolio.png',
     url: 'https://hafsausmani.com/',
-    problem: 'Building a portfolio that showcases both design sensibility and technical capability—while standing out from template-based sites—traditionally requires weeks of development time.',
-    solution: 'Used AI-assisted prompt-driven development with Cursor and Claude Code to build a custom Astro site from scratch. Custom CSS animations, 3D card effects, ambient backgrounds, scroll reveals, and dark/light themes—all implemented through iterative conversation with AI.',
-    insight: 'The meta-experience of building this portfolio with AI tools became a portfolio piece itself. It proved that AI doesn\'t replace design thinking—it accelerates the translation of ideas into working code.',
-    screenshots: []
+    question: "Can a designer build a custom portfolio without writing code from scratch?",
+    buildTime: '1 week',
+    tool: 'Claude Code + Cursor',
+    keyLearning: "AI doesn't replace design thinking—it accelerates translating ideas into working code. The conversation with AI became part of the creative process."
   },
   {
     id: 'interview-sage',
-    number: '03',
     title: 'Interview Sage',
-    tags: ['Replit Agent', 'AI Tool'],
+    tags: ['Replit Agent', 'AI Coach'],
     image: '/images/ai-lab/interview-sage.png',
     url: 'https://interview-sage--hafsausmani.replit.app/',
-    problem: 'Job seekers spend hours searching for relevant interview questions online and have no way to get objective feedback on their practice answers before the real thing.',
-    solution: 'Created an AI interview coach where users select their target role, receive tailored behavioral and technical questions, record or type their answers, and get instant AI-generated feedback on clarity, structure, and content.',
-    insight: 'Built entirely with Replit Agent in a single session. The speed of going from idea to working prototype validated how AI tools dramatically lower the barrier to shipping useful products.',
-    screenshots: []
+    question: "Can AI provide meaningful interview practice and feedback?",
+    buildTime: '4 hours',
+    tool: 'Replit Agent',
+    keyLearning: "Built entirely in one session. Speed dramatically lowers the barrier to shipping useful products—ideas don't stay ideas."
   },
   {
     id: 'headshot-ai',
-    number: '04',
     title: 'HeadshotAI',
     tags: ['Lovable', 'Image Gen'],
     image: '/images/ai-lab/headshot-ai.png',
     url: 'https://heatshot-ai.lovable.app/',
-    problem: 'Professional headshots are expensive ($200-500) and time-consuming to schedule, yet they\'re essential for LinkedIn profiles, conference bios, and company websites.',
-    solution: 'Built an AI headshot generator where users upload a casual photo, describe their desired style (corporate, creative, approachable), and receive a polished professional headshot in seconds.',
-    insight: 'Demonstrated how no-code AI platforms like Lovable can turn a weekend idea into a shareable tool. The constraint of using a visual builder forced clearer thinking about user flow and feature prioritization.',
-    screenshots: []
+    question: "Can no-code AI tools create professional-grade image applications?",
+    buildTime: '1 weekend',
+    tool: 'Lovable',
+    keyLearning: "Visual builders force clearer thinking about user flow. Constraints aren't limitations—they're design decisions made for you."
   }
 ];
 
-const reflections = [
+// Philosophy pillars
+const philosophy = [
   {
-    title: 'Different Tools, Same Thinking',
-    description: 'Claude Code, Replit Agent, Lovable—each AI tool has its strengths. The common thread was clear problem definition. The better I articulated what I wanted, the better the output.'
+    title: 'Intent First',
+    icon: '🎯',
+    description: 'Define the problem clearly before prompting. The better I articulate what I want, the better the output.'
   },
   {
-    title: 'Speed Enables Risk-Taking',
-    description: 'EqualTales went from hackathon idea to working demo in 24 hours. When building is fast, you can chase ambitious ideas without fear of wasted effort.'
+    title: 'Fast Loops',
+    icon: '🔄',
+    description: 'Prototype in hours, not weeks. Speed enables risk-taking—ambitious ideas become low-stakes experiments.'
+  },
+  {
+    title: 'Ship & Learn',
+    icon: '🚀',
+    description: 'Real users teach more than assumptions. Deploy early, gather feedback, iterate with purpose.'
+  }
+];
+
+// AI Tools used
+const aiTools = [
+  {
+    name: 'Claude Code',
+    icon: '🤖',
+    bestFor: 'Complex codebases, debugging, architecture decisions',
+    usedIn: ['HafsaUsmani.com'],
+    learning: 'Pair programming with AI that understands context across files'
+  },
+  {
+    name: 'Cursor',
+    icon: '✨',
+    bestFor: 'In-editor assistance, quick edits, code completion',
+    usedIn: ['HafsaUsmani.com'],
+    learning: 'Best for iterative refinement when you know what you want'
+  },
+  {
+    name: 'Replit Agent',
+    icon: '⚡',
+    bestFor: 'Rapid prototyping, full-stack MVPs',
+    usedIn: ['Interview Sage'],
+    learning: 'Lowest friction from idea to deployed app'
+  },
+  {
+    name: 'Lovable',
+    icon: '💜',
+    bestFor: 'Visual-first apps, no-code builds',
+    usedIn: ['HeadshotAI'],
+    learning: 'Perfect for validating ideas without writing code'
+  }
+];
+
+// Currently exploring
+const exploring = [
+  {
+    title: 'AI Agents for Design',
+    status: 'wip',
+    description: 'Building autonomous assistants for design system maintenance'
+  },
+  {
+    title: 'Design-to-Code Workflows',
+    status: 'wip',
+    description: 'Figma to production code with AI translation'
+  },
+  {
+    title: 'AI for Accessibility',
+    status: 'idea',
+    description: 'Automated accessibility checking and fix suggestions'
+  }
+];
+
+// Enhanced reflections with before/after examples
+const reflections = [
+  {
+    title: 'Prompting is a Design Skill',
+    description: 'The quality of AI output directly reflects the clarity of input.',
+    before: '"Make me a login page"',
+    after: '"Create a login page for elderly users with high contrast, 18px min font, single-column layout, and clear error states"'
+  },
+  {
+    title: 'Speed Changes What\'s Possible',
+    description: 'When building takes hours instead of weeks, you can chase ideas that seemed too risky before.'
   },
   {
     title: 'AI Amplifies, Not Replaces',
-    description: 'Every project still required design decisions: What problem matters? What flow feels right? What copy connects? AI handled the implementation; I owned the intent.'
+    description: 'Every project still required design decisions: What problem matters? What flow feels right? AI handled implementation; I owned the intent.'
   }
 ];
 ---
 
 <CaseStudyLayout
   title="AI Lab"
-  subtitle="A collection of experiments exploring what's possible when a product designer teams up with AI. Each project started as a question: 'What if I could build this?'"
+  subtitle="Where a product designer learns to ship code. Each project started as a question—and ended with a working prototype."
   description="Experiments in AI-assisted design and development using Claude Code, Replit, and other AI tools"
   heroImage="/images/ai-lab/hero-image.svg"
   industry="AI / Design Tools"
   role="Designer & Developer"
-  timeline="2026 - Ongoing"
-  platforms="Web, iOS"
+  timeline="2024 - Ongoing"
+  platforms="Web"
   tools={[]}
   metrics={metrics}
   nextProject={{
@@ -91,102 +179,168 @@ const reflections = [
     subtitle: 'Streamlined diabetes management'
   }}
 >
-  <!-- Section: Introduction -->
-  <section class="case-section">
-    <h2>The Experiment</h2>
-    <div class="problem-statement">
-      <p class="lead-text">
-        What happens when a product designer with technical curiosity gets access to AI coding assistants? This lab is the answer.
-      </p>
-      <p class="lead-text secondary">
-        Each project here was built with AI tools—from initial concept to working prototype. Some solve real problems; others are pure exploration. All taught me something about the future of design and development.
-      </p>
-      <div class="challenge-box">
-        <span class="challenge-label">The Question</span>
-        <p>
-          How does AI change the design process when you can <strong>build and test ideas in hours</strong> instead of weeks?
-        </p>
-      </div>
-    </div>
+  <!-- Section: Code Terminal Intro -->
+  <section class="case-section terminal-intro">
+    <CodeTerminal prompts={[
+      "claude: Help me build a children's storybook generator",
+      "claude: Create a watercolor illustration style",
+      "claude: Add personalization with the child's name",
+      "claude: Feature real women from history who defied stereotypes"
+    ]} />
+    <p class="terminal-caption">This is how it starts. A question, a prompt, and curiosity.</p>
   </section>
 
-  <!-- Section: Projects Overview Grid -->
+  <!-- Section: Philosophy -->
   <section class="case-section">
-    <h2>Projects</h2>
-    <p class="section-intro">
-      Click any project to jump to its details below, or visit the live demos.
+    <h2>My Approach</h2>
+    <p class="philosophy-intro">
+      I don't use AI to skip the design process—I use it to iterate faster on more ambitious ideas.
     </p>
-    <div class="lab-projects-grid">
-      {labProjects.map(project => (
-        <a href={`#${project.id}`} class="lab-project-card">
-          <div class="lab-card-image">
-            <img src={project.image} alt={`${project.title} - AI-assisted project preview showing ${project.tags.join(', ')}`} />
-          </div>
-          <div class="lab-card-content">
-            <h3>{project.title}</h3>
-            <div class="lab-card-tags">
-              {project.tags.map(tag => (
-                <span class="lab-tag">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </a>
+    <div class="philosophy-grid">
+      {philosophy.map(pillar => (
+        <div class="philosophy-card">
+          <span class="philosophy-icon">{pillar.icon}</span>
+          <h3>{pillar.title}</h3>
+          <p>{pillar.description}</p>
+        </div>
       ))}
     </div>
   </section>
 
-  <!-- Individual Project Sections -->
-  {labProjects.map(project => (
-    <section id={project.id} class="case-section project-detail-section">
-      <div class="project-detail-header">
-        <span class="project-detail-number">{project.number}</span>
-        <h2>{project.title}</h2>
+  <!-- Section: Featured Project (EqualTales Deep Dive) -->
+  <section id={featuredProject.id} class="case-section featured-project-section">
+    <div class="featured-header">
+      <span class="featured-badge">Featured Project</span>
+      <h2>{featuredProject.title}</h2>
+      <p class="featured-question">{featuredProject.question}</p>
+    </div>
+
+    <div class="featured-meta">
+      <div class="featured-meta-item">
+        <span class="meta-label">Build Time</span>
+        <span class="meta-value">{featuredProject.buildTime}</span>
       </div>
-      <div class="project-detail-tags">
-        {project.tags.map(tag => (
-          <span class="lab-tag">{tag}</span>
-        ))}
-        <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link">
-          View Live
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-            <polyline points="15 3 21 3 21 9"/>
-            <line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </a>
+      <div class="featured-meta-item">
+        <span class="meta-label">Tools</span>
+        <span class="meta-value">{featuredProject.tool.name}</span>
+      </div>
+      <div class="featured-meta-item">
+        <span class="meta-label">Outcome</span>
+        <span class="meta-value">{featuredProject.outcome.award}</span>
+      </div>
+      <a href={featuredProject.url} target="_blank" rel="noopener noreferrer" class="project-link featured-link">
+        View Live
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="featured-image">
+      <img src={featuredProject.image} alt={`${featuredProject.title} - AI-generated children's storybook application showing watercolor illustrations`} />
+    </div>
+
+    <div class="featured-narrative">
+      <div class="narrative-block challenge-block">
+        <h4>The Challenge</h4>
+        <p>{featuredProject.challenge}</p>
       </div>
 
-      <div class="project-detail-grid">
-        <div class="project-detail-item">
-          <h4>Problem</h4>
-          <p>{project.problem}</p>
+      <div class="narrative-block decision-card">
+        <div class="decision-column failed">
+          <h4>What I Tried That Didn't Work</h4>
+          <ul>
+            {featuredProject.triedAndFailed.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
         </div>
-        <div class="project-detail-item">
-          <h4>Solution</h4>
-          <p>{project.solution}</p>
-        </div>
-        <div class="project-detail-item">
-          <h4>Key Insight</h4>
-          <p>{project.insight}</p>
+        <div class="decision-column worked">
+          <h4>What Actually Worked</h4>
+          <ul>
+            {featuredProject.whatWorked.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      {project.screenshots.length > 0 && (
-        <div class="project-screenshots">
-          {project.screenshots.map(screenshot => (
-            <img src={screenshot} alt={`${project.title} interface screenshot showing application in use`} />
-          ))}
-        </div>
-      )}
-    </section>
-  ))}
+      <div class="narrative-block tradeoff-block">
+        <h4>Key Trade-off</h4>
+        <blockquote>{featuredProject.keyTradeoff}</blockquote>
+      </div>
+    </div>
+  </section>
 
-  <!-- Section: Reflections -->
+  <!-- Section: Other Experiments -->
   <section class="case-section">
-    <h2>Reflections</h2>
+    <h2>Other Experiments</h2>
     <p class="section-intro">
-      After building these projects with AI, here's what I've learned about the intersection of design and AI-assisted development.
+      Quick builds that validated ideas and taught lessons.
     </p>
+    <div class="experiments-grid">
+      {labProjects.map(project => (
+        <div id={project.id} class="experiment-card">
+          <div class="experiment-image">
+            <img src={project.image} alt={`${project.title} - AI-assisted project preview`} />
+          </div>
+          <div class="experiment-content">
+            <div class="experiment-header">
+              <h3>{project.title}</h3>
+              <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link">
+                View Live
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+              </a>
+            </div>
+            <p class="experiment-question">{project.question}</p>
+            <div class="experiment-meta">
+              <span class="experiment-time">{project.buildTime}</span>
+              <span class="experiment-tool">{project.tool}</span>
+            </div>
+            <p class="experiment-learning">{project.keyLearning}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: AI Toolbox -->
+  <section class="case-section">
+    <h2>AI Toolbox</h2>
+    <p class="section-intro">
+      Different tools for different jobs. Here's what I've learned about each.
+    </p>
+    <div class="toolbox-grid">
+      {aiTools.map(tool => (
+        <div class="tool-card">
+          <div class="tool-header">
+            <span class="tool-icon">{tool.icon}</span>
+            <h3>{tool.name}</h3>
+          </div>
+          <div class="tool-best-for">
+            <span class="tool-label">Best for:</span>
+            <span>{tool.bestFor}</span>
+          </div>
+          <p class="tool-learning">{tool.learning}</p>
+          <div class="tool-used-in">
+            {tool.usedIn.map(project => (
+              <span class="tool-project-tag">{project}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: What I've Learned -->
+  <section class="case-section">
+    <h2>What I've Learned</h2>
     <div class="reflections-grid">
       {reflections.map((reflection, index) => (
         <div class="reflection-card">
@@ -194,22 +348,45 @@ const reflections = [
           <div class="reflection-content">
             <h3>{reflection.title}</h3>
             <p>{reflection.description}</p>
+            {reflection.before && reflection.after && (
+              <div class="before-after">
+                <div class="before">
+                  <span class="ba-label">Before</span>
+                  <code>{reflection.before}</code>
+                </div>
+                <div class="after">
+                  <span class="ba-label">After</span>
+                  <code>{reflection.after}</code>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Section: What's Next -->
+  <!-- Section: Currently Exploring -->
   <section class="case-section">
-    <h2>What's Next</h2>
-    <div class="problem-statement">
-      <p class="lead-text">
-        This lab is ongoing. New experiments get added as curiosity strikes and AI tools evolve.
-      </p>
-      <p class="lead-text secondary">
-        Have an idea for what I should build next? <a href="/#contact">Let me know.</a>
-      </p>
+    <h2>Currently Exploring</h2>
+    <p class="section-intro">
+      Work in progress. Ideas taking shape.
+    </p>
+    <div class="exploring-grid">
+      {exploring.map(item => (
+        <div class="exploring-card">
+          <div class="exploring-header">
+            <span class={`status-badge status-${item.status}`}>
+              {item.status === 'wip' ? 'In Progress' : 'Idea'}
+            </span>
+            <h3>{item.title}</h3>
+          </div>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+    <div class="exploring-cta">
+      <p>Have a project idea? <a href="/#contact">Let's chat.</a></p>
     </div>
   </section>
 </CaseStudyLayout>
@@ -220,51 +397,264 @@ const reflections = [
     --ai-lab-accent: #f97316;
   }
 
-  /* Override accent color for this page */
   h2 {
     color: var(--color-fg);
   }
 
-  .challenge-label,
-  .project-detail-number,
   .reflection-number,
   .lab-tag {
     color: #f97316;
   }
 
-  .challenge-box {
-    border-left-color: #f97316;
+  /* Terminal Intro Section */
+  .terminal-intro {
+    text-align: center;
+    padding-bottom: 2rem;
   }
 
-  /* Projects Grid */
-  .lab-projects-grid {
+  .terminal-caption {
+    margin-top: 1.5rem;
+    color: var(--color-muted);
+    font-style: italic;
+    font-size: 1rem;
+  }
+
+  /* Philosophy Section */
+  .philosophy-intro {
+    font-size: 1.25rem;
+    color: var(--color-fg);
+    margin-bottom: 2rem;
+    font-style: italic;
+    border-left: 3px solid #f97316;
+    padding-left: 1.5rem;
+  }
+
+  .philosophy-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .philosophy-card {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .philosophy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
+  }
+
+  .philosophy-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .philosophy-card h3 {
+    font-size: 1.125rem;
+    color: #f97316;
+    margin-bottom: 0.75rem;
+  }
+
+  .philosophy-card p {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  /* Featured Project Section */
+  .featured-project-section {
+    padding-top: 3rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .featured-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.1);
+    padding: 0.375rem 0.75rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .featured-header h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .featured-question {
+    font-size: 1.125rem;
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  .featured-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+
+  .featured-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+  }
+
+  .meta-value {
+    color: var(--color-fg);
+    font-weight: 500;
+  }
+
+  .featured-link {
+    margin-left: auto;
+  }
+
+  .featured-image {
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #1a1a24;
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .featured-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .narrative-block {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .narrative-block h4 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .challenge-block p {
+    color: var(--color-fg);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 1.0625rem;
+  }
+
+  .decision-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 0;
+    background: transparent;
+  }
+
+  .decision-column {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .decision-column.failed {
+    border-left: 3px solid #ef4444;
+  }
+
+  .decision-column.failed h4 {
+    color: #ef4444;
+  }
+
+  .decision-column.worked {
+    border-left: 3px solid #22c55e;
+  }
+
+  .decision-column.worked h4 {
+    color: #22c55e;
+  }
+
+  .decision-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .decision-column li {
+    color: var(--color-fg);
+    line-height: 1.6;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .decision-column li:last-child {
+    border-bottom: none;
+  }
+
+  .tradeoff-block blockquote {
+    margin: 0;
+    font-size: 1.0625rem;
+    font-style: italic;
+    color: var(--color-fg);
+    line-height: 1.6;
+    border-left: 3px solid #f97316;
+    padding-left: 1rem;
+  }
+
+  /* Other Experiments */
+  .experiments-grid {
+    display: grid;
     gap: 1.5rem;
     margin-top: 2rem;
   }
 
-  .lab-project-card {
+  .experiment-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
     background: var(--color-border);
     border-radius: 1rem;
     overflow: hidden;
-    text-decoration: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: block;
   }
 
-  .lab-project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  .experiment-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   }
 
-  .lab-card-image {
+  .experiment-image {
     aspect-ratio: 16/10;
     overflow: hidden;
     background: #1a1a24;
   }
 
-  .lab-card-image img {
+  .experiment-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -272,65 +662,59 @@ const reflections = [
     transition: transform 0.3s ease;
   }
 
-  .lab-project-card:hover .lab-card-image img {
+  .experiment-card:hover .experiment-image img {
     transform: scale(1.05);
   }
 
-  .lab-card-content {
-    padding: 1.25rem;
+  .experiment-content {
+    padding: 1.5rem 1.5rem 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  .lab-card-content h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.75rem;
+  .experiment-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .experiment-header h3 {
+    font-size: 1.25rem;
     color: var(--color-fg);
+    margin: 0;
   }
 
-  .lab-card-tags {
+  .experiment-question {
+    font-style: italic;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .experiment-meta {
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .lab-tag {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    background: rgba(249, 115, 22, 0.1);
-    border-radius: 1rem;
-    color: #f97316;
-  }
-
-  /* Project Detail Sections */
-  .project-detail-section {
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .project-detail-header {
-    display: flex;
-    align-items: baseline;
     gap: 1rem;
     margin-bottom: 1rem;
   }
 
-  .project-detail-number {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
+  .experiment-time,
+  .experiment-tool {
+    font-size: 0.8125rem;
     color: #f97316;
+    background: rgba(249, 115, 22, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
   }
 
-  .project-detail-header h2 {
+  .experiment-learning {
+    color: var(--color-fg);
+    line-height: 1.6;
     margin: 0;
+    font-size: 0.9375rem;
   }
 
-  .project-detail-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-    align-items: center;
-  }
-
+  /* Project Link */
   .project-link {
     display: inline-flex;
     align-items: center;
@@ -343,7 +727,7 @@ const reflections = [
     color: #f97316;
     text-decoration: none;
     transition: all 0.2s ease;
-    margin-left: 0.5rem;
+    white-space: nowrap;
   }
 
   .project-link:hover {
@@ -351,37 +735,74 @@ const reflections = [
     color: white;
   }
 
-  .project-detail-grid {
+  /* AI Toolbox */
+  .toolbox-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .project-detail-item h4 {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-muted);
-    margin-bottom: 0.5rem;
-  }
-
-  .project-detail-item p {
-    color: var(--color-fg);
-    line-height: 1.6;
-  }
-
-  .project-screenshots {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
     margin-top: 2rem;
   }
 
-  .project-screenshots img {
-    width: 100%;
-    border-radius: 0.75rem;
-    border: 1px solid var(--color-border);
+  .tool-card {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
+  }
+
+  .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .tool-icon {
+    font-size: 1.5rem;
+  }
+
+  .tool-header h3 {
+    font-size: 1.125rem;
+    color: var(--color-fg);
+    margin: 0;
+  }
+
+  .tool-best-for {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .tool-label {
+    color: #f97316;
+    font-weight: 500;
+    margin-right: 0.25rem;
+  }
+
+  .tool-learning {
+    color: var(--color-fg);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .tool-used-in {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tool-project-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    color: var(--color-muted);
   }
 
   /* Reflections Grid */
@@ -389,7 +810,6 @@ const reflections = [
     display: grid;
     gap: 1.5rem;
     margin-top: 2rem;
-    margin-bottom: 3rem;
   }
 
   .reflection-card {
@@ -417,22 +837,199 @@ const reflections = [
   .reflection-content p {
     color: var(--color-muted);
     line-height: 1.6;
+    margin: 0 0 1rem 0;
+  }
+
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .before, .after {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ba-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .before .ba-label {
+    color: #ef4444;
+  }
+
+  .after .ba-label {
+    color: #22c55e;
+  }
+
+  .before-after code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    color: var(--color-fg);
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  /* Currently Exploring */
+  .exploring-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .exploring-card {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px dashed rgba(249, 115, 22, 0.3);
+    transition: border-color 0.3s ease;
+  }
+
+  .exploring-card:hover {
+    border-color: #f97316;
+  }
+
+  .exploring-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .status-badge {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+  }
+
+  .status-wip {
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+  }
+
+  .status-idea {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+  }
+
+  .exploring-header h3 {
+    font-size: 1rem;
+    color: var(--color-fg);
     margin: 0;
+  }
+
+  .exploring-card p {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  .exploring-cta {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .exploring-cta p {
+    color: var(--color-muted);
+    font-size: 1.0625rem;
+  }
+
+  .exploring-cta a {
+    color: #f97316;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .exploring-cta a:hover {
+    color: #fb923c;
+    text-decoration: underline;
+  }
+
+  /* Section intro */
+  .section-intro {
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .philosophy-card,
+    .tool-card,
+    .experiment-card,
+    .exploring-card {
+      transition: none;
+    }
+
+    .philosophy-card:hover,
+    .tool-card:hover,
+    .experiment-card:hover {
+      transform: none;
+    }
+
+    .experiment-card:hover .experiment-image img {
+      transform: none;
+    }
   }
 
   /* Responsive */
   @media (max-width: 768px) {
-    .lab-projects-grid {
+    .philosophy-grid {
       grid-template-columns: 1fr;
     }
 
-    .project-detail-grid {
+    .decision-card {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .featured-meta {
+      gap: 1rem;
+    }
+
+    .featured-link {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .experiment-card {
+      grid-template-columns: 1fr;
+    }
+
+    .experiment-content {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+
+    .toolbox-grid {
       grid-template-columns: 1fr;
     }
 
     .reflection-card {
       flex-direction: column;
       gap: 0.75rem;
+    }
+
+    .before-after {
+      grid-template-columns: 1fr;
+    }
+
+    .exploring-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

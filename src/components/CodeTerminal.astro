@@ -1,0 +1,206 @@
+---
+// CodeTerminal.astro - Animated terminal showing AI prompts
+interface Props {
+  prompts?: string[];
+}
+
+const { prompts = [
+  "claude: Help me build a children's storybook generator",
+  "claude: Create a watercolor illustration style",
+  "claude: Add personalization with the child's name",
+  "claude: Feature real women from history"
+] } = Astro.props;
+---
+
+<div class="code-terminal" data-prompts={JSON.stringify(prompts)}>
+  <div class="terminal-header">
+    <div class="terminal-dots">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    <span class="terminal-title">claude-code</span>
+  </div>
+  <div class="terminal-body">
+    <div class="terminal-line">
+      <span class="prompt">$</span>
+      <span class="typed-text"></span>
+      <span class="cursor">|</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .code-terminal {
+    background: #0d1117;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    font-family: var(--font-mono, 'SF Mono', Monaco, monospace);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .dot.red { background: #ff5f56; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #27c93f; }
+
+  .terminal-title {
+    font-size: 0.75rem;
+    color: #8b949e;
+    flex: 1;
+    text-align: center;
+    margin-right: 3rem;
+  }
+
+  .terminal-body {
+    padding: 1.25rem;
+    min-height: 60px;
+  }
+
+  .terminal-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .prompt {
+    color: #f97316;
+    font-weight: 600;
+  }
+
+  .typed-text {
+    color: #e6edf3;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .cursor {
+    color: #f97316;
+    animation: blink 1s step-end infinite;
+    font-weight: 300;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .cursor {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .code-terminal {
+      max-width: 100%;
+    }
+
+    .typed-text {
+      font-size: 0.8125rem;
+    }
+  }
+</style>
+
+<script>
+  class CodeTerminal {
+    private element: HTMLElement;
+    private prompts: string[];
+    private typedText: HTMLElement;
+    private currentPromptIndex: number = 0;
+    private currentCharIndex: number = 0;
+    private isDeleting: boolean = false;
+    private typeSpeed: number = 50;
+    private deleteSpeed: number = 30;
+    private pauseBeforeDelete: number = 2000;
+    private pauseBeforeType: number = 500;
+
+    constructor(element: HTMLElement) {
+      this.element = element;
+      this.prompts = JSON.parse(element.dataset.prompts || '[]');
+      this.typedText = element.querySelector('.typed-text')!;
+
+      if (this.prompts.length > 0) {
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReducedMotion) {
+          // Just show the first prompt statically
+          this.typedText.textContent = this.prompts[0];
+        } else {
+          this.type();
+        }
+      }
+    }
+
+    private type(): void {
+      const currentPrompt = this.prompts[this.currentPromptIndex];
+
+      if (this.isDeleting) {
+        // Deleting
+        this.currentCharIndex--;
+        this.typedText.textContent = currentPrompt.substring(0, this.currentCharIndex);
+
+        if (this.currentCharIndex === 0) {
+          this.isDeleting = false;
+          this.currentPromptIndex = (this.currentPromptIndex + 1) % this.prompts.length;
+          setTimeout(() => this.type(), this.pauseBeforeType);
+        } else {
+          setTimeout(() => this.type(), this.deleteSpeed);
+        }
+      } else {
+        // Typing
+        this.currentCharIndex++;
+        this.typedText.textContent = currentPrompt.substring(0, this.currentCharIndex);
+
+        if (this.currentCharIndex === currentPrompt.length) {
+          this.isDeleting = true;
+          setTimeout(() => this.type(), this.pauseBeforeDelete);
+        } else {
+          setTimeout(() => this.type(), this.typeSpeed);
+        }
+      }
+    }
+  }
+
+  // Initialize all terminals
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll<HTMLElement>('.code-terminal').forEach(terminal => {
+      new CodeTerminal(terminal);
+    });
+  });
+
+  // Also handle Astro view transitions
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.code-terminal').forEach(terminal => {
+      if (!terminal.dataset.initialized) {
+        new CodeTerminal(terminal);
+        terminal.dataset.initialized = 'true';
+      }
+    });
+  });
+</script>
