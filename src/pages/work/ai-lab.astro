@@ -129,6 +129,18 @@ const aiTools = [
     bestFor: 'Visual-first apps, no-code builds',
     usedIn: ['HeadshotAI'],
     learning: 'Perfect for validating ideas without writing code'
+  },
+  {
+    name: 'DALL-E',
+    bestFor: 'Image generation, visual prototypes, illustrations',
+    usedIn: ['EqualTales'],
+    learning: 'Style consistency requires careful prompting and iteration'
+  },
+  {
+    name: 'v0 by Vercel',
+    bestFor: 'UI component generation, React prototypes',
+    usedIn: ['Experiments'],
+    learning: 'Great for quickly visualizing component ideas before building'
   }
 ];
 
@@ -176,8 +188,8 @@ const reflections = [
   description="Experiments in AI-assisted design and development using Claude Code, Replit, and other AI tools"
   heroImage="/images/ai-lab/hero-image.svg"
   industry="AI / Design Tools"
-  role="Designer & Developer"
-  timeline="2024 - Ongoing"
+  role="Designer, Developer & Builder"
+  timeline="2025 - Ongoing"
   platforms="Web"
   tools={[]}
   metrics={metrics}
@@ -190,10 +202,10 @@ const reflections = [
   <!-- Section: Code Terminal Intro -->
   <section class="case-section terminal-intro">
     <CodeTerminal prompts={[
-      "Build a storybook generator",
-      "Use watercolor illustration style",
-      "Add child name personalization",
-      "Feature real historical women"
+      "claude: Build a storybook generator",
+      "claude: Use watercolor illustration style",
+      "claude: Add child name personalization",
+      "claude: Feature real historical women"
     ]} />
     <p class="terminal-caption">This is how it starts. A question, a prompt, and curiosity.</p>
   </section>
@@ -289,7 +301,7 @@ const reflections = [
   ))}
 
   <!-- Section: Other Experiments -->
-  <section class="case-section">
+  <section class="case-section experiments-section">
     <h2>Other Experiments</h2>
     <p class="section-intro">
       Quick builds that validated ideas and taught lessons.
@@ -324,7 +336,7 @@ const reflections = [
   </section>
 
   <!-- Section: AI Toolbox -->
-  <section class="case-section">
+  <section class="case-section toolbox-section">
     <h2>AI Toolbox</h2>
     <p class="section-intro">
       Different tools for different jobs. Here's what I've learned about each.
@@ -814,6 +826,20 @@ const reflections = [
     background: rgba(255, 255, 255, 0.05);
     border-radius: 0.5rem;
     color: var(--color-muted);
+  }
+
+  /* Other Experiments Section - extra spacing after featured projects */
+  .experiments-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* AI Toolbox Section - extra spacing */
+  .toolbox-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--color-border);
   }
 
   /* Reflections Section */

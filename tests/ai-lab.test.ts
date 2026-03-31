@@ -35,6 +35,15 @@ describe('AI Lab Page Quality Checks', () => {
       }
     });
 
+    it('should have 6 tools in aiTools including DALL-E and v0', () => {
+      expect(aiLabContent).toContain("name: 'Claude Code'");
+      expect(aiLabContent).toContain("name: 'Cursor'");
+      expect(aiLabContent).toContain("name: 'Replit Agent'");
+      expect(aiLabContent).toContain("name: 'Lovable'");
+      expect(aiLabContent).toContain("name: 'DALL-E'");
+      expect(aiLabContent).toContain("name: 'v0 by Vercel'");
+    });
+
     it('should not contain emoji in award text', () => {
       expect(aiLabContent).toContain('award: "Best AI/ML');
       expect(aiLabContent).not.toContain('🏆');
@@ -130,15 +139,27 @@ describe('AI Lab Page Quality Checks', () => {
       expect(codeTerminalContent).not.toContain('max-width: 500px');
     });
 
-    it('should use short prompts in ai-lab.astro', () => {
-      // Check that prompts are reasonably short
-      expect(aiLabContent).toContain('"Build a storybook generator"');
-      expect(aiLabContent).toContain('"Use watercolor illustration style"');
-      expect(aiLabContent).not.toContain('claude: Help me build');
+    it('should use short prompts with claude: prefix in ai-lab.astro', () => {
+      // Check that prompts have claude: prefix and are reasonably short
+      expect(aiLabContent).toContain('"claude: Build a storybook generator"');
+      expect(aiLabContent).toContain('"claude: Use watercolor illustration style"');
+      expect(aiLabContent).not.toContain('claude: Help me build a');
     });
   });
 
   describe('CSS Layout Fixes', () => {
+    it('should have experiments-section with extra spacing', () => {
+      expect(aiLabContent).toContain('class="case-section experiments-section"');
+      expect(aiLabContent).toContain('.experiments-section');
+      expect(aiLabContent).toMatch(/\.experiments-section[\s\S]*?margin-top:\s*4rem/);
+    });
+
+    it('should have toolbox-section with extra spacing', () => {
+      expect(aiLabContent).toContain('class="case-section toolbox-section"');
+      expect(aiLabContent).toContain('.toolbox-section');
+      expect(aiLabContent).toMatch(/\.toolbox-section[\s\S]*?margin-top:\s*4rem/);
+    });
+
     it('should have reflections-section with extra spacing', () => {
       expect(aiLabContent).toContain('.reflections-section');
       expect(aiLabContent).toContain('margin-top: 5rem');
