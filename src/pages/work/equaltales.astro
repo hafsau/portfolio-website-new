@@ -1,5 +1,13 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CodeTerminal from '../../components/CodeTerminal.astro';
+
+const equalTalesPrompts = [
+  "claude: Build a children's storybook generator",
+  "claude: Feature real women from history",
+  "claude: Create a watercolor illustration style",
+  "claude: Add personalization with the child's name"
+];
 
 const metrics = [
   { value: '1st', label: 'Place - Best AI/ML at #75HER Hackathon' },
@@ -118,6 +126,12 @@ const aboutMePoints = [
         <line x1="10" y1="14" x2="21" y2="3"/>
       </svg>
     </a>
+  </section>
+
+  <!-- Terminal Animation -->
+  <section class="case-section terminal-section">
+    <CodeTerminal prompts={equalTalesPrompts} />
+    <p class="terminal-caption">This is how it starts. A question, a prompt, and curiosity.</p>
   </section>
 
   <!-- Section: Problem Statement -->
@@ -342,6 +356,20 @@ const aboutMePoints = [
     --equaltales-coral: #C4766D;
     --equaltales-gold: #D4A853;
     --equaltales-cream: #FDF6ED;
+  }
+
+  /* Terminal Section */
+  .terminal-section {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .terminal-caption {
+    margin-top: 1.5rem;
+    font-size: 1.125rem;
+    color: var(--color-muted);
+    font-style: italic;
   }
 
   /* Problem Statement */

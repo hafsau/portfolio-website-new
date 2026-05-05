@@ -120,8 +120,8 @@ describe('AI Lab Page Quality Checks', () => {
 
     it('should use short prompts with claude: prefix in ai-lab.astro', () => {
       // Check that prompts have claude: prefix and are reasonably short
-      expect(aiLabContent).toContain('"claude: Build a storybook generator"');
-      expect(aiLabContent).toContain('"claude: Use watercolor illustration style"');
+      expect(aiLabContent).toContain('"claude: Build my portfolio with Astro"');
+      expect(aiLabContent).toContain('"claude: Audit CI/CD pipelines for carbon waste"');
       expect(aiLabContent).not.toContain('claude: Help me build a');
     });
   });
