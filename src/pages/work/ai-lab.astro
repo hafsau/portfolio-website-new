@@ -3,7 +3,7 @@ import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 import CodeTerminal from '../../components/CodeTerminal.astro';
 
 const metrics = [
-  { value: '3', label: 'Experiments Shipped' },
+  { value: '4', label: 'Experiments Shipped' },
   { value: '2', label: 'Hackathons Won' }
 ];
 
@@ -19,6 +19,16 @@ const labProjects = [
     tool: 'GitLab Duo',
     keyLearning: "Agent platforms unlock powerful automation. 25+ GitLab tools working together delivered impact a single prompt never could.",
     award: 'Sustainable Design Bonus'
+  },
+  {
+    id: 'climatehaven',
+    title: 'ClimateHaven',
+    tags: ['Zerve', 'Data Science', 'Climate'],
+    image: '/images/ai-lab/climatehaven.png',
+    url: 'https://devpost.com/software/climatehaven',
+    question: "Can data predict which neighborhoods will gentrify due to climate change?",
+    tool: 'Zerve',
+    keyLearning: "Combining FEMA flood data, housing prices, and demographics revealed patterns invisible to any single dataset."
   },
   {
     id: 'interview-sage',
@@ -68,6 +78,12 @@ const aiTools = [
     bestFor: 'CI/CD automation, multi-agent workflows, DevOps tasks',
     usedIn: ['CarbonLint'],
     learning: 'Agent platforms shine when orchestrating multiple specialized tools'
+  },
+  {
+    name: 'Zerve',
+    bestFor: 'Data science workflows, rapid iteration, Python notebooks',
+    usedIn: ['ClimateHaven'],
+    learning: 'Cloud notebooks with AI assistance accelerate data exploration'
   },
   {
     name: 'Claude Code',
@@ -172,8 +188,8 @@ const reflections = [
     <CodeTerminal prompts={[
       "claude: Build my portfolio with Astro",
       "claude: Audit CI/CD pipelines for carbon waste",
-      "claude: Create an AI interview coach app",
-      "claude: Generate professional headshots"
+      "claude: Predict climate gentrification hotspots",
+      "claude: Create an AI interview coach app"
     ]} />
     <p class="terminal-caption">This is how it starts. A question, a prompt, and curiosity.</p>
   </section>

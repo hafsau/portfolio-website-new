@@ -67,7 +67,7 @@ describe('AI Lab Page Quality Checks', () => {
     });
 
     it('should only have 2 metrics: Experiments Shipped and Hackathons Won', () => {
-      expect(aiLabContent).toContain("{ value: '3', label: 'Experiments Shipped' }");
+      expect(aiLabContent).toContain("{ value: '4', label: 'Experiments Shipped' }");
       expect(aiLabContent).toContain("{ value: '2', label: 'Hackathons Won' }");
     });
 
@@ -121,7 +121,7 @@ describe('AI Lab Page Quality Checks', () => {
     it('should use short prompts with claude: prefix in ai-lab.astro', () => {
       // Check that prompts have claude: prefix and are reasonably short
       expect(aiLabContent).toContain('"claude: Build my portfolio with Astro"');
-      expect(aiLabContent).toContain('"claude: Audit CI/CD pipelines for carbon waste"');
+      expect(aiLabContent).toContain('"claude: Predict climate gentrification hotspots"');
       expect(aiLabContent).not.toContain('claude: Help me build a');
     });
   });
