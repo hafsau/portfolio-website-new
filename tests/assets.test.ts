@@ -117,7 +117,7 @@ describe('Image Performance', () => {
       'ai-lab/interview-sage.png',
       'ai-lab/headshot-ai.png',
       'equaltales/hero.png',
-      'portfolio-website/hero.png',
+      'portfolio-website/after-typography.png',
       'medrec/hero-medrec.png',
       'medrec/hero-image-1.png',
       'fitstart/hero-image.png',
