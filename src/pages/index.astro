@@ -422,36 +422,7 @@ const skills = [
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4 class="footer-heading">Navigation</h4>
-            <a href="#work" class="footer-link">Work</a>
-            <a href="#about" class="footer-link">About</a>
-            <a href="#contact" class="footer-link">Contact</a>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Projects</h4>
-            <a href="/work/equaltales" class="footer-link">EqualTales</a>
-            <a href="/work/portfolio-website" class="footer-link">This Portfolio</a>
-            <a href="/work/ai-lab" class="footer-link">AI Lab</a>
-          </div>
-          <div class="footer-column">
-            <h4 class="footer-heading">Connect</h4>
-            <a href="https://www.linkedin.com/in/hafsausmani/" target="_blank" rel="noopener noreferrer" class="footer-link footer-social">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="footer-social-icon">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-              </svg>
-              LinkedIn
-            </a>
-            <a href="mailto:hafsa.usmani2@gmail.com" class="footer-link">Email</a>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p class="copyright">© 2026 Hafsa Usmani</p>
-          <p class="footer-location">San Francisco Bay Area</p>
-        </div>
-      </div>
+      <p class="copyright">© 2026 Hafsa Usmani</p>
     </footer>
 
   </div>
@@ -1484,85 +1455,8 @@ const skills = [
     /* Footer */
     .footer {
       background: var(--warm-bg);
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 4rem 1.5rem 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .footer {
-        padding: 5rem 3rem 2.5rem;
-      }
-    }
-
-    .footer-content {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .footer-links {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    @media (min-width: 640px) {
-      .footer-links {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 3rem;
-      }
-    }
-
-    .footer-column {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .footer-heading {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--warm-muted);
-      margin: 0 0 0.5rem;
-      font-weight: 600;
-    }
-
-    .footer-link {
-      font-size: 0.9rem;
-      color: var(--warm-fg);
-      text-decoration: none;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .footer-link:hover {
-      color: var(--accent);
-    }
-
-    .footer-social-icon {
-      width: 16px;
-      height: 16px;
-    }
-
-    .footer-bottom {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.25rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 2rem 1.5rem;
       text-align: center;
-    }
-
-    @media (min-width: 640px) {
-      .footer-bottom {
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
-      }
     }
 
     .copyright {
@@ -1570,19 +1464,6 @@ const skills = [
       color: var(--warm-muted);
       letter-spacing: 0.02em;
       margin: 0;
-    }
-
-    .footer-location {
-      font-size: 0.75rem;
-      color: var(--warm-muted);
-      margin: 0;
-    }
-
-    @media (min-width: 640px) {
-      .footer-location::before {
-        content: '·';
-        margin-right: 1rem;
-      }
     }
 
   </style>
