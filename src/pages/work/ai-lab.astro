@@ -3,12 +3,23 @@ import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 import CodeTerminal from '../../components/CodeTerminal.astro';
 
 const metrics = [
-  { value: '2', label: 'Experiments Shipped' },
-  { value: '1', label: 'Hackathon Won' }
+  { value: '3', label: 'Experiments Shipped' },
+  { value: '2', label: 'Hackathons Won' }
 ];
 
-// Lab experiments (compact format) - Interview Sage and HeadshotAI
+// Lab experiments (compact format)
 const labProjects = [
+  {
+    id: 'carbonlint',
+    title: 'CarbonLint',
+    tags: ['GitLab Duo', 'Sustainability', 'Hackathon Winner'],
+    image: '/images/ai-lab/carbonlint.png',
+    url: 'https://devpost.com/software/carbonlint',
+    question: "Can AI help reduce the carbon footprint of CI/CD pipelines?",
+    tool: 'GitLab Duo',
+    keyLearning: "Agent platforms unlock powerful automation. 25+ GitLab tools working together delivered impact a single prompt never could.",
+    award: 'Sustainable Design Bonus'
+  },
   {
     id: 'interview-sage',
     title: 'Interview Sage',
@@ -52,6 +63,12 @@ const philosophy = [
 
 // AI Tools used - no emojis
 const aiTools = [
+  {
+    name: 'GitLab Duo',
+    bestFor: 'CI/CD automation, multi-agent workflows, DevOps tasks',
+    usedIn: ['CarbonLint'],
+    learning: 'Agent platforms shine when orchestrating multiple specialized tools'
+  },
   {
     name: 'Claude Code',
     bestFor: 'Complex codebases, debugging, architecture decisions',
@@ -205,6 +222,7 @@ const reflections = [
             <p class="experiment-question">{project.question}</p>
             <div class="experiment-meta">
               <span class="experiment-tool">{project.tool}</span>
+              {project.award && <span class="experiment-award">{project.award}</span>}
             </div>
             <p class="experiment-learning">{project.keyLearning}</p>
           </div>
@@ -610,6 +628,14 @@ const reflections = [
     font-size: 0.8125rem;
     color: #f97316;
     background: rgba(249, 115, 22, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+  }
+
+  .experiment-award {
+    font-size: 0.8125rem;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
   }

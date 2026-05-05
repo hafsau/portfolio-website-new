@@ -66,9 +66,9 @@ describe('AI Lab Page Quality Checks', () => {
       }
     });
 
-    it('should only have 2 metrics: Experiments Shipped and Hackathon Won', () => {
-      expect(aiLabContent).toContain("{ value: '2', label: 'Experiments Shipped' }");
-      expect(aiLabContent).toContain("{ value: '1', label: 'Hackathon Won' }");
+    it('should only have 2 metrics: Experiments Shipped and Hackathons Won', () => {
+      expect(aiLabContent).toContain("{ value: '3', label: 'Experiments Shipped' }");
+      expect(aiLabContent).toContain("{ value: '2', label: 'Hackathons Won' }");
     });
 
     it('should not have buildTime in labProjects', () => {
