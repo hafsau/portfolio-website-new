@@ -1,0 +1,94 @@
+---
+/**
+ * Magnet Component
+ * Makes elements follow the cursor with magnetic effect
+ */
+
+interface Props {
+  padding?: number;
+  strength?: number;
+  class?: string;
+}
+
+const {
+  padding = 80,
+  strength = 0.4,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={['magnet-area', className]}
+  data-magnet-area
+  data-padding={padding}
+  data-strength={strength}
+>
+  <slot />
+</div>
+
+<style>
+  .magnet-area {
+    display: inline-block;
+  }
+</style>
+
+<script is:inline>
+(function() {
+  // Run immediately and also after DOM ready
+  function setupMagnets() {
+    const areas = document.querySelectorAll('[data-magnet-area]');
+
+    // Check reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    areas.forEach(function(area) {
+      if (area.dataset.magnetInitialized) return;
+      area.dataset.magnetInitialized = 'true';
+
+      const padding = parseFloat(area.dataset.padding) || 80;
+      const strength = parseFloat(area.dataset.strength) || 0.4;
+
+      function handleMove(e) {
+        const rect = area.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const inBounds =
+          e.clientX >= rect.left - padding &&
+          e.clientX <= rect.right + padding &&
+          e.clientY >= rect.top - padding &&
+          e.clientY <= rect.bottom + padding;
+
+        if (inBounds) {
+          const moveX = (e.clientX - centerX) * strength;
+          const moveY = (e.clientY - centerY) * strength;
+          area.style.transform = 'translate(' + moveX + 'px, ' + moveY + 'px)';
+          area.style.transition = 'transform 0.15s ease-out';
+        } else {
+          area.style.transform = 'translate(0, 0)';
+          area.style.transition = 'transform 0.4s cubic-bezier(0.33, 1, 0.68, 1)';
+        }
+      }
+
+      function handleLeave() {
+        area.style.transform = 'translate(0, 0)';
+        area.style.transition = 'transform 0.4s cubic-bezier(0.33, 1, 0.68, 1)';
+      }
+
+      document.addEventListener('mousemove', handleMove);
+      document.addEventListener('mouseleave', handleLeave);
+    });
+  }
+
+  // Run now
+  setupMagnets();
+
+  // Run after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMagnets);
+  }
+
+  // Run after Astro page transitions
+  document.addEventListener('astro:page-load', setupMagnets);
+})();
+</script>

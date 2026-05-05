@@ -1,0 +1,162 @@
+---
+/**
+ * RotatingCircle Component - Interactive Hero Decoration
+ *
+ * A large rotating SVG circle with decorative elements that responds to hover.
+ * Inspired by mynrd.co.uk's interactive hero elements.
+ *
+ * Props:
+ * - size: Diameter of the circle (default: 200)
+ * - duration: Rotation duration in seconds (default: 25)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  size?: number;
+  duration?: number;
+  class?: string;
+}
+
+const {
+  size = 200,
+  duration = 25,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={['rotating-circle', className]}
+  style={`--size: ${size}px; --duration: ${duration}s;`}
+  data-rotating-circle
+>
+  <svg viewBox="0 0 200 200" class="rotating-circle__svg">
+    <!-- Outer dashed circle -->
+    <circle
+      cx="100"
+      cy="100"
+      r="95"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="0.5"
+      stroke-dasharray="4 4"
+      class="rotating-circle__outer"
+    />
+
+    <!-- Inner solid circle -->
+    <circle
+      cx="100"
+      cy="100"
+      r="80"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+      class="rotating-circle__inner"
+    />
+
+    <!-- Decorative dots around the circle -->
+    <g class="rotating-circle__dots">
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+        <circle
+          cx={100 + 87 * Math.cos((angle * Math.PI) / 180)}
+          cy={100 + 87 * Math.sin((angle * Math.PI) / 180)}
+          r="3"
+          fill="currentColor"
+        />
+      ))}
+    </g>
+
+    <!-- Center icon/shape -->
+    <g class="rotating-circle__center">
+      <circle cx="100" cy="100" r="20" fill="currentColor" opacity="0.1" />
+      <path
+        d="M100 85 L100 115 M85 100 L115 100"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .rotating-circle {
+    width: var(--size);
+    height: var(--size);
+    position: relative;
+    color: currentColor;
+    opacity: 0.15;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .rotating-circle:hover {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+
+  .rotating-circle__svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate-circle var(--duration) linear infinite;
+  }
+
+  .rotating-circle__outer {
+    animation: rotate-circle-reverse calc(var(--duration) * 1.5) linear infinite;
+    transform-origin: center;
+  }
+
+  .rotating-circle__inner {
+    transition: stroke-width 0.3s ease;
+  }
+
+  .rotating-circle:hover .rotating-circle__inner {
+    stroke-width: 2;
+  }
+
+  .rotating-circle__dots {
+    animation: rotate-circle-reverse calc(var(--duration) * 0.8) linear infinite;
+    transform-origin: center;
+  }
+
+  .rotating-circle__center {
+    transition: transform 0.3s ease;
+    transform-origin: center;
+  }
+
+  .rotating-circle:hover .rotating-circle__center {
+    transform: rotate(45deg);
+  }
+
+  @keyframes rotate-circle {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate-circle-reverse {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  /* Pause on hover for interactivity */
+  .rotating-circle:hover .rotating-circle__svg,
+  .rotating-circle:hover .rotating-circle__outer,
+  .rotating-circle:hover .rotating-circle__dots {
+    animation-play-state: paused;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .rotating-circle__svg,
+    .rotating-circle__outer,
+    .rotating-circle__dots {
+      animation: none;
+    }
+  }
+</style>

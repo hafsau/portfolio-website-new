@@ -1,0 +1,140 @@
+---
+/**
+ * SplitTextReveal - Character-level stagger animation
+ * Inspired by cristianaaraujo.com letter-by-letter reveals
+ *
+ * Props:
+ * - text: The text to animate
+ * - tag: HTML tag to use (default: 'span')
+ * - stagger: Delay between characters in ms (default: 25)
+ * - duration: Animation duration in seconds (default: 0.6)
+ * - delay: Initial delay before animation starts in ms (default: 0)
+ * - triggerOnScroll: Whether to trigger on scroll (default: false)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'div';
+  stagger?: number;
+  duration?: number;
+  delay?: number;
+  triggerOnScroll?: boolean;
+  class?: string;
+}
+
+const {
+  text,
+  tag = 'span',
+  stagger = 25,
+  duration = 0.6,
+  delay = 0,
+  triggerOnScroll = false,
+  class: className = '',
+} = Astro.props;
+
+const Tag = tag;
+
+// Split text into characters, preserving spaces
+const chars = text.split('');
+---
+
+<Tag
+  class:list={['split-text-reveal', className]}
+  data-split-reveal
+  data-stagger={stagger}
+  data-duration={duration}
+  data-delay={delay}
+  data-trigger-scroll={triggerOnScroll}
+>
+  {chars.map((char, i) => (
+    <span
+      class="split-char"
+      data-char-index={i}
+      style={`--char-index: ${i};`}
+    >
+      {char === ' ' ? '\u00A0' : char}
+    </span>
+  ))}
+</Tag>
+
+<style>
+  .split-text-reveal {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .split-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(4px);
+    will-change: transform, opacity, filter;
+  }
+
+  /* Reduced motion: show immediately */
+  @media (prefers-reduced-motion: reduce) {
+    .split-char {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initSplitTextReveal() {
+    const elements = document.querySelectorAll('[data-split-reveal]');
+
+    elements.forEach((el) => {
+      const chars = el.querySelectorAll('.split-char');
+      const stagger = parseInt(el.getAttribute('data-stagger') || '25') / 1000;
+      const duration = parseFloat(el.getAttribute('data-duration') || '0.6');
+      const delay = parseInt(el.getAttribute('data-delay') || '0') / 1000;
+      const triggerOnScroll = el.getAttribute('data-trigger-scroll') === 'true';
+
+      // Check for reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        gsap.set(chars, { opacity: 1, y: 0, filter: 'blur(0px)' });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        delay: delay,
+        ...(triggerOnScroll && {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          }
+        })
+      });
+
+      tl.to(chars, {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: duration,
+        stagger: stagger,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSplitTextReveal);
+  } else {
+    initSplitTextReveal();
+  }
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:after-swap', initSplitTextReveal);
+</script>

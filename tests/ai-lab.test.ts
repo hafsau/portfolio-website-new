@@ -44,8 +44,8 @@ describe('AI Lab Page Quality Checks', () => {
       expect(aiLabContent).toContain("name: 'v0 by Vercel'");
     });
 
-    it('should not contain emoji in award text', () => {
-      expect(aiLabContent).toContain('award: "Best AI/ML');
+    it('should not contain emoji in text', () => {
+      // Featured projects moved to their own pages, no award text in AI Lab anymore
       expect(aiLabContent).not.toContain('🏆');
     });
 
@@ -66,17 +66,9 @@ describe('AI Lab Page Quality Checks', () => {
       }
     });
 
-    it('should only have 2 metrics: Projects Shipped and Hackathon Won', () => {
-      expect(aiLabContent).toContain("{ value: '4', label: 'Projects Shipped' }");
+    it('should only have 2 metrics: Experiments Shipped and Hackathon Won', () => {
+      expect(aiLabContent).toContain("{ value: '2', label: 'Experiments Shipped' }");
       expect(aiLabContent).toContain("{ value: '1', label: 'Hackathon Won' }");
-    });
-
-    it('should not have buildTime in featuredProjects', () => {
-      const featuredSection = aiLabContent.match(/const featuredProjects = \[[\s\S]*?\];/);
-      expect(featuredSection).toBeTruthy();
-      if (featuredSection) {
-        expect(featuredSection[0]).not.toContain('buildTime:');
-      }
     });
 
     it('should not have buildTime in labProjects', () => {
@@ -92,31 +84,18 @@ describe('AI Lab Page Quality Checks', () => {
     });
   });
 
-  describe('Two Featured Projects', () => {
-    it('should have featuredProjects as an array', () => {
-      expect(aiLabContent).toContain('const featuredProjects = [');
+  describe('Featured Projects Moved to Own Pages', () => {
+    it('should NOT have featuredProjects array (moved to separate pages)', () => {
+      expect(aiLabContent).not.toContain('const featuredProjects = [');
     });
 
-    it('should include EqualTales as featured', () => {
-      expect(aiLabContent).toContain("id: 'equaltales'");
-      expect(aiLabContent).toContain("title: 'EqualTales'");
+    it('should NOT have EqualTales in AI Lab (has own page)', () => {
+      expect(aiLabContent).not.toContain("id: 'equaltales'");
     });
 
-    it('should include HafsaUsmani.com as featured', () => {
-      const featuredSection = aiLabContent.match(/const featuredProjects = \[[\s\S]*?\];/);
-      expect(featuredSection).toBeTruthy();
-      if (featuredSection) {
-        expect(featuredSection[0]).toContain("id: 'portfolio'");
-        expect(featuredSection[0]).toContain("title: 'HafsaUsmani.com'");
-      }
-    });
-
-    it('should have triedAndFailed and whatWorked for both featured projects', () => {
-      // Count occurrences - should have 2 of each
-      const triedAndFailedCount = (aiLabContent.match(/triedAndFailed:/g) || []).length;
-      const whatWorkedCount = (aiLabContent.match(/whatWorked:/g) || []).length;
-      expect(triedAndFailedCount).toBe(2);
-      expect(whatWorkedCount).toBe(2);
+    it('should NOT have HafsaUsmani.com as a project in AI Lab (has own page)', () => {
+      expect(aiLabContent).not.toContain("id: 'portfolio'");
+      // Note: HafsaUsmani.com still appears in prevProject nav and tool usedIn arrays, which is expected
     });
   });
 
@@ -189,12 +168,10 @@ describe('AI Lab Page Quality Checks', () => {
       expect(aiLabContent).toContain('philosophy-number');
     });
 
-    it('should have Featured Projects section', () => {
-      expect(aiLabContent).toContain('Featured Project');
-    });
-
-    it('should have Other Experiments section', () => {
-      expect(aiLabContent).toContain('<h2>Other Experiments</h2>');
+    it('should have Experiments section (not Featured Projects in content)', () => {
+      expect(aiLabContent).toContain('<h2>Experiments</h2>');
+      // CSS comments may still contain "Featured" but HTML content should not
+      expect(aiLabContent).not.toContain('<span class="featured-badge">');
     });
 
     it('should have AI Toolbox section', () => {

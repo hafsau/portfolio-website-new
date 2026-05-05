@@ -1,0 +1,105 @@
+---
+/**
+ * ScrollProgress Component
+ *
+ * A thin progress bar at the top of the page that shows scroll progress.
+ * Inspired by common reading progress indicators on blogs.
+ *
+ * Props:
+ * - color: CSS color for the progress bar (default: accent gradient)
+ * - height: Height in pixels (default: 3)
+ * - position: 'top' | 'bottom' (default: 'top')
+ */
+
+interface Props {
+  color?: string;
+  height?: number;
+  position?: 'top' | 'bottom';
+}
+
+const {
+  color,
+  height = 3,
+  position = 'top',
+} = Astro.props;
+---
+
+<div
+  class="scroll-progress"
+  data-scroll-progress
+  style={`--progress-height: ${height}px; --progress-position: ${position === 'top' ? '0' : 'auto'}; --progress-bottom: ${position === 'bottom' ? '0' : 'auto'};`}
+>
+  <div
+    class="scroll-progress__bar"
+    style={color ? `background: ${color};` : ''}
+  ></div>
+</div>
+
+<style>
+  .scroll-progress {
+    position: fixed;
+    top: var(--progress-position);
+    bottom: var(--progress-bottom);
+    left: 0;
+    right: 0;
+    height: var(--progress-height, 3px);
+    z-index: 9999;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .scroll-progress__bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4a5ee4 0%, #764ba2 100%);
+    transition: width 0.1s ease-out;
+    will-change: width;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress__bar {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initScrollProgress() {
+    const progressBars = document.querySelectorAll<HTMLElement>('[data-scroll-progress]');
+
+    progressBars.forEach((container) => {
+      const bar = container.querySelector<HTMLElement>('.scroll-progress__bar');
+      if (!bar) return;
+
+      const updateProgress = () => {
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        bar.style.width = `${Math.min(progress, 100)}%`;
+      };
+
+      // Update on scroll with passive listener for performance
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+      // Initial update
+      updateProgress();
+
+      // Cleanup
+      const cleanup = () => {
+        window.removeEventListener('scroll', updateProgress);
+      };
+
+      document.addEventListener('astro:before-swap', cleanup, { once: true });
+    });
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollProgress);
+  } else {
+    initScrollProgress();
+  }
+
+  document.addEventListener('astro:after-swap', initScrollProgress);
+</script>

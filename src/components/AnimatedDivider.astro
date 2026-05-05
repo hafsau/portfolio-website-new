@@ -1,0 +1,114 @@
+---
+/**
+ * AnimatedDivider - Expanding line that grows on scroll
+ * Inspired by cristianaaraujo.com divider reveals
+ *
+ * Props:
+ * - direction: 'center' | 'left' | 'right' (default: 'center')
+ * - color: CSS color value (default: 'currentColor')
+ * - thickness: Line thickness in px (default: 1)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  direction?: 'center' | 'left' | 'right';
+  color?: string;
+  thickness?: number;
+  class?: string;
+}
+
+const {
+  direction = 'center',
+  color = 'currentColor',
+  thickness = 1,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={['animated-divider', `animated-divider--${direction}`, className]}
+  data-animated-divider
+  style={`--divider-color: ${color}; --divider-thickness: ${thickness}px;`}
+>
+  <div class="animated-divider__line"></div>
+</div>
+
+<style>
+  .animated-divider {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .animated-divider--center {
+    justify-content: center;
+  }
+
+  .animated-divider--left {
+    justify-content: flex-start;
+  }
+
+  .animated-divider--right {
+    justify-content: flex-end;
+  }
+
+  .animated-divider__line {
+    height: var(--divider-thickness, 1px);
+    background: var(--divider-color, currentColor);
+    width: 0;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: width;
+  }
+
+  .animated-divider.visible .animated-divider__line {
+    width: 100%;
+  }
+
+  /* Reduced motion: show immediately */
+  @media (prefers-reduced-motion: reduce) {
+    .animated-divider__line {
+      width: 100%;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initAnimatedDividers() {
+    const dividers = document.querySelectorAll('[data-animated-divider]');
+
+    // Check for reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      dividers.forEach((divider) => divider.classList.add('visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    dividers.forEach((divider) => observer.observe(divider));
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimatedDividers);
+  } else {
+    initAnimatedDividers();
+  }
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:after-swap', initAnimatedDividers);
+</script>

@@ -1,0 +1,143 @@
+---
+/**
+ * CircleButton Component - Dennis Snellenberg Inspired
+ *
+ * Button with circle fill hover animation.
+ * Background circle scales from 0 to fill the button on hover.
+ *
+ * Props:
+ * - href: Link destination (makes it an anchor)
+ * - variant: 'light' | 'dark' (default: 'dark')
+ * - cursorText: Text to show in custom cursor on hover
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  href?: string;
+  variant?: 'light' | 'dark';
+  cursorText?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'dark',
+  cursorText,
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['circle-button', `circle-button--${variant}`, className]}
+  href={href}
+  data-circle-button
+  data-cursor-text={cursorText}
+>
+  <span class="circle-button__bg"></span>
+  <span class="circle-button__text">
+    <slot />
+  </span>
+</Tag>
+
+<style>
+  .circle-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 2px solid currentColor;
+    border-radius: 9999px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+    background: transparent;
+  }
+
+  /* Dark variant (cream background, dark text) */
+  .circle-button--dark {
+    color: #0C0C0C;
+    border-color: #0C0C0C;
+  }
+
+  .circle-button--dark .circle-button__bg {
+    background: #0C0C0C;
+  }
+
+  .circle-button--dark:hover {
+    color: #FFF4E4;
+  }
+
+  /* Light variant (dark background, light text) */
+  .circle-button--light {
+    color: #F5F5F0;
+    border-color: #F5F5F0;
+  }
+
+  .circle-button--light .circle-button__bg {
+    background: #F5F5F0;
+  }
+
+  .circle-button--light:hover {
+    color: #0C0C0C;
+  }
+
+  /* Circle background that expands on hover */
+  .circle-button__bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+    z-index: 0;
+  }
+
+  .circle-button:hover .circle-button__bg {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Text stays above background */
+  .circle-button__text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Arrow icon if present */
+  .circle-button__text :global(svg) {
+    width: 1em;
+    height: 1em;
+    transition: transform 0.3s ease;
+  }
+
+  .circle-button:hover .circle-button__text :global(svg) {
+    transform: translate(4px, -4px);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .circle-button,
+    .circle-button__bg,
+    .circle-button__text :global(svg) {
+      transition: none;
+    }
+
+    .circle-button__bg {
+      transform: translate(-50%, -50%) scale(0);
+    }
+
+    .circle-button:hover .circle-button__bg {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+/**
+ * WordReveal - Word-by-word stagger animation
+ * Inspired by cristianaaraujo.com word-based reveals
+ *
+ * Props:
+ * - text: The text to animate (words separated by spaces)
+ * - tag: HTML tag to use (default: 'p')
+ * - stagger: Delay between words in ms (default: 100)
+ * - duration: Animation duration in seconds (default: 0.8)
+ * - delay: Initial delay before animation starts in ms (default: 0)
+ * - triggerOnScroll: Whether to trigger on scroll (default: false)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'div';
+  stagger?: number;
+  duration?: number;
+  delay?: number;
+  triggerOnScroll?: boolean;
+  class?: string;
+}
+
+const {
+  text,
+  tag = 'p',
+  stagger = 100,
+  duration = 0.8,
+  delay = 0,
+  triggerOnScroll = false,
+  class: className = '',
+} = Astro.props;
+
+const Tag = tag;
+
+// Split text into words
+const words = text.split(' ');
+---
+
+<Tag
+  class:list={['word-reveal', className]}
+  data-word-reveal
+  data-stagger={stagger}
+  data-duration={duration}
+  data-delay={delay}
+  data-trigger-scroll={triggerOnScroll}
+>
+  {words.map((word, i) => (
+    <span class="word-wrapper" data-word-index={i}>
+      <span class="word">{word}</span>
+    </span>
+  ))}
+</Tag>
+
+<style>
+  .word-reveal {
+    display: inline;
+  }
+
+  .word-wrapper {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    margin-right: 0.3em;
+  }
+
+  .word-wrapper:last-child {
+    margin-right: 0;
+  }
+
+  .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    will-change: transform, opacity;
+  }
+
+  /* Reduced motion: show immediately */
+  @media (prefers-reduced-motion: reduce) {
+    .word {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initWordReveal() {
+    const elements = document.querySelectorAll('[data-word-reveal]');
+
+    elements.forEach((el) => {
+      const words = el.querySelectorAll('.word');
+      const stagger = parseInt(el.getAttribute('data-stagger') || '100') / 1000;
+      const duration = parseFloat(el.getAttribute('data-duration') || '0.8');
+      const delay = parseInt(el.getAttribute('data-delay') || '0') / 1000;
+      const triggerOnScroll = el.getAttribute('data-trigger-scroll') === 'true';
+
+      // Check for reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        gsap.set(words, { opacity: 1, y: 0 });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        delay: delay,
+        ...(triggerOnScroll && {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          }
+        })
+      });
+
+      tl.to(words, {
+        opacity: 1,
+        y: 0,
+        duration: duration,
+        stagger: stagger,
+        ease: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWordReveal);
+  } else {
+    initWordReveal();
+  }
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:after-swap', initWordReveal);
+</script>

@@ -3,65 +3,11 @@ import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 import CodeTerminal from '../../components/CodeTerminal.astro';
 
 const metrics = [
-  { value: '4', label: 'Projects Shipped' },
+  { value: '2', label: 'Experiments Shipped' },
   { value: '1', label: 'Hackathon Won' }
 ];
 
-// Featured projects with detailed "messy middle" narrative
-const featuredProjects = [
-  {
-    id: 'equaltales',
-    title: 'EqualTales',
-    tags: ['Claude', 'DALL-E', 'Next.js', 'Hackathon Winner'],
-    image: '/images/ai-lab/equaltales.png',
-    url: 'https://equaltales.vercel.app/',
-    question: "Can AI create meaningful children's content that challenges stereotypes?",
-    tool: { name: 'Claude + DALL-E' },
-    challenge: "A hackathon challenge with a mission: create something that helps close the gender gap in STEM.",
-    triedAndFailed: [
-      "Generating unique characters per story—faces were inconsistent across pages",
-      "Using photorealistic image style—uncanny valley effect",
-      "Generic fictional role models—felt hollow without authenticity"
-    ],
-    whatWorked: [
-      "Real historical women (Marie Curie, Mae Jemison) for instant authenticity",
-      "Watercolor illustration style for cohesive, warm visuals",
-      "Child's name woven into narrative for emotional connection"
-    ],
-    keyTradeoff: "Chose authenticity over flexibility—real historical figures limit story variety but create deeper emotional impact.",
-    outcome: {
-      award: "Best AI/ML — #75HER Hackathon",
-      reach: "Demo'd to 200+ attendees"
-    }
-  },
-  {
-    id: 'portfolio',
-    title: 'HafsaUsmani.com',
-    tags: ['Claude Code', 'Cursor', 'Astro'],
-    image: '/images/ai-lab/portfolio.png',
-    url: 'https://hafsausmani.com/',
-    question: "Can a designer build a custom portfolio without writing code from scratch?",
-    tool: { name: 'Claude Code + Cursor' },
-    challenge: "Create a portfolio that showcases both design sensibility and technical capability—standing out from template-based sites.",
-    triedAndFailed: [
-      "Using page builders—too generic, no custom interactions",
-      "Hand-coding everything—too slow, constant context switching",
-      "Off-the-shelf templates—couldn't showcase actual skills"
-    ],
-    whatWorked: [
-      "Prompt-driven development with Claude Code for complex logic",
-      "Iterative conversation to refine animations and effects",
-      "Custom CSS over framework constraints for full control"
-    ],
-    keyTradeoff: "Chose custom build over speed—took longer but resulted in a portfolio that demonstrates the very skills it showcases.",
-    outcome: {
-      result: "Live portfolio with custom animations",
-      tech: "Astro, Custom CSS, 3D card effects"
-    }
-  }
-];
-
-// Other experiments (compact format) - only Interview Sage and HeadshotAI
+// Lab experiments (compact format) - Interview Sage and HeadshotAI
 const labProjects = [
   {
     id: 'interview-sage',
@@ -184,7 +130,7 @@ const reflections = [
 
 <CaseStudyLayout
   title="AI Lab"
-  subtitle="Where a product designer learns to ship code. Each project started as a question—and ended with a working prototype."
+  subtitle="A creative playground for AI-assisted experiments. Quick builds, rapid learning, and ideas that became working tools."
   description="Experiments in AI-assisted design and development using Claude Code, Replit, and other AI tools"
   heroImage="/images/ai-lab/hero-image.svg"
   industry="AI / Design Tools"
@@ -193,6 +139,11 @@ const reflections = [
   platforms="Web"
   tools={[]}
   metrics={metrics}
+  prevProject={{
+    title: 'HafsaUsmani.com',
+    href: '/work/portfolio-website',
+    subtitle: 'AI-assisted portfolio development'
+  }}
   nextProject={{
     title: 'MedRec',
     href: '/work/medrec',
@@ -227,82 +178,9 @@ const reflections = [
     </div>
   </section>
 
-  <!-- Section: Featured Projects -->
-  {featuredProjects.map((project, index) => (
-    <section id={project.id} class="case-section featured-project-section">
-      <div class="featured-header">
-        <span class="featured-badge">Featured Project {index + 1}</span>
-        <h2>{project.title}</h2>
-        <p class="featured-question">{project.question}</p>
-      </div>
-
-      <div class="featured-meta">
-        <div class="featured-meta-item">
-          <span class="meta-label">Tools</span>
-          <span class="meta-value">{project.tool.name}</span>
-        </div>
-        {project.outcome.award && (
-          <div class="featured-meta-item">
-            <span class="meta-label">Outcome</span>
-            <span class="meta-value">{project.outcome.award}</span>
-          </div>
-        )}
-        {project.outcome.result && (
-          <div class="featured-meta-item">
-            <span class="meta-label">Result</span>
-            <span class="meta-value">{project.outcome.result}</span>
-          </div>
-        )}
-        <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link featured-link">
-          View Live
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-            <polyline points="15 3 21 3 21 9"/>
-            <line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="featured-image">
-        <img src={project.image} alt={`${project.title} - AI-assisted project preview`} />
-      </div>
-
-      <div class="featured-narrative">
-        <div class="narrative-block challenge-block">
-          <h4>The Challenge</h4>
-          <p>{project.challenge}</p>
-        </div>
-
-        <div class="narrative-block decision-card">
-          <div class="decision-column failed">
-            <h4>What I Tried That Didn't Work</h4>
-            <ul>
-              {project.triedAndFailed.map(item => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div class="decision-column worked">
-            <h4>What Actually Worked</h4>
-            <ul>
-              {project.whatWorked.map(item => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div class="narrative-block tradeoff-block">
-          <h4>Key Trade-off</h4>
-          <blockquote>{project.keyTradeoff}</blockquote>
-        </div>
-      </div>
-    </section>
-  ))}
-
-  <!-- Section: Other Experiments -->
+  <!-- Section: Experiments -->
   <section class="case-section experiments-section">
-    <h2>Other Experiments</h2>
+    <h2>Experiments</h2>
     <p class="section-intro">
       Quick builds that validated ideas and taught lessons.
     </p>
@@ -439,7 +317,7 @@ const reflections = [
   .terminal-caption {
     margin-top: 1.5rem;
     color: var(--color-muted);
-    font-style: italic;
+    font-style: normal;
     font-size: 1rem;
   }
 
@@ -448,7 +326,7 @@ const reflections = [
     font-size: 1.25rem;
     color: var(--color-fg);
     margin-bottom: 2rem;
-    font-style: italic;
+    font-style: normal;
     border-left: 3px solid #f97316;
     padding-left: 1.5rem;
   }
@@ -523,7 +401,7 @@ const reflections = [
   .featured-question {
     font-size: 1.125rem;
     color: var(--color-muted);
-    font-style: italic;
+    font-style: normal;
   }
 
   .featured-meta {
@@ -646,7 +524,7 @@ const reflections = [
   .tradeoff-block blockquote {
     margin: 0;
     font-size: 1.0625rem;
-    font-style: italic;
+    font-style: normal;
     color: var(--color-fg);
     line-height: 1.6;
     border-left: 3px solid #f97316;
@@ -716,7 +594,7 @@ const reflections = [
   }
 
   .experiment-question {
-    font-style: italic;
+    font-style: normal;
     color: var(--color-muted);
     margin-bottom: 0.75rem;
     word-wrap: break-word;

@@ -1,0 +1,167 @@
+---
+/**
+ * BackToTop - Osmo-inspired back to top button
+ * Appears after scrolling 50vh, with smooth entrance/exit animations
+ */
+---
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <span class="back-to-top-arrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </span>
+</button>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-fg, #F5F5F0);
+    color: var(--color-bg, #0C0C0C);
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: rotate(-65deg) scale(0.4);
+    transition: border-color 0.3s ease, border-width 0.3s ease;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .back-to-top.visible {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .back-to-top-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .back-to-top-arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (hover: hover) {
+    .back-to-top:hover {
+      border-color: var(--color-accent, #4a5ee4);
+      border-width: 3px;
+    }
+
+    .back-to-top:hover .back-to-top-arrow {
+      transform: translateY(-2px);
+    }
+  }
+
+  .back-to-top:focus-visible {
+    outline: none;
+    border-color: var(--color-accent, #4a5ee4);
+    border-width: 3px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+      transition: opacity 0.2s ease;
+      transform: none;
+    }
+
+    .back-to-top-arrow {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  function initBackToTop() {
+    // Remove any duplicate back-to-top buttons
+    const allBtns = document.querySelectorAll('.back-to-top');
+    if (allBtns.length > 1) {
+      for (let i = 1; i < allBtns.length; i++) {
+        allBtns[i].remove();
+      }
+    }
+
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+    if (btn.dataset.init === 'true') return;
+    btn.dataset.init = 'true';
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isVisible = false;
+    const threshold = window.innerHeight * 0.5;
+
+    // Check scroll position
+    const checkScroll = () => {
+      const shouldShow = window.scrollY > threshold;
+
+      if (shouldShow && !isVisible) {
+        isVisible = true;
+
+        if (!prefersReducedMotion) {
+          gsap.to(btn, {
+            rotation: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 0.45,
+            ease: 'power4.out',
+            onStart: () => btn.classList.add('visible')
+          });
+        } else {
+          btn.classList.add('visible');
+        }
+      } else if (!shouldShow && isVisible) {
+        isVisible = false;
+
+        if (!prefersReducedMotion) {
+          gsap.to(btn, {
+            rotation: -65,
+            scale: 0.6,
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power3.in',
+            onComplete: () => btn.classList.remove('visible')
+          });
+        } else {
+          btn.classList.remove('visible');
+        }
+      }
+    };
+
+    // Scroll to top on click
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Listen for scroll
+    window.addEventListener('scroll', checkScroll, { passive: true });
+
+    // Initial check
+    checkScroll();
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBackToTop);
+  } else {
+    initBackToTop();
+  }
+
+  // Re-initialize after page transitions
+  document.addEventListener('astro:after-swap', initBackToTop);
+  window.addEventListener('barba:afterEnter', initBackToTop);
+</script>

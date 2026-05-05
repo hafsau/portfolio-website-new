@@ -74,7 +74,21 @@ const breadcrumbSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description} ogImage={heroImage} ogType="article">
+<BaseLayout title={title} description={description} ogImage={heroImage} ogType="article" useBarba={false}>
+  <!-- Page Transition Overlay with Curved SVG -->
+  <div class="page-transition-overlay" id="page-transition">
+    <div class="transition-background"></div>
+    <div class="transition-curve">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0,0 L0,70 Q50,100 100,70 L100,0 Z" />
+      </svg>
+    </div>
+    <div class="transition-content">
+      <span class="transition-label">Loading</span>
+      <h1 class="transition-title">{title}</h1>
+    </div>
+  </div>
+
   <!-- JSON-LD Structured Data for Case Study -->
   <script type="application/ld+json" set:html={JSON.stringify(creativeWorkSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -88,6 +102,7 @@ const breadcrumbSchema = {
   <!-- Cursor Dot Follower -->
   <div class="cursor-dot" id="cursor-dot">
     <div class="cursor-ring"></div>
+    <span class="cursor-text" id="cursor-text"></span>
   </div>
 
   <!-- Navigation -->
@@ -102,25 +117,14 @@ const breadcrumbSchema = {
         </svg>
       </a>
       <div class="nav-links-desktop">
-        <a href="/#home" class="link text-sm">Home</a>
-        <a href="/#work" class="link text-sm">Work</a>
-        <a href="/#about" class="link text-sm">About</a>
-        <a href="/#contact" class="link text-sm">Contact</a>
+        <a href="/" class="nav-home-link" data-section="home" data-cursor-text="Go">Home</a>
+        <a href="/" class="nav-home-link" data-section="work" data-cursor-text="Go">Work</a>
+        <a href="/" class="nav-home-link" data-section="about" data-cursor-text="Go">About</a>
+        <a href="/" class="nav-home-link" data-section="contact" data-cursor-text="Go">Contact</a>
       </div>
       <MobileNav />
     </div>
   </nav>
-
-  <!-- Theme Toggle -->
-  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-    <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="5" stroke-width="1.5"/>
-      <path stroke-width="1.5" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-    </svg>
-    <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-width="1.5" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  </button>
 
   <article id="main-content" class="case-study">
     <!-- Header Section -->
@@ -174,7 +178,15 @@ const breadcrumbSchema = {
     <div class="container mb-12 reveal delay-4">
       <div class="case-hero-image">
         {heroImage ? (
-          <img src={heroImage} alt={`${title} case study hero image - ${subtitle}`} class="w-full h-full object-contain" />
+          <img
+            src={heroImage}
+            alt={`${title} case study hero image - ${subtitle}`}
+            class="w-full h-full object-contain"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          />
         ) : (
           <div class="case-hero-placeholder">
             <span class="text-muted text-sm">Project Preview</span>
@@ -254,193 +266,542 @@ const breadcrumbSchema = {
   </footer>
 
   <script>
-    // Scroll Progress
-    const scrollProgress = document.getElementById('scroll-progress');
+    // Page Transition Animation with Curved SVG
+    function animatePageTransition() {
+      const pageTransition = document.getElementById('page-transition');
+      const transitionCurve = pageTransition?.querySelector('.transition-curve') as HTMLElement;
+      const transitionContent = pageTransition?.querySelector('.transition-content') as HTMLElement;
+      const mainContent = document.getElementById('main-content');
 
-    function updateScrollProgress() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollTop / docHeight;
-      if (scrollProgress) {
-        scrollProgress.style.transform = `scaleX(${progress})`;
+      if (pageTransition && transitionCurve) {
+        // Hide main content initially
+        if (mainContent) {
+          mainContent.style.opacity = '0';
+          mainContent.style.transition = 'none';
+        }
+
+        // Reset transition for animation - curve starts covering the screen
+        pageTransition.style.display = 'flex';
+        transitionCurve.style.transform = 'translateY(0)';
+        transitionCurve.style.transition = 'none';
+        if (transitionContent) {
+          transitionContent.style.opacity = '1';
+          transitionContent.style.transition = 'none';
+        }
+
+        // Animate out after showing the title
+        setTimeout(() => {
+          // Fade out transition content
+          if (transitionContent) {
+            transitionContent.style.transition = 'opacity 0.4s ease-out';
+            transitionContent.style.opacity = '0';
+          }
+
+          // Slide the curve up with a smooth ease
+          setTimeout(() => {
+            transitionCurve.style.transition = 'transform 1.2s cubic-bezier(0.65, 0, 0.35, 1)';
+            transitionCurve.style.transform = 'translateY(-115%)';
+          }, 300);
+
+          // Show main content after curve starts moving
+          setTimeout(() => {
+            if (mainContent) {
+              mainContent.style.transition = 'opacity 0.6s ease-out';
+              mainContent.style.opacity = '1';
+            }
+          }, 800);
+
+          // Hide overlay after animation completes
+          setTimeout(() => {
+            pageTransition.style.display = 'none';
+            // Reset for next use
+            transitionCurve.style.transform = 'translateY(0)';
+            if (transitionContent) transitionContent.style.opacity = '1';
+          }, 1600);
+        }, 600);
       }
     }
 
-    window.addEventListener('scroll', updateScrollProgress);
-    updateScrollProgress();
+    // Run on initial page load
+    animatePageTransition();
 
-    // Scroll Reveal
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50px',
-      threshold: 0.1
-    };
+    // Re-run after View Transitions navigation
+    document.addEventListener('astro:after-swap', animatePageTransition);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+    // Handle navigation to home page with curved transition
+    function setupHomeNavigation() {
+      const homeLinks = document.querySelectorAll('.nav-home-link, .back-link, .signature-logo');
+      const pageTransition = document.getElementById('page-transition');
+      const transitionCurve = pageTransition?.querySelector('.transition-curve') as HTMLElement;
+
+      homeLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-section') || 'home';
+
+          // Show transition overlay (curve slides up from bottom)
+          if (pageTransition && transitionCurve) {
+            pageTransition.style.display = 'flex';
+            pageTransition.classList.add('active');
+
+            // Start curve below the viewport
+            transitionCurve.style.transform = 'translateY(110%)';
+            transitionCurve.style.transition = 'none';
+
+            // Update transition title for going home
+            const titleEl = pageTransition.querySelector('.transition-title');
+            const labelEl = pageTransition.querySelector('.transition-label');
+            const contentEl = pageTransition.querySelector('.transition-content') as HTMLElement;
+            if (titleEl) titleEl.textContent = 'Home';
+            if (labelEl) labelEl.textContent = 'Returning to';
+            if (contentEl) {
+              contentEl.style.opacity = '0';
+              contentEl.style.transition = 'none';
+            }
+
+            requestAnimationFrame(() => {
+              // Animate curve sliding up to cover screen
+              transitionCurve.style.transition = 'transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
+              transitionCurve.style.transform = 'translateY(0)';
+
+              // Fade in content
+              if (contentEl) {
+                setTimeout(() => {
+                  contentEl.style.transition = 'opacity 0.3s ease-in';
+                  contentEl.style.opacity = '1';
+                }, 200);
+              }
+            });
+
+            // Navigate after animation
+            setTimeout(() => {
+              // Store section to scroll to
+              sessionStorage.setItem('scrollToSection', section);
+              window.location.href = '/';
+            }, 600);
+          } else {
+            sessionStorage.setItem('scrollToSection', section);
+            window.location.href = '/';
+          }
+        });
       });
-    }, observerOptions);
-
-    document.querySelectorAll('.reveal, .words-reveal, .text-reveal, .chars-reveal, .stagger-grid').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Theme Toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-    const html = document.documentElement;
-
-    function updateIcons() {
-      const isLight = html.classList.contains('light');
-      if (sunIcon && moonIcon) {
-        sunIcon.classList.toggle('hidden', !isLight);
-        moonIcon.classList.toggle('hidden', isLight);
-      }
     }
 
-    updateIcons();
+    setupHomeNavigation();
 
-    themeToggle?.addEventListener('click', () => {
-      const isLight = html.classList.contains('light');
-      if (isLight) {
-        html.classList.remove('light');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        html.classList.add('light');
-        localStorage.setItem('theme', 'light');
+    // Initialize all page functionality
+    function initCaseStudyPage() {
+      // Scroll Progress and Nav Background
+      const scrollProgress = document.getElementById('scroll-progress');
+      const navFixed = document.querySelector('.nav-fixed');
+
+      function updateScrollProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollTop / docHeight;
+        if (scrollProgress) {
+          scrollProgress.style.transform = `scaleX(${progress})`;
+        }
+        // Add scrolled class after scrolling past 50px
+        if (navFixed) {
+          if (scrollTop > 50) {
+            navFixed.classList.add('scrolled');
+          } else {
+            navFixed.classList.remove('scrolled');
+          }
+        }
       }
-      updateIcons();
-    });
 
-    // Cursor Dot Follower
-    const cursorDot = document.getElementById('cursor-dot');
-    let mouseX = 0;
-    let mouseY = 0;
-    let dotX = 0;
-    let dotY = 0;
+      window.addEventListener('scroll', updateScrollProgress);
+      updateScrollProgress();
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      if (cursorDot && !cursorDot.classList.contains('visible')) {
-        cursorDot.classList.add('visible');
-      }
-    });
+      // Scroll Reveal
+      const observerOptions = {
+        root: null,
+        rootMargin: '-50px',
+        threshold: 0.3
+      };
 
-    document.addEventListener('mouseleave', () => {
-      if (cursorDot) {
-        cursorDot.classList.remove('visible');
-      }
-    });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
 
-    function animateCursor() {
-      dotX += (mouseX - dotX) * 0.15;
-      dotY += (mouseY - dotY) * 0.15;
-      if (cursorDot) {
-        cursorDot.style.left = dotX + 'px';
-        cursorDot.style.top = dotY + 'px';
-      }
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Hover effect on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .metric-item');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorDot?.classList.add('hover');
+      document.querySelectorAll('.reveal, .words-reveal, .text-reveal, .chars-reveal, .stagger-grid').forEach(el => {
+        observer.observe(el);
       });
-      el.addEventListener('mouseleave', () => {
-        cursorDot?.classList.remove('hover');
-      });
-    });
 
-    // Animated Counters
-    const counters = document.querySelectorAll('.counter');
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-          entry.target.classList.add('counted');
-          animateCounter(entry.target as HTMLElement);
+      // Cursor Dot Follower
+      const cursorDot = document.getElementById('cursor-dot');
+      const cursorText = document.getElementById('cursor-text');
+      let mouseX = 0;
+      let mouseY = 0;
+      let dotX = 0;
+      let dotY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (cursorDot && !cursorDot.classList.contains('visible')) {
+          cursorDot.classList.add('visible');
         }
       });
-    }, { threshold: 0.5 });
 
-    function animateCounter(el: HTMLElement) {
-      const target = el.dataset.target || '0';
-      const hasPercent = target.includes('%');
-      const hasX = target.includes('x');
-      const hasPlus = target.includes('+');
-      const numericValue = parseFloat(target.replace(/[^0-9.]/g, ''));
-      const isDecimal = target.includes('.');
-      const duration = 2000;
-      const startTime = performance.now();
-
-      // Check for reduced motion preference
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        el.textContent = target;
-        return;
-      }
-
-      el.textContent = '0' + (hasPercent ? '%' : hasX ? 'x' : hasPlus ? '+' : '');
-
-      function updateCounter(currentTime: number) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease out cubic for smooth deceleration
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const currentValue = numericValue * easeOut;
-
-        if (isDecimal) {
-          el.textContent = currentValue.toFixed(1) + (hasX ? 'x' : hasPercent ? '%' : hasPlus ? '+' : '');
-        } else {
-          el.textContent = Math.floor(currentValue) + (hasPercent ? '%' : hasX ? 'x' : hasPlus ? '+' : '');
+      document.addEventListener('mouseleave', () => {
+        if (cursorDot) {
+          cursorDot.classList.remove('visible');
         }
+      });
 
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        } else {
+      function animateCursor() {
+        dotX += (mouseX - dotX) * 0.15;
+        dotY += (mouseY - dotY) * 0.15;
+        if (cursorDot) {
+          cursorDot.style.left = dotX + 'px';
+          cursorDot.style.top = dotY + 'px';
+        }
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+
+      // Cursor text elements (like "Go" on nav links)
+      const cursorTextElements = document.querySelectorAll('[data-cursor-text]');
+      cursorTextElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          const text = el.getAttribute('data-cursor-text');
+          if (text && cursorText) {
+            cursorText.textContent = text;
+            cursorDot?.classList.add('has-text');
+          }
+        });
+        el.addEventListener('mouseleave', () => {
+          if (cursorText) cursorText.textContent = '';
+          cursorDot?.classList.remove('has-text');
+        });
+      });
+
+      // Hover effect on interactive elements
+      const interactiveElements = document.querySelectorAll('a, button, .metric-item');
+      interactiveElements.forEach(el => {
+        if (!el.hasAttribute('data-cursor-text')) {
+          el.addEventListener('mouseenter', () => {
+            cursorDot?.classList.add('hover');
+          });
+          el.addEventListener('mouseleave', () => {
+            cursorDot?.classList.remove('hover');
+          });
+        }
+      });
+
+      // Animated Counters
+      const counters = document.querySelectorAll('.counter');
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+            entry.target.classList.add('counted');
+            animateCounter(entry.target as HTMLElement);
+          }
+        });
+      }, { threshold: 0.7 });
+
+      function animateCounter(el: HTMLElement) {
+        const target = el.dataset.target || '0';
+        const hasPercent = target.includes('%');
+        const hasX = target.includes('x');
+        const hasPlus = target.includes('+');
+        const numericValue = parseFloat(target.replace(/[^0-9.]/g, ''));
+        const isDecimal = target.includes('.');
+        const duration = 2000;
+        const startTime = performance.now();
+
+        // Check for reduced motion preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           el.textContent = target;
+          return;
         }
+
+        el.textContent = '0' + (hasPercent ? '%' : hasX ? 'x' : hasPlus ? '+' : '');
+
+        function updateCounter(currentTime: number) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic for smooth deceleration
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const currentValue = numericValue * easeOut;
+
+          if (isDecimal) {
+            el.textContent = currentValue.toFixed(1) + (hasX ? 'x' : hasPercent ? '%' : hasPlus ? '+' : '');
+          } else {
+            el.textContent = Math.floor(currentValue) + (hasPercent ? '%' : hasX ? 'x' : hasPlus ? '+' : '');
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            el.textContent = target;
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
       }
 
-      requestAnimationFrame(updateCounter);
+      counters.forEach(counter => counterObserver.observe(counter));
+
+      // Drag cursor for images
+      initImageDragCursor();
     }
 
-    counters.forEach(counter => counterObserver.observe(counter));
+    // Drag cursor for BeforeAfterSlider only (not regular images)
+    function initImageDragCursor() {
+      const caseContent = document.querySelector('.case-content');
+      if (!caseContent) return;
+
+      // Only target BeforeAfterSlider containers
+      const sliders = caseContent.querySelectorAll('[data-ba-slider]');
+      if (sliders.length === 0) return;
+
+      // Create drag cursor element
+      let dragCursor = document.getElementById('image-drag-cursor');
+      if (!dragCursor) {
+        dragCursor = document.createElement('div');
+        dragCursor.id = 'image-drag-cursor';
+        dragCursor.textContent = 'Drag';
+        dragCursor.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          z-index: 99999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 80px;
+          height: 80px;
+          background: #4a5ee4;
+          color: #fff;
+          border-radius: 50%;
+          font-size: 13px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-family: 'Space Grotesk', sans-serif;
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.5);
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        `;
+        document.body.appendChild(dragCursor);
+      }
+
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+
+      // Smooth cursor following
+      function animateDragCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        if (dragCursor) {
+          dragCursor.style.left = cursorX + 'px';
+          dragCursor.style.top = cursorY + 'px';
+        }
+        requestAnimationFrame(animateDragCursor);
+      }
+      animateDragCursor();
+
+      function showDragCursor() {
+        if (dragCursor) {
+          dragCursor.style.opacity = '1';
+          dragCursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+        const cursorDot = document.getElementById('cursor-dot');
+        if (cursorDot) cursorDot.style.opacity = '0';
+      }
+
+      function hideDragCursor() {
+        if (dragCursor) {
+          dragCursor.style.opacity = '0';
+          dragCursor.style.transform = 'translate(-50%, -50%) scale(0.5)';
+        }
+        const cursorDot = document.getElementById('cursor-dot');
+        if (cursorDot) cursorDot.style.opacity = '1';
+      }
+
+      function trackMouse(e: MouseEvent) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }
+
+      // Apply only to slider containers (BeforeAfterSlider)
+      sliders.forEach(slider => {
+        (slider as HTMLElement).style.cursor = 'none';
+        slider.addEventListener('mouseenter', showDragCursor);
+        slider.addEventListener('mouseleave', hideDragCursor);
+        slider.addEventListener('mousemove', trackMouse as EventListener);
+      });
+    }
+
+    // Run initialization
+    initCaseStudyPage();
+
+    // Re-initialize after View Transitions
+    document.addEventListener('astro:after-swap', initCaseStudyPage);
   </script>
 
   <style>
-    /* Theme Toggle */
-    .theme-toggle {
+    /* Page Transition Overlay with Curved SVG */
+    .page-transition-overlay {
       position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 50;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--color-border);
-      border: 1px solid var(--color-muted);
+      inset: 0;
+      z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      pointer-events: none;
+      overflow: hidden;
     }
 
-    .theme-toggle:hover {
-      border-color: var(--color-accent);
-      box-shadow: 0 0 20px rgba(74, 94, 228, 0.3);
+    .transition-background {
+      position: absolute;
+      inset: 0;
+      background: #0C0C0C;
+      opacity: 0;
+    }
+
+    .page-transition-overlay.active .transition-background {
+      opacity: 1;
+    }
+
+    .transition-curve {
+      position: absolute;
+      width: 100%;
+      height: 115%;
+      bottom: 0;
+      left: 0;
+      will-change: transform;
+    }
+
+    .transition-curve svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: var(--color-accent);
+    }
+
+    /* Fixed Navigation */
+    .nav-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: transparent;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease;
+    }
+
+    .nav-fixed.scrolled {
+      background: rgba(12, 12, 12, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-fixed .container {
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .nav-links-desktop {
+      display: none;
+      gap: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links-desktop {
+        display: flex;
+      }
+    }
+
+    .nav-links-desktop a {
+      color: var(--color-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links-desktop a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--color-fg);
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .nav-links-desktop a:hover {
+      color: var(--color-fg);
+    }
+
+    .nav-links-desktop a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+
+    .scroll-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: var(--color-accent);
+      transform-origin: left;
+      transform: scaleX(0);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-fixed.scrolled .scroll-progress {
+      opacity: 1;
+    }
+
+    .transition-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
+    }
+
+    .transition-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .transition-title {
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
     }
 
     /* Case Study Layout */
     .case-study {
       padding-top: 100px;
+      opacity: 0;
     }
 
     .case-hero {
@@ -568,34 +929,82 @@ const breadcrumbSchema = {
     }
 
     .case-content {
-      padding: var(--space-md) 0;
+      padding: var(--space-lg) 0;
+      overflow: visible;
     }
 
+    /* Allow certain content to break out of narrow container */
+    .case-content :global(.full-width),
+    .case-content :global(.fidelity-stages),
+    .case-content :global(.before-after-grid) {
+      width: 100vw;
+      max-width: 1000px;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      padding: 0 1rem;
+    }
+
+    /* Section dividers */
+    .case-content :global(section) {
+      padding-bottom: 4rem;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .case-content :global(section:last-of-type) {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    /* Heading hierarchy */
     .case-content :global(h2) {
-      font-size: 1.75rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 700;
-      margin-top: 4rem;
-      margin-bottom: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
       color: var(--color-fg);
+      letter-spacing: -0.02em;
     }
 
-    .case-content :global(h2:first-child) {
-      margin-top: 0;
+    .case-content :global(h2)::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--color-accent);
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 2px;
     }
 
     .case-content :global(h3) {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 600;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.8125rem;
+    }
+
+    .case-content :global(h4) {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
       color: var(--color-fg);
     }
 
     .case-content :global(p) {
-      font-size: 1.0625rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.75;
       color: var(--color-muted);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .case-content :global(p:last-child) {
+      margin-bottom: 0;
     }
 
     .case-content :global(strong) {
@@ -605,33 +1014,57 @@ const breadcrumbSchema = {
 
     .case-content :global(ul),
     .case-content :global(ol) {
-      margin-bottom: 1.5rem;
-      padding-left: 1.5rem;
+      margin-bottom: 1.25rem;
+      padding-left: 1.25rem;
     }
 
     .case-content :global(li) {
-      font-size: 1.0625rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.75;
       color: var(--color-muted);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     .case-content :global(blockquote) {
       border-left: 3px solid var(--color-accent);
       padding-left: 1.5rem;
-      margin: 2.5rem 0;
-      font-style: italic;
+      margin: 2rem 0;
+      font-style: normal;
     }
 
     .case-content :global(blockquote p) {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       color: var(--color-fg);
     }
 
+    /* Image sizing - constrained */
     .case-content :global(img) {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 0.5rem;
+      margin: 1.5rem auto;
+      display: block;
+    }
+
+    .case-content :global(img.full-width) {
+      max-height: none;
       width: 100%;
-      border-radius: 0.75rem;
-      margin: 2.5rem 0;
+    }
+
+    /* Image grids */
+    .case-content :global(.image-grid) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .case-content :global(.image-grid img) {
+      margin: 0;
+      max-height: 300px;
     }
 
     /* Project Navigation Section */

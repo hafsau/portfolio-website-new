@@ -9,58 +9,97 @@ const globalCss = readFileSync(resolve(__dirname, '../src/styles/global.css'), '
 describe('Page Structure', () => {
   describe('Navigation', () => {
     it('should have navigation with correct sections', () => {
-      expect(indexContent).toContain('href="#home"');
+      // Hero nav links
       expect(indexContent).toContain('href="#work"');
       expect(indexContent).toContain('href="#about"');
       expect(indexContent).toContain('href="#contact"');
     });
 
-    it('should have scroll progress indicator', () => {
-      expect(indexContent).toContain('scroll-progress');
+    it('should have nav links styled', () => {
+      expect(indexContent).toContain('nav-link');
+    });
+
+    it('should have hamburger menu for scroll navigation', () => {
+      expect(indexContent).toContain('HamburgerMenu');
+      expect(indexContent).toContain('navItems');
     });
   });
 
   describe('Hero Section', () => {
-    it('should have personal greeting', () => {
-      // Text is now split into character spans for animation
-      expect(indexContent).toContain('hero-text-split');
-      expect(indexContent).toContain('<span class="char">H</span>');
+    it('should have multilingual greeting component', () => {
+      expect(indexContent).toContain('MultilingualGreeting');
+      expect(indexContent).toContain("'Hello', 'Bonjour', 'Hola'");
     });
 
-    it('should have rotating text with Designer, Builder, Maker', () => {
-      expect(indexContent).toContain('<span>Designer</span>');
-      expect(indexContent).toContain('<span>Builder</span>');
-      expect(indexContent).toContain('<span>Maker</span>');
+    it('should have massive name display with HAFSA and USMANI', () => {
+      expect(indexContent).toContain('hero-name');
+      expect(indexContent).toContain('SplitTextReveal');
+      expect(indexContent).toContain('text="HAFSA"');
+      expect(indexContent).toContain('text="USMANI"');
     });
 
-    it('should have tagline about design meets data', () => {
-      // Words are now in separate spans for reveal animation
-      expect(indexContent).toContain('class="word">where</span>');
-      expect(indexContent).toContain('class="word">design</span>');
-      expect(indexContent).toContain('class="word">meets</span>');
-      expect(indexContent).toContain('class="word">data.</span>');
+    it('should have hero subtitle with role', () => {
+      expect(indexContent).toContain('hero-subtitle');
+      expect(indexContent).toContain('Product Designer');
     });
 
-    it('should have CTA buttons', () => {
-      expect(indexContent).toContain('See My Work');
-      expect(indexContent).toContain("Let's Talk");
+    it('should have see work CTA', () => {
+      expect(indexContent).toContain('See my work');
+      expect(indexContent).toContain('hero-cta');
+    });
+
+    it('should have magnetic portrait component', () => {
+      expect(indexContent).toContain('hero-portrait');
+      expect(indexContent).toContain('Magnet');
+    });
+
+    it('should use BlurFadeIn for animations', () => {
+      expect(indexContent).toContain('BlurFadeIn');
+    });
+
+    it('should have floating orbs background', () => {
+      expect(indexContent).toContain('FloatingOrbs');
     });
   });
 
   describe('Sections', () => {
-    it('should have all main sections', () => {
-      expect(indexContent).toContain('id="home"');
+    it('should have main sections with proper IDs', () => {
       expect(indexContent).toContain('id="work"');
       expect(indexContent).toContain('id="about"');
       expect(indexContent).toContain('id="contact"');
     });
 
-    it('should have horizontal scroll projects', () => {
-      expect(indexContent).toContain('projects-horizontal');
+    it('should have wave dividers between sections', () => {
+      expect(indexContent).toContain('WaveDivider');
+      expect(indexContent).toContain('wave-to-dark');
+      expect(indexContent).toContain('wave-to-warm');
     });
 
-    it('should have tools marquee', () => {
-      expect(indexContent).toContain('marquee');
+    it('should have draggable projects carousel', () => {
+      expect(indexContent).toContain('projects-carousel');
+      expect(indexContent).toContain('projects-scroll-track');
+    });
+
+    it('should have 3D tilt cards for projects', () => {
+      expect(indexContent).toContain('TiltCard');
+      expect(indexContent).toContain('project-card');
+    });
+
+    it('should have stats section with animated counters', () => {
+      expect(indexContent).toContain('stats-section');
+      expect(indexContent).toContain('stat-number');
+      expect(indexContent).toContain('data-count');
+    });
+  });
+
+  describe('About Section', () => {
+    it('should have about section with title', () => {
+      expect(indexContent).toContain('about-section');
+      expect(indexContent).toContain('About Me');
+    });
+
+    it('should mention relevant background', () => {
+      expect(indexContent).toContain('MS in Computer Science');
     });
   });
 
@@ -73,36 +112,36 @@ describe('Page Structure', () => {
     it('should have LinkedIn link', () => {
       expect(indexContent).toContain('linkedin.com');
     });
+
+    it('should have GitHub link', () => {
+      expect(indexContent).toContain('github.com');
+    });
+
+    it('should have contact links styled', () => {
+      expect(indexContent).toContain('contact-link');
+    });
   });
 
   describe('Footer', () => {
     it('should have copyright', () => {
       expect(indexContent).toContain('2026 Hafsa Usmani');
     });
-
-    it('should have location', () => {
-      expect(indexContent).toContain('San Francisco Bay Area');
-    });
   });
 });
 
-describe('Logo SVG', () => {
-  it('should have HU logo with H path', () => {
-    // H is made of two vertical lines and one horizontal
-    expect(indexContent).toContain('<!-- H -->');
+describe('Visual Design', () => {
+  it('should have warm and dark color variables', () => {
+    expect(indexContent).toContain('--warm-bg: #FFF4E4');
+    expect(indexContent).toContain('--dark-bg: #0C0C0C');
   });
 
-  it('should have U path (curved left, straight right)', () => {
-    expect(indexContent).toContain('<!-- U');
+  it('should have gradient text for stats', () => {
+    expect(indexContent).toContain('linear-gradient(135deg, #667eea');
   });
 
-  it('should have blue dot', () => {
-    expect(indexContent).toContain('sig-dot');
-    expect(indexContent).toContain('<circle');
-  });
-
-  it('should use stroke-based rendering for letters', () => {
-    expect(indexContent).toContain('sig-letter');
+  it('should have alternating section backgrounds', () => {
+    expect(indexContent).toContain('background: var(--warm-bg)');
+    expect(indexContent).toContain('background: var(--dark-bg)');
   });
 });
 
@@ -123,8 +162,12 @@ describe('Layout', () => {
   });
 
   it('should have theme initialization script', () => {
-    expect(layoutContent).toContain('localStorage.getItem');
-    expect(layoutContent).toContain('theme');
+    expect(layoutContent).toContain('data-theme');
+    expect(layoutContent).toContain('dark');
+  });
+
+  it('should have View Transitions', () => {
+    expect(layoutContent).toContain('ViewTransitions');
   });
 });
 
@@ -146,16 +189,90 @@ describe('Styling', () => {
     expect(globalCss).toContain('.cursor-dot');
   });
 
-  it('should have signature animation', () => {
-    expect(globalCss).toContain('sig-letter');
-    expect(globalCss).toContain('sig-dot');
+  it('should have liquid glass effect', () => {
+    expect(globalCss).toContain('.liquid-glass');
   });
 
-  it('should have rotating text animation', () => {
-    expect(globalCss).toContain('rotating-text');
+  it('should have blur fade up animation', () => {
+    expect(globalCss).toContain('blurFadeUp');
   });
 
   it('should have marquee animation', () => {
     expect(globalCss).toContain('marquee');
+  });
+});
+
+describe('Animations', () => {
+  it('should have animated counters script', () => {
+    expect(indexContent).toContain('animateCounters');
+    expect(indexContent).toContain('IntersectionObserver');
+  });
+
+  it('should support View Transitions', () => {
+    expect(indexContent).toContain('astro:after-swap');
+  });
+});
+
+describe('Back to Top Button', () => {
+  it('should have BackToTop component imported', () => {
+    expect(layoutContent).toContain('BackToTop');
+  });
+
+  it('should include BackToTop in layout', () => {
+    expect(layoutContent).toContain('<BackToTop />');
+  });
+});
+
+describe('Responsive Design', () => {
+  it('should have ultra-wide screen constraint', () => {
+    expect(globalCss).toContain('@media (min-width: 1920px)');
+    expect(globalCss).toContain('max-width: 1920px');
+  });
+
+  it('should have tablet breakpoint', () => {
+    expect(globalCss).toContain('@media (min-width: 769px) and (max-width: 1024px)');
+  });
+
+  it('should have mobile breakpoint', () => {
+    expect(globalCss).toContain('@media (max-width: 768px)');
+  });
+
+  it('should use clamp for responsive typography', () => {
+    expect(globalCss).toContain('clamp(');
+  });
+
+  it('should hide cursor on mobile', () => {
+    expect(globalCss).toContain('.cursor-dot');
+    expect(globalCss).toContain('display: none');
+  });
+});
+
+describe('Image Optimization', () => {
+  it('should have lazy loading on project images', () => {
+    expect(indexContent).toContain('loading="lazy"');
+  });
+
+  it('should have async decoding on images', () => {
+    expect(indexContent).toContain('decoding="async"');
+  });
+
+  it('should have fetchpriority on hero image', () => {
+    expect(indexContent).toContain('fetchpriority="high"');
+  });
+
+  it('should have sizes attribute on hero image', () => {
+    expect(indexContent).toContain('sizes="');
+  });
+});
+
+describe('Anchor Scroll', () => {
+  it('should initialize anchor scroll in layout', () => {
+    expect(layoutContent).toContain('initAnchorScroll');
+  });
+
+  it('should have anchor links to sections', () => {
+    expect(indexContent).toContain('href="#work"');
+    expect(indexContent).toContain('href="#about"');
+    expect(indexContent).toContain('href="#contact"');
   });
 });

@@ -899,7 +899,7 @@ const responsiveFeatures = [
   .persona-context {
     font-size: 1rem;
     color: var(--color-muted);
-    font-style: italic;
+    font-style: normal;
     margin: 0 0 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -1456,7 +1456,7 @@ const responsiveFeatures = [
   .reflection-quote p {
     font-size: 1.25rem !important;
     color: var(--color-fg) !important;
-    font-style: italic;
+    font-style: normal;
     margin: 0 !important;
     line-height: 1.6;
   }
@@ -1535,5 +1535,57 @@ const responsiveFeatures = [
     font-size: 0.9375rem;
     color: var(--color-muted);
     line-height: 1.6;
+  }
+
+  /* ========================================
+     SECTION & HEADING STYLES
+     ======================================== */
+  .case-section {
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .case-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .case-section > h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-fg);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .case-section > h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--color-accent);
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+    border-radius: 2px;
+  }
+
+  .case-section h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  .case-section img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    display: block;
+    margin: 1rem auto;
   }
 </style>

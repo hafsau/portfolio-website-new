@@ -1,0 +1,68 @@
+---
+/**
+ * WaveDivider - Organic SVG wave transition between sections
+ * Inspired by mynrd.co.uk wave dividers
+ *
+ * Props:
+ * - fillColor: The color of the wave fill (default: '#0C0C0C')
+ * - flip: Whether to flip vertically (default: false)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  fillColor?: string;
+  flip?: boolean;
+  class?: string;
+}
+
+const {
+  fillColor = 'currentColor',
+  flip = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['wave-divider', { 'wave-divider--flipped': flip }, className]} style={fillColor !== 'currentColor' ? `color: ${fillColor}` : ''}>
+  <svg
+    viewBox="0 0 1440 120"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="none"
+  >
+    <path
+      d="M0,64 C240,120 480,20 720,64 C960,108 1200,20 1440,64 L1440,120 L0,120 Z"
+      fill="currentColor"
+    />
+  </svg>
+</div>
+
+<style>
+  .wave-divider {
+    width: 100%;
+    line-height: 0;
+    margin-top: -1px;
+    margin-bottom: -1px;
+  }
+
+  .wave-divider svg {
+    width: 100%;
+    height: 80px;
+    display: block;
+  }
+
+  .wave-divider--flipped {
+    transform: scaleY(-1);
+  }
+
+  @media (min-width: 768px) {
+    .wave-divider svg {
+      height: 100px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .wave-divider svg {
+      height: 120px;
+    }
+  }
+</style>

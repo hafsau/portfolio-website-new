@@ -1,0 +1,167 @@
+---
+/**
+ * AnimatedText Component
+ *
+ * Character-by-character scroll-driven opacity animation.
+ * Each character transitions from low opacity to full opacity
+ * based on its position in the text relative to scroll progress.
+ *
+ * Creates an immersive "reading along" effect as the user scrolls.
+ *
+ * Inspired by MotionSites "Jack" template.
+ *
+ * Props:
+ * - text: The text content to animate
+ * - tag: HTML tag to use (default: 'p')
+ * - class: Additional CSS classes
+ * - startOpacity: Initial opacity for characters (default: 0.2)
+ * - scrollStart: ScrollTrigger start position (default: 'top 80%')
+ * - scrollEnd: ScrollTrigger end position (default: 'bottom 20%')
+ */
+
+interface Props {
+  text: string;
+  tag?: 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
+  class?: string;
+  startOpacity?: number;
+  scrollStart?: string;
+  scrollEnd?: string;
+}
+
+const {
+  text,
+  tag: Tag = 'p',
+  class: className = '',
+  startOpacity = 0.2,
+  scrollStart = 'top 80%',
+  scrollEnd = 'bottom 20%',
+} = Astro.props;
+
+// Split text into characters, preserving spaces
+const characters = text.split('');
+---
+
+<Tag
+  class:list={['animated-text', className]}
+  data-animated-text
+  data-start-opacity={startOpacity}
+  data-scroll-start={scrollStart}
+  data-scroll-end={scrollEnd}
+>
+  {characters.map((char, index) => (
+    <span class="char-wrapper">
+      <span class="char-placeholder" aria-hidden="true">{char === ' ' ? '\u00A0' : char}</span>
+      <span
+        class="char"
+        data-char-index={index}
+        style={`opacity: ${startOpacity};`}
+      >
+        {char === ' ' ? '\u00A0' : char}
+      </span>
+    </span>
+  ))}
+</Tag>
+
+<style>
+  .animated-text {
+    position: relative;
+  }
+
+  .char-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .char-placeholder {
+    visibility: hidden;
+  }
+
+  .char {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: opacity;
+    transition: opacity 0.1s ease-out;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .char {
+      opacity: 1 !important;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, ScrollTrigger } from '../scripts/gsap-utils';
+
+  function initAnimatedText() {
+    const textElements = document.querySelectorAll<HTMLElement>('[data-animated-text]');
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      // Show all characters at full opacity
+      textElements.forEach((element) => {
+        const chars = element.querySelectorAll<HTMLElement>('.char');
+        chars.forEach((char) => {
+          char.style.opacity = '1';
+        });
+      });
+      return;
+    }
+
+    textElements.forEach((element) => {
+      const startOpacity = parseFloat(element.dataset.startOpacity || '0.2');
+      const scrollStart = element.dataset.scrollStart || 'top 80%';
+      const scrollEnd = element.dataset.scrollEnd || 'bottom 20%';
+      const chars = element.querySelectorAll<HTMLElement>('.char');
+      const totalChars = chars.length;
+
+      // Create ScrollTrigger for this text element
+      ScrollTrigger.create({
+        trigger: element,
+        start: scrollStart,
+        end: scrollEnd,
+        scrub: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+
+          chars.forEach((char, index) => {
+            // Calculate individual character progress
+            // Earlier characters reach full opacity sooner
+            const charStart = index / totalChars;
+            const charEnd = (index + 1) / totalChars;
+
+            let charProgress: number;
+
+            if (progress <= charStart) {
+              charProgress = 0;
+            } else if (progress >= charEnd) {
+              charProgress = 1;
+            } else {
+              charProgress = (progress - charStart) / (charEnd - charStart);
+            }
+
+            // Interpolate opacity from startOpacity to 1
+            const opacity = startOpacity + (1 - startOpacity) * charProgress;
+            char.style.opacity = String(opacity);
+          });
+        },
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimatedText);
+  } else {
+    // Small delay to ensure GSAP is loaded
+    requestAnimationFrame(initAnimatedText);
+  }
+
+  // Re-initialize after Astro View Transitions
+  document.addEventListener('astro:after-swap', initAnimatedText);
+</script>

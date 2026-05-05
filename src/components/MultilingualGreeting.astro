@@ -1,0 +1,118 @@
+---
+/**
+ * MultilingualGreeting - Cycling greeting animation
+ * Inspired by Dennis Snellenberg's portfolio
+ *
+ * Props:
+ * - greetings: Array of greetings to cycle through
+ * - interval: Time between greetings in ms (default: 2000)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  greetings?: string[];
+  interval?: number;
+  class?: string;
+}
+
+const {
+  greetings = ['Hello', 'Bonjour', 'Hola', 'नमस्ते', 'Ciao', '你好', 'مرحبا', 'Olá'],
+  interval = 2000,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={['multilingual-greeting', className]}
+  data-greeting
+  data-interval={interval}
+>
+  {greetings.map((greeting, i) => (
+    <span
+      class="greeting-word"
+      data-greeting-index={i}
+      style={i === 0 ? 'opacity: 1;' : 'opacity: 0;'}
+    >
+      {greeting}
+    </span>
+  ))}
+</div>
+
+<style>
+  .multilingual-greeting {
+    position: relative;
+    display: block;
+    text-align: center;
+    min-height: 1.5em;
+    width: 100%;
+  }
+
+  .greeting-word {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+    transition: opacity 0.5s ease;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .greeting-word:first-child {
+    position: relative;
+    left: auto;
+    transform: none;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .greeting-word {
+      transition: none;
+    }
+  }
+</style>
+
+<script define:vars={{ greetings, interval }}>
+  function initGreetingAnimation() {
+    const container = document.querySelector('[data-greeting]');
+    if (!container) return;
+
+    const words = container.querySelectorAll('.greeting-word');
+    if (words.length <= 1) return;
+
+    let currentIndex = 0;
+    const totalWords = words.length;
+
+    // Check for reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    function showNextGreeting() {
+      // Hide current
+      const current = words[currentIndex];
+      current.style.opacity = '0';
+
+      // Move to next
+      currentIndex = (currentIndex + 1) % totalWords;
+
+      // Show next
+      const next = words[currentIndex];
+      next.style.opacity = '1';
+    }
+
+    // Start cycling
+    setInterval(showNextGreeting, interval);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGreetingAnimation);
+  } else {
+    initGreetingAnimation();
+  }
+
+  // Re-init after View Transitions
+  document.addEventListener('astro:after-swap', initGreetingAnimation);
+</script>

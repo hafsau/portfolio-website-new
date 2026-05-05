@@ -1,0 +1,45 @@
+---
+/**
+ * Marquee - Simplest possible infinite scroll
+ */
+interface Props {
+  duration?: number;
+  class?: string;
+}
+
+const { duration = 20, class: className = '' } = Astro.props;
+---
+
+<div class:list={['simple-marquee', className]} style={`--duration: ${duration}s`}>
+  <div class="simple-marquee-track">
+    <span class="simple-marquee-content"><slot /></span>
+    <span class="simple-marquee-content" aria-hidden="true"><slot /></span>
+  </div>
+</div>
+
+<style>
+  .simple-marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .simple-marquee-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: scroll var(--duration) linear infinite;
+  }
+
+  .simple-marquee-content {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .simple-marquee:hover .simple-marquee-track {
+    animation-play-state: paused;
+  }
+</style>

@@ -114,10 +114,10 @@ describe('Image Performance', () => {
   it('should have all referenced images', () => {
     const requiredImages = [
       'ai-lab/hero-image.svg',
-      'ai-lab/equaltales.png',
-      'ai-lab/portfolio.png',
       'ai-lab/interview-sage.png',
       'ai-lab/headshot-ai.png',
+      'equaltales/hero.png',
+      'portfolio-website/hero.png',
       'medrec/hero-medrec.png',
       'medrec/hero-image-1.png',
       'fitstart/hero-image.png',

@@ -29,9 +29,11 @@ describe('Portfolio Data', () => {
       projects.forEach((project: any) => {
         expect(project).toHaveProperty('number');
         expect(project).toHaveProperty('title');
+        expect(project).toHaveProperty('category');
         expect(project).toHaveProperty('description');
-        expect(project).toHaveProperty('metric');
-        expect(project).toHaveProperty('year');
+        expect(project).toHaveProperty('href');
+        expect(project).toHaveProperty('image');
+        expect(project).toHaveProperty('color');
       });
     });
 
@@ -42,59 +44,38 @@ describe('Portfolio Data', () => {
       });
     });
 
-    it('project metrics should contain percentage or quantifiable data', () => {
+    it('project colors should be valid hex codes', () => {
       projects.forEach((project: any) => {
-        expect(project.metric).toMatch(/\d+%|\d+[MK]?\+?/);
+        expect(project.color).toMatch(/^#[0-9a-fA-F]{6}$/);
+      });
+    });
+
+    it('project images should be valid paths', () => {
+      projects.forEach((project: any) => {
+        expect(project.image).toMatch(/^\/images\/.+\.(png|jpg|jpeg|svg|webp)$/);
       });
     });
   });
 
-  describe('Skill Categories', () => {
-    const skillCategories = extractArray(indexContent, 'skillCategories');
+  describe('Stats', () => {
+    const stats = extractArray(indexContent, 'stats');
 
-    it('should have at least 4 skill categories', () => {
-      expect(skillCategories.length).toBeGreaterThanOrEqual(4);
+    it('should have stats for visual showcase', () => {
+      expect(stats.length).toBeGreaterThan(0);
     });
 
-    it('should include Design, Research, Technical, and AI & Automation categories', () => {
-      const categoryNames = skillCategories.map((cat: any) => cat.category);
-      expect(categoryNames).toContain('Design');
-      expect(categoryNames).toContain('Research');
-      expect(categoryNames).toContain('Technical');
-      expect(categoryNames).toContain('AI & Automation');
-    });
-
-    it('each category should have at least 5 skills', () => {
-      skillCategories.forEach((cat: any) => {
-        expect(cat.skills.length).toBeGreaterThanOrEqual(5);
-      });
-    });
-  });
-
-  describe('Tools', () => {
-    const tools = extractArray(indexContent, 'tools');
-
-    it('should have at least 10 tools', () => {
-      expect(tools.length).toBeGreaterThanOrEqual(10);
-    });
-
-    it('each tool should have name and icon properties', () => {
-      tools.forEach((tool: any) => {
-        expect(tool).toHaveProperty('name');
-        expect(tool).toHaveProperty('icon');
-        expect(tool.name).toBeTruthy();
-        expect(tool.icon).toBeTruthy();
+    it('each stat should have required fields', () => {
+      stats.forEach((stat: any) => {
+        expect(stat).toHaveProperty('number');
+        expect(stat).toHaveProperty('suffix');
+        expect(stat).toHaveProperty('label');
       });
     });
 
-    it('should include essential design tools', () => {
-      const toolNames = tools.map((t: any) => t.name);
-      expect(toolNames).toContain('Figma');
-    });
-
-    it('should include Claude AI tool', () => {
-      const toolNames = tools.map((t: any) => t.name);
-      expect(toolNames).toContain('Claude AI');
+    it('stat numbers should be valid', () => {
+      stats.forEach((stat: any) => {
+        expect(parseInt(stat.number)).toBeGreaterThan(0);
+      });
     });
   });
 });

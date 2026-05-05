@@ -1,0 +1,211 @@
+---
+/**
+ * ScrollFloatingElements - Scroll-linked parallax floating orbs
+ *
+ * Creates persistent gradient orbs that follow the user as they scroll,
+ * drifting and fading to create depth and visual continuity.
+ *
+ * Inspired by Sarah Fatmi's portfolio (sarahfatmi.com)
+ */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['scroll-floating-container', className]} id="scroll-floats">
+  <div class="scroll-float scroll-float-1"></div>
+  <div class="scroll-float scroll-float-2"></div>
+  <div class="scroll-float scroll-float-3"></div>
+  <div class="scroll-float scroll-float-4"></div>
+</div>
+
+<style>
+  .scroll-floating-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .scroll-float {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.6;
+    will-change: transform, opacity;
+  }
+
+  /* Purple-blue orb - top left */
+  .scroll-float-1 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    top: 10%;
+    left: -5%;
+  }
+
+  /* Pink-red orb - top right */
+  .scroll-float-2 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    top: 30%;
+    right: -10%;
+  }
+
+  /* Blue-cyan orb - bottom left */
+  .scroll-float-3 {
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    bottom: 20%;
+    left: 20%;
+  }
+
+  /* Green-teal orb - center right */
+  .scroll-float-4 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    top: 60%;
+    right: 15%;
+  }
+
+  /* Reduced motion: show static orbs */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-float {
+      opacity: 0.4;
+    }
+  }
+
+  /* Smaller orbs on mobile */
+  @media (max-width: 768px) {
+    .scroll-float-1 {
+      width: 300px;
+      height: 300px;
+    }
+    .scroll-float-2 {
+      width: 250px;
+      height: 250px;
+    }
+    .scroll-float-3 {
+      width: 200px;
+      height: 200px;
+    }
+    .scroll-float-4 {
+      width: 180px;
+      height: 180px;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initScrollFloats() {
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    // Kill any existing ScrollTriggers for these elements to prevent duplicates
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (trigger.vars.trigger === 'body' && trigger.animation?.targets()?.some((el: Element) =>
+        el.classList.contains('scroll-float')
+      )) {
+        trigger.kill();
+      }
+    });
+
+    // Element 1: Slow drift down-right (purple-blue)
+    gsap.fromTo('.scroll-float-1',
+      { y: 0, x: 0, scale: 1, opacity: 0.6 },
+      {
+        y: '80vh',
+        x: '20vw',
+        scale: 0.7,
+        opacity: 0.2,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.5,
+        }
+      }
+    );
+
+    // Element 2: Drift down-left (pink-red)
+    gsap.fromTo('.scroll-float-2',
+      { y: 0, x: 0, scale: 1, opacity: 0.6 },
+      {
+        y: '60vh',
+        x: '-30vw',
+        scale: 0.6,
+        opacity: 0.15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 2,
+        }
+      }
+    );
+
+    // Element 3: Slower, drift right (blue-cyan)
+    gsap.fromTo('.scroll-float-3',
+      { y: 0, x: 0, scale: 1, opacity: 0.6 },
+      {
+        y: '40vh',
+        x: '25vw',
+        scale: 0.8,
+        opacity: 0.1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 2.5,
+        }
+      }
+    );
+
+    // Element 4: Very slow, drift left (green-teal)
+    gsap.fromTo('.scroll-float-4',
+      { y: 0, x: 0, scale: 1, opacity: 0.6 },
+      {
+        y: '50vh',
+        x: '-15vw',
+        scale: 0.5,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 3,
+        }
+      }
+    );
+  }
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollFloats);
+  } else {
+    initScrollFloats();
+  }
+
+  // Re-initialize after View Transitions
+  document.addEventListener('astro:after-swap', () => {
+    // Small delay to ensure DOM is ready
+    requestAnimationFrame(initScrollFloats);
+  });
+</script>

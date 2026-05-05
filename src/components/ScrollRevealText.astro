@@ -1,0 +1,146 @@
+---
+/**
+ * ScrollRevealText Component - Dennis Snellenberg Inspired
+ *
+ * Reveals text word-by-word as user scrolls into view.
+ * Uses GSAP ScrollTrigger for smooth, scroll-connected animation.
+ *
+ * Props:
+ * - tag: HTML element to render (default: 'p')
+ * - class: Additional CSS classes
+ * - stagger: Delay between each word (default: 0.02)
+ * - threshold: How much of element should be visible to trigger (default: 0.1)
+ */
+
+interface Props {
+  tag?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'span' | 'div';
+  class?: string;
+  stagger?: number;
+  threshold?: number;
+}
+
+const {
+  tag: Tag = 'p',
+  class: className = '',
+  stagger = 0.02,
+  threshold = 0.3,
+} = Astro.props;
+---
+
+<Tag
+  class:list={['scroll-reveal-text', className]}
+  data-scroll-reveal
+  data-stagger={stagger}
+  data-threshold={threshold}
+>
+  <slot />
+</Tag>
+
+<style>
+  .scroll-reveal-text {
+    overflow: hidden;
+  }
+
+  /* Words are wrapped in spans by JS */
+  .scroll-reveal-text :global(.word) {
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  .scroll-reveal-text :global(.word-inner) {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .scroll-reveal-text.revealed :global(.word-inner) {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Reduced motion fallback */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal-text :global(.word-inner) {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initScrollRevealText() {
+    const elements = document.querySelectorAll<HTMLElement>('[data-scroll-reveal]');
+
+    // Check for reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    elements.forEach((element) => {
+      // Skip if already initialized
+      if (element.dataset.initialized === 'true') return;
+      element.dataset.initialized = 'true';
+
+      const stagger = parseFloat(element.dataset.stagger || '0.02');
+      const threshold = parseFloat(element.dataset.threshold || '0.1');
+
+      // Get original text content
+      const text = element.textContent || '';
+
+      // Split into words and wrap each in spans
+      const words = text.trim().split(/\s+/);
+      element.innerHTML = words
+        .map(word => `<span class="word"><span class="word-inner">${word}</span></span>`)
+        .join(' ');
+
+      const wordInners = element.querySelectorAll('.word-inner');
+
+      if (prefersReducedMotion) {
+        // Instantly reveal for reduced motion
+        element.classList.add('revealed');
+        wordInners.forEach(w => {
+          (w as HTMLElement).style.transform = 'translateY(0)';
+          (w as HTMLElement).style.opacity = '1';
+        });
+        return;
+      }
+
+      // GSAP ScrollTrigger animation
+      gsap.fromTo(
+        wordInners,
+        {
+          y: '100%',
+          opacity: 0
+        },
+        {
+          y: '0%',
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: stagger,
+          scrollTrigger: {
+            trigger: element,
+            start: `top ${100 - threshold * 100}%`,
+            once: true,
+            onEnter: () => element.classList.add('revealed')
+          }
+        }
+      );
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollRevealText);
+  } else {
+    initScrollRevealText();
+  }
+
+  // Re-initialize after page transitions
+  document.addEventListener('astro:after-swap', initScrollRevealText);
+  window.addEventListener('barba:afterEnter', initScrollRevealText);
+</script>

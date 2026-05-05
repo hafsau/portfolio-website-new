@@ -1,0 +1,154 @@
+---
+/**
+ * StaggeredShapes Component
+ *
+ * Decorative SVG shapes that animate in with staggered delays.
+ * Adds visual interest to sections with organic, playful elements.
+ *
+ * Props:
+ * - variant: 'dots' | 'lines' | 'circles' (default: 'dots')
+ * - count: Number of shapes (default: 5)
+ * - color: Fill color (default: currentColor)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  variant?: 'dots' | 'lines' | 'circles';
+  count?: number;
+  color?: string;
+  class?: string;
+}
+
+const {
+  variant = 'dots',
+  count = 5,
+  color = 'currentColor',
+  class: className = '',
+} = Astro.props;
+
+const shapes = Array.from({ length: count }, (_, i) => i);
+---
+
+<div
+  class:list={['staggered-shapes', `staggered-shapes--${variant}`, className]}
+  data-staggered-shapes
+  style={`--shape-color: ${color};`}
+>
+  {variant === 'dots' && shapes.map((i) => (
+    <svg
+      class="shape shape-dot"
+      viewBox="0 0 10 10"
+      style={`--delay: ${i * 0.1}s;`}
+    >
+      <circle cx="5" cy="5" r="4" fill="var(--shape-color)" />
+    </svg>
+  ))}
+
+  {variant === 'lines' && shapes.map((i) => (
+    <svg
+      class="shape shape-line"
+      viewBox="0 0 30 4"
+      style={`--delay: ${i * 0.08}s;`}
+    >
+      <rect x="0" y="0" width="30" height="4" rx="2" fill="var(--shape-color)" />
+    </svg>
+  ))}
+
+  {variant === 'circles' && shapes.map((i) => (
+    <svg
+      class="shape shape-circle"
+      viewBox="0 0 20 20"
+      style={`--delay: ${i * 0.12}s;`}
+    >
+      <circle cx="10" cy="10" r="8" fill="none" stroke="var(--shape-color)" stroke-width="2" />
+    </svg>
+  ))}
+</div>
+
+<style>
+  .staggered-shapes {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .staggered-shapes--dots {
+    gap: 0.375rem;
+  }
+
+  .staggered-shapes--lines {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .staggered-shapes--circles {
+    gap: 0.25rem;
+  }
+
+  .shape {
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: var(--delay);
+  }
+
+  .shape-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .shape-line {
+    width: 24px;
+    height: 3px;
+  }
+
+  .shape-circle {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Animate in when parent has .visible class */
+  .staggered-shapes.visible .shape {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .shape {
+      transition: none;
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<script>
+  function initStaggeredShapes() {
+    const containers = document.querySelectorAll('[data-staggered-shapes]');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    containers.forEach((container) => observer.observe(container));
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStaggeredShapes);
+  } else {
+    initStaggeredShapes();
+  }
+
+  // Re-initialize after page transitions
+  document.addEventListener('astro:after-swap', initStaggeredShapes);
+</script>

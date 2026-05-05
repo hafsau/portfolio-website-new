@@ -1,12 +1,17 @@
 ---
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
+import { ViewTransitions } from 'astro:transitions';
+import LoadingScreen from '../components/LoadingScreen.astro';
+import BackToTop from '../components/BackToTop.astro';
 
 interface Props {
   title: string;
   description?: string;
   ogImage?: string;
   ogType?: string;
+  useBarba?: boolean; // Enable Barba.js transitions (Version A)
+  showLoadingScreen?: boolean; // Show initial loading animation
 }
 
 const {
@@ -14,7 +19,13 @@ const {
   description = 'Product Designer with engineering precision. Designing health & wellness experiences that improve user efficiency by 30-45%.',
   ogImage = '/images/headshot.png',
   ogType = 'website',
+  useBarba = false,
+  showLoadingScreen = false,
 } = Astro.props;
+
+// Determine namespace for Barba transitions
+const pathname = Astro.url.pathname;
+const barbaNamespace = pathname.startsWith('/work/') ? 'work' : 'home';
 
 const fullTitle = title === 'Home' ? 'Hafsa Usmani | Product Designer' : `${title} | Hafsa Usmani`;
 const siteUrl = 'https://hafsausmani.com';
@@ -56,18 +67,16 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
 
     <title>{fullTitle}</title>
 
-    <!-- Theme initialization -->
+    <!-- View Transitions (fallback when Barba not used) -->
+    {!useBarba && <ViewTransitions />}
+
+    <!-- Theme initialization - always dark mode -->
     <script is:inline>
       (function() {
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-
-        if (theme === 'light') {
-          document.documentElement.classList.add('light');
-        }
-
-        document.documentElement.setAttribute('data-theme', theme);
+        // Always use dark mode
+        document.documentElement.classList.remove('light');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.removeItem('theme');
       })();
     </script>
 
@@ -87,16 +96,289 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
     })} />
   </head>
   <body>
+    <!-- Loading Screen (initial page load) -->
+    {showLoadingScreen && <LoadingScreen />}
+
     <a href="#main-content" class="skip-link">Skip to content</a>
-    <slot />
+
+    <!-- Back to Top Button -->
+    <BackToTop />
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot">
+      <div class="cursor-ring"></div>
+      <span class="cursor-text" id="cursor-text"></span>
+      <div class="cursor-image" id="cursor-image"></div>
+    </div>
+
+    <!-- Fixed elements slot (outside Barba for position:fixed to work) -->
+    <slot name="fixed" />
+
+    {useBarba ? (
+      <!-- Barba.js wrapper for page transitions -->
+      <div data-barba="wrapper">
+        <main data-barba="container" data-barba-namespace={barbaNamespace}>
+          <slot />
+        </main>
+      </div>
+    ) : (
+      <slot />
+    )}
+
+    <!-- Full-width slot outside main (for marquees, etc) -->
+    <slot name="fullwidth" />
 
     <!-- Console Easter Egg -->
     <script>
-      console.log('%c👋 Hey there, curious developer!', 'font-size: 24px; font-weight: bold; color: #4a5ee4;');
+      console.log('%cHey there, curious developer!', 'font-size: 24px; font-weight: bold; color: #4a5ee4;');
       console.log('%cI see you like peeking under the hood. Nice.', 'font-size: 14px; color: #666;');
-      console.log('%c✨ This portfolio was crafted with Astro, custom CSS, and a lot of attention to detail.', 'font-size: 12px; color: #888;');
-      console.log('%c📧 Want to chat? hafsa.usmani2@gmail.com', 'font-size: 12px; color: #4a5ee4;');
+      console.log('%cThis portfolio was crafted with Astro, GSAP, and a lot of attention to detail.', 'font-size: 12px; color: #888;');
+      console.log('%cWant to chat? hafsa.usmani2@gmail.com', 'font-size: 12px; color: #4a5ee4;');
     </script>
+
+    <!-- GSAP and Lenis Initialization -->
+    <script>
+      import { initSmoothScroll, initScrollReveals, initAnchorScroll } from '../scripts/gsap-utils';
+
+      // Initialize smooth scroll and GSAP animations
+      function initAnimations() {
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReducedMotion) {
+          // Initialize Lenis smooth scroll
+          initSmoothScroll();
+        }
+
+        // Initialize scroll reveal animations
+        initScrollReveals();
+
+        // Initialize anchor link smooth scrolling
+        initAnchorScroll(100);
+      }
+
+      // Run on initial load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAnimations);
+      } else {
+        initAnimations();
+      }
+
+      // Re-run after View Transitions
+      document.addEventListener('astro:after-swap', initAnimations);
+    </script>
+
+    <!-- Custom Cursor Logic -->
+    <script>
+      function initCursor() {
+        const cursor = document.getElementById('cursor-dot');
+        const cursorText = document.getElementById('cursor-text');
+        const cursorImage = document.getElementById('cursor-image');
+
+        if (!cursor || !cursorText || !cursorImage) return;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        // Smooth cursor following
+        function animateCursor() {
+          const lerp = 0.15;
+          currentX += (mouseX - currentX) * lerp;
+          currentY += (mouseY - currentY) * lerp;
+
+          cursor.style.left = `${currentX}px`;
+          cursor.style.top = `${currentY}px`;
+
+          requestAnimationFrame(animateCursor);
+        }
+
+        // Track mouse position
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+
+          if (!cursor.classList.contains('visible')) {
+            cursor.classList.add('visible');
+          }
+        });
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => {
+          cursor.classList.remove('visible');
+        });
+
+        // Handle hover states with cursor text and images
+        function setupHoverListeners() {
+          // Elements with data-cursor-text attribute
+          const cursorTextElements = document.querySelectorAll('[data-cursor-text]');
+          cursorTextElements.forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+              const text = el.getAttribute('data-cursor-text');
+              if (text) {
+                cursorText.textContent = text;
+                cursor.classList.add('has-text');
+              }
+            });
+            el.addEventListener('mouseleave', () => {
+              cursorText.textContent = '';
+              cursor.classList.remove('has-text');
+            });
+          });
+
+          // Elements with data-cursor-image attribute (project cards)
+          const cursorImageElements = document.querySelectorAll('[data-cursor-image]');
+          cursorImageElements.forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+              const imageSrc = el.getAttribute('data-cursor-image');
+              if (imageSrc) {
+                cursorImage.style.backgroundImage = `url(${imageSrc})`;
+                cursor.classList.add('has-image');
+              }
+            });
+            el.addEventListener('mouseleave', () => {
+              cursor.classList.remove('has-image');
+              // Delay clearing image to allow fade out
+              setTimeout(() => {
+                if (!cursor.classList.contains('has-image')) {
+                  cursorImage.style.backgroundImage = '';
+                }
+              }, 300);
+            });
+          });
+
+          // Interactive elements (links, buttons)
+          const interactiveElements = document.querySelectorAll('a, button, [role="button"]');
+          interactiveElements.forEach((el) => {
+            if (!el.hasAttribute('data-cursor-text') && !el.hasAttribute('data-cursor-image')) {
+              el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+              });
+              el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+              });
+            }
+          });
+        }
+
+        setupHoverListeners();
+        animateCursor();
+
+        // Re-setup listeners after View Transitions
+        document.addEventListener('astro:after-swap', setupHoverListeners);
+      }
+
+      // Initialize cursor
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCursor);
+      } else {
+        initCursor();
+      }
+
+      document.addEventListener('astro:after-swap', initCursor);
+    </script>
+
+    <!-- Barba.js Page Transitions (only for Version A) -->
+    {useBarba && (
+      <script>
+        import { initBarbaTransitions } from '../scripts/barba-transitions';
+        import { initSmoothScroll, initScrollReveals, initAnchorScroll } from '../scripts/gsap-utils';
+
+        // Initialize Barba transitions
+        initBarbaTransitions();
+
+        // Initialize smooth anchor scrolling with offset for hamburger menu
+        initAnchorScroll(100);
+
+        // Re-initialize animations after Barba transition
+        window.addEventListener('barba:afterEnter', () => {
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!prefersReducedMotion) {
+            initSmoothScroll();
+          }
+          initScrollReveals();
+          initAnchorScroll(100);
+
+          // Re-initialize custom cursor hover listeners
+          const cursor = document.getElementById('cursor-dot');
+          const cursorText = document.getElementById('cursor-text');
+          if (cursor && cursorText) {
+            const cursorTextElements = document.querySelectorAll('[data-cursor-text]');
+            cursorTextElements.forEach((el) => {
+              el.addEventListener('mouseenter', () => {
+                const text = el.getAttribute('data-cursor-text');
+                if (text) {
+                  cursorText.textContent = text;
+                  cursor.classList.add('has-text');
+                }
+              });
+              el.addEventListener('mouseleave', () => {
+                cursorText.textContent = '';
+                cursor.classList.remove('has-text');
+              });
+            });
+          }
+        });
+      </script>
+
+      <style is:global>
+        /* Page Transition Overlay - Hidden by default */
+        #page-transition-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          display: none !important;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+          overflow: hidden;
+          visibility: hidden !important;
+          opacity: 0;
+        }
+
+        #page-transition-overlay.active {
+          display: flex !important;
+          visibility: visible !important;
+          opacity: 1;
+        }
+
+        #page-transition-overlay .transition-curve {
+          position: fixed;
+          width: 100%;
+          height: 120vh;
+          bottom: 0;
+          left: 0;
+          transform: translateY(100%);
+          will-change: transform;
+        }
+
+        #page-transition-overlay .transition-curve svg {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          fill: #0C0C0C;
+        }
+
+        #page-transition-overlay .transition-logo {
+          position: relative;
+          z-index: 10;
+          font-size: 4rem;
+          font-weight: 900;
+          color: white;
+          opacity: 0;
+          transform: scale(0.8);
+          letter-spacing: 0.1em;
+        }
+
+        /* Barba container base styles */
+        [data-barba="container"] {
+          will-change: opacity, transform;
+        }
+      </style>
+    )}
 
     <!-- Vercel Analytics -->
     <Analytics />

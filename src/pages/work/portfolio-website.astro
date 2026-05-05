@@ -1,0 +1,736 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BeforeAfterSlider from '../../components/BeforeAfterSlider.astro';
+
+const metrics = [
+  { value: '2', label: 'Weeks build time' },
+  { value: '20+', label: 'Micro-interactions' },
+  { value: '157', label: 'Tests passing' }
+];
+
+const contributions = [
+  {
+    label: 'Research',
+    metrics: [
+      { value: '20+', text: 'award-winning portfolios analyzed' },
+      { value: '50+', text: 'micro-interactions studied' },
+      { value: '5', text: 'animation libraries explored' }
+    ]
+  },
+  {
+    label: 'Design',
+    metrics: [
+      { value: '20+', text: 'interaction patterns designed' },
+      { value: '6', text: 'signature animations created' },
+      { value: '1', text: 'cohesive motion system' }
+    ]
+  },
+  {
+    label: 'Development',
+    metrics: [
+      { value: '60+', text: 'custom components built' },
+      { value: '100%', text: 'AI-assisted implementation' },
+      { value: '157', text: 'automated tests passing' }
+    ]
+  }
+];
+
+const transformations = [
+  {
+    id: 'typography',
+    title: 'Display Typography',
+    before: 'Generic system fonts for headlines',
+    after: 'Custom Moche display font for hero text',
+    description: 'The bold, distinctive Moche typeface makes a strong first impression. Typography becomes a design element, not just text.',
+    beforeImage: '/images/portfolio-website/before-typography.png',
+    afterImage: '/images/portfolio-website/after-typography.png'
+  },
+  {
+    id: 'card-tilt',
+    title: '3D Card Effects',
+    before: 'Flat cards with basic hover states',
+    after: 'Perspective tilt responding to mouse position',
+    description: 'Project cards now feel tactile. The 3D effect invites exploration and adds depth to the browsing experience.',
+    beforeImage: '/images/portfolio-website/before-cards.png',
+    afterImage: '/images/portfolio-website/after-cards.png'
+  }
+];
+
+const microInteractions = [
+  {
+    title: 'Page Transition',
+    description: 'Curved overlay sweeps across the screen, creating a seamless flow between pages.',
+    gif: '/images/portfolio-website/after-transition.gif'
+  },
+  {
+    title: 'Back to Top',
+    description: 'Smooth animated button that appears after scrolling, with GSAP-powered transitions and accessibility support.',
+    gif: '/images/portfolio-website/back-to-top.gif'
+  }
+];
+
+const animationPhilosophy = [
+  {
+    principle: 'Purpose Over Polish',
+    description: 'Every animation serves a function—guiding attention, providing feedback, or creating continuity. No decoration for decoration\'s sake.'
+  },
+  {
+    principle: 'Respect User Preferences',
+    description: 'All animations honor prefers-reduced-motion. The site remains fully functional and beautiful without any motion.'
+  },
+  {
+    principle: 'Performance First',
+    description: 'Custom CSS animations over heavy libraries. GPU-accelerated transforms. 60fps or nothing.'
+  }
+];
+
+const aboutMePoints = [
+  {
+    title: 'Obsessive Attention to Detail',
+    description: 'The difference between good and great is in the micro-interactions. I spend time on details most people won\'t consciously notice—but will feel.'
+  },
+  {
+    title: 'Design Meets Development',
+    description: 'I don\'t just design interactions—I build them. This portfolio proves I can bridge the gap between concept and implementation.'
+  },
+  {
+    title: 'Craft Over Convenience',
+    description: 'I chose custom animations over libraries, bespoke components over templates. The extra effort shows in every interaction.'
+  }
+];
+---
+
+<CaseStudyLayout
+  title="HafsaUsmani.com"
+  subtitle="Redesigning my portfolio to showcase design craft through polished interactions and elevated visuals—because the details are the design."
+  description="A complete portfolio redesign focused on micro-interactions, custom animations, and attention to detail that demonstrates design thinking in action."
+  heroImage="/images/portfolio-website/after-typography.png"
+  industry="Personal / Design Portfolio"
+  role="Designer & Developer"
+  timeline="2 Weeks"
+  platforms="Web"
+  tools={[]}
+  metrics={metrics}
+  prevProject={{
+    title: 'EqualTales',
+    href: '/work/equaltales',
+    subtitle: 'AI-powered children\'s storybook'
+  }}
+  nextProject={{
+    title: 'AI Lab',
+    href: '/work/ai-lab',
+    subtitle: 'Creative experiments in AI-assisted design',
+    image: '/images/ai-lab/hero-image.svg'
+  }}
+>
+  <!-- Section: The Challenge -->
+  <section class="case-section">
+    <h2>The Challenge</h2>
+    <div class="problem-statement">
+      <p class="lead-text">
+        The old portfolio worked. It showed my projects, listed my skills, and got the job done. But "working" isn't enough.
+      </p>
+      <p class="lead-text secondary">
+        It felt static. Generic. It didn't demonstrate the attention to detail I bring to every project.
+      </p>
+      <div class="challenge-box">
+        <span class="challenge-label">The Goal</span>
+        <p>
+          Redesign every interaction to <strong>demonstrate design craft</strong>—showing that I care about the details that most people overlook but everyone feels.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: My Contributions -->
+  <section class="case-section">
+    <h2>My Contributions</h2>
+    <div class="contributions-stack">
+      {contributions.map((contribution, index) => (
+        <div class="contribution-row reveal">
+          <span class="contribution-number">0{index + 1}</span>
+          <div class="contribution-content">
+            <h3 class="contribution-label">{contribution.label}</h3>
+            <div class="contribution-metrics">
+              {contribution.metrics.map((metric) => (
+                <div class="contribution-metric">
+                  <span class="metric-value">{metric.value}</span>
+                  <span class="metric-text">{metric.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: The Transformation -->
+  <section class="case-section transformation-section">
+    <h2>The Transformation</h2>
+    <p>
+      Side-by-side comparisons of what changed. Drag the slider to see before and after.
+    </p>
+
+    <div class="transformations-grid">
+      {transformations.map((item) => (
+        <div class="transformation-item" id={item.id}>
+          <div class="transformation-header">
+            <h3>{item.title}</h3>
+            <div class="transformation-labels">
+              <span class="label-before">{item.before}</span>
+              <span class="label-arrow">→</span>
+              <span class="label-after">{item.after}</span>
+            </div>
+          </div>
+          <div class="slider-container">
+            <BeforeAfterSlider
+              beforeImage={item.beforeImage}
+              afterImage={item.afterImage}
+              beforeLabel="Before"
+              afterLabel="After"
+            />
+          </div>
+          <p class="transformation-description">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Micro-Interactions Showcase -->
+  <section class="case-section interactions-section">
+    <h2>Micro-Interactions in Action</h2>
+    <p>
+      The details that bring the portfolio to life. Each interaction was carefully crafted to feel intentional.
+    </p>
+
+    <div class="interactions-grid">
+      {microInteractions.map((interaction) => (
+        <div class="interaction-card">
+          <div class="interaction-preview">
+            <img
+              src={interaction.gif}
+              alt={`${interaction.title} animation demo`}
+              loading="lazy"
+            />
+            <div class="preview-placeholder">
+              <span>GIF Preview</span>
+            </div>
+          </div>
+          <div class="interaction-info">
+            <h3>{interaction.title}</h3>
+            <p>{interaction.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Animation Philosophy -->
+  <section class="case-section philosophy-section">
+    <h2>Animation Philosophy</h2>
+    <p>
+      Not every animation is good animation. Here's what guided my decisions:
+    </p>
+
+    <div class="philosophy-grid">
+      {animationPhilosophy.map((item, index) => (
+        <div class="philosophy-card">
+          <span class="philosophy-number">0{index + 1}</span>
+          <h3>{item.principle}</h3>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: Key Trade-off -->
+  <section class="case-section">
+    <h2>Key Trade-off</h2>
+    <div class="tradeoff-block">
+      <blockquote>
+        Chose craft over speed—spent extra time on details that most visitors won't consciously notice, but will feel.
+      </blockquote>
+      <p class="tradeoff-explanation">
+        A simpler portfolio could have shipped faster. But this portfolio isn't just showing my work—it <em>is</em> my work. Every polished interaction demonstrates the same attention to detail I bring to client projects.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section: What This Shows About Me -->
+  <section class="case-section conclusion">
+    <h2>What This Shows About Me</h2>
+    <p class="conclusion-intro">
+      This portfolio is both the project and the proof. The interactions you experience while reading this are the skills being demonstrated.
+    </p>
+
+    <div class="about-me-stack">
+      {aboutMePoints.map(point => (
+        <div class="about-me-row">
+          <h3>{point.title}</h3>
+          <p>{point.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="case-section cta-section">
+    <p class="cta-note">You're already experiencing it. Keep exploring.</p>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  /* Teal accent color override for Portfolio Website */
+  :root {
+    --color-accent: #14b8a6;
+  }
+
+  /* Problem Statement */
+  .problem-statement {
+    margin-top: 1rem;
+  }
+
+  .lead-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .lead-text.secondary {
+    margin-top: 0.75rem;
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(20, 184, 166, 0.04) 100%);
+    border-left: 3px solid var(--color-accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin-top: 1.5rem;
+  }
+
+  .challenge-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-box p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-fg);
+    line-height: 1.6;
+  }
+
+  /* Contributions Stack */
+  .contributions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .contribution-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .contribution-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+
+  .contribution-content {
+    flex: 1;
+  }
+
+  .contribution-label {
+    margin: 0 0 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .contribution-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .contribution-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contribution-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contribution-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .contribution-metric .metric-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .contribution-metric .metric-text {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* Transformation Section */
+  .transformation-section {
+    margin-top: 2rem;
+  }
+
+  .transformations-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .transformation-item {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(20, 184, 166, 0.1);
+  }
+
+  .transformation-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .transformation-header h3 {
+    font-size: 1.25rem;
+    color: var(--color-fg);
+    margin: 0 0 0.75rem;
+  }
+
+  .transformation-labels {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .label-before {
+    font-size: 0.8125rem;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+  }
+
+  .label-arrow {
+    color: var(--color-muted);
+    font-size: 1rem;
+  }
+
+  .label-after {
+    font-size: 0.8125rem;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+  }
+
+  .slider-container {
+    margin: 1.5rem 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .transformation-description {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Micro-Interactions Section */
+  .interactions-section {
+    margin-top: 2rem;
+  }
+
+  .interactions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .interactions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .interaction-card {
+    background: var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(20, 184, 166, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .interaction-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(20, 184, 166, 0.15);
+  }
+
+  .interaction-preview {
+    position: relative;
+    aspect-ratio: 16/10;
+    background: #1a1a24;
+    overflow: hidden;
+  }
+
+  .interaction-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .preview-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.02) 100%);
+    border: 2px dashed rgba(20, 184, 166, 0.3);
+    margin: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .preview-placeholder span {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Hide placeholder when image loads */
+  .interaction-preview img:not([src=""]):not([src$="undefined"]) + .preview-placeholder {
+    display: none;
+  }
+
+  .interaction-info {
+    padding: 1.25rem;
+  }
+
+  .interaction-info h3 {
+    font-size: 1rem;
+    color: var(--color-fg);
+    margin: 0 0 0.5rem;
+  }
+
+  .interaction-info p {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Philosophy Section */
+  .philosophy-section {
+    margin-top: 2rem;
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .philosophy-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .philosophy-card {
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .philosophy-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .philosophy-card h3 {
+    font-size: 1rem;
+    color: var(--color-fg);
+    margin: 0 0 0.5rem;
+  }
+
+  .philosophy-card p {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Trade-off Block */
+  .tradeoff-block {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .tradeoff-block blockquote {
+    margin: 0;
+    font-size: 1.125rem;
+    font-style: normal;
+    color: var(--color-fg);
+    line-height: 1.6;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+  }
+
+  .tradeoff-explanation {
+    margin-top: 1rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .tradeoff-explanation em {
+    color: var(--color-accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Conclusion / What This Shows About Me */
+  .conclusion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .conclusion-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .about-me-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-me-row {
+    padding: 1.5rem 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .about-me-row h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-accent);
+  }
+
+  .about-me-row p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    padding-top: 2rem;
+  }
+
+  .cta-note {
+    color: var(--color-muted);
+    font-style: normal;
+    font-size: 1rem;
+  }
+
+  /* Section styling */
+  .case-section {
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .case-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .case-section > h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-fg);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .case-section > h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--color-accent);
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+    border-radius: 2px;
+  }
+
+  .case-section > p {
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .interaction-card {
+      transition: none;
+    }
+    .interaction-card:hover {
+      transform: none;
+    }
+  }
+</style>

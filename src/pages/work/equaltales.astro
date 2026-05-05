@@ -1,0 +1,895 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+
+const metrics = [
+  { value: '1st', label: 'Place - Best AI/ML at #75HER Hackathon' },
+  { value: '200+', label: 'Demo attendees' },
+  { value: '48hrs', label: 'Build time' }
+];
+
+const contributions = [
+  {
+    label: 'Research',
+    metrics: [
+      { value: '50+', text: 'historical figures researched' },
+      { value: '5', text: 'user personas developed' },
+      { value: '5', text: 'competitor analysis' }
+    ]
+  },
+  {
+    label: 'Design',
+    metrics: [
+      { value: '12', text: 'story screens designed' },
+      { value: '6', text: 'character templates' },
+      { value: '1', text: 'illustration style guide' }
+    ]
+  },
+  {
+    label: 'Development',
+    metrics: [
+      { value: '48hrs', text: 'hackathon build time' },
+      { value: '2', text: 'AI models integrated' },
+      { value: '1', text: 'deployed MVP' }
+    ]
+  }
+];
+
+const impactPoints = [
+  {
+    title: 'Identifying the Gap',
+    description: 'Recognized that most children\'s books feature male protagonists. Girls need to see themselves as scientists, engineers, and leaders—not just princesses.'
+  },
+  {
+    title: 'Choosing Authenticity',
+    description: 'Used real historical women like Marie Curie and Mae Jemison instead of fictional characters. Real stories create real impact.'
+  },
+  {
+    title: 'Visual Consistency',
+    description: 'Developed a watercolor illustration style that creates cohesive, warm visuals across all generated images—solving the AI inconsistency problem.'
+  },
+  {
+    title: 'Personal Connection',
+    description: 'Wove the child\'s name directly into the narrative, transforming a generic story into a personal adventure.'
+  }
+];
+
+const designEvolution = {
+  triedAndFailed: [
+    'Generating unique characters per story—faces were inconsistent across pages',
+    'Using photorealistic image style—uncanny valley effect',
+    'Generic fictional role models—felt hollow without authenticity'
+  ],
+  whatWorked: [
+    'Real historical women (Marie Curie, Mae Jemison) for instant authenticity',
+    'Watercolor illustration style for cohesive, warm visuals',
+    'Child\'s name woven into narrative for emotional connection'
+  ]
+};
+
+const keyTradeoff = "Chose authenticity over flexibility—real historical figures limit story variety but create deeper emotional impact.";
+
+const outcome = {
+  award: "Best AI/ML — #75HER Hackathon",
+  reach: "Demo'd to 200+ attendees",
+  devpostUrl: "https://devpost.com/software/equaltales"
+};
+
+const aboutMePoints = [
+  {
+    title: 'Mission-Driven Design',
+    description: 'I\'m drawn to projects with real-world impact. Closing the STEM gender gap isn\'t just a hackathon theme—it\'s a problem worth solving.'
+  },
+  {
+    title: 'Rapid Prototyping',
+    description: 'I can take an idea from concept to deployed product in 48 hours. Speed enables experimentation and learning.'
+  },
+  {
+    title: 'AI-Native Thinking',
+    description: 'I understand how to leverage AI tools effectively—knowing when to prompt, iterate, and make trade-offs for the best outcome.'
+  }
+];
+---
+
+<CaseStudyLayout
+  title="EqualTales"
+  subtitle="An AI-powered children's storybook generator featuring real women from history—built in 48 hours for a hackathon with a mission."
+  description="AI-generated personalized children's stories featuring historical women role models to inspire the next generation of STEM leaders."
+  heroImage="/images/equaltales/hero.png"
+  industry="EdTech / Social Impact"
+  role="Designer & Developer"
+  timeline="2026 (48-Hour Hackathon)"
+  platforms="Web"
+  tools={[]}
+  metrics={metrics}
+  nextProject={{
+    title: 'HafsaUsmani.com',
+    href: '/work/portfolio-website',
+    subtitle: 'AI-assisted portfolio development',
+    image: '/images/portfolio-website/hero.png'
+  }}
+>
+  <!-- Top CTA -->
+  <section class="case-section cta-section-top">
+    <a href="https://equaltales.vercel.app/" target="_blank" rel="noopener noreferrer" class="cta-button">
+      Try EqualTales
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- Section: Problem Statement -->
+  <section class="case-section">
+    <h2>The Challenge</h2>
+    <div class="problem-statement">
+      <p class="lead-text">
+        A hackathon challenge with a mission: create something that helps close the gender gap in STEM.
+      </p>
+      <p class="lead-text secondary">
+        Research shows that representation matters. Girls who see women in STEM are more likely to pursue those careers themselves.
+      </p>
+      <div class="challenge-box">
+        <span class="challenge-label">The Question</span>
+        <p>
+          Can AI create <strong>meaningful children's content</strong> that challenges stereotypes and inspires young girls to see themselves as scientists, engineers, and leaders?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: My Contributions -->
+  <section class="case-section">
+    <h2>My Contributions</h2>
+    <div class="contributions-stack">
+      {contributions.map((contribution, index) => (
+        <div class="contribution-row reveal">
+          <span class="contribution-number">0{index + 1}</span>
+          <div class="contribution-content">
+            <h3 class="contribution-label">{contribution.label}</h3>
+            <div class="contribution-metrics">
+              {contribution.metrics.map((metric) => (
+                <div class="contribution-metric">
+                  <span class="metric-value">{metric.value}</span>
+                  <span class="metric-text">{metric.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section: How I Made an Impact -->
+  <section class="case-section">
+    <h2>How I Made an Impact</h2>
+    <div class="impact-stack">
+      {impactPoints.map((point, index) => (
+        <div class="impact-row">
+          <span class="impact-number">0{index + 1}</span>
+          <div class="impact-content">
+            <h3>{point.title}</h3>
+            <p>{point.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Product Gallery -->
+  <section class="case-section">
+    <h2>The Product</h2>
+    <div class="product-gallery">
+      <div class="gallery-item gallery-item-large">
+        <img src="/images/equaltales/hero.png" alt="EqualTales landing page - AI-powered stories that change what children believe is possible" loading="lazy" />
+        <span class="gallery-caption">Landing Page</span>
+      </div>
+      <div class="gallery-item">
+        <img src="/images/equaltales/equaltales-selection.png" alt="Stereotype selection screen - Type the stereotype your child has expressed" loading="lazy" />
+        <span class="gallery-caption">Stereotype Input</span>
+      </div>
+      <div class="gallery-item">
+        <img src="/images/equaltales/equaltales-historical-figure.png" alt="Historical figure selection - Real women who broke barriers" loading="lazy" />
+        <span class="gallery-caption">Historical Figures</span>
+      </div>
+      <div class="gallery-item gallery-item-full">
+        <img src="/images/equaltales/equaltales-storytelling.png" alt="AI-generated personalized story with watercolor illustrations" loading="lazy" />
+        <span class="gallery-caption">Generated Story</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Design Evolution -->
+  <section class="case-section">
+    <h2>Design Evolution</h2>
+    <p>
+      Building with AI requires iteration. Here's what I learned through trial and error:
+    </p>
+
+    <div class="decision-card">
+      <div class="decision-column failed">
+        <h4>What I Tried That Didn't Work</h4>
+        <ul>
+          {designEvolution.triedAndFailed.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="decision-column worked">
+        <h4>What Actually Worked</h4>
+        <ul>
+          {designEvolution.whatWorked.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Visual Direction -->
+  <section class="case-section">
+    <h2>Visual Direction</h2>
+    <p>
+      The watercolor illustration style was a deliberate choice to solve AI's consistency problem while creating warm, inviting visuals.
+    </p>
+
+    <div class="style-guide-block">
+      <div class="style-guide-item">
+        <span class="style-label">Art Style</span>
+        <div class="style-preview">
+          <span class="style-value">Watercolor</span>
+        </div>
+        <span class="style-desc">Soft, warm, forgiving of AI inconsistencies</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Palette</span>
+        <div class="color-swatches">
+          <span class="swatch" style="background: #7B5EA7"></span>
+          <span class="swatch" style="background: #C4766D"></span>
+          <span class="swatch" style="background: #D4A853"></span>
+          <span class="swatch" style="background: #FDF6ED"></span>
+        </div>
+        <span class="style-desc">Purple, coral, gold on warm cream</span>
+      </div>
+
+      <div class="style-guide-item">
+        <span class="style-label">Characters</span>
+        <div class="style-preview">
+          <span class="style-value">Historical</span>
+        </div>
+        <span class="style-desc">Real women, real stories</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Key Trade-off -->
+  <section class="case-section">
+    <h2>Key Trade-off</h2>
+    <div class="tradeoff-block">
+      <blockquote>{keyTradeoff}</blockquote>
+      <p class="tradeoff-explanation">
+        By anchoring stories to real historical figures, we limited the variety of narratives we could tell. But the authenticity of real women's achievements—Marie Curie discovering radium, Mae Jemison traveling to space—creates a deeper emotional impact than any fictional character could.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section: Outcome -->
+  <section class="case-section outcome-section">
+    <h2>Outcome</h2>
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <span class="outcome-label">Recognition</span>
+        <span class="outcome-value">{outcome.award}</span>
+      </div>
+      <div class="outcome-card">
+        <span class="outcome-label">Impact</span>
+        <span class="outcome-value">{outcome.reach}</span>
+      </div>
+    </div>
+    <p class="outcome-note">
+      The judges recognized that EqualTales wasn't just a technical achievement—it was a meaningful application of AI to address a real social challenge.
+    </p>
+    <div class="outcome-link">
+      <a href={outcome.devpostUrl} target="_blank" rel="noopener noreferrer" class="devpost-link">
+        View on Devpost
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Section: What This Shows About Me -->
+  <section class="case-section conclusion">
+    <h2>What This Shows About Me</h2>
+    <p class="conclusion-intro">
+      This project demonstrates my ability to combine design thinking, AI tools, and social impact into a cohesive product under extreme time pressure.
+    </p>
+
+    <div class="about-me-stack">
+      {aboutMePoints.map(point => (
+        <div class="about-me-row">
+          <h3>{point.title}</h3>
+          <p>{point.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="case-section cta-section">
+    <a href="https://equaltales.vercel.app/" target="_blank" rel="noopener noreferrer" class="cta-button">
+      Try EqualTales
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  /* EqualTales color palette */
+  :root {
+    --color-accent: #7B5EA7;
+    --equaltales-purple: #7B5EA7;
+    --equaltales-coral: #C4766D;
+    --equaltales-gold: #D4A853;
+    --equaltales-cream: #FDF6ED;
+  }
+
+  /* Problem Statement */
+  .problem-statement {
+    margin-top: 1rem;
+  }
+
+  .lead-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .lead-text.secondary {
+    margin-top: 0.75rem;
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(123, 94, 167, 0.12) 0%, rgba(123, 94, 167, 0.04) 100%);
+    border-left: 3px solid var(--color-accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin-top: 1.5rem;
+  }
+
+  .challenge-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-box p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-fg);
+    line-height: 1.6;
+  }
+
+  /* Contributions Stack */
+  .contributions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .contribution-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .contribution-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+
+  .contribution-content {
+    flex: 1;
+  }
+
+  .contribution-label {
+    margin: 0 0 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .contribution-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .contribution-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contribution-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contribution-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .contribution-metric .metric-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .contribution-metric .metric-text {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* Impact Stack */
+  .impact-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .impact-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .impact-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.5;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+
+  .impact-content h3 {
+    margin: 0 0 0.375rem;
+    font-size: 0.9375rem;
+    color: var(--color-fg);
+  }
+
+  .impact-content p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Hero Image Showcase */
+  /* Product Gallery */
+  .product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: var(--equaltales-cream);
+    border: 1px solid rgba(123, 94, 167, 0.15);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.01);
+  }
+
+  .gallery-item-large,
+  .gallery-item-full {
+    /* All items are now full width by default */
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .product-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-item-large,
+    .gallery-item-full {
+      grid-column: span 1;
+    }
+  }
+
+  /* Decision Card */
+  .decision-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .decision-column {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .decision-column.failed {
+    border-left: 3px solid #ef4444;
+  }
+
+  .decision-column.failed h4 {
+    color: #ef4444;
+  }
+
+  .decision-column.worked {
+    border-left: 3px solid #22c55e;
+  }
+
+  .decision-column.worked h4 {
+    color: #22c55e;
+  }
+
+  .decision-column h4 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .decision-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .decision-column li {
+    color: var(--color-fg);
+    line-height: 1.6;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .decision-column li:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    .decision-card {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  /* Style Guide Block */
+  .style-guide-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(123, 94, 167, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .style-guide-block {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .style-guide-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .style-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .style-desc {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    text-align: center;
+  }
+
+  .style-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .style-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-fg);
+  }
+
+  .color-swatches {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  /* Trade-off Block */
+  .tradeoff-block {
+    background: var(--color-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .tradeoff-block blockquote {
+    margin: 0;
+    font-size: 1.125rem;
+    font-style: normal;
+    color: var(--color-fg);
+    line-height: 1.6;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+  }
+
+  .tradeoff-explanation {
+    margin-top: 1rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Outcome Grid */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .outcome-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .outcome-card {
+    background: linear-gradient(135deg, rgba(123, 94, 167, 0.15) 0%, rgba(123, 94, 167, 0.05) 100%);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(123, 94, 167, 0.2);
+  }
+
+  .outcome-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .outcome-link {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .devpost-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .devpost-link:hover {
+    color: var(--equaltales-coral);
+    text-decoration: underline;
+  }
+
+  .outcome-value {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .outcome-note {
+    margin-top: 1.5rem;
+    color: var(--color-muted);
+    text-align: center;
+    font-style: normal;
+  }
+
+  /* Conclusion / What This Shows About Me */
+  .conclusion {
+    border-top: 1px solid var(--color-border);
+    padding-top: 3rem;
+  }
+
+  .conclusion-intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  .about-me-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about-me-row {
+    padding: 1.5rem 2rem;
+    background: var(--color-border);
+    border-radius: 0.75rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .about-me-row h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-accent);
+  }
+
+  .about-me-row p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  /* Top CTA Section */
+  .cta-section-top {
+    text-align: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: none;
+  }
+
+  .cta-section-top .cta-button {
+    margin-top: 0;
+  }
+
+  /* Bottom CTA Section */
+  .cta-section {
+    text-align: center;
+    padding-top: 2rem;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: var(--color-accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(123, 94, 167, 0.3);
+  }
+
+  /* Section styling */
+  .case-section {
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .case-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  /* Remove border from outcome section since conclusion has border-top */
+  .outcome-section {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .case-section > h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-fg);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .case-section > h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--color-accent);
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+    border-radius: 2px;
+  }
+
+  .case-section > p {
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+</style>

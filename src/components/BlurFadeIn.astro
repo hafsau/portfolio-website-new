@@ -1,0 +1,135 @@
+---
+/**
+ * BlurFadeIn Component
+ *
+ * Signature MotionSites animation where elements start blurred,
+ * translated down, and fade in while clearing the blur and
+ * moving to their final position.
+ *
+ * Props:
+ * - delay: Animation delay in seconds (default: 0)
+ * - duration: Animation duration in seconds (default: 1)
+ * - y: Initial Y translation in pixels (default: 40)
+ * - blur: Initial blur amount in pixels (default: 20)
+ * - triggerOnScroll: Whether to trigger on scroll or immediately (default: false)
+ * - triggerStart: ScrollTrigger start position (default: 'top 90%')
+ * - class: Additional CSS classes
+ * - tag: HTML tag to use (default: 'div')
+ */
+
+interface Props {
+  delay?: number;
+  duration?: number;
+  y?: number;
+  blur?: number;
+  triggerOnScroll?: boolean;
+  triggerStart?: string;
+  class?: string;
+  tag?: keyof HTMLElementTagNameMap;
+}
+
+const {
+  delay = 0,
+  duration = 1,
+  y = 40,
+  blur = 20,
+  triggerOnScroll = false,
+  triggerStart = 'top 90%',
+  class: className = '',
+  tag: Tag = 'div',
+} = Astro.props;
+---
+
+<Tag
+  class:list={['blur-fade-in', className]}
+  data-blur-fade-in
+  data-delay={delay}
+  data-duration={duration}
+  data-y={y}
+  data-blur={blur}
+  data-trigger-on-scroll={triggerOnScroll}
+  data-trigger-start={triggerStart}
+  style={`opacity: 0; filter: blur(${blur}px); transform: translateY(${y}px);`}
+>
+  <slot />
+</Tag>
+
+<style>
+  .blur-fade-in {
+    will-change: opacity, filter, transform;
+  }
+
+  /* Respect reduced motion - show immediately without animation */
+  @media (prefers-reduced-motion: reduce) {
+    .blur-fade-in {
+      opacity: 1 !important;
+      filter: blur(0) !important;
+      transform: translateY(0) !important;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, ScrollTrigger } from '../scripts/gsap-utils';
+
+  function initBlurFadeIn() {
+    const elements = document.querySelectorAll<HTMLElement>('[data-blur-fade-in]');
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      elements.forEach((element) => {
+        element.style.opacity = '1';
+        element.style.filter = 'blur(0)';
+        element.style.transform = 'translateY(0)';
+      });
+      return;
+    }
+
+    elements.forEach((element) => {
+      const delay = parseFloat(element.dataset.delay || '0');
+      const duration = parseFloat(element.dataset.duration || '1');
+      const y = parseFloat(element.dataset.y || '40');
+      const blur = parseFloat(element.dataset.blur || '20');
+      const triggerOnScroll = element.dataset.triggerOnScroll === 'true';
+      const triggerStart = element.dataset.triggerStart || 'top 90%';
+
+      const animationConfig: gsap.TweenVars = {
+        opacity: 1,
+        filter: 'blur(0px)',
+        y: 0,
+        duration,
+        delay,
+        ease: 'power3.out',
+      };
+
+      if (triggerOnScroll) {
+        // Scroll-triggered animation
+        gsap.to(element, {
+          ...animationConfig,
+          scrollTrigger: {
+            trigger: element,
+            start: triggerStart,
+            toggleActions: 'play none none none',
+          },
+        });
+      } else {
+        // Immediate animation (for hero elements)
+        gsap.to(element, animationConfig);
+      }
+    });
+  }
+
+  // Initialize after a small delay to ensure GSAP is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(initBlurFadeIn);
+    });
+  } else {
+    requestAnimationFrame(initBlurFadeIn);
+  }
+
+  // Re-initialize after Astro View Transitions
+  document.addEventListener('astro:after-swap', initBlurFadeIn);
+</script>

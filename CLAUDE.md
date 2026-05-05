@@ -56,6 +56,23 @@ Case study pages can override `--color-accent` for per-project accent colors.
 - `.counter` - Animated number counter (requires `data-target` attribute)
 - Respects `prefers-reduced-motion`
 
+### BeforeAfterSlider Component (`src/components/BeforeAfterSlider.astro`)
+
+**Critical implementation details - DO NOT CHANGE without understanding these:**
+
+1. **Structure**: Single container with two images (after first, before second), handle, and labels
+2. **Image alignment**:
+   - After image: `display: block; width: 100%; height: auto;` - sets container size
+   - Before image: `position: absolute; top: 0; left: 0; width: 100%; height: 100%;` with `clip-path`
+3. **Labels**: Positioned absolutely outside container using `right: calc(100% + 1.5rem)` and `left: calc(100% + 1.5rem)` with `overflow: visible` on parent
+4. **IMPORTANT - CSS Overrides needed**: Must use `!important` on slider images to override `.case-section img` styles in medrec.astro that apply `margin: 1rem auto` and `max-height: 400px`
+5. **IMPORTANT - CaseStudyLayout**: Do NOT add `.evolution-slider-container` or `.before-after-slider` to the "breakout" rule in CaseStudyLayout.astro - this overrides container max-width settings
+
+**Container sizing in medrec.astro:**
+- Mobile: `max-width: 180px`
+- Web (`.wide`): `max-width: 100%`
+- Watch: `max-width: 280px`
+
 ## Project Order (Homepage)
 1. AI Lab (#01) - Orange accent (#f97316)
 2. MedRec (#02) - Blue accent (#4a5ee4)
@@ -189,3 +206,90 @@ const aiTools = [
 - Stats display (hackathon win, project count)
 
 **Pending:** Commit and push to deploy changes to production
+
+---
+
+## Portfolio Revamp (April 2026)
+
+### Goal
+Transform portfolio from "nice template" to "blow people away" with premium, award-winning animations.
+
+### Inspiration Sites
+
+| Site | Key Patterns |
+|------|--------------|
+| [dennissnellenberg.com](https://dennissnellenberg.com/) | Multilingual greeting animations, card-based projects with year badges |
+| [peter-gould.com](https://www.peter-gould.com/) | Word-by-word GSAP scroll reveals with SplitType, scrub-based animations |
+| [osmo.supply](https://www.osmo.supply/) | Radial marquee, 3D carousels, magnetic cursor, glass-morphism, animated odometers |
+| [daveholloway.uk](https://daveholloway.uk/) | View Transitions API, canvas effects, pixel distortion, loading sequences |
+| [mynrd.co.uk](https://mynrd.co.uk/) | Warm cream palette, character stagger reveals, cursor with image previews |
+| [enter-support.de](https://enter-support.de/) | Bounce-in cascades, waypoint triggers, ticker marquee, LED effects |
+| [motionsites.ai](https://motionsites.ai/) | Premium hero prompts and animation templates |
+| [unsection.com/category/hero-section-design](https://www.unsection.com/category/hero-section-design) | Hero section design gallery |
+
+### MotionSites Animation Patterns
+
+These patterns are extracted from MotionSites prompts for reference:
+
+**1. Liquid Glass Effect**
+```css
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+.liquid-glass::before {
+  /* Gradient border via mask-composite */
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+```
+
+**2. Blur-Fade-Up Animation**
+```css
+@keyframes blurFadeUp {
+  from { opacity: 0; filter: blur(20px); transform: translateY(40px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+```
+
+**3. Magnetic Component**
+- Mouse-following hover effect
+- Props: padding (150px), strength (3), activeTransition, inactiveTransition
+- Applies translate3d based on cursor distance from element center
+
+**4. Character Scroll Reveal**
+- Per-character opacity tied to scroll progress
+- Each character: invisible placeholder + absolute positioned animated span
+- Opacity: 0.2 → 1 based on scroll offset ['start 0.8', 'end 0.2']
+
+**5. Sticky Card Stacking**
+- Cards scale down on scroll: `targetScale = 1 - (totalCards - 1 - index) * 0.03`
+- Creates depth illusion with sticky positioning
+
+**6. Scroll-Driven Marquee**
+- Horizontal translate based on vertical scroll position
+- `offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3`
+
+### New Animation Components
+
+| Component | Purpose |
+|-----------|---------|
+| `Magnet.astro` | Mouse-following magnetic hover effect |
+| `AnimatedText.astro` | Character-by-character scroll reveal |
+| `BlurFadeIn.astro` | Blur + fade + translate entrance animation |
+| `CursorPreview.astro` | Project preview image on cursor hover |
+
+### Tech Stack for Animations
+- **GSAP + ScrollTrigger** - Scroll-based animations, timeline control
+- **SplitType** - Text splitting for character/word animations
+- **Lenis** - Smooth scroll (already installed)
+- **Astro View Transitions** - Page transitions
+
+### Animation Timing Guidelines
+- Hero entrance stagger: 0ms, 150ms, 350ms, 500ms, 600ms
+- Bounce-in delays: 0.2-0.4s increments
+- Scroll scrub: value of 1-2 for smooth binding
+- Reduced motion: disable all via `prefers-reduced-motion`

@@ -1,0 +1,94 @@
+---
+/**
+ * RotatingText Component - Dennis Snellenberg Inspired
+ *
+ * Circular text that rotates slowly around a center point.
+ * Creates visual interest and adds a playful element to sections.
+ *
+ * Props:
+ * - text: The text to display (will be repeated around the circle)
+ * - size: Diameter of the circle (default: 150)
+ * - duration: Rotation duration in seconds (default: 20)
+ * - class: Additional CSS classes
+ */
+
+interface Props {
+  text: string;
+  size?: number;
+  duration?: number;
+  class?: string;
+}
+
+const {
+  text,
+  size = 150,
+  duration = 20,
+  class: className = '',
+} = Astro.props;
+
+// Add separator between repeated text
+const displayText = `${text} · ${text} · ${text} · ${text} · `;
+---
+
+<div
+  class:list={['rotating-text', className]}
+  style={`--size: ${size}px; --duration: ${duration}s;`}
+  data-rotating-text
+>
+  <svg viewBox="0 0 200 200" class="rotating-text__svg">
+    <defs>
+      <path
+        id="circlePath"
+        d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"
+      />
+    </defs>
+    <text class="rotating-text__text">
+      <textPath href="#circlePath" startOffset="0%">
+        {displayText}
+      </textPath>
+    </text>
+  </svg>
+</div>
+
+<style>
+  .rotating-text {
+    width: var(--size);
+    height: var(--size);
+    position: relative;
+  }
+
+  .rotating-text__svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate var(--duration) linear infinite;
+  }
+
+  .rotating-text__text {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    fill: currentColor;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Pause on hover for interactivity */
+  .rotating-text:hover .rotating-text__svg {
+    animation-play-state: paused;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .rotating-text__svg {
+      animation: none;
+    }
+  }
+</style>

@@ -4,76 +4,171 @@ interface Props {
   afterImage: string;
   beforeLabel?: string;
   afterLabel?: string;
-  aspectRatio?: string;
 }
 
 const {
   beforeImage,
   afterImage,
   beforeLabel = 'Before',
-  afterLabel = 'After',
-  aspectRatio = '9/16'
+  afterLabel = 'After'
 } = Astro.props;
 ---
 
-<div class="ba-slider" data-ba-slider style={`aspect-ratio: ${aspectRatio}`}>
-  <div class="ba-before">
-    <img src={beforeImage} alt={`Design comparison: ${beforeLabel} version`} loading="lazy" />
-    <span class="ba-label ba-label-before">{beforeLabel}</span>
-  </div>
-  <div class="ba-after">
-    <img src={afterImage} alt={`Design comparison: ${afterLabel} version`} loading="lazy" />
-    <span class="ba-label ba-label-after">{afterLabel}</span>
-  </div>
-  <div class="ba-handle">
-    <div class="ba-handle-line"></div>
-    <div class="ba-handle-circle">
+<div class="before-after-slider" data-ba-slider>
+  <img src={afterImage} alt={afterLabel} class="ba-after-img" draggable="false" />
+  <img src={beforeImage} alt={beforeLabel} class="ba-before-img" draggable="false" />
+  <div class="ba-divider">
+    <div class="ba-line"></div>
+    <div class="ba-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M8 12H16M8 12L11 9M8 12L11 15M16 12L13 9M16 12L13 15"/>
       </svg>
     </div>
-    <div class="ba-handle-line"></div>
+    <div class="ba-line"></div>
   </div>
+  <span class="ba-text ba-text-left">{beforeLabel}</span>
+  <span class="ba-text ba-text-right">{afterLabel}</span>
 </div>
 
+<style is:global>
+  .before-after-slider {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+
+  .before-after-slider .ba-after-img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    pointer-events: none;
+  }
+
+  .before-after-slider .ba-before-img {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    object-fit: fill !important;
+    pointer-events: none;
+    clip-path: inset(0 50% 0 0);
+  }
+
+  .before-after-slider .ba-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .before-after-slider .ba-line {
+    flex: 1;
+    width: 2px;
+    background: var(--color-accent, #4a5ee4);
+  }
+
+  .before-after-slider .ba-btn {
+    width: 48px;
+    height: 48px;
+    background: var(--color-accent, #4a5ee4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(74, 94, 228, 0.4);
+    flex-shrink: 0;
+  }
+
+  .before-after-slider .ba-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .before-after-slider .ba-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .before-after-slider .ba-text-left {
+    right: calc(100% + 1.5rem);
+    color: var(--color-muted, #888);
+  }
+
+  .before-after-slider .ba-text-right {
+    left: calc(100% + 1.5rem);
+    color: var(--color-accent, #4a5ee4);
+  }
+</style>
+
 <script>
-  // Before/After Slider functionality
-  document.querySelectorAll('[data-ba-slider]').forEach(slider => {
-    const before = slider.querySelector('.ba-before') as HTMLElement;
-    const handle = slider.querySelector('.ba-handle') as HTMLElement;
-    let isDragging = false;
+  function initSliders() {
+    document.querySelectorAll('[data-ba-slider]').forEach(el => {
+      if ((el as HTMLElement).dataset.ready) return;
+      (el as HTMLElement).dataset.ready = 'true';
 
-    function updatePosition(x: number) {
-      const rect = slider.getBoundingClientRect();
-      const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
-      if (before) before.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
-      if (handle) handle.style.left = `${percentage}%`;
-    }
+      const beforeImg = el.querySelector('.ba-before-img') as HTMLImageElement;
+      const divider = el.querySelector('.ba-divider') as HTMLElement;
+      if (!beforeImg || !divider) return;
 
-    slider.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      updatePosition((e as MouseEvent).clientX);
+      let active = false;
+
+      const move = (x: number) => {
+        const r = el.getBoundingClientRect();
+        const p = Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100));
+        beforeImg.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
+        divider.style.left = `${p}%`;
+      };
+
+      el.addEventListener('mousedown', (e: Event) => {
+        active = true;
+        move((e as MouseEvent).clientX);
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', (e: MouseEvent) => {
+        if (active) move(e.clientX);
+      });
+
+      document.addEventListener('mouseup', () => active = false);
+
+      el.addEventListener('touchstart', (e: Event) => {
+        active = true;
+        move((e as TouchEvent).touches[0].clientX);
+      }, { passive: true });
+
+      document.addEventListener('touchmove', (e: TouchEvent) => {
+        if (active) move(e.touches[0].clientX);
+      }, { passive: true });
+
+      document.addEventListener('touchend', () => active = false);
     });
+  }
 
-    slider.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      updatePosition((e as TouchEvent).touches[0].clientX);
-    }, { passive: true });
-
-    document.addEventListener('mousemove', (e) => {
-      if (isDragging) updatePosition(e.clientX);
-    });
-
-    document.addEventListener('touchmove', (e) => {
-      if (isDragging) updatePosition(e.touches[0].clientX);
-    }, { passive: true });
-
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
-
-    document.addEventListener('touchend', () => {
-      isDragging = false;
-    });
-  });
+  initSliders();
+  document.addEventListener('astro:after-swap', initSliders);
 </script>

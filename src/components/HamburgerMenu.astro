@@ -1,0 +1,278 @@
+---
+/**
+ * HamburgerMenu Component
+ * Hidden at top, appears with smooth transition on scroll down
+ */
+
+interface MenuItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: MenuItem[];
+  showAfter?: number; // Pixels to scroll before showing
+}
+
+const { items, showAfter = 100 } = Astro.props;
+---
+
+<div class="hamburger-nav" id="hamburger-nav" data-show-after={showAfter}>
+  <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu" aria-expanded="false">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+
+  <div class="menu-overlay" id="menu-overlay">
+    <nav class="menu-content">
+      <ul class="menu-list">
+        {items.map((item, i) => (
+          <li class="menu-item" style={`--i: ${i}`}>
+            <a href={item.href} class="menu-link">
+              <span class="menu-num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="menu-text">{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .hamburger-nav {
+    --nav-bg: #0c0c0c;
+    --nav-fg: #f5f3ef;
+  }
+
+  /* Hamburger Button - Fixed position, hidden by default */
+  .hamburger-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    width: 60px;
+    height: 60px;
+    border: none;
+    background: #0c0c0c;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    /* Hidden by default - will be shown via JS */
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+    /* Elastic-like easing with longer duration for smooth feel */
+    transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.3s ease;
+  }
+
+  /* Visible state */
+  .hamburger-nav.visible .hamburger-btn {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .hamburger-btn:hover {
+    background: #1a1a1a;
+  }
+
+  .hamburger-nav.visible .hamburger-btn:hover {
+    transform: scale(1.08);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (min-width: 768px) {
+    .hamburger-btn {
+      top: 2rem;
+      right: 2rem;
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: var(--nav-fg);
+    transition: transform 0.3s ease;
+  }
+
+  /* X state */
+  .hamburger-nav.open .hamburger-line:first-child {
+    transform: translateY(5px) rotate(45deg);
+  }
+  .hamburger-nav.open .hamburger-line:last-child {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+
+  /* Overlay */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: var(--nav-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  .hamburger-nav.open .menu-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu-content {
+    text-align: left;
+  }
+
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu-item {
+    overflow: hidden;
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.75rem 0;
+    text-decoration: none;
+    color: var(--nav-fg);
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 0.5s ease, color 0.2s ease;
+    transition-delay: calc(0.1s + var(--i) * 0.05s);
+  }
+
+  .hamburger-nav.open .menu-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .menu-num {
+    font-size: 1rem;
+    color: rgba(245, 243, 239, 0.7);
+    font-family: monospace;
+  }
+
+  .menu-text {
+    font-size: clamp(3rem, 12vw, 6rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .menu-link:hover .menu-text,
+  .menu-link:hover .menu-num {
+    color: #4a5ee4;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hamburger-btn,
+    .hamburger-line,
+    .menu-overlay,
+    .menu-link {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline>
+(function() {
+  function initHamburger() {
+    var nav = document.getElementById('hamburger-nav');
+    var btn = document.getElementById('hamburger-btn');
+    if (!nav || !btn) return;
+    if (btn.dataset.init) return;
+    btn.dataset.init = 'true';
+
+    var isOpen = false;
+    var showAfter = parseInt(nav.dataset.showAfter || '100', 10);
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+
+    function openMenu() {
+      isOpen = true;
+      nav.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    function updateVisibility() {
+      var scrollY = window.scrollY;
+
+      // Show hamburger when scrolled past threshold
+      if (scrollY > showAfter) {
+        nav.classList.add('visible');
+      } else {
+        // Only hide if menu is not open
+        if (!isOpen) {
+          nav.classList.remove('visible');
+        }
+      }
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      lastScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(updateVisibility);
+        ticking = true;
+      }
+    }
+
+    // Initial check
+    updateVisibility();
+
+    // Listen for scroll
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    btn.onclick = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (isOpen) closeMenu();
+      else openMenu();
+    };
+
+    nav.querySelectorAll('.menu-link').forEach(function(link) {
+      link.onclick = function() {
+        closeMenu();
+        // After closing, check if we should hide hamburger
+        setTimeout(function() {
+          updateVisibility();
+        }, 500);
+      };
+    });
+
+    document.onkeydown = function(e) {
+      if (e.key === 'Escape' && isOpen) closeMenu();
+    };
+  }
+
+  initHamburger();
+  document.addEventListener('DOMContentLoaded', initHamburger);
+  document.addEventListener('astro:page-load', initHamburger);
+})();
+</script>

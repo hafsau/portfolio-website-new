@@ -1,0 +1,133 @@
+---
+/**
+ * FloatingOrbs - Animated gradient background elements
+ * Creates depth and visual interest without distraction
+ */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['floating-orbs', className]}>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<style>
+  .floating-orbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    will-change: transform;
+  }
+
+  .orb-1 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    top: -20%;
+    left: -10%;
+    animation: float1 35s ease-in-out infinite;
+  }
+
+  .orb-2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+    top: 50%;
+    right: -15%;
+    animation: float2 40s ease-in-out infinite;
+    animation-delay: -10s;
+  }
+
+  .orb-3 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
+    bottom: -10%;
+    left: 30%;
+    animation: float3 30s ease-in-out infinite;
+    animation-delay: -20s;
+  }
+
+  @keyframes float1 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(100px, 50px) scale(1.1);
+    }
+    50% {
+      transform: translate(50px, 100px) scale(0.95);
+    }
+    75% {
+      transform: translate(-50px, 50px) scale(1.05);
+    }
+  }
+
+  @keyframes float2 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(-80px, -60px) scale(1.05);
+    }
+    50% {
+      transform: translate(-40px, 80px) scale(0.9);
+    }
+    75% {
+      transform: translate(60px, -40px) scale(1.1);
+    }
+  }
+
+  @keyframes float3 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(60px, -80px) scale(0.95);
+    }
+    50% {
+      transform: translate(-80px, -40px) scale(1.1);
+    }
+    75% {
+      transform: translate(40px, 60px) scale(1);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .orb {
+      animation: none;
+    }
+  }
+
+  /* Smaller orbs on mobile */
+  @media (max-width: 768px) {
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+    }
+    .orb-2 {
+      width: 250px;
+      height: 250px;
+    }
+    .orb-3 {
+      width: 200px;
+      height: 200px;
+    }
+  }
+</style>

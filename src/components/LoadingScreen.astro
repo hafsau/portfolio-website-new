@@ -1,0 +1,312 @@
+---
+/**
+ * LoadingScreen - Osmo-inspired logo reveal animation
+ * Logo clip-path reveals based on actual loading progress
+ */
+---
+
+<div id="loading-screen" class="loading-screen">
+  <div class="loader-content">
+    <div class="logo-container">
+      <!-- Faded background logo -->
+      <div class="logo-bg">
+        <svg viewBox="0 0 100 100" class="logo-svg">
+          <path d="M10 25v50M10 50h16M26 25v50" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M42 25 L42 60 Q42 75 58 75 L58 25" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="80" cy="68" r="8" fill="var(--color-accent, #4a5ee4)"/>
+        </svg>
+      </div>
+      <!-- Clipped reveal logo (progress-driven) -->
+      <div class="logo-reveal" id="logo-reveal">
+        <svg viewBox="0 0 100 100" class="logo-svg">
+          <path d="M10 25v50M10 50h16M26 25v50" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M42 25 L42 60 Q42 75 58 75 L58 25" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="80" cy="68" r="8" fill="var(--color-accent, #4a5ee4)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Animated text lines -->
+    <div class="text-container">
+      <div class="text-line text-line-1" id="text-line-1"></div>
+      <div class="text-line text-line-2" id="text-line-2"></div>
+    </div>
+  </div>
+
+  <!-- Background that slides up -->
+  <div class="loader-bg" id="loader-bg"></div>
+</div>
+
+<style>
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+    overflow: hidden;
+  }
+
+  .loading-screen.hidden {
+    pointer-events: none;
+  }
+
+  .loader-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg, #0C0C0C);
+    z-index: 1;
+  }
+
+  .loader-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  /* Logo styles */
+  .logo-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo-svg {
+    width: clamp(120px, 25vw, 180px);
+    height: clamp(120px, 25vw, 180px);
+    color: var(--color-fg, #F5F5F0);
+  }
+
+  .logo-bg {
+    opacity: 0.15;
+  }
+
+  .logo-reveal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+
+  /* Text animations */
+  .text-container {
+    position: relative;
+    height: 1.5rem;
+    overflow: hidden;
+  }
+
+  .text-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.3em;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+  }
+
+  .text-line .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-reveal {
+      clip-path: inset(0 0% 0 0);
+    }
+    .logo-bg {
+      display: none;
+    }
+    .text-line .char {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  function initLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loaderBg = document.getElementById('loader-bg');
+    const logoReveal = document.getElementById('logo-reveal');
+    const textLine1 = document.getElementById('text-line-1');
+    const textLine2 = document.getElementById('text-line-2');
+    const loaderContent = document.querySelector('.loader-content') as HTMLElement;
+
+    if (!loadingScreen || !logoReveal) return;
+
+    // Skip loading screen when returning from case study
+    const returningFromCaseStudy = sessionStorage.getItem('scrollToSection');
+    if (returningFromCaseStudy) {
+      loadingScreen.style.display = 'none';
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Custom easing (Osmo style)
+    const customEase = 'cubic-bezier(0.65, 0.01, 0.05, 0.99)';
+
+    // Split text into characters
+    const splitText = (element: HTMLElement, text: string) => {
+      element.innerHTML = text.split('').map(char =>
+        char === ' ' ? '<span class="char">&nbsp;</span>' : `<span class="char">${char}</span>`
+      ).join('');
+      return element.querySelectorAll('.char');
+    };
+
+    const text1Chars = textLine1 ? splitText(textLine1, 'Loading') : [];
+    const text2Chars = textLine2 ? splitText(textLine2, 'Almost there') : [];
+
+    // Track loading progress
+    let currentProgress = 0;
+    let targetProgress = 0;
+    let isComplete = false;
+
+    const images = Array.from(document.images);
+    const totalResources = Math.max(images.length, 1);
+    let loadedResources = 0;
+
+    const updateProgress = () => {
+      targetProgress = Math.min(Math.round(((loadedResources + 1) / (totalResources + 1)) * 100), 100);
+    };
+
+    images.forEach(img => {
+      if (img.complete) {
+        loadedResources++;
+        updateProgress();
+      } else {
+        img.addEventListener('load', () => { loadedResources++; updateProgress(); });
+        img.addEventListener('error', () => { loadedResources++; updateProgress(); });
+      }
+    });
+
+    // Fallback timeout - reduced for faster loading feel
+    const fallbackTimeout = setTimeout(() => {
+      targetProgress = 100;
+    }, 2000);
+
+    // Animate logo reveal based on progress
+    const animateProgress = () => {
+      if (currentProgress < targetProgress) {
+        currentProgress += (targetProgress - currentProgress) * 0.18;
+        if (targetProgress - currentProgress < 0.5) currentProgress = targetProgress;
+
+        // Update logo clip-path based on progress
+        const clipValue = 100 - currentProgress;
+        logoReveal.style.clipPath = `inset(0 ${clipValue}% 0 0)`;
+      }
+
+      if (currentProgress >= 100 && !isComplete) {
+        isComplete = true;
+        clearTimeout(fallbackTimeout);
+        setTimeout(completeLoading, 100);
+        return;
+      }
+
+      requestAnimationFrame(animateProgress);
+    };
+
+    if (prefersReducedMotion) {
+      // Simple fade for reduced motion
+      gsap.set(logoReveal, { clipPath: 'inset(0 0% 0 0)' });
+      setTimeout(() => {
+        targetProgress = 100;
+        animateProgress();
+      }, 300);
+
+    } else {
+      // Start with text animation
+      gsap.to(text1Chars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.015,
+        ease: 'power3.out',
+        delay: 0.1
+      });
+
+      // Start progress-driven logo reveal immediately
+      animateProgress();
+
+      // Swap text after delay (only if loading takes longer)
+      setTimeout(() => {
+        if (!isComplete) {
+          gsap.to(text1Chars, {
+            opacity: 0,
+            y: '-100%',
+            duration: 0.25,
+            stagger: 0.01,
+            ease: 'power2.in'
+          });
+          gsap.to(text2Chars, {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.015,
+            ease: 'power3.out',
+            delay: 0.1
+          });
+        }
+      }, 1200);
+    }
+
+    // Complete loading animation
+    const completeLoading = () => {
+      const exitTl = gsap.timeline({
+        onComplete: () => {
+          loadingScreen.classList.add('hidden');
+          loadingScreen.style.display = 'none';
+        }
+      });
+
+      if (prefersReducedMotion) {
+        exitTl.to(loadingScreen, { opacity: 0, duration: 0.2 });
+      } else {
+        exitTl
+          // Fade out text
+          .to([text1Chars, text2Chars], {
+            opacity: 0,
+            y: '-100%',
+            duration: 0.2,
+            stagger: 0.008,
+            ease: 'power2.in'
+          })
+          // Scale down content
+          .to(loaderContent, {
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.25,
+            ease: 'power2.in'
+          }, '-=0.1')
+          // Slide background up
+          .to(loaderBg, {
+            yPercent: -101,
+            duration: 0.5,
+            ease: customEase
+          }, '-=0.15');
+      }
+    };
+  }
+
+  // Run on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLoadingScreen);
+  } else {
+    initLoadingScreen();
+  }
+</script>
