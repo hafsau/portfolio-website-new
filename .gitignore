@@ -29,3 +29,4 @@ yarn-error.log*
 
 # Archive folder (old drafts, not for production)
 archive/
+.vercel
