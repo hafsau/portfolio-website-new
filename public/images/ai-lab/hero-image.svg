@@ -28,11 +28,11 @@
     <rect y="20" width="220" height="12" fill="#1e1e28"/>
     <circle cx="16" cy="16" r="4" fill="#7B5EA7"/>
     <text x="30" y="20" fill="#8a8a8e" font-family="system-ui, sans-serif" font-size="10" font-weight="500">EqualTales</text>
-    <!-- Book icon -->
-    <g transform="translate(85, 65)">
-      <rect x="0" y="10" width="50" height="40" rx="3" fill="#7B5EA7" opacity="0.2" stroke="#7B5EA7" stroke-width="1"/>
-      <line x1="25" y1="10" x2="25" y2="50" stroke="#7B5EA7" stroke-width="1"/>
-      <text x="25" y="75" text-anchor="middle" fill="#7B5EA7" font-family="system-ui" font-size="9">Storybooks</text>
+    <!-- Book icon - centered in 220px card -->
+    <g transform="translate(110, 85)">
+      <rect x="-25" y="0" width="50" height="40" rx="3" fill="#7B5EA7" opacity="0.2" stroke="#7B5EA7" stroke-width="1"/>
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#7B5EA7" stroke-width="1"/>
+      <text x="0" y="60" text-anchor="middle" fill="#7B5EA7" font-family="system-ui" font-size="9">Storybooks</text>
     </g>
   </g>
 
@@ -43,11 +43,11 @@
     <rect y="20" width="220" height="12" fill="#1e1e28"/>
     <circle cx="16" cy="16" r="4" fill="#22c55e"/>
     <text x="30" y="20" fill="#8a8a8e" font-family="system-ui, sans-serif" font-size="10" font-weight="500">CarbonLint</text>
-    <!-- Leaf/sustainability icon -->
-    <g transform="translate(85, 60)">
-      <path d="M25 20 C10 20 5 35 25 55 C45 35 40 20 25 20" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1"/>
-      <line x1="25" y1="35" x2="25" y2="55" stroke="#22c55e" stroke-width="1"/>
-      <text x="25" y="75" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9">Sustainability</text>
+    <!-- Leaf/sustainability icon - centered -->
+    <g transform="translate(110, 80)">
+      <path d="M0 0 C-15 0 -20 15 0 35 C20 15 15 0 0 0" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="1"/>
+      <line x1="0" y1="15" x2="0" y2="35" stroke="#22c55e" stroke-width="1"/>
+      <text x="0" y="55" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9">Sustainability</text>
     </g>
   </g>
 
@@ -58,13 +58,13 @@
     <rect y="20" width="220" height="12" fill="#1e1e28"/>
     <circle cx="16" cy="16" r="4" fill="#3b82f6"/>
     <text x="30" y="20" fill="#8a8a8e" font-family="system-ui, sans-serif" font-size="10" font-weight="500">ClimateHaven</text>
-    <!-- Chart icon -->
-    <g transform="translate(75, 55)">
-      <rect x="5" y="35" width="12" height="20" fill="#3b82f6" opacity="0.3"/>
-      <rect x="22" y="25" width="12" height="30" fill="#3b82f6" opacity="0.5"/>
-      <rect x="39" y="15" width="12" height="40" fill="#3b82f6" opacity="0.7"/>
-      <rect x="56" y="5" width="12" height="50" fill="#3b82f6"/>
-      <text x="37" y="75" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="9">Data Science</text>
+    <!-- Chart icon - centered -->
+    <g transform="translate(110, 75)">
+      <rect x="-30" y="25" width="12" height="20" fill="#3b82f6" opacity="0.3"/>
+      <rect x="-13" y="15" width="12" height="30" fill="#3b82f6" opacity="0.5"/>
+      <rect x="4" y="5" width="12" height="40" fill="#3b82f6" opacity="0.7"/>
+      <rect x="21" y="-5" width="12" height="50" fill="#3b82f6"/>
+      <text x="0" y="65" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="9">Data Science</text>
     </g>
   </g>
 
@@ -75,11 +75,11 @@
     <rect y="20" width="220" height="12" fill="#1e1e28"/>
     <circle cx="16" cy="16" r="4" fill="#f97316"/>
     <text x="30" y="20" fill="#8a8a8e" font-family="system-ui, sans-serif" font-size="10" font-weight="500">Interview Sage</text>
-    <!-- Chat bubbles -->
-    <g transform="translate(70, 50)">
-      <rect x="0" y="10" width="50" height="25" rx="8" fill="#f97316" opacity="0.2" stroke="#f97316" stroke-width="1"/>
-      <rect x="30" y="30" width="50" height="25" rx="8" fill="#f97316" opacity="0.3" stroke="#f97316" stroke-width="1"/>
-      <text x="40" y="75" text-anchor="middle" fill="#f97316" font-family="system-ui" font-size="9">AI Coach</text>
+    <!-- Chat bubbles - centered -->
+    <g transform="translate(110, 75)">
+      <rect x="-35" y="0" width="45" height="22" rx="8" fill="#f97316" opacity="0.2" stroke="#f97316" stroke-width="1"/>
+      <rect x="-5" y="18" width="45" height="22" rx="8" fill="#f97316" opacity="0.3" stroke="#f97316" stroke-width="1"/>
+      <text x="0" y="60" text-anchor="middle" fill="#f97316" font-family="system-ui" font-size="9">AI Coach</text>
     </g>
   </g>
 
