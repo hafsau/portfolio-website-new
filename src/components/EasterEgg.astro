@@ -1,0 +1,245 @@
+---
+/**
+ * EasterEgg - Konami code secret
+ * Enter: up up down down left right left right B A
+ * Triggers a fun confetti animation and message
+ */
+---
+
+<div id="easter-egg-overlay" class="easter-egg-overlay">
+  <div class="easter-egg-content">
+    <div class="easter-egg-confetti" id="confetti-container"></div>
+    <div class="easter-egg-message">
+      <span class="easter-egg-icon">*</span>
+      <h2>You found it!</h2>
+      <p>You're clearly a person of culture. Let's connect!</p>
+      <a href="mailto:hafsa.usmani2@gmail.com" class="easter-egg-cta">Say Hello</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .easter-egg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  .easter-egg-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .easter-egg-content {
+    position: relative;
+    text-align: center;
+    padding: 3rem;
+  }
+
+  .easter-egg-confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall 3s ease-out forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      transform: translateY(-100vh) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  .easter-egg-message {
+    position: relative;
+    z-index: 10;
+    animation: easter-egg-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  .easter-egg-overlay.active .easter-egg-message {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @keyframes easter-egg-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .easter-egg-icon {
+    display: block;
+    font-size: 4rem;
+    color: #f97316;
+    margin-bottom: 1rem;
+    animation: icon-pulse 1s ease-in-out infinite;
+  }
+
+  @keyframes icon-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  .easter-egg-message h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.75rem;
+  }
+
+  .easter-egg-message p {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 2rem;
+  }
+
+  .easter-egg-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .easter-egg-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .easter-egg-message,
+    .easter-egg-icon,
+    .confetti-piece {
+      animation: none;
+    }
+    .easter-egg-overlay.active .easter-egg-message {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<script>
+  function initEasterEgg() {
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+    let konamiIndex = 0;
+    const overlay = document.getElementById('easter-egg-overlay');
+    const confettiContainer = document.getElementById('confetti-container');
+
+    if (!overlay || !confettiContainer) return;
+
+    // Check if already initialized
+    if ((window as any).__easterEggInit) return;
+    (window as any).__easterEggInit = true;
+
+    function createConfetti() {
+      const colors = ['#667eea', '#764ba2', '#f97316', '#4facfe', '#43e97b', '#f093fb'];
+
+      for (let i = 0; i < 100; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 2 + 's';
+        piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+        confettiContainer.appendChild(piece);
+      }
+
+      // Clean up confetti after animation
+      setTimeout(() => {
+        confettiContainer.innerHTML = '';
+      }, 5000);
+    }
+
+    function triggerEasterEgg() {
+      overlay.classList.add('active');
+      createConfetti();
+
+      // Play a sound effect (optional - only if audio file exists)
+      // const audio = new Audio('/sounds/success.mp3');
+      // audio.volume = 0.3;
+      // audio.play().catch(() => {});
+    }
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.code === konamiCode[konamiIndex]) {
+        konamiIndex++;
+
+        if (konamiIndex === konamiCode.length) {
+          triggerEasterEgg();
+          konamiIndex = 0;
+        }
+      } else {
+        konamiIndex = 0;
+        // Check if current key matches start of sequence
+        if (e.code === konamiCode[0]) {
+          konamiIndex = 1;
+        }
+      }
+    }
+
+    // Close overlay on click
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('keydown', handleKeyDown);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEasterEgg);
+  } else {
+    initEasterEgg();
+  }
+
+  // Re-init after View Transitions
+  document.addEventListener('astro:after-swap', () => {
+    (window as any).__easterEggInit = false;
+    initEasterEgg();
+  });
+</script>

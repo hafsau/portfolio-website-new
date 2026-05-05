@@ -35,7 +35,8 @@ const projects = [
     description: 'AI-powered children\'s storybook',
     image: '/images/equaltales/hero.png',
     href: '/work/equaltales',
-    color: '#7B5EA7'
+    color: '#7B5EA7',
+    year: '2025'
   },
   {
     number: '02',
@@ -44,7 +45,8 @@ const projects = [
     description: 'AI-assisted portfolio development',
     image: '/images/portfolio-website/after-typography.png',
     href: '/work/portfolio-website',
-    color: '#14b8a6'
+    color: '#14b8a6',
+    year: '2025'
   },
   {
     number: '03',
@@ -53,7 +55,8 @@ const projects = [
     description: 'AI-powered design tools and experiments',
     image: '/images/ai-lab/hero-image.svg',
     href: '/work/ai-lab',
-    color: '#f97316'
+    color: '#f97316',
+    year: '2025'
   },
   {
     number: '04',
@@ -62,7 +65,8 @@ const projects = [
     description: 'Digital health records for millions',
     image: '/images/medrec/hero-medrec.png',
     href: '/work/medrec',
-    color: '#4a5ee4'
+    color: '#4a5ee4',
+    year: '2024'
   },
   {
     number: '05',
@@ -71,7 +75,8 @@ const projects = [
     description: 'Fitness journey companion',
     image: '/images/fitstart/hero-image.png',
     href: '/work/fitstart',
-    color: '#8b5cf6'
+    color: '#8b5cf6',
+    year: '2024'
   },
   {
     number: '06',
@@ -80,7 +85,8 @@ const projects = [
     description: 'Investment portfolio tracking',
     image: '/images/folio/hero-image.png',
     href: '/work/folio',
-    color: '#0891b2'
+    color: '#0891b2',
+    year: '2024'
   },
   {
     number: '07',
@@ -89,7 +95,8 @@ const projects = [
     description: 'Healthcare monitoring at scale',
     image: '/images/immunization/hero-image.png',
     href: '/work/immunization',
-    color: '#4a5ee4'
+    color: '#4a5ee4',
+    year: '2014'
   }
 ];
 
@@ -261,6 +268,7 @@ const skills = [
               <div class="project-card">
                 <div class="project-card-image">
                   <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
+                  <span class="project-year">{project.year}</span>
                 </div>
                 <div class="project-card-content">
                   <span class="project-number">{project.number}</span>
@@ -278,6 +286,7 @@ const skills = [
               <div class="project-card">
                 <div class="project-card-image">
                   <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
+                  <span class="project-year">{project.year}</span>
                 </div>
                 <div class="project-card-content">
                   <span class="project-number">{project.number}</span>
@@ -934,12 +943,36 @@ const skills = [
       aspect-ratio: 16/10;
       overflow: hidden;
       background: var(--card-image-bg);
+      position: relative;
     }
 
     .project-card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .project-year {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    @media (min-width: 768px) {
+      .project-year {
+        top: 16px;
+        right: 16px;
+        font-size: 0.75rem;
+        padding: 5px 12px;
+      }
     }
 
     /* Card content */

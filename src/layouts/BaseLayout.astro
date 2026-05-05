@@ -4,6 +4,7 @@ import Analytics from '@vercel/analytics/astro';
 import { ViewTransitions } from 'astro:transitions';
 import LoadingScreen from '../components/LoadingScreen.astro';
 import BackToTop from '../components/BackToTop.astro';
+import EasterEgg from '../components/EasterEgg.astro';
 
 interface Props {
   title: string;
@@ -103,6 +104,9 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
 
     <!-- Back to Top Button -->
     <BackToTop />
+
+    <!-- Easter Egg (Konami Code) -->
+    <EasterEgg />
 
     <!-- Custom Cursor -->
     <div class="cursor-dot" id="cursor-dot">
