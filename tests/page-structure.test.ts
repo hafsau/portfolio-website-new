@@ -166,8 +166,11 @@ describe('Layout', () => {
     expect(layoutContent).toContain('dark');
   });
 
-  it('should have View Transitions', () => {
-    expect(layoutContent).toContain('ViewTransitions');
+  // Page scripts init on DOMContentLoaded; Astro's client router skips that on
+  // back/forward, leaving the loading screen stuck over the home page.
+  it('should not use the Astro client router', () => {
+    expect(layoutContent).not.toContain('ViewTransitions');
+    expect(layoutContent).not.toContain('ClientRouter');
   });
 });
 

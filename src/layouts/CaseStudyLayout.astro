@@ -325,6 +325,19 @@ const breadcrumbSchema = {
     // Run on initial page load
     animatePageTransition();
 
+    // Back/forward cache restores the page exactly as it was left - including the
+    // "Returning to Home" overlay covering the screen. Clear it so the page is usable.
+    window.addEventListener('pageshow', (e) => {
+      if (!e.persisted) return;
+      const pageTransition = document.getElementById('page-transition');
+      const mainContent = document.getElementById('main-content');
+      if (pageTransition) {
+        pageTransition.style.display = 'none';
+        pageTransition.classList.remove('active');
+      }
+      if (mainContent) mainContent.style.opacity = '1';
+    });
+
     // Re-run after View Transitions navigation
     document.addEventListener('astro:after-swap', animatePageTransition);
 

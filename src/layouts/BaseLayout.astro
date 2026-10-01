@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
-import { ViewTransitions } from 'astro:transitions';
 import LoadingScreen from '../components/LoadingScreen.astro';
 import BackToTop from '../components/BackToTop.astro';
 import EasterEgg from '../components/EasterEgg.astro';
@@ -67,9 +66,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
 
     <title>{fullTitle}</title>
-
-    <!-- View Transitions (fallback when Barba not used) -->
-    {!useBarba && <ViewTransitions />}
 
     <!-- Theme initialization - always dark mode -->
     <script is:inline>

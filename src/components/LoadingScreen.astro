@@ -149,12 +149,14 @@
 
     if (!loadingScreen || !logoReveal) return;
 
-    // Skip loading screen when returning from case study
+    // Skip loading screen when returning from case study, or if it already played this session
+    // (e.g. pressing the browser back button reloads the home page)
     const returningFromCaseStudy = sessionStorage.getItem('scrollToSection');
-    if (returningFromCaseStudy) {
+    if (returningFromCaseStudy || sessionStorage.getItem('loaderShown')) {
       loadingScreen.style.display = 'none';
       return;
     }
+    sessionStorage.setItem('loaderShown', '1');
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
