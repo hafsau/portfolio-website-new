@@ -152,9 +152,9 @@ describe('Image Performance', () => {
     expect(largePngs.length).toBeGreaterThanOrEqual(0);
   });
 
-  it('should have resume PDF', () => {
-    const resumePath = resolve(__dirname, '../public/Hafsa Usmani - Resume.pdf');
-    expect(existsSync(resumePath)).toBe(true);
+  it('should not publish a resume PDF', () => {
+    const pdfs = readdirSync(resolve(__dirname, '../public')).filter(f => f.toLowerCase().endsWith('.pdf'));
+    expect(pdfs).toEqual([]);
   });
 });
 
