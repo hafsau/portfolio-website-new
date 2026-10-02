@@ -40,7 +40,7 @@ describe('Page Structure', () => {
 
     it('should have hero subtitle with role', () => {
       expect(indexContent).toContain('hero-subtitle');
-      expect(indexContent).toContain('Product Designer');
+      expect(indexContent).toMatch(/hero-subtitle">[^<]*product designer/i);
     });
 
     it('should have see work CTA', () => {
@@ -136,8 +136,8 @@ describe('Visual Design', () => {
     expect(indexContent).toContain('--dark-bg: #0C0C0C');
   });
 
-  it('should have gradient text for stats', () => {
-    expect(indexContent).toContain('linear-gradient(135deg, #667eea');
+  it('should color stats with the ink accent', () => {
+    expect(indexContent).toMatch(/\.stat-number \{[^}]*color: var\(--accent\)/);
   });
 
   it('should have alternating section backgrounds', () => {

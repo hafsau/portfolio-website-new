@@ -123,6 +123,29 @@ const {
     left: calc(100% + 1.5rem);
     color: var(--color-accent, #4a5ee4);
   }
+
+  /* Phones: side labels would stick out past the screen and widen the page, so place them
+     under the slider instead (desktop keeps the side labels) */
+  @media (max-width: 640px) {
+    .before-after-slider {
+      margin-bottom: 2.25rem;
+    }
+
+    .before-after-slider .ba-text {
+      top: calc(100% + 0.75rem);
+      transform: none;
+    }
+
+    .before-after-slider .ba-text-left {
+      right: auto;
+      left: 0;
+    }
+
+    .before-after-slider .ba-text-right {
+      left: auto;
+      right: 0;
+    }
+  }
 </style>
 
 <script>

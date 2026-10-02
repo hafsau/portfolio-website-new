@@ -33,6 +33,7 @@ const projects = [
     category: 'EdTech',
     title: 'EqualTales',
     description: 'AI-powered children\'s storybook',
+    outcome: '1st Place, Best AI/ML at #75HER Hackathon', // DRAFT: from the case study's own metrics
     image: '/images/equaltales/hero.webp',
     href: '/work/equaltales',
     color: '#7B5EA7',
@@ -43,6 +44,7 @@ const projects = [
     category: 'Portfolio',
     title: 'HafsaUsmani.com',
     description: 'AI-assisted portfolio development',
+    outcome: 'Designed and built in 2 weeks', // DRAFT: from the case study's own metrics
     image: '/images/portfolio-website/after-typography.webp',
     href: '/work/portfolio-website',
     color: '#14b8a6',
@@ -53,6 +55,7 @@ const projects = [
     category: 'AI Lab',
     title: 'Creative Experiments',
     description: 'AI-powered design tools and experiments',
+    outcome: '4 experiments shipped', // DRAFT: from the case study's own metrics
     image: '/images/ai-lab/hero-image.svg',
     href: '/work/ai-lab',
     color: '#f97316',
@@ -63,6 +66,7 @@ const projects = [
     category: 'Healthcare',
     title: 'MedRec Platform',
     description: 'Diabetes management app',
+    outcome: '35% decrease in error rates', // DRAFT: from the case study's own metrics
     image: '/images/medrec/hero-medrec.webp',
     href: '/work/medrec',
     color: '#4a5ee4',
@@ -73,6 +77,7 @@ const projects = [
     category: 'Wellness',
     title: 'FitStart App',
     description: 'Fitness journey companion',
+    outcome: '45% faster task completion', // DRAFT: from the case study's own metrics
     image: '/images/fitstart/hero-image.webp',
     href: '/work/fitstart',
     color: '#8b5cf6',
@@ -83,6 +88,7 @@ const projects = [
     category: 'B2B SaaS',
     title: 'Folio Platform',
     description: 'Client portal for freelancers',
+    outcome: '60% reduction in admin time', // DRAFT: from the case study's own metrics
     image: '/images/folio/hero-image.webp',
     href: '/work/folio',
     color: '#0891b2',
@@ -93,6 +99,7 @@ const projects = [
     category: 'Government',
     title: 'Immunization Tracker',
     description: 'Healthcare monitoring at scale',
+    outcome: '21% → 91% vaccinator attendance', // DRAFT: from the case study's own metrics
     image: '/images/immunization/hero-image.webp',
     href: '/work/immunization',
     color: '#4a5ee4',
@@ -216,7 +223,9 @@ const skills = [
       <!-- Subtitle + CTA -->
       <div class="hero-footer">
         <BlurFadeIn delay={1.2} y={20}>
-          <p class="hero-subtitle">Product Designer · San Francisco Bay Area</p>
+          <!-- DRAFT positioning line: Hafsa to confirm the wording -->
+          <p class="hero-subtitle">Product designer with a CS background. I design it, then I build it.</p>
+          <p class="hero-location">San Francisco Bay Area</p>
         </BlurFadeIn>
         <BlurFadeIn delay={1.4} y={20}>
           <Magnet padding={300} strength={0.5}>
@@ -276,6 +285,7 @@ const skills = [
                   <span class="project-category">{project.category}</span>
                   <h3 class="project-title">{project.title}</h3>
                   <p class="project-description">{project.description}</p>
+                  {project.outcome && <p class="project-outcome">{project.outcome}</p>}
                   <a href={project.href} class="project-cta" data-cursor-text="View" aria-label={`Discover ${project.title} case study`}>Discover</a>
                 </div>
               </div>
@@ -294,6 +304,7 @@ const skills = [
                   <span class="project-category">{project.category}</span>
                   <h3 class="project-title">{project.title}</h3>
                   <p class="project-description">{project.description}</p>
+                  {project.outcome && <p class="project-outcome">{project.outcome}</p>}
                   <a href={project.href} class="project-cta" data-cursor-text="View" aria-label={`Discover ${project.title} case study`}>Discover</a>
                 </div>
               </div>
@@ -667,6 +678,14 @@ const skills = [
       position: relative;
       z-index: 10;
       padding-bottom: 2rem;
+    }
+
+    .hero-location {
+      margin: 0.5rem 0 1.5rem;
+      font: 500 11px/1.4 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--warm-muted);
     }
 
     .hero-subtitle {
@@ -1082,6 +1101,25 @@ const skills = [
       line-height: 1.5;
     }
 
+    /* Outcome line on project cards */
+    .project-outcome {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.35rem 0 0.75rem;
+      font: 500 0.72rem/1.4 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    .project-outcome::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      flex: none;
+      background: var(--accent);
+    }
+
     /* Discover CTA Button - Centered inside card */
     .project-cta {
       display: flex;
@@ -1143,10 +1181,7 @@ const skills = [
       font-size: clamp(3rem, 10vw, 8rem);
       font-weight: 900;
       line-height: 1;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--accent);
     }
 
     .stat-label {

@@ -42,6 +42,8 @@ const d = `M0 ${y0 * H} C${x1 * W} ${y1 * H}, ${x2 * W} ${y2 * H}, ${W} ${y3 * H
 
   .section-cut svg {
     display: block;
+    /* The pen tool can bend the edge beyond its band while a handle is dragged */
+    overflow: visible;
     width: 100%;
     /* 1px bleed so no hairline shows against the next section */
     height: calc(100% + 1px);

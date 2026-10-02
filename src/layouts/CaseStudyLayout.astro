@@ -4,6 +4,9 @@ import BaseLayout from './BaseLayout.astro';
 import Lightbox from '../components/Lightbox.astro';
 import AmbientBackground from '../components/AmbientBackground.astro';
 import MobileNav from '../components/MobileNav.astro';
+import SectionCut from '../components/SectionCut.astro';
+import CaseStudyPen from '../components/CaseStudyPen.astro';
+import { caseStudySummaries } from '../data/caseStudySummaries';
 
 interface Metric {
   value: string;
@@ -55,6 +58,15 @@ const fullHeroImage = heroImage ? (heroImage.startsWith('http') ? heroImage : `$
 // Show the lighter WebP version on the page when one exists; PNG/JPG stays for social previews
 const webpHero = heroImage?.replace(/\.(png|jpe?g)$/i, '.webp');
 const displayHeroImage = webpHero && webpHero !== heroImage && existsSync(`public${webpHero}`) ? webpHero : heroImage;
+
+// "At a glance" card and key decisions for this case study (drafted from the page's own text)
+const slug = Astro.url.pathname.split('/').filter(Boolean).pop() ?? '';
+const summary = caseStudySummaries[slug];
+
+// Next-project card image, preferring the lighter WebP when one exists
+const nextImage = nextProject?.image;
+const nextWebp = nextImage?.replace(/\.(png|jpe?g)$/i, '.webp');
+const nextDisplayImage = nextWebp && nextWebp !== nextImage && existsSync(`public${nextWebp}`) ? nextWebp : nextImage;
 
 // JSON-LD Schemas
 const creativeWorkSchema = {
@@ -133,7 +145,12 @@ const breadcrumbSchema = {
     </div>
   </nav>
 
+  <!-- Pen tool: section index rail, progress chip, read time, and sign-off -->
+  <CaseStudyPen />
+
   <article id="main-content" class="case-study">
+    <!-- Opening on paper (cream), cut into the dark content like the home page -->
+    <div class="paper-zone">
     <!-- Header Section -->
     <header class="case-hero">
       <div class="container">
@@ -178,6 +195,15 @@ const breadcrumbSchema = {
             </div>
           )}
         </div>
+
+        {summary && (
+          <dl class="glance reveal delay-3" aria-label="At a glance">
+            <div class="glance-row"><dt>Problem</dt><dd>{summary.tldr.problem}</dd></div>
+            <div class="glance-row"><dt>My role</dt><dd>{summary.tldr.role}</dd></div>
+            <div class="glance-row"><dt>Outcome</dt><dd>{summary.tldr.outcome}</dd></div>
+            <div class="glance-row"><dt>Timeline</dt><dd>{summary.tldr.timeline}</dd></div>
+          </dl>
+        )}
       </div>
     </header>
 
@@ -213,16 +239,43 @@ const breadcrumbSchema = {
         ))}
       </div>
     </div>
+      <div class="cut-room" aria-hidden="true"></div>
+    </div>
+
+    <SectionCut to="#0D0D0D" curve={[0.75, 0.3, 1, 0.7, 0, 0.3]} />
 
     <!-- Main Content -->
     <div class="case-content">
       <div class="container-narrow">
+        {summary && summary.decisions.length > 0 && (
+          <section class="case-section decisions-section">
+            <h2>Key Decisions</h2>
+            <div class="decision-list">
+              {summary.decisions.map((d) => (
+                <article class="decision-card">
+                  <h3 class="decision-title">{d.title}</h3>
+                  {d.considered.length > 0 && (
+                    <ul class="decision-considered" aria-label="Options considered">
+                      {d.considered.map((o) => <li>{o}</li>)}
+                    </ul>
+                  )}
+                  <p class="decision-chosen"><span class="decision-anchor" aria-hidden="true"></span><span class="sr-only">Chosen: </span>{d.chosen}</p>
+                  <p class="decision-why">{d.why}</p>
+                  {d.cost && <p class="decision-cost"><span>Trade-off</span> {d.cost}</p>}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
         <slot />
       </div>
+      <div class="cut-room" aria-hidden="true"></div>
     </div>
 
-    <!-- Project Navigation -->
-    <div class="project-nav-section">
+    <SectionCut to="#FFF4E4" curve={[0.3, 0.32, 0, 0.7, 1, 0.72]} />
+
+    <!-- Project Navigation (back on paper) -->
+    <div class="project-nav-section paper-zone">
       <div class="container">
         <!-- Utility Row: Previous + View All -->
         <div class="nav-utility-row reveal">
@@ -244,6 +297,11 @@ const breadcrumbSchema = {
         <!-- Next Project Feature -->
         {nextProject && (
           <a href={nextProject.href} class="next-project-feature reveal">
+            {nextDisplayImage && (
+              <span class="next-image-frame">
+                <img class="next-image" src={nextDisplayImage} alt="" loading="lazy" decoding="async" />
+              </span>
+            )}
             <span class="next-label">Next Project</span>
             <h2 class="next-title">{nextProject.title}</h2>
             {nextProject.subtitle && (
@@ -262,7 +320,7 @@ const breadcrumbSchema = {
   </article>
 
   <!-- Footer -->
-  <footer class="py-8">
+  <footer class="py-8 paper-zone">
     <div class="container">
       <div class="divider mb-8"></div>
       <div class="flex items-center justify-between">
@@ -722,6 +780,23 @@ const breadcrumbSchema = {
       transition: background 0.3s ease, backdrop-filter 0.3s ease;
     }
 
+    /* Over the cream opening, before scrolling: dark text */
+    .nav-fixed:not(.scrolled) {
+      --color-fg: #1A1A1A;
+      --color-muted: #736E68;
+    }
+
+    /* Cream sections: swap the color tokens so everything inside adapts */
+    .paper-zone {
+      --color-bg: #FFF4E4;
+      --color-fg: #1A1A1A;
+      --color-muted: #736E68;
+      --color-border: rgba(26, 26, 26, 0.12);
+      background: var(--color-bg);
+      color: var(--color-fg);
+      position: relative;
+    }
+
     .nav-fixed.scrolled {
       background: rgba(12, 12, 12, 0.8);
       backdrop-filter: blur(12px);
@@ -820,8 +895,12 @@ const breadcrumbSchema = {
 
     /* Case Study Layout */
     .case-study {
-      padding-top: 100px;
       opacity: 0;
+    }
+
+    /* The cream opening runs under the fixed nav; the nav space moves inside it */
+    .case-study > .paper-zone:first-child {
+      padding-top: 100px;
     }
 
     .case-hero {
@@ -887,6 +966,145 @@ const breadcrumbSchema = {
     .detail-value {
       font-size: 0.9375rem;
       color: var(--color-fg);
+    }
+
+    /* At a glance (TL;DR) */
+    .glance {
+      display: grid;
+      gap: 0;
+      margin: 2rem 0 0;
+      max-width: 860px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .glance-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1.5rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .glance dt {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font: 500 11px/1.6 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+    }
+
+    .glance dt::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      flex: none;
+      border: 1.5px solid var(--color-accent);
+      background: var(--color-bg);
+    }
+
+    .glance dd {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--color-fg);
+    }
+
+    @media (max-width: 640px) {
+      .glance-row { grid-template-columns: 1fr; gap: 0.35rem; }
+    }
+
+    /* Key decisions */
+    .decision-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .decision-card {
+      padding: 1.5rem 1.5rem 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .decision-title {
+      margin: 0 0 0.9rem;
+      font-size: 1.05rem;
+    }
+
+    .decision-considered {
+      list-style: none;
+      margin: 0 0 0.6rem;
+      padding: 0;
+    }
+
+    .decision-considered li {
+      position: relative;
+      padding-left: 1.4rem;
+      color: var(--color-muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(184, 184, 184, 0.45);
+      font-size: 0.925rem;
+      line-height: 1.6;
+    }
+
+    .decision-considered li::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 0.55em;
+      width: 7px;
+      height: 7px;
+      border: 1.5px solid rgba(184, 184, 184, 0.55);
+    }
+
+    .decision-chosen {
+      position: relative;
+      margin: 0 0 0.75rem;
+      padding-left: 1.4rem;
+      font-weight: 600;
+      color: var(--color-fg);
+    }
+
+    /* Selected anchor with its handles */
+    .decision-anchor {
+      position: absolute;
+      left: 1px;
+      top: 0.45em;
+      width: 9px;
+      height: 9px;
+      background: var(--color-accent);
+    }
+
+    .decision-anchor::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: -6px;
+      width: 21px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    .decision-why {
+      margin: 0;
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    .decision-cost {
+      margin: 0.75rem 0 0;
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    .decision-cost span {
+      font: 500 11px/1 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+      margin-right: 0.4rem;
     }
 
     /* Hero Image */
@@ -1089,9 +1307,7 @@ const breadcrumbSchema = {
 
     /* Project Navigation Section */
     .project-nav-section {
-      padding: 4rem 0 6rem;
-      margin-top: 4rem;
-      border-top: 1px solid var(--color-border);
+      padding: 2rem 0 6rem;
     }
 
     /* Utility Row - Previous + View All */
@@ -1130,9 +1346,32 @@ const breadcrumbSchema = {
       text-align: center;
       text-decoration: none;
       padding: 3rem;
-      background: var(--color-border);
+      background: rgba(26, 26, 26, 0.05);
+      border: 1px solid var(--color-border);
       border-radius: 1.5rem;
       transition: all 0.4s ease;
+    }
+
+    .next-image-frame {
+      display: block;
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #0C0C0C;
+    }
+
+    .next-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .next-project-feature:hover .next-image {
+      transform: scale(1.03);
     }
 
     .next-project-feature:hover {
