@@ -9,8 +9,8 @@ import BlurFadeIn from '../components/BlurFadeIn.astro';
 import SplitTextReveal from '../components/SplitTextReveal.astro';
 import MultilingualGreeting from '../components/MultilingualGreeting.astro';
 import FloatingOrbs from '../components/FloatingOrbs.astro';
-import ScrollFloatingElements from '../components/ScrollFloatingElements.astro';
-import WaveDivider from '../components/WaveDivider.astro';
+import PenToolPath from '../components/PenToolPath.astro';
+import SectionCut from '../components/SectionCut.astro';
 import TiltCard from '../components/TiltCard.astro';
 import ScrollRevealText from '../components/ScrollRevealText.astro';
 import CircleButton from '../components/CircleButton.astro';
@@ -133,15 +133,15 @@ const skills = [
   <!-- Scroll Progress Indicator -->
   <ScrollProgress />
 
-  <!-- Scroll-linked Floating Elements (parallax orbs) -->
-  <ScrollFloatingElements />
+  <!-- Scroll-linked pen tool: draws a bezier line down the page and signs off at Contact -->
+  <PenToolPath />
 
   <div class="portfolio-wrapper" role="main">
 
     <!-- ============================================
          HERO SECTION - Warm Cream Background
          ============================================ -->
-    <section class="hero-section">
+    <section class="hero-section" data-pen-section>
       <FloatingOrbs />
 
       <!-- Navigation -->
@@ -220,7 +220,7 @@ const skills = [
         </BlurFadeIn>
         <BlurFadeIn delay={1.4} y={20}>
           <Magnet padding={300} strength={0.5}>
-            <a href="#work" class="hero-cta" data-cursor-text="Go">
+            <a href="#work" class="hero-cta" data-cursor-text="Go" data-pen-start>
               See my work
               <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7V17"/>
@@ -229,15 +229,16 @@ const skills = [
           </Magnet>
         </BlurFadeIn>
       </div>
+      <div class="cut-room" aria-hidden="true"></div>
     </section>
 
-    <!-- Wave Transition: Cream → Dark -->
-    <WaveDivider class="wave-to-dark" />
+    <!-- Pen-cut edge: Cream → Dark (the pen line rides along it) -->
+    <SectionCut to="#0C0C0C" curve={[0.8, 0.3, 1, 0.7, 0, 0.25]} />
 
     <!-- ============================================
          WORK SECTION - Dark Background
          ============================================ -->
-    <section class="work-section" id="work">
+    <section class="work-section" id="work" data-pen-section>
       <div class="work-header">
         <BlurFadeIn delay={0} y={40} triggerOnScroll>
           <h2 class="section-title section-title-light">Selected Work</h2>
@@ -301,15 +302,16 @@ const skills = [
         </div>
 
       </div>
+      <div class="cut-room" aria-hidden="true"></div>
     </section>
 
-    <!-- Wave Transition: Dark → Cream -->
-    <WaveDivider class="wave-to-warm" />
+    <!-- Pen-cut edge: Dark → Cream (the pen line rides along it) -->
+    <SectionCut to="#FFF4E4" curve={[0.25, 0.35, 0, 0.7, 1, 0.75]} />
 
     <!-- ============================================
          STATS SECTION - Warm Cream Background
          ============================================ -->
-    <section class="stats-section">
+    <section class="stats-section" data-pen-section>
       <div class="stats-grid">
         {stats.map((stat, i) => (
           <BlurFadeIn delay={i * 0.15} y={40} triggerOnScroll>
@@ -322,15 +324,16 @@ const skills = [
           </BlurFadeIn>
         ))}
       </div>
+      <div class="cut-room" aria-hidden="true"></div>
     </section>
 
-    <!-- Wave Transition: Cream → Dark -->
-    <WaveDivider class="wave-to-dark" />
+    <!-- Pen-cut edge: Cream → Dark (the pen line rides along it) -->
+    <SectionCut to="#0C0C0C" curve={[0.75, 0.28, 1, 0.72, 0, 0.25]} />
 
     <!-- ============================================
          ABOUT SECTION - Dark Background
          ============================================ -->
-    <section class="about-section" id="about">
+    <section class="about-section" id="about" data-pen-section>
       <div class="about-content">
         <BlurFadeIn delay={0} y={40} triggerOnScroll>
           <h2 class="section-title section-title-light">About Me</h2>
@@ -384,15 +387,16 @@ const skills = [
           ))}
         </Marquee>
       </div>
+      <div class="cut-room" aria-hidden="true"></div>
     </section>
 
-    <!-- Wave Transition: Dark → Cream -->
-    <WaveDivider class="wave-to-warm" />
+    <!-- Pen-cut edge: Dark → Cream (the pen line rides along it) -->
+    <SectionCut to="#FFF4E4" curve={[0.25, 0.3, 0, 0.68, 1, 0.72]} />
 
     <!-- ============================================
          CONTACT SECTION - Warm Cream Background
          ============================================ -->
-    <section class="contact-section" id="contact">
+    <section class="contact-section" id="contact" data-pen-section>
       <div class="contact-content">
         <!-- Decorative staggered shapes -->
         <div class="contact-decorations">
@@ -416,6 +420,9 @@ const skills = [
             </a>
           </div>
         </BlurFadeIn>
+
+        <!-- The pen tool signs off here (desktop only) -->
+        <div class="pen-signature-slot" data-pen-signature aria-hidden="true"></div>
       </div>
 
     </section>
@@ -443,14 +450,6 @@ const skills = [
       --card-bg: #1A1A1A;
       --card-border: #333;
       --card-image-bg: #0c0c0c;
-    }
-
-    /* Wave divider colors */
-    .wave-to-dark {
-      color: var(--dark-bg);
-    }
-    .wave-to-warm {
-      color: var(--warm-bg);
     }
 
     /* ============================================
@@ -1313,6 +1312,15 @@ const skills = [
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
+    }
+
+    .pen-signature-slot {
+      height: 76px;
+      margin-top: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .pen-signature-slot { height: 96px; margin-top: 1.5rem; }
     }
 
     .contact-decorations {

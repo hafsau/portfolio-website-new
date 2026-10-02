@@ -69,10 +69,10 @@ describe('Page Structure', () => {
       expect(indexContent).toContain('id="contact"');
     });
 
-    it('should have wave dividers between sections', () => {
-      expect(indexContent).toContain('WaveDivider');
-      expect(indexContent).toContain('wave-to-dark');
-      expect(indexContent).toContain('wave-to-warm');
+    it('should have pen-cut edges between sections', () => {
+      expect(indexContent).toContain('<SectionCut');
+      expect(indexContent).toContain('cut-room');
+      expect(indexContent).toContain('<PenToolPath');
     });
 
     it('should have draggable projects carousel', () => {

@@ -1,0 +1,361 @@
+---
+/**
+ * PenToolPath - a design-tool pen draws one continuous bezier line down the page as you scroll.
+ *
+ * The line runs in the side margins, switches sides at each section boundary (dropping an
+ * anchor point with handles there, like the Figma pen tool), and finishes by signing "Hafsa"
+ * inside the element marked [data-pen-signature].
+ *
+ * Usage: mark sections with [data-pen-section] (in page order), the start point with
+ * [data-pen-start], and the signature slot with [data-pen-signature].
+ * On phones it switches to a slimmer line hugging the screen edge, with a smaller nib and signature.
+ *
+ * Signature outline: "Hafsa" set in Corinthia Bold (SIL Open Font License), converted to a path.
+ */
+---
+
+<div class="pen-layer" id="pen-layer" aria-hidden="true">
+  <svg class="pen-svg" id="pen-svg">
+    <defs>
+      <clipPath id="pen-sig-clip"><rect id="pen-sig-reveal" x="0" y="-700" width="0" height="1400" /></clipPath>
+    </defs>
+    <path class="pen-line" id="pen-line" />
+    <g id="pen-anchors"></g>
+    <g id="pen-signature" class="pen-signature">
+      <path clip-path="url(#pen-sig-clip)" d="M233 92Q200 92 162 85Q124 78 89.5 61.5Q55 45 33 17.5Q11 -10 11 -51Q11 -99 43.5 -134Q76 -169 130.5 -193.5Q185 -218 253 -234Q321 -250 392.5 -259Q464 -268 531 -271.5Q598 -275 649 -275Q670 -275 688 -274.5Q706 -274 719 -273Q732 -299 746 -331Q760 -363 770.5 -396.5Q781 -430 781 -458Q781 -471 772.5 -484.5Q764 -498 750 -498Q731 -498 718 -492Q705 -486 689 -478Q683 -476 682 -476Q674 -476 674 -484Q674 -493 687.5 -500.5Q701 -508 720 -514.5Q739 -521 756.5 -524.5Q774 -528 781 -528Q816 -528 830.5 -508.5Q845 -489 845 -457Q845 -411 827 -360Q809 -309 789 -268Q828 -264 867 -258.5Q906 -253 944 -243Q959 -272 982.5 -313Q1006 -354 1033 -397.5Q1060 -441 1087.5 -478Q1115 -515 1139 -534Q1153 -545 1170 -548Q1187 -551 1203 -551Q1209 -551 1217 -549.5Q1225 -548 1226 -540Q1224 -531 1212 -519Q1200 -507 1193 -499Q1129 -429 1080 -362.5Q1031 -296 992 -226Q1006 -221 1022 -212Q1038 -203 1050 -190.5Q1062 -178 1062 -161Q1062 -139 1051 -125Q1043 -115 1032 -115Q1026 -115 1026 -119Q1026 -123 1030 -127Q1037 -136 1037 -155Q1037 -158 1037 -161Q1037 -164 1036 -167Q1035 -176 1025 -184Q1015 -192 1003 -198.5Q991 -205 984 -207Q972 -184 954.5 -148.5Q937 -113 924 -76.5Q911 -40 911 -13Q911 -3 916.5 10Q922 23 935 23Q949 23 962 18Q975 13 994 0Q998 -2 999 -2Q1002 -2 1002 3Q1002 13 989.5 23.5Q977 34 959.5 40Q942 46 926 45Q894 43 878.5 28Q863 13 863 -18Q863 -47 876 -84.5Q889 -122 906.5 -159Q924 -196 936 -222Q897 -231 857.5 -236.5Q818 -242 778 -245Q738 -185 681.5 -125.5Q625 -66 555 -16.5Q485 33 404 62.5Q323 92 233 92ZM227 71Q320 71 393.5 42.5Q467 14 524 -33Q581 -80 625.5 -136.5Q670 -193 706 -249Q693 -250 679.5 -250.5Q666 -251 653 -251Q623 -251 568 -247Q513 -243 446 -234Q379 -225 311.5 -209Q244 -193 187 -169Q130 -145 95 -112Q60 -79 60 -34Q60 -3 77.5 17Q95 37 121 49Q147 61 176 66Q205 71 227 71ZM1353 3Q1321 3 1305 -12.5Q1289 -28 1284.5 -52Q1280 -76 1281 -100Q1266 -80 1244 -56.5Q1222 -33 1196 -16Q1170 1 1143 1Q1123 1 1110 -8.5Q1097 -18 1097 -39Q1097 -74 1119.5 -113Q1142 -152 1177 -187.5Q1212 -223 1252 -245Q1292 -267 1327 -267Q1337 -267 1355 -263Q1373 -259 1387.5 -251Q1402 -243 1402 -229Q1402 -222 1393 -221Q1384 -220 1380 -215Q1351 -180 1351 -102Q1351 -92 1352 -75Q1353 -58 1359.5 -45Q1366 -32 1380 -32Q1401 -32 1425 -50Q1449 -68 1473 -93.5Q1497 -119 1517 -140Q1519 -143 1521 -143Q1526 -143 1529.5 -137.5Q1533 -132 1529 -128Q1505 -100 1482.5 -78Q1460 -56 1436 -36Q1390 3 1353 3ZM1197 -45Q1220 -58 1243.5 -86Q1267 -114 1288.5 -150Q1310 -186 1325 -222Q1301 -222 1271 -204.5Q1241 -187 1214 -160.5Q1187 -134 1169.5 -105.5Q1152 -77 1152 -54Q1152 -35 1167 -35Q1178 -35 1197 -45ZM1434 357Q1384 357 1367.5 326Q1351 295 1351 252Q1351 222 1360 187.5Q1369 153 1382 119Q1395 85 1407 58Q1439 -16 1478.5 -88Q1518 -160 1571 -244Q1579 -258 1598.5 -287.5Q1618 -317 1642 -353.5Q1666 -390 1690.5 -425.5Q1715 -461 1734 -486.5Q1753 -512 1762 -519Q1772 -527 1784.5 -532.5Q1797 -538 1810 -538Q1834 -538 1834 -515Q1834 -511 1818 -488.5Q1802 -466 1776 -431.5Q1750 -397 1720 -358.5Q1690 -320 1661.5 -283.5Q1633 -247 1612 -219.5Q1591 -192 1584 -181H1586Q1608 -182 1623 -161Q1638 -140 1647 -113.5Q1656 -87 1660 -70Q1671 -63 1683 -60.5Q1695 -58 1708 -58Q1740 -58 1766.5 -72Q1793 -86 1812.5 -103.5Q1832 -121 1840 -131Q1843 -135 1847 -135Q1854 -135 1854 -126Q1854 -118 1828 -94Q1803 -71 1774.5 -54Q1746 -37 1713 -32Q1710 -31 1706.5 -31Q1703 -31 1698 -31Q1688 -31 1679 -32Q1670 -33 1665 -34Q1668 -10 1668 13Q1668 49 1657.5 94.5Q1647 140 1626.5 186Q1606 232 1577.5 271Q1549 310 1513 333.5Q1477 357 1434 357ZM1450 329Q1482 329 1509.5 306Q1537 283 1559.5 246Q1582 209 1598 167Q1614 125 1622.5 86Q1631 47 1631 21Q1631 3 1628.5 -14.5Q1626 -32 1622 -49L1621 -51Q1599 -64 1579 -84.5Q1559 -105 1551 -130Q1530 -91 1504.5 -40.5Q1479 10 1456 66Q1433 122 1418 176Q1403 230 1403 275Q1403 299 1413.5 314Q1424 329 1450 329ZM1924 24Q1892 24 1854.5 10Q1817 -4 1790.5 -31Q1764 -58 1764 -96Q1764 -109 1769.5 -120Q1775 -131 1791 -131Q1798 -131 1808 -125.5Q1818 -120 1823 -115Q1846 -136 1870 -167.5Q1894 -199 1919.5 -231Q1945 -263 1972.5 -286.5Q2000 -310 2031 -315Q2034 -316 2042 -316Q2062 -316 2080.5 -307Q2099 -298 2094 -278Q2092 -269 2075.5 -268Q2059 -267 2038.5 -267Q2018 -267 2003 -260Q1988 -253 1988 -231Q1988 -223 1997 -206Q2006 -189 2017 -166.5Q2028 -144 2035 -119Q2042 -94 2039 -70Q2050 -69 2072.5 -73.5Q2095 -78 2122.5 -91.5Q2150 -105 2174 -131Q2177 -134 2180 -134Q2185 -134 2187 -129Q2189 -124 2186 -120Q2176 -107 2159.5 -91Q2143 -75 2120 -64Q2093 -51 2069 -46.5Q2045 -42 2036 -43Q2026 -8 1992 8Q1958 24 1924 24ZM1984 -71V-74Q1984 -92 1975 -118Q1966 -144 1956 -171.5Q1946 -199 1942 -220Q1918 -189 1893.5 -161Q1869 -133 1841 -105Q1876 -92 1911.5 -82.5Q1947 -73 1984 -71ZM1918 -5Q1935 -5 1953 -15Q1971 -25 1984 -47Q1944 -48 1900 -56.5Q1856 -65 1821 -85Q1823 -41 1850.5 -23Q1878 -5 1918 -5ZM2392 3Q2360 3 2344 -12.5Q2328 -28 2323.5 -52Q2319 -76 2320 -100Q2305 -80 2283 -56.5Q2261 -33 2235 -16Q2209 1 2182 1Q2162 1 2149 -8.5Q2136 -18 2136 -39Q2136 -74 2158.5 -113Q2181 -152 2216 -187.5Q2251 -223 2291 -245Q2331 -267 2366 -267Q2376 -267 2394 -263Q2412 -259 2426.5 -251Q2441 -243 2441 -229Q2441 -222 2432 -221Q2423 -220 2419 -215Q2390 -180 2390 -102Q2390 -92 2391 -75Q2392 -58 2398.5 -45Q2405 -32 2419 -32Q2440 -32 2464 -50Q2488 -68 2512 -93.5Q2536 -119 2556 -140Q2558 -143 2560 -143Q2565 -143 2568.5 -137.5Q2572 -132 2568 -128Q2544 -100 2521.5 -78Q2499 -56 2475 -36Q2429 3 2392 3ZM2236 -45Q2259 -58 2282.5 -86Q2306 -114 2327.5 -150Q2349 -186 2364 -222Q2340 -222 2310 -204.5Q2280 -187 2253 -160.5Q2226 -134 2208.5 -105.5Q2191 -77 2191 -54Q2191 -35 2206 -35Q2217 -35 2236 -45Z" />
+      <path class="pen-flourish" id="pen-flourish" d="M 330 300 C 1100 360, 1900 330, 2700 160" />
+    </g>
+    <g class="pen-nib" id="pen-nib">
+      <path d="M0 0 L-9 -22 L0 -32 L9 -22 Z" />
+      <circle cx="0" cy="-18" r="2.4" />
+      <line x1="0" y1="-18" x2="0" y2="-3" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .pen-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 30;
+  }
+
+  .pen-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+  }
+
+  .pen-line {
+    fill: none;
+    stroke: var(--pen-color, #4A5EE4);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+  }
+
+  .pen-nib path {
+    fill: var(--pen-color, #4A5EE4);
+    stroke: #fff;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+
+  .pen-nib circle { fill: #fff; }
+  .pen-nib line { stroke: #fff; stroke-width: 1.2; }
+
+  .pen-signature path { fill: var(--pen-color, #4A5EE4); }
+
+  .pen-signature .pen-flourish {
+    fill: none;
+    stroke: var(--pen-color, #4A5EE4);
+    stroke-width: 22;
+    stroke-linecap: round;
+  }
+
+  @media (max-width: 767px) {
+    .pen-line { stroke-width: 1.6; }
+  }
+</style>
+
+<script>
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  // Bounds of the signature path in its own units (Corinthia Bold, 1000 units per em)
+  const SIG = { x: 11, y: -551, w: 2700, h: 908, baseline: 0 };
+
+  type Pt = [number, number];
+  const lerp = (a: Pt, b: Pt, t: number): Pt => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+  const bez = (p: Pt[], t: number): Pt => {
+    const u = 1 - t;
+    return [
+      u * u * u * p[0][0] + 3 * u * u * t * p[1][0] + 3 * u * t * t * p[2][0] + t * t * t * p[3][0],
+      u * u * u * p[0][1] + 3 * u * u * t * p[1][1] + 3 * u * t * t * p[2][1] + t * t * t * p[3][1],
+    ];
+  };
+  const bezTangent = (p: Pt[], t: number): Pt => {
+    const u = 1 - t;
+    return [
+      3 * u * u * (p[1][0] - p[0][0]) + 6 * u * t * (p[2][0] - p[1][0]) + 3 * t * t * (p[3][0] - p[2][0]),
+      3 * u * u * (p[1][1] - p[0][1]) + 6 * u * t * (p[2][1] - p[1][1]) + 3 * t * t * (p[3][1] - p[2][1]),
+    ];
+  };
+  // The part of a cubic between t0 and t1 (de Casteljau), returned as 4 points
+  function bezSlice(p: Pt[], t0: number, t1: number): Pt[] {
+    const split = (q: Pt[], t: number) => {
+      const a = lerp(q[0], q[1], t), b = lerp(q[1], q[2], t), c = lerp(q[2], q[3], t);
+      const ab = lerp(a, b, t), bc = lerp(b, c, t), m = lerp(ab, bc, t);
+      return { left: [q[0], a, ab, m] as Pt[], right: [m, bc, c, q[3]] as Pt[] };
+    };
+    const right = split(p, t0).right;
+    return split(right, (t1 - t0) / (1 - t0)).left;
+  }
+  // t where the curve reaches a given x (x grows with t for these edges)
+  function tAtX(p: Pt[], x: number) {
+    let lo = 0, hi = 1;
+    for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (bez(p, m)[0] < x) lo = m; else hi = m; }
+    return (lo + hi) / 2;
+  }
+
+  function initPenTool() {
+    const layer = document.getElementById('pen-layer');
+    const svg = document.getElementById('pen-svg') as unknown as SVGSVGElement | null;
+    const line = document.getElementById('pen-line') as unknown as SVGPathElement | null;
+    const nib = document.getElementById('pen-nib');
+    const anchorsG = document.getElementById('pen-anchors');
+    const sigG = document.getElementById('pen-signature');
+    const reveal = document.getElementById('pen-sig-reveal');
+    const flourish = document.getElementById('pen-flourish') as unknown as SVGPathElement | null;
+    if (!layer || !svg || !line || !nib || !anchorsG || !sigG || !reveal || !flourish) return;
+    if (layer.dataset.init) return;
+    layer.dataset.init = 'true';
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let samples: { l: number; x: number; y: number }[] = [];
+    let anchors: { y: number; el: SVGGElement }[] = [];
+    let total = 0;
+    let endY = 0;
+    let drawn = 0;
+    let sigScale = 0.1;
+    let sigOrigin = { x: 0, y: 0 };
+    let flourishLen = 1;
+    let signState: 'hidden' | 'writing' | 'done' = 'hidden';
+    let signStart = 0;
+    let rafId = 0;
+    let compact = false;
+
+    const pageY = (el: Element) => el.getBoundingClientRect().top + window.scrollY;
+
+    function build() {
+      const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-pen-section]'));
+      const start = document.querySelector<HTMLElement>('[data-pen-start]');
+      const slot = document.querySelector<HTMLElement>('[data-pen-signature]');
+      if (!sections.length || !start || !slot) return;
+
+      // Collapse the layer before measuring, or the page height would include the layer's own
+      // previous (possibly taller) height and leave empty space below the footer after a resize
+      layer!.style.height = '0px';
+      svg!.setAttribute('height', '0');
+      const W = document.documentElement.clientWidth;
+      const H = document.documentElement.scrollHeight;
+      layer!.style.height = H + 'px';
+      svg!.setAttribute('width', String(W));
+      svg!.setAttribute('height', String(H));
+
+      compact = W < 768;
+      const gutter = compact ? 12 : 36;
+      const bend = compact ? 18 : 30; // radius of the turn from a margin onto an edge
+      const side = [W - gutter, gutter]; // right margin, left margin
+      const cuts = Array.from(document.querySelectorAll<HTMLElement>('[data-pen-cut]'));
+      const s = start.getBoundingClientRect();
+      const sx = s.right + (compact ? 14 : 28);
+      const sy = s.top + window.scrollY + s.height / 2;
+
+      // Leave the "See my work" button and curve into the right margin
+      const lead = compact ? 70 : 160;
+      let d = `M ${sx} ${sy} C ${sx + lead} ${sy}, ${side[0]} ${sy - 40}, ${side[0]} ${sy + lead}`;
+      const anchorPts: { at: Pt; tan: Pt }[] = [];
+
+      sections.forEach((sec, i) => {
+        if (i === sections.length - 1) return;
+        const x = side[i % 2];
+        const nx = side[(i + 1) % 2];
+        const next = sections[i + 1];
+        const cut = cuts[i];
+
+        if (cut && cuts.length === sections.length - 1) {
+          // Ride exactly along the section's pen-cut edge, margin to margin
+          const [y0, x1, y1, x2, y2, y3] = cut.dataset.penCut!.split(',').map(Number);
+          const top = pageY(cut), h = cut.offsetHeight;
+          const curve: Pt[] = [[0, top + y0 * h], [x1 * W, top + y1 * h], [x2 * W, top + y2 * h], [W, top + y3 * h]];
+          const fromLeft = x < W / 2;
+          const tA = tAtX(curve, gutter + bend), tB = tAtX(curve, W - gutter - bend);
+          let seg = bezSlice(curve, tA, tB);
+          if (!fromLeft) seg = [seg[3], seg[2], seg[1], seg[0]];
+          const yIn = fromLeft ? bez(curve, tAtX(curve, gutter))[1] : bez(curve, tAtX(curve, W - gutter))[1];
+          const yOut = fromLeft ? bez(curve, tAtX(curve, W - gutter))[1] : bez(curve, tAtX(curve, gutter))[1];
+          d += ` L ${x} ${yIn - bend} Q ${x} ${yIn}, ${seg[0][0]} ${seg[0][1]}`;
+          d += ` C ${seg[1][0]} ${seg[1][1]}, ${seg[2][0]} ${seg[2][1]}, ${seg[3][0]} ${seg[3][1]}`;
+          d += ` Q ${nx} ${yOut}, ${nx} ${yOut + bend}`;
+          const tan = bezTangent(curve, 0.5);
+          anchorPts.push({ at: bez(curve, 0.5), tan: fromLeft ? tan : [-tan[0], -tan[1]] });
+        } else {
+          // No edge to follow: switch margins with an S-curve at the boundary
+          const b = (pageY(sec) + sec.offsetHeight + pageY(next)) / 2;
+          d += ` L ${x} ${b - 220}`;
+          d += ` C ${x} ${b - 40}, ${nx} ${b - 60}, ${nx} ${b + 160}`;
+          anchorPts.push({ at: [(x + nx) / 2, b + 50], tan: [nx - x, 120] });
+        }
+      });
+
+      // Into the signature: end at the left edge of the signature baseline
+      const slotRect = slot.getBoundingClientRect();
+      const sigW = Math.min(compact ? 140 : 200, slotRect.width * 0.8);
+      sigScale = sigW / SIG.w;
+      const sigH = SIG.h * sigScale;
+      sigOrigin = {
+        x: slotRect.left + (slotRect.width - sigW) / 2 - SIG.x * sigScale,
+        y: slotRect.top + window.scrollY + (slotRect.height - sigH) / 2 - SIG.y * sigScale,
+      };
+      const ex = sigOrigin.x + 40 * sigScale;
+      const ey = sigOrigin.y + 60 * sigScale;
+      const lastX = side[(sections.length - 1) % 2];
+      // Sweep beneath the signature and curl up into the "H" from the left, so the line never crosses the letters
+      const below = ey + sigH * 0.95;
+      const leftOfSig = ex - (compact ? 36 : 70);
+      d += ` L ${lastX} ${ey - (compact ? 120 : 200)}`;
+      d += ` C ${lastX} ${below}, ${leftOfSig + (compact ? 120 : 220)} ${below}, ${leftOfSig} ${below - 20}`;
+      d += ` C ${leftOfSig - (compact ? 30 : 60)} ${below - 30}, ${ex - 30} ${ey + 10}, ${ex} ${ey}`;
+      line!.setAttribute('d', d);
+
+      total = line!.getTotalLength();
+      samples = [];
+      for (let l = 0; l <= total; l += 6) {
+        const p = line!.getPointAtLength(l);
+        samples.push({ l, x: p.x, y: p.y });
+      }
+      const end = line!.getPointAtLength(total);
+      samples.push({ l: total, x: end.x, y: end.y });
+      endY = end.y;
+      line!.style.strokeDasharray = String(total);
+
+      // Anchor points with Bezier handles, placed on the line where it crosses each boundary
+      anchorsG!.replaceChildren();
+      anchors = anchorPts.map((a) => {
+        const g = document.createElementNS(SVG_NS, 'g') as SVGGElement;
+        g.setAttribute('class', 'pen-anchor');
+        g.setAttribute('opacity', '0');
+        g.style.transition = 'opacity .35s ease';
+        // Handles lie along the curve's tangent, like a Figma bezier anchor
+        const len = Math.hypot(a.tan[0], a.tan[1]) || 1;
+        const reach = compact ? 36 : 70;
+        const hx = (a.tan[0] / len) * reach, hy = (a.tan[1] / len) * reach;
+        const [ax, ay] = a.at;
+        const sq = compact ? 9 : 12;
+        g.innerHTML =
+          `<line x1="${ax - hx}" y1="${ay - hy}" x2="${ax + hx}" y2="${ay + hy}" stroke="#4A5EE4" stroke-width="1"/>` +
+          `<circle cx="${ax - hx}" cy="${ay - hy}" r="${compact ? 3 : 4}" fill="#4A5EE4"/>` +
+          `<circle cx="${ax + hx}" cy="${ay + hy}" r="${compact ? 3 : 4}" fill="#4A5EE4"/>` +
+          `<rect x="${ax - sq / 2}" y="${ay - sq / 2}" width="${sq}" height="${sq}" fill="#fff" stroke="#4A5EE4" stroke-width="2"/>`;
+        anchorsG!.appendChild(g);
+        return { y: ay, el: g };
+      });
+
+      sigG!.setAttribute('transform', `translate(${sigOrigin.x} ${sigOrigin.y}) scale(${sigScale})`);
+      flourishLen = flourish!.getTotalLength();
+      flourish!.style.strokeDasharray = String(flourishLen);
+      setSignature(signState === 'done' ? 1 : 0);
+    }
+
+    function setSignature(t: number) {
+      // t: 0..1 write-on progress (letters for 0..0.8, flourish for 0.8..1)
+      const letters = Math.min(1, t / 0.8);
+      reveal!.setAttribute('x', String(SIG.x - 20));
+      reveal!.setAttribute('width', String((SIG.w + 40) * letters));
+      const f = Math.max(0, (t - 0.8) / 0.2);
+      flourish!.style.strokeDashoffset = String(flourishLen * (1 - f));
+    }
+
+    function placeNib(x: number, y: number, angle: number) {
+      nib!.setAttribute('transform', `translate(${x} ${y}) rotate(${angle})${compact ? ' scale(0.75)' : ''}`);
+    }
+
+    function pointAtY(yTarget: number) {
+      let lo = 0, hi = samples.length - 1;
+      while (lo < hi) {
+        const m = (lo + hi) >> 1;
+        if (samples[m].y < yTarget) lo = m + 1; else hi = m;
+      }
+      return samples[lo];
+    }
+
+    let lastScroll = window.scrollY, speed = 0;
+
+    function frame(now: number) {
+      rafId = requestAnimationFrame(frame);
+      if (!samples.length) return;
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? Math.min(1, window.scrollY / maxScroll) : 1;
+      // Pen tip sits ~60% down the viewport, and catches up with the end of the page in the last stretch
+      const reach = 0.62 + 0.38 * Math.max(0, (progress - 0.88) / 0.12);
+      const yTarget = window.scrollY + window.innerHeight * reach;
+      const target = yTarget >= endY ? total : pointAtY(yTarget).l;
+      drawn = reduceMotion ? target : drawn + (target - drawn) * 0.18;
+      line!.style.strokeDashoffset = String(total - drawn);
+
+      speed = speed * 0.85 + Math.abs(window.scrollY - lastScroll) * 0.15;
+      lastScroll = window.scrollY;
+
+      const atEnd = drawn >= total - 1;
+      if (atEnd && signState === 'hidden') { signState = 'writing'; signStart = now; }
+      if (drawn < total * 0.92 && signState !== 'hidden') { signState = 'hidden'; setSignature(0); }
+
+      anchors.forEach((a) => {
+        const tip = line!.getPointAtLength(drawn);
+        a.el.setAttribute('opacity', tip.y > a.y + 8 ? '1' : '0');
+      });
+
+      if (signState === 'writing') {
+        const t = reduceMotion ? 1 : Math.min(1, (now - signStart) / 1900);
+        const eased = 1 - Math.pow(1 - t, 2);
+        setSignature(eased);
+        // Nib rides the writing edge, bobbing over the letters
+        const letters = Math.min(1, eased / 0.8);
+        const nx = sigOrigin.x + (SIG.x + SIG.w * letters) * sigScale;
+        const ny = sigOrigin.y + (-180 + Math.sin(letters * Math.PI * 9) * 140) * sigScale;
+        placeNib(nx, ny, 200 + Math.sin(letters * 20) * 8);
+        if (t >= 1) signState = 'done';
+        return;
+      }
+      if (signState === 'done') {
+        placeNib(sigOrigin.x + (SIG.x + SIG.w + 40) * sigScale, sigOrigin.y + 120 * sigScale, 200);
+        return;
+      }
+
+      const p = line!.getPointAtLength(drawn);
+      const p2 = line!.getPointAtLength(Math.min(total, drawn + 4));
+      const angle = (Math.atan2(p2.y - p.y, p2.x - p.x) * 180) / Math.PI + 90;
+      const wobble = reduceMotion ? 0 : Math.sin(now / 140) * Math.min(8, speed / 6);
+      placeNib(p.x, p.y, angle + wobble);
+    }
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const rebuild = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(build, 150); };
+    new ResizeObserver(rebuild).observe(document.body);
+    window.addEventListener('resize', rebuild);
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(build);
+    build();
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(frame);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPenTool);
+  } else {
+    initPenTool();
+  }
+</script>

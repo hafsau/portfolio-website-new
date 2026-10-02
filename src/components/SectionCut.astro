@@ -1,0 +1,71 @@
+---
+/**
+ * SectionCut - a single smooth bezier edge between two sections, as if cut with a pen tool.
+ *
+ * Only the area below the curve is painted (in the next section's color); above it, the
+ * previous section shows through, so gradients and glows run right up to the edge.
+ * The element overlaps the bottom of the previous section by its own height, so place a
+ * `.cut-room` spacer at the end of that section to keep its content clear of the curve.
+ *
+ * The curve is exposed as data-pen-cut so PenToolPath can draw along exactly the same edge.
+ * Curve values are fractions: start y (left edge), two control points (x, y), end y (right edge).
+ */
+
+interface Props {
+  to: string; // color below the curve (the next section's background)
+  curve: [number, number, number, number, number, number]; // y0, x1, y1, x2, y2, y3
+}
+
+const { to, curve } = Astro.props;
+const [y0, x1, y1, x2, y2, y3] = curve;
+const W = 1440;
+const H = 120;
+const d = `M0 ${y0 * H} C${x1 * W} ${y1 * H}, ${x2 * W} ${y2 * H}, ${W} ${y3 * H} V${H} H0 Z`;
+---
+
+<div class="section-cut" data-pen-cut={curve.join(',')} aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+    <path d={d} fill={to} />
+  </svg>
+</div>
+
+<style>
+  .section-cut {
+    --cut-h: 72px;
+    position: relative;
+    z-index: 2;
+    height: var(--cut-h);
+    margin-top: calc(-1 * var(--cut-h));
+    line-height: 0;
+    pointer-events: none;
+  }
+
+  .section-cut svg {
+    display: block;
+    width: 100%;
+    /* 1px bleed so no hairline shows against the next section */
+    height: calc(100% + 1px);
+  }
+
+  @media (min-width: 768px) {
+    .section-cut { --cut-h: 100px; }
+  }
+
+  @media (min-width: 1024px) {
+    .section-cut { --cut-h: 120px; }
+  }
+
+  /* Spacer at the end of the section above, same height as the cut */
+  :global(.cut-room) {
+    height: 72px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    :global(.cut-room) { height: 100px; }
+  }
+
+  @media (min-width: 1024px) {
+    :global(.cut-room) { height: 120px; }
+  }
+</style>
