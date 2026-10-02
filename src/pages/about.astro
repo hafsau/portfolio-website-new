@@ -79,8 +79,8 @@ const currently = {
 };
 ---
 
-<BaseLayout title="About" currentPath="/about">
-  <section class="max-w-[680px] mx-auto px-6 py-16">
+<BaseLayout title="About" currentPath="/about" description="About Hafsa Usmani: Product Designer in the San Francisco Bay Area with an MS in Computer Science, experience, education, and design approach.">
+  <main id="main-content" tabindex="-1" class="max-w-[680px] mx-auto px-6 py-16">
     <!-- Header -->
     <div class="mb-16">
       <h1 class="text-4xl md:text-5xl font-bold mb-6 reveal">About</h1>
@@ -89,7 +89,7 @@ const currently = {
     <!-- Photo placeholder + Bio -->
     <div class="mb-16">
       <div class="about-photo reveal">
-        <img src="/images/headshot.png" alt="Hafsa Usmani, Product Designer" />
+        <img src="/images/headshot.webp" alt="Hafsa Usmani, Product Designer" />
       </div>
 
       <div class="space-y-4 text-lg text-[var(--color-muted)] reveal reveal-2">
@@ -159,7 +159,7 @@ const currently = {
       <div class="skills-grid">
         {skillsWithProficiency.map((category, catIndex) => (
           <div class={`skill-category reveal reveal-${catIndex + 1}`}>
-            <h3 class="font-semibold mb-4 text-[var(--color-accent)]">{category.category}</h3>
+            <h3 class="font-semibold mb-4 text-[#7383F0]">{category.category}</h3>
             <div class="skill-list">
               {category.skills.map((skill) => (
                 <div class="skill-item">
@@ -200,7 +200,7 @@ const currently = {
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
   <style>
     /* Skills Grid with Proficiency Bars */

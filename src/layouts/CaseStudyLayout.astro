@@ -1,4 +1,5 @@
 ---
+import { existsSync } from 'node:fs';
 import BaseLayout from './BaseLayout.astro';
 import Lightbox from '../components/Lightbox.astro';
 import AmbientBackground from '../components/AmbientBackground.astro';
@@ -21,6 +22,7 @@ interface Props {
   subtitle: string;
   description: string;
   heroImage?: string;
+  ogImage?: string; // 1200x630 social preview; defaults to heroImage
   industry: string;
   role: string;
   timeline: string;
@@ -36,6 +38,7 @@ const {
   subtitle,
   description,
   heroImage,
+  ogImage = heroImage,
   industry,
   role,
   timeline,
@@ -48,6 +51,10 @@ const {
 
 const siteUrl = 'https://hafsausmani.com';
 const fullHeroImage = heroImage ? (heroImage.startsWith('http') ? heroImage : `${siteUrl}${heroImage}`) : undefined;
+
+// Show the lighter WebP version on the page when one exists; PNG/JPG stays for social previews
+const webpHero = heroImage?.replace(/\.(png|jpe?g)$/i, '.webp');
+const displayHeroImage = webpHero && webpHero !== heroImage && existsSync(`public${webpHero}`) ? webpHero : heroImage;
 
 // JSON-LD Schemas
 const creativeWorkSchema = {
@@ -74,7 +81,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description} ogImage={heroImage} ogType="article" useBarba={false}>
+<BaseLayout title={title} description={description} ogImage={ogImage} ogType="article" useBarba={false}>
   <!-- Page Transition Overlay with Curved SVG -->
   <div class="page-transition-overlay" id="page-transition">
     <div class="transition-background"></div>
@@ -179,7 +186,7 @@ const breadcrumbSchema = {
       <div class="case-hero-image">
         {heroImage ? (
           <img
-            src={heroImage}
+            src={displayHeroImage}
             alt={`${title} case study hero image - ${subtitle}`}
             class="w-full h-full object-contain"
             loading="eager"

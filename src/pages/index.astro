@@ -33,7 +33,7 @@ const projects = [
     category: 'EdTech',
     title: 'EqualTales',
     description: 'AI-powered children\'s storybook',
-    image: '/images/equaltales/hero.png',
+    image: '/images/equaltales/hero.webp',
     href: '/work/equaltales',
     color: '#7B5EA7',
     year: '2026'
@@ -43,7 +43,7 @@ const projects = [
     category: 'Portfolio',
     title: 'HafsaUsmani.com',
     description: 'AI-assisted portfolio development',
-    image: '/images/portfolio-website/after-typography.jpg',
+    image: '/images/portfolio-website/after-typography.webp',
     href: '/work/portfolio-website',
     color: '#14b8a6',
     year: '2026'
@@ -63,7 +63,7 @@ const projects = [
     category: 'Healthcare',
     title: 'MedRec Platform',
     description: 'Digital health records for millions',
-    image: '/images/medrec/hero-medrec.png',
+    image: '/images/medrec/hero-medrec.webp',
     href: '/work/medrec',
     color: '#4a5ee4',
     year: '2025'
@@ -73,7 +73,7 @@ const projects = [
     category: 'Wellness',
     title: 'FitStart App',
     description: 'Fitness journey companion',
-    image: '/images/fitstart/hero-image.png',
+    image: '/images/fitstart/hero-image.webp',
     href: '/work/fitstart',
     color: '#8b5cf6',
     year: '2025'
@@ -83,7 +83,7 @@ const projects = [
     category: 'Finance',
     title: 'Folio Platform',
     description: 'Investment portfolio tracking',
-    image: '/images/folio/hero-image.png',
+    image: '/images/folio/hero-image.webp',
     href: '/work/folio',
     color: '#0891b2',
     year: '2025'
@@ -93,7 +93,7 @@ const projects = [
     category: 'Government',
     title: 'Immunization Tracker',
     description: 'Healthcare monitoring at scale',
-    image: '/images/immunization/hero-image.png',
+    image: '/images/immunization/hero-image.webp',
     href: '/work/immunization',
     color: '#4a5ee4',
     year: '2015'
@@ -102,7 +102,6 @@ const projects = [
 
 // Stats data
 const stats = [
-  { number: '30', suffix: '%', label: 'User Efficiency' },
   { number: '5', suffix: '+', label: 'Years Experience' },
   { number: '10', suffix: 'M+', label: 'Users Reached' }
 ];
@@ -127,7 +126,7 @@ const skills = [
 ];
 ---
 
-<BaseLayout title="Home" ogImage="/images/headshot.png" useBarba={false} showLoadingScreen={true}>
+<BaseLayout title="Home" ogImage="/images/og/home.jpg" useBarba={false} showLoadingScreen={true}>
   <!-- Hamburger Menu - in fixed slot outside Barba -->
   <HamburgerMenu slot="fixed" items={navItems} />
 
@@ -137,7 +136,7 @@ const skills = [
   <!-- Scroll-linked Floating Elements (parallax orbs) -->
   <ScrollFloatingElements />
 
-  <div class="portfolio-wrapper">
+  <div class="portfolio-wrapper" role="main">
 
     <!-- ============================================
          HERO SECTION - Warm Cream Background
@@ -166,10 +165,11 @@ const skills = [
       </div>
 
       <!-- Main Hero Content: Name + Portrait -->
-      <div class="hero-content">
+      <div class="hero-content" id="main-content" tabindex="-1">
         <!-- First Name -->
         <div class="hero-name-row">
-          <h1 class="hero-name hero-name-first">
+          <!-- One h1 for the page: the full name is announced here; the split letters are decorative -->
+          <h1 class="hero-name hero-name-first" aria-label="Hafsa Usmani">
             <SplitTextReveal
               text="HAFSA"
               tag="span"
@@ -186,7 +186,7 @@ const skills = [
             <Magnet padding={150} strength={0.4}>
               <div class="hero-portrait-wrapper">
                 <img
-                  src="/images/headshot.png"
+                  src="/images/headshot.webp"
                   alt="Hafsa Usmani"
                   class="hero-portrait"
                   loading="eager"
@@ -201,7 +201,7 @@ const skills = [
 
         <!-- Last Name -->
         <div class="hero-name-row">
-          <h1 class="hero-name hero-name-last">
+          <div class="hero-name hero-name-last" aria-hidden="true">
             <SplitTextReveal
               text="USMANI"
               tag="span"
@@ -209,7 +209,7 @@ const skills = [
               duration={0.7}
               delay={900}
             />
-          </h1>
+          </div>
         </div>
       </div>
 
@@ -245,9 +245,9 @@ const skills = [
       </div>
 
       <!-- Draggable Projects Carousel -->
-      <div class="projects-carousel" id="projects-carousel">
+      <div class="projects-carousel" id="projects-carousel" data-focus-scroll-anchor role="region" aria-roledescription="carousel" aria-label="Selected work. Use Tab or the left and right arrow keys to browse projects.">
         <!-- Drag Indicator with dots -->
-        <div class="drag-indicator" id="drag-indicator">
+        <div class="drag-indicator" id="drag-indicator" aria-hidden="true">
           <span class="drag-dots drag-dots-left">
             <span class="drag-dot"></span>
             <span class="drag-dot"></span>
@@ -275,14 +275,14 @@ const skills = [
                   <span class="project-category">{project.category}</span>
                   <h3 class="project-title">{project.title}</h3>
                   <p class="project-description">{project.description}</p>
-                  <a href={project.href} class="project-cta" data-cursor-text="View">Discover</a>
+                  <a href={project.href} class="project-cta" data-cursor-text="View" aria-label={`Discover ${project.title} case study`}>Discover</a>
                 </div>
               </div>
             </div>
           ))}
           {/* Duplicate set for infinite loop */}
           {projects.map((project, i) => (
-            <div class="project-card-wrapper project-card-clone" style={`--accent: ${project.color};`}>
+            <div class="project-card-wrapper project-card-clone" style={`--accent: ${project.color};`} aria-hidden="true" inert>
               <div class="project-card">
                 <div class="project-card-image">
                   <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
@@ -293,7 +293,7 @@ const skills = [
                   <span class="project-category">{project.category}</span>
                   <h3 class="project-title">{project.title}</h3>
                   <p class="project-description">{project.description}</p>
-                  <a href={project.href} class="project-cta" data-cursor-text="View">Discover</a>
+                  <a href={project.href} class="project-cta" data-cursor-text="View" aria-label={`Discover ${project.title} case study`}>Discover</a>
                 </div>
               </div>
             </div>
@@ -315,7 +315,7 @@ const skills = [
           <BlurFadeIn delay={i * 0.15} y={40} triggerOnScroll>
             <div class="stat-item">
               <span class="stat-number" data-count={stat.number} data-suffix={stat.suffix}>
-                0{stat.suffix}
+                {stat.number}{stat.suffix}
               </span>
               <span class="stat-label">{stat.label}</span>
             </div>
@@ -435,7 +435,7 @@ const skills = [
     :root {
       --warm-bg: #FFF4E4;
       --warm-fg: #1A1A1A;
-      --warm-muted: #8B8680;
+      --warm-muted: #736E68; /* 4.6:1 on --warm-bg (WCAG AA) */
       --dark-bg: #0C0C0C;
       --dark-fg: #F5F5F0;
       --dark-muted: #B8B8B8;
@@ -479,6 +479,7 @@ const skills = [
       position: relative;
       padding: 1.5rem;
       overflow: hidden;
+      overflow: clip; /* clip, not hidden: keyboard focus must not scroll this box internally */
     }
 
     @media (min-width: 768px) {
@@ -716,6 +717,7 @@ const skills = [
       color: var(--dark-fg);
       padding: 4rem 0 3rem;
       overflow: hidden;
+      overflow: clip; /* clip, not hidden: keyboard focus must not scroll this box internally */
     }
 
     @media (min-width: 768px) {
@@ -1125,9 +1127,9 @@ const skills = [
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
-      max-width: 1000px;
+      max-width: 720px;
       margin: 0 auto;
       text-align: center;
     }
@@ -1744,6 +1746,50 @@ const skills = [
       carousel.addEventListener('pointercancel', onPointerUp);
       carousel.addEventListener('pointerleave', onPointerUp);
 
+      // Keyboard support: center a card when its link receives focus; arrows move between cards
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ctas = Array.from(track.querySelectorAll('.project-card-wrapper:not(.project-card-clone) .project-cta')) as HTMLElement[];
+
+      function animateTo(target: number) {
+        cancelAnimationFrame(animationId);
+        velocityX = 0;
+        const start = currentX;
+        const t0 = performance.now();
+        const duration = prefersReducedMotion ? 0 : 450;
+        function step(now: number) {
+          const t = duration ? Math.min((now - t0) / duration, 1) : 1;
+          const eased = 1 - Math.pow(1 - t, 3);
+          currentX = start + (target - start) * eased;
+          // No wrap here: the focused (original) card must stay the one on screen
+          track.style.transform = `translateX(${-currentX}px)`;
+          update3DEffect();
+          if (t < 1) animationId = requestAnimationFrame(step);
+        }
+        animationId = requestAnimationFrame(step);
+      }
+
+      carousel.addEventListener('focusin', (e) => {
+        const wrapper = (e.target as HTMLElement).closest('.project-card-wrapper') as HTMLElement | null;
+        if (!wrapper) return;
+        carousel.scrollLeft = 0; // undo the browser's native scroll-into-view on the overflow container
+        // Sync with where the track really is (it may not have been dragged yet)
+        currentX = -new DOMMatrixReadOnly(getComputedStyle(track).transform).m41;
+        const maxX = track.scrollWidth - carousel.clientWidth;
+        const cardRect = wrapper.getBoundingClientRect();
+        const carouselRect = carousel.getBoundingClientRect();
+        const target = currentX + (cardRect.left + cardRect.width / 2) - (carouselRect.left + carouselRect.width / 2);
+        animateTo(clamp(target, 0, Math.max(maxX, 0)));
+      });
+
+      carousel.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const index = ctas.indexOf(document.activeElement as HTMLElement);
+        if (index === -1) return;
+        e.preventDefault();
+        const next = (index + (e.key === 'ArrowRight' ? 1 : -1) + ctas.length) % ctas.length;
+        ctas[next].focus({ preventScroll: true });
+      });
+
       carousel.addEventListener('dragstart', (e) => e.preventDefault());
       carousel.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -1767,6 +1813,8 @@ const skills = [
     // Animated Counter
     function animateCounters() {
       const counters = document.querySelectorAll('[data-count]');
+      // Real values are rendered in the HTML; only animate when motion is welcome
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {

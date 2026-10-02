@@ -42,6 +42,30 @@ export function initSmoothScroll(): Lenis {
   // Disable GSAP's default lag smoothing for smoother animations
   gsap.ticker.lagSmoothing(0);
 
+  // Lenis overrides the browser's native scroll-to-focused-element, so keyboard users could
+  // Tab onto links that stay off screen. Bring keyboard-focused elements into view ourselves.
+  let usingKeyboard = false;
+  document.addEventListener('keydown', (e) => { if (e.key === 'Tab') usingKeyboard = true; }, true);
+  document.addEventListener('pointerdown', () => { usingKeyboard = false; }, true);
+  document.addEventListener('focusin', (e) => {
+    if (!usingKeyboard || !lenis) return;
+    const el = e.target as HTMLElement;
+    // Inside animated containers (e.g. the project carousel) the focused item is mid-transform;
+    // measure the stable container instead and center it
+    const anchor = el.closest<HTMLElement>('[data-focus-scroll-anchor]');
+    const rect = (anchor || el).getBoundingClientRect();
+    // Compare against where Lenis is heading, not the current frame: an in-flight
+    // scroll from the previous focus would otherwise carry this element off screen
+    const docTop = rect.top + window.scrollY;
+    const viewTop = lenis.targetScroll;
+    if (docTop < viewTop || docTop + rect.height > viewTop + window.innerHeight) {
+      const target = anchor
+        ? docTop + rect.height / 2 - window.innerHeight / 2
+        : docTop - window.innerHeight / 3;
+      lenis.scrollTo(Math.max(target, 0), { duration: 0.6 });
+    }
+  });
+
   return lenis;
 }
 
@@ -90,6 +114,13 @@ export function initAnchorScroll(offset: number = 100): void {
           behavior: 'smooth',
         });
       }
+
+      // Move keyboard focus to the target too (e.g. the skip link), not just the scroll position
+      const targetEl = target as HTMLElement;
+      if (!targetEl.hasAttribute('tabindex') && !targetEl.matches('a[href], button, input, select, textarea')) {
+        targetEl.setAttribute('tabindex', '-1');
+      }
+      targetEl.focus({ preventScroll: true });
     });
   });
 }

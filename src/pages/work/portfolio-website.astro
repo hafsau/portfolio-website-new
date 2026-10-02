@@ -42,8 +42,8 @@ const transformations = [
     before: 'Generic system fonts for headlines',
     after: 'Custom Moche display font for hero text',
     description: 'The bold, distinctive Moche typeface makes a strong first impression. Typography becomes a design element, not just text.',
-    beforeImage: '/images/portfolio-website/before-typography.jpg',
-    afterImage: '/images/portfolio-website/after-typography.jpg'
+    beforeImage: '/images/portfolio-website/before-typography.webp',
+    afterImage: '/images/portfolio-website/after-typography.webp'
   },
   {
     id: 'card-tilt',
@@ -51,8 +51,8 @@ const transformations = [
     before: 'Flat cards with basic hover states',
     after: 'Perspective tilt responding to mouse position',
     description: 'Project cards now feel tactile. The 3D effect invites exploration and adds depth to the browsing experience.',
-    beforeImage: '/images/portfolio-website/before-cards.jpg',
-    afterImage: '/images/portfolio-website/after-cards.png'
+    beforeImage: '/images/portfolio-website/before-cards.webp',
+    afterImage: '/images/portfolio-website/after-cards.webp'
   }
 ];
 
@@ -60,22 +60,22 @@ const microInteractions = [
   {
     title: 'Page Transition',
     description: 'Curved overlay sweeps across the screen, creating a seamless flow between pages.',
-    gif: '/images/portfolio-website/after-transition.gif'
+    video: '/images/portfolio-website/after-transition.mp4'
   },
   {
     title: 'Draggable Card Carousel',
     description: 'Cards respond to drag gestures with momentum scrolling and 3D arc effects, creating depth and interactivity.',
-    gif: '/images/portfolio-website/card-drag.gif'
+    video: '/images/portfolio-website/card-drag.mp4'
   },
   {
     title: 'Scroll-Following Orbs',
     description: 'Gradient orbs that drift and fade as you scroll, creating depth and visual continuity across sections.',
-    gif: '/images/portfolio-website/scroll-orbs.gif'
+    video: '/images/portfolio-website/scroll-orbs.mp4'
   },
   {
     title: 'Back to Top',
     description: 'Smooth animated button that appears after scrolling, with GSAP-powered transitions and accessibility support.',
-    gif: '/images/portfolio-website/back-to-top.gif'
+    video: '/images/portfolio-website/back-to-top.mp4'
   }
 ];
 
@@ -115,6 +115,7 @@ const aboutMePoints = [
   subtitle="Redesigning my portfolio to showcase design craft through polished interactions and elevated visuals—because the details are the design."
   description="A complete portfolio redesign focused on micro-interactions, custom animations, and attention to detail that demonstrates design thinking in action."
   heroImage="/images/portfolio-website/after-typography.jpg"
+  ogImage="/images/og/portfolio-website.jpg"
   industry="Personal / Design Portfolio"
   role="Designer & Developer"
   timeline="2 Weeks"
@@ -218,14 +219,15 @@ const aboutMePoints = [
       {microInteractions.map((interaction) => (
         <div class="interaction-card">
           <div class="interaction-preview">
-            <img
-              src={interaction.gif}
-              alt={`${interaction.title} animation demo`}
-              loading="lazy"
-            />
-            <div class="preview-placeholder">
-              <span>GIF Preview</span>
-            </div>
+            <video
+              src={interaction.video}
+              muted
+              loop
+              playsinline
+              preload="none"
+              data-lazy-autoplay
+              aria-label={`${interaction.title} animation demo`}
+            ></video>
           </div>
           <div class="interaction-info">
             <h3>{interaction.title}</h3>
@@ -522,35 +524,11 @@ const aboutMePoints = [
     overflow: hidden;
   }
 
-  .interaction-preview img {
+  .interaction-preview video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-
-  .preview-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.02) 100%);
-    border: 2px dashed rgba(20, 184, 166, 0.3);
-    margin: 1rem;
-    border-radius: 0.5rem;
-  }
-
-  .preview-placeholder span {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* Hide placeholder when image loads */
-  .interaction-preview img:not([src=""]):not([src$="undefined"]) + .preview-placeholder {
-    display: none;
   }
 
   .interaction-info {

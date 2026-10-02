@@ -99,6 +99,18 @@
   outline: none;
 }
 
+/* Visible keyboard focus for every interactive element (mouse clicks stay outline-free) */
+:where(a, button, input, select, textarea, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Skip-link targets receive focus programmatically; no ring needed */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 /* ============================================
    CURSOR DOT FOLLOWER - Glow + Ring Effect
    ============================================ */

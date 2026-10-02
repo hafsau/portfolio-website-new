@@ -16,8 +16,8 @@ interface Props {
 
 const {
   title,
-  description = 'Product Designer with engineering precision. Designing health & wellness experiences that improve user efficiency by 30-45%.',
-  ogImage = '/images/headshot.png',
+  description = 'Hafsa Usmani is a Product Designer in the San Francisco Bay Area with an MS in Computer Science. Case studies in public health, health tech, B2B SaaS, and AI-assisted products.',
+  ogImage = '/images/og/home.jpg',
   ogType = 'website',
   useBarba = false,
   showLoadingScreen = false,
@@ -29,7 +29,9 @@ const barbaNamespace = pathname.startsWith('/work/') ? 'work' : 'home';
 
 const fullTitle = title === 'Home' ? 'Hafsa Usmani | Product Designer' : `${title} | Hafsa Usmani`;
 const siteUrl = 'https://hafsausmani.com';
-const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+// No trailing slash, to match internal links and the sitemap
+const canonicalPath = Astro.url.pathname.length > 1 ? Astro.url.pathname.replace(/\/$/, '') : '/';
+const canonicalUrl = new URL(canonicalPath, siteUrl).href;
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
@@ -49,6 +51,8 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={fullOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Hafsa Usmani" />
 
     <!-- Twitter Card -->
@@ -168,6 +172,45 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
       document.addEventListener('astro:after-swap', initAnimations);
     </script>
 
+    <!-- Lazy autoplay for looping demo videos (replacements for heavy GIFs) -->
+    <script>
+      function initLazyVideos() {
+        const videos = document.querySelectorAll<HTMLVideoElement>('video[data-lazy-autoplay]');
+        if (!videos.length) return;
+
+        // Respect reduced motion: no autoplay, let the viewer press play
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          videos.forEach((video) => {
+            video.controls = true;
+            video.preload = 'metadata';
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target as HTMLVideoElement;
+            if (entry.isIntersecting) {
+              video.play().catch((err) => {
+                // Autoplay blocked (e.g. low-power mode): let the viewer start it
+                if (err.name === 'NotAllowedError') video.controls = true;
+              });
+            } else {
+              video.pause();
+            }
+          });
+        }, { rootMargin: '200px 0px' });
+
+        videos.forEach((video) => observer.observe(video));
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLazyVideos);
+      } else {
+        initLazyVideos();
+      }
+    </script>
+
     <!-- Custom Cursor Logic -->
     <script>
       function initCursor() {
@@ -181,8 +224,9 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
         let mouseY = 0;
         let currentX = 0;
         let currentY = 0;
+        let rafId = 0;
 
-        // Smooth cursor following
+        // Smooth cursor following; the loop stops once the cursor settles
         function animateCursor() {
           const lerp = 0.15;
           currentX += (mouseX - currentX) * lerp;
@@ -191,13 +235,18 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
           cursor.style.left = `${currentX}px`;
           cursor.style.top = `${currentY}px`;
 
-          requestAnimationFrame(animateCursor);
+          if (Math.abs(mouseX - currentX) > 0.1 || Math.abs(mouseY - currentY) > 0.1) {
+            rafId = requestAnimationFrame(animateCursor);
+          } else {
+            rafId = 0;
+          }
         }
 
         // Track mouse position
         document.addEventListener('mousemove', (e) => {
           mouseX = e.clientX;
           mouseY = e.clientY;
+          if (!rafId) rafId = requestAnimationFrame(animateCursor);
 
           if (!cursor.classList.contains('visible')) {
             cursor.classList.add('visible');
@@ -263,7 +312,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
         }
 
         setupHoverListeners();
-        animateCursor();
 
         // Re-setup listeners after View Transitions
         document.addEventListener('astro:after-swap', setupHoverListeners);
