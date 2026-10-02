@@ -99,7 +99,8 @@ describe('Page Structure', () => {
     });
 
     it('should mention relevant background', () => {
-      expect(indexContent).toContain('MS in Computer Science');
+      expect(indexContent).toContain('Computer Science');
+      expect(indexContent).toContain('background and experience reaching millions of users');
     });
   });
 
