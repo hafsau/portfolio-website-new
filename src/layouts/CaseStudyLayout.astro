@@ -4,8 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 import Lightbox from '../components/Lightbox.astro';
 import AmbientBackground from '../components/AmbientBackground.astro';
 import MobileNav from '../components/MobileNav.astro';
-import SectionCut from '../components/SectionCut.astro';
-import CaseStudyPen from '../components/CaseStudyPen.astro';
+import ReadTime from '../components/ReadTime.astro';
 import { caseStudySummaries } from '../data/caseStudySummaries';
 
 interface Metric {
@@ -128,7 +127,7 @@ const breadcrumbSchema = {
   <nav class="nav-fixed">
     <div class="scroll-progress" id="scroll-progress"></div>
     <div class="container py-5 flex items-center justify-between">
-      <a href="/" class="signature-logo">
+      <a href="/" class="signature-logo" aria-label="Hafsa Usmani, home">
         <svg class="signature-svg" viewBox="0 0 90 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="sig-letter" d="M2 2v24M2 14h14M16 2v24"/>
           <path class="sig-letter" d="M30 2 L30 20 Q30 26 44 26 L44 2"/>
@@ -145,12 +144,10 @@ const breadcrumbSchema = {
     </div>
   </nav>
 
-  <!-- Pen tool: section index rail, progress chip, read time, and sign-off -->
-  <CaseStudyPen />
+  <!-- Adds "Read time" to the project details -->
+  <ReadTime />
 
-  <article id="main-content" class="case-study">
-    <!-- Opening on paper (cream), cut into the dark content like the home page -->
-    <div class="paper-zone">
+  <main id="main-content" class="case-study">
     <!-- Header Section -->
     <header class="case-hero">
       <div class="container">
@@ -239,10 +236,6 @@ const breadcrumbSchema = {
         ))}
       </div>
     </div>
-      <div class="cut-room" aria-hidden="true"></div>
-    </div>
-
-    <SectionCut to="#0D0D0D" curve={[0.75, 0.3, 1, 0.7, 0, 0.3]} />
 
     <!-- Main Content -->
     <div class="case-content">
@@ -269,13 +262,10 @@ const breadcrumbSchema = {
         )}
         <slot />
       </div>
-      <div class="cut-room" aria-hidden="true"></div>
     </div>
 
-    <SectionCut to="#FFF4E4" curve={[0.3, 0.32, 0, 0.7, 1, 0.72]} />
-
-    <!-- Project Navigation (back on paper) -->
-    <div class="project-nav-section paper-zone">
+    <!-- Project Navigation -->
+    <div class="project-nav-section">
       <div class="container">
         <!-- Utility Row: Previous + View All -->
         <div class="nav-utility-row reveal">
@@ -317,10 +307,10 @@ const breadcrumbSchema = {
         )}
       </div>
     </div>
-  </article>
+  </main>
 
   <!-- Footer -->
-  <footer class="py-8 paper-zone">
+  <footer class="py-8">
     <div class="container">
       <div class="divider mb-8"></div>
       <div class="flex items-center justify-between">
@@ -646,6 +636,7 @@ const breadcrumbSchema = {
       if (!dragCursor) {
         dragCursor = document.createElement('div');
         dragCursor.id = 'image-drag-cursor';
+        dragCursor.setAttribute('aria-hidden', 'true');
         dragCursor.textContent = 'Drag';
         dragCursor.style.cssText = `
           position: fixed;
@@ -780,23 +771,6 @@ const breadcrumbSchema = {
       transition: background 0.3s ease, backdrop-filter 0.3s ease;
     }
 
-    /* Over the cream opening, before scrolling: dark text */
-    .nav-fixed:not(.scrolled) {
-      --color-fg: #1A1A1A;
-      --color-muted: #736E68;
-    }
-
-    /* Cream sections: swap the color tokens so everything inside adapts */
-    .paper-zone {
-      --color-bg: #FFF4E4;
-      --color-fg: #1A1A1A;
-      --color-muted: #736E68;
-      --color-border: rgba(26, 26, 26, 0.12);
-      background: var(--color-bg);
-      color: var(--color-fg);
-      position: relative;
-    }
-
     .nav-fixed.scrolled {
       background: rgba(12, 12, 12, 0.8);
       backdrop-filter: blur(12px);
@@ -895,12 +869,8 @@ const breadcrumbSchema = {
 
     /* Case Study Layout */
     .case-study {
-      opacity: 0;
-    }
-
-    /* The cream opening runs under the fixed nav; the nav space moves inside it */
-    .case-study > .paper-zone:first-child {
       padding-top: 100px;
+      opacity: 0;
     }
 
     .case-hero {
@@ -960,7 +930,7 @@ const breadcrumbSchema = {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
     }
 
     .detail-value {
@@ -992,7 +962,7 @@ const breadcrumbSchema = {
       font: 500 11px/1.6 'JetBrains Mono', monospace;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
     }
 
     .glance dt::before {
@@ -1103,7 +1073,7 @@ const breadcrumbSchema = {
       font: 500 11px/1 'JetBrains Mono', monospace;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       margin-right: 0.4rem;
     }
 
@@ -1307,7 +1277,9 @@ const breadcrumbSchema = {
 
     /* Project Navigation Section */
     .project-nav-section {
-      padding: 2rem 0 6rem;
+      padding: 4rem 0 6rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--color-border);
     }
 
     /* Utility Row - Previous + View All */
@@ -1346,8 +1318,7 @@ const breadcrumbSchema = {
       text-align: center;
       text-decoration: none;
       padding: 3rem;
-      background: rgba(26, 26, 26, 0.05);
-      border: 1px solid var(--color-border);
+      background: var(--color-border);
       border-radius: 1.5rem;
       transition: all 0.4s ease;
     }
@@ -1386,7 +1357,7 @@ const breadcrumbSchema = {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       margin-bottom: 1rem;
     }
 
@@ -1417,7 +1388,7 @@ const breadcrumbSchema = {
       gap: 0.5rem;
       font-size: 0.875rem;
       font-weight: 600;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
     }
 
     .next-cta svg {

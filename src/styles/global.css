@@ -43,6 +43,7 @@
   --color-border: #1A1A1A;
   --color-hover: #252525;
   --color-accent: #4a5ee4;
+  --color-accent-text: #7b8af2; /* ink tint for small text on dark: 6.3:1 on --color-bg (WCAG AA) */
 
   /* Typography */
   --font-sans: "Space Grotesk", system-ui, -apple-system, sans-serif;
@@ -1847,6 +1848,16 @@ nav a.link::after {
     width: 16px;
     height: 16px;
   }
+}
+
+/* "Pause animations" toggle (see MotionToggle): settle all CSS motion immediately */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
 }
 
 /* Reduce motion for accessibility */

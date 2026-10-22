@@ -143,7 +143,8 @@ const skills = [
   <!-- Scroll-linked pen tool: draws a bezier line down the page and signs off at Contact -->
   <PenToolPath />
 
-  <div class="portfolio-wrapper" role="main">
+  <div class="portfolio-wrapper">
+  <main class="home-main">
 
     <!-- ============================================
          HERO SECTION - Warm Cream Background
@@ -437,6 +438,7 @@ const skills = [
       </div>
 
     </section>
+  </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -1109,7 +1111,8 @@ const skills = [
       margin: 0.35rem 0 0.75rem;
       font: 500 0.72rem/1.4 'JetBrains Mono', monospace;
       letter-spacing: 0.04em;
-      color: var(--accent);
+      /* Project color lifted toward white so small text stays above 4.5:1 on the card */
+      color: color-mix(in srgb, var(--accent) 55%, #fff);
     }
 
     .project-outcome::before {
@@ -1531,6 +1534,7 @@ const skills = [
       if (!dragCursor) {
         dragCursor = document.createElement('div');
         dragCursor.id = 'drag-cursor-element';
+        dragCursor.setAttribute('aria-hidden', 'true');
         dragCursor.textContent = 'Drag';
         dragCursor.style.cssText = `
           position: fixed;

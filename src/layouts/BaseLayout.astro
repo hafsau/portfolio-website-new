@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Analytics from '@vercel/analytics/astro';
 import LoadingScreen from '../components/LoadingScreen.astro';
 import BackToTop from '../components/BackToTop.astro';
+import MotionToggle from '../components/MotionToggle.astro';
 import EasterEgg from '../components/EasterEgg.astro';
 
 interface Props {
@@ -71,6 +72,27 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
 
     <title>{fullTitle}</title>
 
+    <!-- Motion preference from the "Pause animations" toggle (WCAG 2.2.2). Runs before any other
+         script so every component's prefers-reduced-motion check sees the visitor's choice. -->
+    <script is:inline>
+      (function () {
+        var pref = null;
+        try { pref = localStorage.getItem('motion'); } catch (e) {}
+        if (pref !== 'paused' && pref !== 'playing') return;
+        var reduce = pref === 'paused';
+        if (reduce) document.documentElement.classList.add('reduce-motion');
+        var native = window.matchMedia.bind(window);
+        window.matchMedia = function (q) {
+          if (!/prefers-reduced-motion/.test(q)) return native(q);
+          var matches = /reduce/.test(q) ? reduce : !reduce;
+          return { matches: matches, media: q, onchange: null,
+            addListener: function () {}, removeListener: function () {},
+            addEventListener: function () {}, removeEventListener: function () {},
+            dispatchEvent: function () { return false; } };
+        };
+      })();
+    </script>
+
     <!-- Theme initialization - always dark mode -->
     <script is:inline>
       (function() {
@@ -104,6 +126,9 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
 
     <!-- Back to Top Button -->
     <BackToTop />
+
+    <!-- Pause animations (WCAG 2.2.2) -->
+    <MotionToggle />
 
     <!-- Easter Egg (Konami Code) -->
     <EasterEgg />

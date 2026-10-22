@@ -225,7 +225,7 @@ const aboutMePoints = [
 
     <div class="decision-card">
       <div class="decision-column failed">
-        <h4>What I Tried That Didn't Work</h4>
+        <h3>What I Tried That Didn't Work</h3>
         <ul>
           {designEvolution.triedAndFailed.map(item => (
             <li>{item}</li>
@@ -233,7 +233,7 @@ const aboutMePoints = [
         </ul>
       </div>
       <div class="decision-column worked">
-        <h4>What Actually Worked</h4>
+        <h3>What Actually Worked</h3>
         <ul>
           {designEvolution.whatWorked.map(item => (
             <li>{item}</li>
@@ -403,7 +403,7 @@ const aboutMePoints = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     margin-bottom: 0.5rem;
   }
 
@@ -435,8 +435,7 @@ const aboutMePoints = [
   .contribution-number {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-accent);
-    opacity: 0.5;
+    color: var(--color-accent-text);
     line-height: 1;
     flex-shrink: 0;
     width: 32px;
@@ -480,7 +479,7 @@ const aboutMePoints = [
   .contribution-metric .metric-value {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     line-height: 1;
   }
 
@@ -511,8 +510,7 @@ const aboutMePoints = [
   .impact-number {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-accent);
-    opacity: 0.5;
+    color: var(--color-accent-text);
     line-height: 1;
     flex-shrink: 0;
     width: 32px;
@@ -605,7 +603,7 @@ const aboutMePoints = [
     border-left: 3px solid #ef4444;
   }
 
-  .decision-column.failed h4 {
+  .decision-column.failed h3 {
     color: #ef4444;
   }
 
@@ -613,11 +611,11 @@ const aboutMePoints = [
     border-left: 3px solid #22c55e;
   }
 
-  .decision-column.worked h4 {
+  .decision-column.worked h3 {
     color: #22c55e;
   }
 
-  .decision-column h4 {
+  .decision-column h3 {
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -681,7 +679,7 @@ const aboutMePoints = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
   }
 
   .style-desc {
@@ -777,7 +775,7 @@ const aboutMePoints = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
@@ -831,7 +829,7 @@ const aboutMePoints = [
   .about-me-row h3 {
     margin: 0 0 0.5rem;
     font-size: 1.0625rem;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
   }
 
   .about-me-row p {

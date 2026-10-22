@@ -1,0 +1,31 @@
+---
+/**
+ * ReadTime - adds a "Read time" item to the case-study details grid,
+ * estimated from the article text at about 230 words per minute.
+ */
+---
+
+<script>
+  function addReadTime() {
+    const content = document.querySelector<HTMLElement>('.case-content');
+    const details = document.querySelector('.details-grid');
+    const template = details?.querySelector<HTMLElement>('.detail-item');
+    if (!content || !details || !template || details.querySelector('[data-read-time]')) return;
+
+    const words = (content.innerText || '').trim().split(/\s+/).length;
+    // Clone an existing item so it carries the layout's (scoped) styles
+    const item = template.cloneNode(true) as HTMLElement;
+    item.dataset.readTime = '';
+    const label = item.querySelector('.detail-label');
+    const value = item.querySelector('.detail-value');
+    if (label) label.textContent = 'Read time';
+    if (value) value.textContent = `${Math.max(1, Math.round(words / 230))} min`;
+    details.appendChild(item);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addReadTime);
+  } else {
+    addReadTime();
+  }
+</script>
