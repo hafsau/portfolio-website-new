@@ -22,7 +22,7 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
     "tldr": {
       "problem": "Only 21% of 4,000+ medical officers showed up to routes, and field activity couldn't be tracked.",
       "role": "Assistant Program Manager. Led the redesign and development of eVaccs 2.0.",
-      "outcome": "21% → 91% vaccinator attendance increase; 4,000+ medical officers monitored; 3M children's records digitized.",
+      "outcome": "21% → 91% medical officer attendance increase; 4,000+ medical officers monitored; 3M children's records digitized.",
       "timeline": "2014-2015"
     },
     "decisions": [
@@ -42,7 +42,7 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
           "Text-based interface"
         ],
         "chosen": "Visual-first interface relying on icons and color",
-        "why": "Many vaccinators couldn't read, so the interface had to work without text.",
+        "why": "Many medical officers couldn't read, so the interface had to work without text.",
         "cost": null,
         "stated": false
       },
@@ -224,7 +224,7 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
     "tldr": {
       "problem": "Use AI to iterate faster on ambitious ideas, without skipping the design process.",
       "role": "Designer, Developer & Builder. AI handled implementation; she owned the intent.",
-      "outcome": "4 Experiments Shipped; 2 Hackathons Won.",
+      "outcome": "4 Experiments Shipped; 2 Hackathon Awards.",
       "timeline": "2025 - Ongoing"
     },
     "decisions": []
@@ -233,7 +233,7 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
     "tldr": {
       "problem": "The old portfolio worked but felt static and generic; it didn't show her attention to detail.",
       "role": "Designer & Developer. Designed and built every interaction, with AI-assisted implementation.",
-      "outcome": "2 Weeks build time; 20+ Micro-interactions; 157 Tests passing.",
+      "outcome": "2 Weeks build time; 20+ Micro-interactions; 160+ Tests passing.",
       "timeline": "2 Weeks"
     },
     "decisions": [
