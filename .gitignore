@@ -30,3 +30,6 @@ yarn-error.log*
 # Archive folder (old drafts, not for production)
 archive/
 .vercel
+
+# Generated knowledge base for Ask Hafsa's AI (built by scripts/build-knowledge.mjs)
+src/data/knowledge.json

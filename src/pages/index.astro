@@ -24,6 +24,7 @@ const navItems = [
   { label: 'Work', href: '#work' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
+  { label: 'Ask my AI', href: '#ask-ai' },
 ];
 
 // Project data
@@ -158,6 +159,7 @@ const skills = [
           <a href="#work" class="nav-link" data-cursor-text="Go">Work</a>
           <a href="#about" class="nav-link" data-cursor-text="Go">About</a>
           <a href="#contact" class="nav-link" data-cursor-text="Go">Contact</a>
+          <a href="#ask-ai" class="nav-link" data-cursor-text="Ask">Ask my AI</a>
         </nav>
       </BlurFadeIn>
 
@@ -228,14 +230,17 @@ const skills = [
           <p class="hero-location">San Francisco Bay Area</p>
         </BlurFadeIn>
         <BlurFadeIn delay={1.4} y={20}>
-          <Magnet padding={300} strength={0.5}>
-            <a href="#work" class="hero-cta" data-cursor-text="Go" data-pen-start>
-              See my work
-              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7M17 7H7M17 7V17"/>
-              </svg>
-            </a>
-          </Magnet>
+          <div class="hero-ctas" data-pen-start>
+            <Magnet padding={300} strength={0.5}>
+              <a href="#work" class="hero-cta" data-cursor-text="Go">
+                See my work
+                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+              </a>
+            </Magnet>
+            <a href="#ask-ai" class="hero-cta-secondary" data-cursor-text="Ask">Ask my AI</a>
+          </div>
         </BlurFadeIn>
       </div>
       <div class="cut-room" aria-hidden="true"></div>
@@ -701,6 +706,37 @@ const skills = [
         font-size: 1rem;
         margin-bottom: 2rem;
       }
+    }
+
+    .hero-ctas {
+      display: flex;
+      width: fit-content; /* hug the buttons: the pen line starts at this box's right edge */
+      max-width: 100%;
+      margin-inline: auto;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem 1rem;
+    }
+
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 1.75rem;
+      color: var(--warm-fg);
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border: 1.5px solid var(--warm-fg);
+      border-radius: 100px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .hero-cta-secondary:hover {
+      background: var(--warm-fg);
+      color: var(--warm-bg);
     }
 
     .hero-cta {

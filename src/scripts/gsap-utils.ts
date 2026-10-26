@@ -90,7 +90,7 @@ export function initAnchorScroll(offset: number = 100): void {
 
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
-      if (!href || href === '#') return;
+      if (!href || href === '#' || href === '#ask-ai') return; // #ask-ai opens the chat panel (AskAI)
 
       const target = document.querySelector(href);
       if (!target) return;

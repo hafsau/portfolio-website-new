@@ -4,6 +4,7 @@ import Analytics from '@vercel/analytics/astro';
 import LoadingScreen from '../components/LoadingScreen.astro';
 import BackToTop from '../components/BackToTop.astro';
 import PenToolButton from '../components/PenToolButton.astro';
+import AskAI from '../components/AskAI.astro';
 import EasterEgg from '../components/EasterEgg.astro';
 
 interface Props {
@@ -108,6 +109,9 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
 
     <!-- Pen tool button: the visible way into "Press P" pen mode -->
     <PenToolButton />
+
+    <!-- Ask Hafsa's AI: chat panel, opened by any link to #ask-ai -->
+    <AskAI />
 
     <!-- Easter Egg (Konami Code) -->
     <EasterEgg />
