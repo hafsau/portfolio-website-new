@@ -402,6 +402,7 @@
 
       document.documentElement.classList.add('pm-active');
       showToast();
+      window.dispatchEvent(new CustomEvent('pen-mode:change', { detail: { active: true } }));
     }
 
     function exit() {
@@ -411,6 +412,7 @@
       CLICK_TYPES.forEach((t) => window.removeEventListener(t, swallowClick, true));
       document.documentElement.classList.remove('pm-active');
       hideToast();
+      window.dispatchEvent(new CustomEvent('pen-mode:change', { detail: { active: false } }));
 
       const leaving = overlay;
       overlay = null;
@@ -458,6 +460,12 @@
       },
       true
     );
+
+    // The toolbar's pen button (PenToolButton) toggles pen mode too
+    window.addEventListener('pen-mode:toggle', () => {
+      if (active) exit();
+      else if (finePointer.matches) enter();
+    });
 
     document.addEventListener('astro:before-swap', exit);
   }

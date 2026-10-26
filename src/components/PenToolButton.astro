@@ -1,0 +1,111 @@
+---
+/**
+ * PenToolButton - the visible way into pen mode (src/components/EasterEgg.astro).
+ * Clicking it, or pressing P, picks up the pen; Esc or clicking again puts it down.
+ * Shown only on devices with a mouse or trackpad, since pen mode needs a fine pointer.
+ */
+---
+
+<button
+  class="pen-tool-btn"
+  id="pen-tool-btn"
+  type="button"
+  aria-pressed="false"
+  aria-keyshortcuts="P"
+  aria-label="Pen tool"
+>
+  <svg width="22" height="22" viewBox="-14 -36 28 40" aria-hidden="true">
+    <path class="nib" d="M0 0 L-9 -22 L0 -32 L9 -22 Z" />
+    <circle cx="0" cy="-18" r="2.4" />
+    <line x1="0" y1="-18" x2="0" y2="-3" />
+  </svg>
+  <span class="pen-tool-tip" aria-hidden="true">Pen tool <kbd>P</kbd></span>
+</button>
+
+<style>
+  .pen-tool-btn {
+    position: fixed;
+    left: 2rem;
+    bottom: 2rem;
+    /* Above the pen-mode drawing layer, so it can also put the pen down */
+    z-index: 100000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(12, 12, 12, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .pen-tool-btn { display: flex; }
+  }
+
+  .pen-tool-btn svg .nib { fill: #4A5EE4; stroke: #fff; stroke-width: 1.5; stroke-linejoin: round; }
+  .pen-tool-btn svg circle { fill: #fff; }
+  .pen-tool-btn svg line { stroke: #fff; stroke-width: 1.2; }
+
+  .pen-tool-btn:hover { border-color: rgba(123, 138, 242, 0.6); }
+
+  /* Selected, like an active tool in a design app */
+  .pen-tool-btn[aria-pressed='true'] {
+    background: #4A5EE4;
+    border-color: #4A5EE4;
+  }
+  .pen-tool-btn[aria-pressed='true'] svg .nib { fill: #fff; stroke: #4A5EE4; }
+  .pen-tool-btn[aria-pressed='true'] svg circle { fill: #4A5EE4; }
+  .pen-tool-btn[aria-pressed='true'] svg line { stroke: #4A5EE4; }
+
+  .pen-tool-btn:focus-visible {
+    outline: 2px solid #7b8af2;
+    outline-offset: 3px;
+  }
+
+  .pen-tool-tip {
+    position: absolute;
+    left: calc(100% + 10px);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    padding: 6px 8px 6px 12px;
+    border-radius: 999px;
+    background: #0C0C0C;
+    color: #F5F5F0;
+    font: 500 12px/1 'Space Grotesk', sans-serif;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .pen-tool-tip kbd {
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    padding: 3px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .pen-tool-btn:hover .pen-tool-tip,
+  .pen-tool-btn:focus-visible .pen-tool-tip { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pen-tool-btn, .pen-tool-tip { transition: none; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('pen-tool-btn');
+  if (btn && !btn.dataset.init) {
+    btn.dataset.init = 'true';
+    btn.addEventListener('click', () => window.dispatchEvent(new CustomEvent('pen-mode:toggle')));
+    window.addEventListener('pen-mode:change', (e) => {
+      btn.setAttribute('aria-pressed', String((e as CustomEvent).detail.active));
+    });
+  }
+</script>

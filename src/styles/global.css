@@ -1850,16 +1850,6 @@ nav a.link::after {
   }
 }
 
-/* "Pause animations" toggle (see MotionToggle): settle all CSS motion immediately */
-html.reduce-motion *,
-html.reduce-motion *::before,
-html.reduce-motion *::after {
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.001ms !important;
-  scroll-behavior: auto !important;
-}
-
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   .ambient-orb {
