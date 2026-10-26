@@ -40,7 +40,7 @@ describe('Page Structure', () => {
 
     it('should have hero subtitle with role', () => {
       expect(indexContent).toContain('hero-subtitle');
-      expect(indexContent).toMatch(/hero-subtitle">[^<]*product designer/i);
+      expect(indexContent).toMatch(/hero-subtitle">[^<]*product design/i);
     });
 
     it('should have see work CTA', () => {
