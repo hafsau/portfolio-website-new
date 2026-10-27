@@ -230,17 +230,18 @@ const skills = [
           <p class="hero-location">San Francisco Bay Area</p>
         </BlurFadeIn>
         <BlurFadeIn delay={1.4} y={20}>
-          <div class="hero-ctas" data-pen-start>
-            <Magnet padding={300} strength={0.5}>
+          <!-- One magnet around both buttons so they move together and never overlap -->
+          <Magnet padding={120} strength={0.15} class="hero-ctas-magnet">
+            <div class="hero-ctas" data-pen-start>
               <a href="#work" class="hero-cta" data-cursor-text="Go">
                 See my work
                 <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>
                 </svg>
               </a>
-            </Magnet>
-            <a href="#ask-ai" class="hero-cta-secondary" data-cursor-text="Ask">Ask my AI</a>
-          </div>
+              <a href="#ask-ai" class="hero-cta-secondary" data-cursor-text="Ask">Ask my AI</a>
+            </div>
+          </Magnet>
         </BlurFadeIn>
       </div>
       <div class="cut-room" aria-hidden="true"></div>

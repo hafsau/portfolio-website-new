@@ -44,6 +44,12 @@ import { SIGNATURE_PATH, SIGNATURE_FLOURISH } from '../lib/signature';
     z-index: 30;
   }
 
+  /* Until the script has measured and placed everything, the raw markup (an unscaled signature
+     flourish, an undashed line) would flash across the hero, most visibly when the loader is skipped */
+  .pen-layer:not([data-init]) {
+    visibility: hidden;
+  }
+
   .pen-svg {
     position: absolute;
     top: 0;
