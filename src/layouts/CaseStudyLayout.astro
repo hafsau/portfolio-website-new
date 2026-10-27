@@ -153,7 +153,7 @@ const breadcrumbSchema = {
     <header class="case-hero">
       <div class="container">
         <!-- Back link -->
-        <a href="/#work" class="back-link reveal">
+        <a href="/#work" class="back-link reveal" data-section="work">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
           </svg>
@@ -399,59 +399,18 @@ const breadcrumbSchema = {
 
     // Handle navigation to home page with curved transition
     function setupHomeNavigation() {
-      const homeLinks = document.querySelectorAll('.nav-home-link, .back-link, .signature-logo');
-      const pageTransition = document.getElementById('page-transition');
-      const transitionCurve = pageTransition?.querySelector('.transition-curve') as HTMLElement;
+      const homeLinks = document.querySelectorAll<HTMLElement>('.nav-home-link, .back-link, .signature-logo');
+      // The pen's fill matches the section the visitor lands on, so there's no color flash
+      const landingColor: Record<string, string> = { home: '#FFF4E4', work: '#0C0C0C', about: '#0C0C0C', contact: '#FFF4E4' };
 
       homeLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const section = link.getAttribute('data-section') || 'home';
-
-          // Show transition overlay (curve slides up from bottom)
-          if (pageTransition && transitionCurve) {
-            pageTransition.style.display = 'flex';
-            pageTransition.classList.add('active');
-
-            // Start curve below the viewport
-            transitionCurve.style.transform = 'translateY(110%)';
-            transitionCurve.style.transition = 'none';
-
-            // Update transition title for going home
-            const titleEl = pageTransition.querySelector('.transition-title');
-            const labelEl = pageTransition.querySelector('.transition-label');
-            const contentEl = pageTransition.querySelector('.transition-content') as HTMLElement;
-            if (titleEl) titleEl.textContent = 'Home';
-            if (labelEl) labelEl.textContent = 'Returning to';
-            if (contentEl) {
-              contentEl.style.opacity = '0';
-              contentEl.style.transition = 'none';
-            }
-
-            requestAnimationFrame(() => {
-              // Animate curve sliding up to cover screen
-              transitionCurve.style.transition = 'transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
-              transitionCurve.style.transform = 'translateY(0)';
-
-              // Fade in content
-              if (contentEl) {
-                setTimeout(() => {
-                  contentEl.style.transition = 'opacity 0.3s ease-in';
-                  contentEl.style.opacity = '1';
-                }, 200);
-              }
-            });
-
-            // Navigate after animation
-            setTimeout(() => {
-              // Store section to scroll to
-              sessionStorage.setItem('scrollToSection', section);
-              window.location.href = '/';
-            }, 600);
-          } else {
-            sessionStorage.setItem('scrollToSection', section);
-            window.location.href = '/';
-          }
+          sessionStorage.setItem('scrollToSection', section);
+          const penExit = (window as any).penExit;
+          if (penExit) penExit(link, '/', landingColor[section] ?? '#0C0C0C');
+          else window.location.href = '/';
         });
       });
     }

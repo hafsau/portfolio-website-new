@@ -82,7 +82,18 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.removeItem('theme');
       })();
+      // Returning from a case study to a home section: keep the page hidden (in the pen's
+      // fill color) until it has jumped there, so the hero never flashes on the way
+      (function() {
+        var section = location.pathname === '/' && sessionStorage.getItem('scrollToSection');
+        if (!section || section === 'home') return;
+        var root = document.documentElement;
+        root.classList.add('section-return');
+        root.style.background = section === 'contact' ? '#FFF4E4' : '#0C0C0C';
+        setTimeout(function() { root.classList.remove('section-return'); root.style.background = ''; }, 2000);
+      })();
     </script>
+    <style is:inline>html.section-return body { visibility: hidden; }</style>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({

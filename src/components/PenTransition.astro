@@ -47,7 +47,7 @@
     });
   }
 
-  async function playExit(link: HTMLAnchorElement, href: string, color: string) {
+  async function playExit(link: HTMLElement, href: string, color: string) {
     const source = link.closest<HTMLElement>('.project-card-wrapper, .next-project-feature, .project-card') ?? link;
     const r = source.getBoundingClientRect();
     const W = window.innerWidth, H = window.innerHeight;
@@ -137,6 +137,14 @@
       leaving = true;
       playExit(link, url.href, PROJECT_COLOR[slug] ?? INK);
     });
+
+    // Other pen exits (e.g. the case-study "Back to Work" / home links in CaseStudyLayout)
+    (window as any).penExit = (link: HTMLElement, href: string, color: string) => {
+      if (leaving) return;
+      if (reduceMotion()) { window.location.href = href; return; }
+      leaving = true;
+      playExit(link, href, color);
+    };
 
     // Restored from the back/forward cache: clear the cover so the page is usable again
     window.addEventListener('pageshow', (e) => {

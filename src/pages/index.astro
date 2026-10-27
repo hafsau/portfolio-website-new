@@ -2011,8 +2011,10 @@ const skills = [
         setTimeout(() => {
           const targetElement = document.getElementById(section);
           if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            window.scrollTo({ top: targetElement.getBoundingClientRect().top + window.scrollY, behavior: 'instant' });
           }
+          document.documentElement.classList.remove('section-return');
+          document.documentElement.style.background = '';
         }, 100);
       }
     }
