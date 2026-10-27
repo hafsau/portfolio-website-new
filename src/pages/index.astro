@@ -89,7 +89,7 @@ const projects = [
     category: 'B2B SaaS',
     title: 'Folio Platform',
     description: 'Client portal for freelancers',
-    outcome: '60% reduction in admin time',
+    outcome: 'Projected 60% less admin time',
     image: '/images/folio/hero-image.webp',
     href: '/work/folio',
     color: '#0891b2',
@@ -109,9 +109,36 @@ const projects = [
 ];
 
 // Stats data
+// Outcomes ledger: every number is tied to a project and confirmed by Hafsa
 const stats = [
-  { number: '5', suffix: '+', label: 'Years Experience' },
-  { number: '10', suffix: 'M+', label: 'Users Reached' }
+  {
+    number: '91',
+    suffix: '%',
+    from: '21%',
+    label: "Medical officer attendance across 36 districts, plus 3M children's records digitized and £250K in DFID funding.",
+    project: 'Immunization Tracker',
+    meta: 'Punjab Govt · 2014–15',
+    href: '/work/immunization',
+    sr: 'Medical officer attendance rose from 21% to 91%.'
+  },
+  {
+    number: '35',
+    suffix: '%',
+    label: 'Decrease in error rates, and a 40% increase in task efficiency, across mobile, web and smartwatch.',
+    project: 'MedRec',
+    meta: 'Diabetes app',
+    href: '/work/medrec',
+    sr: '35% decrease in error rates.'
+  },
+  {
+    number: '1',
+    suffix: 'st',
+    label: 'Place for Best AI/ML at the #75HER Hackathon, demoed to 200+ attendees.',
+    project: 'EqualTales',
+    meta: 'AI storybook · 2026',
+    href: '/work/equaltales',
+    sr: '1st place.'
+  }
 ];
 
 // Skills for marquee
@@ -316,18 +343,27 @@ const skills = [
     <!-- ============================================
          STATS SECTION - Warm Cream Background
          ============================================ -->
-    <section class="stats-section" data-pen-section>
-      <div class="stats-grid">
-        {stats.map((stat, i) => (
-          <BlurFadeIn delay={i * 0.15} y={40} triggerOnScroll>
-            <div class="stat-item">
-              <span class="stat-number" data-count={stat.number} data-suffix={stat.suffix}>
-                {stat.number}{stat.suffix}
-              </span>
-              <span class="stat-label">{stat.label}</span>
-            </div>
-          </BlurFadeIn>
-        ))}
+    <section class="stats-section" data-pen-section aria-labelledby="outcomes-title">
+      <div class="outcomes">
+        <h2 id="outcomes-title" class="outcomes-eyebrow">Selected outcomes</h2>
+        <ol class="outcomes-list">
+          {stats.map((stat) => (
+            <li class="outcome" data-outcome>
+              <div class="outcome-figure">
+                {stat.from && <span class="outcome-from" aria-hidden="true">from <s>{stat.from}</s></span>}
+                <!-- Final value is in the HTML; the odometer digits are decorative -->
+                <span class="stat-number" data-count={stat.number} data-suffix={stat.suffix} aria-hidden="true">{stat.number}{stat.suffix}</span>
+                <span class="sr-only">{stat.sr}</span>
+              </div>
+              <div class="outcome-text">
+                <p class="outcome-project">{stat.project} <span class="outcome-meta">· {stat.meta}</span></p>
+                <p class="outcome-label">{stat.label}</p>
+                <a class="outcome-link" href={stat.href}>View case study<span class="sr-only">: {stat.project}</span> <span aria-hidden="true">↗</span></a>
+              </div>
+              <span class="outcome-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            </li>
+          ))}
+        </ol>
       </div>
       <div class="cut-room" aria-hidden="true"></div>
     </section>
@@ -1164,39 +1200,186 @@ const skills = [
       }
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      max-width: 720px;
+    /* Outcomes ledger: number | project + context, one row per result */
+    .outcomes {
+      max-width: 1100px;
       margin: 0 auto;
-      text-align: center;
     }
 
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .stat-number {
-      font-size: clamp(3rem, 10vw, 8rem);
-      font-weight: 900;
-      line-height: 1;
-      color: var(--accent);
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
+    .outcomes-eyebrow {
+      margin: 0 0 1.5rem;
+      font: 500 12px/1.4 'JetBrains Mono', monospace;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
       color: var(--warm-muted);
     }
 
+    .outcomes-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid rgb(26 26 26 / 0.12);
+    }
+
+    .outcome {
+      position: relative;
+      display: grid;
+      gap: 0.75rem;
+      padding: 2rem 0.25rem;
+      border-top: 1px solid rgb(26 26 26 / 0.12);
+    }
+
     @media (min-width: 768px) {
-      .stat-label {
-        font-size: 0.875rem;
+      .outcome-frame {
+        inset: 0.4rem -0.5rem;
       }
+
+      .outcome {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+        align-items: center;
+        column-gap: 2.5rem;
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    .outcome-from {
+      display: block;
+      margin-bottom: 0.25rem;
+      font: 500 12px/1.4 'JetBrains Mono', monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-muted);
+    }
+
+    .stat-number {
+      --cell-h: 1.1em;
+      display: inline-flex;
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .outcome-project {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      font-weight: 600;
+      color: var(--warm-fg);
+    }
+
+    .outcome-meta {
+      font-weight: 400;
+      color: var(--warm-muted);
+    }
+
+    .outcome-label {
+      max-width: 34em;
+      margin: 0 0 0.9rem;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--warm-muted);
+    }
+
+    .outcome-link {
+      font: 500 12px/1.4 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .outcome-link:hover,
+    .outcome-link:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Odometer: one clipped cell per digit, a strip of digits rolls up to the final value */
+    .stat-number :global(.roll-cell) {
+      position: relative;
+      display: inline-block;
+      height: var(--cell-h);
+      clip-path: inset(0 -0.25em);
+    }
+
+    .stat-number :global(.roll-ghost) {
+      display: block;
+      visibility: hidden;
+    }
+
+    .stat-number :global(.roll-strip) {
+      position: absolute;
+      inset: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 1.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .stat-number :global(.roll-strip span) {
+      height: var(--cell-h);
+    }
+
+    /* Figma-style selection frame: the pen "selects" each result as it passes */
+    .outcome-frame {
+      position: absolute;
+      inset: 0.4rem -0.25rem;
+      border: 1px solid var(--accent);
+      opacity: 0;
+      clip-path: inset(0 100% 100% 0);
+      pointer-events: none;
+      transition: opacity 0.3s ease, clip-path 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .outcome-frame i {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--warm-bg);
+      border: 1px solid var(--accent);
+      transform: scale(0);
+      transition: transform 0.25s ease 0.35s;
+    }
+
+    .outcome-frame i:nth-child(1) { top: -4.5px; left: -4.5px; }
+    .outcome-frame i:nth-child(2) { top: -4.5px; right: -4.5px; transition-delay: 0.4s; }
+    .outcome-frame i:nth-child(3) { bottom: -4.5px; right: -4.5px; transition-delay: 0.45s; }
+    .outcome-frame i:nth-child(4) { bottom: -4.5px; left: -4.5px; transition-delay: 0.5s; }
+
+    .outcome.is-selected .outcome-frame {
+      opacity: 1;
+      clip-path: inset(-6px);
+    }
+
+    .outcome.is-selected .outcome-frame i {
+      transform: scale(1);
+    }
+
+    /* Only when motion is welcome (JS adds .is-armed): context rises in as each row is reached */
+    .stats-section.is-armed .outcome-text,
+    .stats-section.is-armed .outcome-from {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s;
+    }
+
+    .stats-section.is-armed .outcome.is-reached .outcome-text,
+    .stats-section.is-armed .outcome.is-reached .outcome-from {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* The number appears (and starts rolling) when its row is reached, never as a resting "0" */
+    .stats-section.is-armed .stat-number {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .stats-section.is-armed .outcome.is-reached .stat-number {
+      opacity: 1;
     }
 
     /* ============================================
@@ -1860,41 +2043,63 @@ const skills = [
 
     // Animated Counter
     function animateCounters() {
-      const counters = document.querySelectorAll('[data-count]');
+      const section = document.querySelector<HTMLElement>('.stats-section');
+      const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-outcome]'));
+      if (!section || !rows.length || section.dataset.init) return;
+      section.dataset.init = 'true';
       // Real values are rendered in the HTML; only animate when motion is welcome
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      section.classList.add('is-armed');
 
+      // Odometer: each digit becomes a clipped cell with a strip that rolls through 0-9 to its value
+      const strips = new Map<HTMLElement, HTMLElement[]>();
+      rows.forEach((row) => {
+        const el = row.querySelector<HTMLElement>('[data-count]');
+        if (!el) return;
+        const value = el.dataset.count || '';
+        const suffix = el.dataset.suffix || '';
+        el.textContent = '';
+        const rowStrips: HTMLElement[] = [];
+        for (const ch of value) {
+          const cell = document.createElement('span');
+          cell.className = 'roll-cell';
+          const ghost = document.createElement('span');
+          ghost.className = 'roll-ghost';
+          ghost.textContent = ch;
+          const strip = document.createElement('span');
+          strip.className = 'roll-strip';
+          const digits = [...'0123456789', ...Array.from({ length: Number(ch) + 1 }, (_, n) => String(n))];
+          digits.forEach((d) => {
+            const item = document.createElement('span');
+            item.textContent = d;
+            strip.appendChild(item);
+          });
+          strip.dataset.steps = String(digits.length - 1);
+          cell.append(ghost, strip);
+          el.appendChild(cell);
+          rowStrips.push(strip);
+        }
+        if (suffix) el.append(suffix);
+        strips.set(row, rowStrips);
+      });
+
+      // Rows are "reached" where the pen tip sits (about 62% down the viewport): the pen selects that row
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const target = parseInt(el.dataset.count || '0');
-            const suffix = el.dataset.suffix || '';
-            const duration = 2000;
-            const start = performance.now();
-
-            function update(currentTime: number) {
-              const elapsed = currentTime - start;
-              const progress = Math.min(elapsed / duration, 1);
-
-              // Ease out cubic
-              const eased = 1 - Math.pow(1 - progress, 3);
-              const current = Math.floor(eased * target);
-
-              el.textContent = `${current}${suffix}`;
-
-              if (progress < 1) {
-                requestAnimationFrame(update);
-              }
-            }
-
-            requestAnimationFrame(update);
-            observer.unobserve(el);
-          }
+          if (!entry.isIntersecting) return;
+          const row = entry.target as HTMLElement;
+          rows.forEach((r) => r.classList.toggle('is-selected', r === row));
+          if (row.classList.contains('is-reached')) return;
+          row.classList.add('is-reached');
+          // Digits roll right to left, like an odometer
+          (strips.get(row) || []).slice().reverse().forEach((strip, k) => {
+            strip.style.transitionDelay = `${k * 0.08}s`;
+            strip.style.transform = `translateY(calc(-${strip.dataset.steps} * var(--cell-h)))`;
+          });
         });
-      }, { threshold: 0.7 });
+      }, { rootMargin: '0px 0px -38% 0px', threshold: 0 });
 
-      counters.forEach((counter) => observer.observe(counter));
+      rows.forEach((row) => observer.observe(row));
     }
 
     // Initialize

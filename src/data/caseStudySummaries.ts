@@ -192,9 +192,9 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
   "equaltales": {
     "tldr": {
       "problem": "Help close the STEM gender gap; most children's books feature male protagonists.",
-      "role": "Designer & Developer. Took it from concept to deployed product in 48 hours.",
+      "role": "Designer & Developer. Took it from concept to deployed product.",
       "outcome": "1st Place - Best AI/ML at #75HER Hackathon; 200+ Demo attendees.",
-      "timeline": "2026 (48-Hour Hackathon)"
+      "timeline": "2026 (#75HER Hackathon)"
     },
     "decisions": [
       {
