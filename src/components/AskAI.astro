@@ -273,10 +273,12 @@ const prompts = [
     const escapeHtml = (s: string) =>
       s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-    // Minimal, safe formatting: paragraphs, "- " bullets, and markdown links to this site or email
+    // Minimal, safe formatting: paragraphs, "- " bullets, **bold**, and markdown links to this site or email
     function format(text: string) {
       const linkify = (s: string) =>
-        escapeHtml(s).replace(/\[([^\]]+)\]\(((?:\/[^\s)]*)|(?:mailto:[^\s)]+))\)/g, '<a href="$2">$1</a>');
+        escapeHtml(s)
+          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+          .replace(/\[([^\]]+)\]\(((?:\/[^\s)]*)|(?:mailto:[^\s)]+))\)/g, '<a href="$2">$1</a>');
       const blocks: string[] = [];
       let list: string[] = [];
       const flush = () => { if (list.length) { blocks.push(`<ul>${list.join('')}</ul>`); list = []; } };
