@@ -1,6 +1,6 @@
 /**
- * Case-study summaries (TL;DR card) and key decisions, drafted ONLY from text already on each
- * case-study page. DRAFT: to be reviewed and edited by Hafsa before publishing.
+ * Case-study summaries (TL;DR card) and key decisions, drafted only from text already on each
+ * case-study page and confirmed by Hafsa.
  * `stated: false` marks decisions the page implies (two approaches contrasted) rather than states.
  */
 export interface Decision {
