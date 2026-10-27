@@ -57,24 +57,19 @@ describe('Portfolio Data', () => {
     });
   });
 
-  describe('Stats', () => {
-    const stats = extractArray(indexContent, 'stats');
+  describe('How I work', () => {
+    const principles = extractArray(indexContent, 'principles');
 
-    it('should have stats for visual showcase', () => {
-      expect(stats.length).toBeGreaterThan(0);
+    it('should have three principles', () => {
+      expect(principles.length).toBe(3);
     });
 
-    it('each stat should have required fields', () => {
-      stats.forEach((stat: any) => {
-        expect(stat).toHaveProperty('number');
-        expect(stat).toHaveProperty('suffix');
-        expect(stat).toHaveProperty('label');
-      });
-    });
-
-    it('stat numbers should be valid', () => {
-      stats.forEach((stat: any) => {
-        expect(parseInt(stat.number)).toBeGreaterThan(0);
+    it('each principle should have a word, title, sentence and action', () => {
+      principles.forEach((p: any) => {
+        expect(p.word).toBeTruthy();
+        expect(p.title).toBeTruthy();
+        expect(p.sentence).toBeTruthy();
+        expect(['ask', 'sketch', 'link']).toContain(p.action);
       });
     });
   });

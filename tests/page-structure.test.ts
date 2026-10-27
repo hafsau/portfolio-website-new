@@ -90,10 +90,11 @@ describe('Page Structure', () => {
       expect(indexContent).toContain('project-card');
     });
 
-    it('should have stats section with animated counters', () => {
+    it('should have the How I work section with actions', () => {
       expect(indexContent).toContain('stats-section');
-      expect(indexContent).toContain('stat-number');
-      expect(indexContent).toContain('data-count');
+      expect(indexContent).toContain('principle-word');
+      expect(indexContent).toContain('data-ask-ai');
+      expect(indexContent).toContain('data-pen-toggle');
     });
   });
 
@@ -141,8 +142,8 @@ describe('Visual Design', () => {
     expect(indexContent).toContain('--dark-bg: #0C0C0C');
   });
 
-  it('should color stats with the ink accent', () => {
-    expect(indexContent).toMatch(/\.stat-number \{[^}]*color: var\(--accent\)/);
+  it('should color the How I work verbs with the ink accent', () => {
+    expect(indexContent).toMatch(/\.principle-word \{[^}]*color: var\(--accent\)/);
   });
 
   it('should have alternating section backgrounds', () => {
@@ -213,7 +214,7 @@ describe('Styling', () => {
 
 describe('Animations', () => {
   it('should have animated counters script', () => {
-    expect(indexContent).toContain('animateCounters');
+    expect(indexContent).toContain('initHowIWork');
     expect(indexContent).toContain('IntersectionObserver');
   });
 

@@ -109,35 +109,36 @@ const projects = [
 ];
 
 // Stats data
-// Outcomes ledger: every number is tied to a project and confirmed by Hafsa
-const stats = [
+// How I work: three principles in Hafsa's own words; each action does what its verb says
+const principles = [
   {
-    number: '91',
-    suffix: '%',
-    from: '21%',
-    label: "Medical officer attendance across 36 districts, plus 3M children's records digitized and £250K in DFID funding.",
-    project: 'Immunization Tracker',
-    meta: 'Punjab Govt · 2014–15',
-    href: '/work/immunization',
-    sr: 'Medical officer attendance rose from 21% to 91%.'
+    struck: 'guess',
+    word: 'Ask',
+    title: 'Intent first',
+    meta: 'from MedRec',
+    sentence: 'The best designs emerged from listening, not guessing.',
+    action: 'ask',
+    linkLabel: 'Ask my AI'
   },
   {
-    number: '35',
-    suffix: '%',
-    label: 'Decrease in error rates, and a 40% increase in task efficiency, across mobile, web and smartwatch.',
-    project: 'MedRec',
-    meta: 'Diabetes app',
-    href: '/work/medrec',
-    sr: '35% decrease in error rates.'
+    struck: 'polish',
+    word: 'Sketch',
+    title: 'Fast loops',
+    meta: 'this site',
+    sentence: 'Prototype in hours, not weeks. Speed enables risk-taking.',
+    action: 'sketch',
+    linkLabel: 'Press P to sketch',
+    touchLabel: 'Tap to sketch'
   },
   {
-    number: '1',
-    suffix: 'st',
-    label: 'Place for Best AI/ML at the #75HER Hackathon, demoed to 200+ attendees.',
-    project: 'EqualTales',
-    meta: 'AI storybook · 2026',
-    href: '/work/equaltales',
-    sr: '1st place.'
+    struck: 'assume',
+    word: 'Ship',
+    title: 'Ship and learn',
+    meta: 'AI Lab, since 2025',
+    sentence: 'Real users teach more than assumptions. Deploy early, gather feedback, iterate with purpose.',
+    action: 'link',
+    href: '/work/ai-lab',
+    linkLabel: 'See the AI Lab'
   }
 ];
 
@@ -343,22 +344,32 @@ const skills = [
     <!-- ============================================
          STATS SECTION - Warm Cream Background
          ============================================ -->
-    <section class="stats-section" data-pen-section aria-labelledby="outcomes-title">
+    <section class="stats-section" data-pen-section aria-labelledby="how-i-work-title">
       <div class="outcomes">
-        <h2 id="outcomes-title" class="outcomes-eyebrow">Selected outcomes</h2>
+        <h2 id="how-i-work-title" class="outcomes-eyebrow">How I work</h2>
         <ol class="outcomes-list">
-          {stats.map((stat) => (
+          {principles.map((p) => (
             <li class="outcome" data-outcome>
               <div class="outcome-figure">
-                {stat.from && <span class="outcome-from" aria-hidden="true">from <s>{stat.from}</s></span>}
-                <!-- Final value is in the HTML; the odometer digits are decorative -->
-                <span class="stat-number" data-count={stat.number} data-suffix={stat.suffix} aria-hidden="true">{stat.number}{stat.suffix}</span>
-                <span class="sr-only">{stat.sr}</span>
+                <!-- The struck word is what each step replaces; the verb is drawn in as the pen arrives -->
+                <span class="principle-struck" aria-hidden="true"><s>{p.struck}</s></span>
+                <span class="principle-word" data-word={p.word} aria-hidden="true">{p.word}<span class="principle-anchor"></span></span>
+                <span class="sr-only">{p.word}: {p.title.toLowerCase()}.</span>
               </div>
               <div class="outcome-text">
-                <p class="outcome-project">{stat.project} <span class="outcome-meta">· {stat.meta}</span></p>
-                <p class="outcome-label">{stat.label}</p>
-                <a class="outcome-link" href={stat.href}>View case study<span class="sr-only">: {stat.project}</span> <span aria-hidden="true">↗</span></a>
+                <p class="outcome-project">{p.title} <span class="outcome-meta">· {p.meta}</span></p>
+                <p class="outcome-label">{p.sentence}</p>
+                {p.action === 'ask' && (
+                  <button type="button" class="outcome-link" data-ask-ai>{p.linkLabel} <span aria-hidden="true">↗</span></button>
+                )}
+                {p.action === 'sketch' && (
+                  <button type="button" class="outcome-link" data-pen-toggle>
+                    <span class="label-fine">{p.linkLabel}</span><span class="label-touch">{p.touchLabel}</span> <span aria-hidden="true">↗</span>
+                  </button>
+                )}
+                {p.action === 'link' && (
+                  <a class="outcome-link" href={p.href}>{p.linkLabel} <span aria-hidden="true">↗</span></a>
+                )}
               </div>
               <span class="outcome-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
             </li>
@@ -1242,25 +1253,42 @@ const skills = [
       }
     }
 
-    .outcome-from {
+    .principle-struck {
       display: block;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.4rem;
       font: 500 12px/1.4 'JetBrains Mono', monospace;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--warm-muted);
     }
 
-    .stat-number {
-      --cell-h: 1.1em;
+    /* Strike drawn as a background line so it can sweep in */
+    .principle-struck s {
+      text-decoration: none;
+      background: linear-gradient(currentColor, currentColor) 0 55% / 100% 1px no-repeat;
+    }
+
+    .principle-word {
+      position: relative;
       display: inline-flex;
+      align-items: flex-end;
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(3.25rem, 7vw, 6rem);
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.05;
       letter-spacing: -0.02em;
       color: var(--accent);
       white-space: nowrap;
+    }
+
+    /* The period is a pen anchor point, not a font glyph */
+    .principle-anchor {
+      flex: none;
+      width: max(10px, 0.13em);
+      height: max(10px, 0.13em);
+      margin: 0 0 0.16em 0.1em;
+      background: var(--warm-bg);
+      border: 2px solid var(--accent);
     }
 
     .outcome-project {
@@ -1284,43 +1312,35 @@ const skills = [
     }
 
     .outcome-link {
+      padding: 0;
+      background: none;
+      border: 0;
       font: 500 12px/1.4 'JetBrains Mono', monospace;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--accent);
       text-decoration: none;
+      cursor: pointer;
+    }
+
+    .outcome-link .label-touch {
+      display: none;
+    }
+
+    @media (hover: none) {
+      .outcome-link .label-fine {
+        display: none;
+      }
+
+      .outcome-link .label-touch {
+        display: inline;
+      }
     }
 
     .outcome-link:hover,
     .outcome-link:focus-visible {
       text-decoration: underline;
       text-underline-offset: 4px;
-    }
-
-    /* Odometer: one clipped cell per digit, a strip of digits rolls up to the final value */
-    .stat-number :global(.roll-cell) {
-      position: relative;
-      display: inline-block;
-      height: var(--cell-h);
-      clip-path: inset(0 -0.25em);
-    }
-
-    .stat-number :global(.roll-ghost) {
-      display: block;
-      visibility: hidden;
-    }
-
-    .stat-number :global(.roll-strip) {
-      position: absolute;
-      inset: 0 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 1.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    .stat-number :global(.roll-strip span) {
-      height: var(--cell-h);
     }
 
     /* Figma-style selection frame: the pen "selects" each result as it passes */
@@ -1360,26 +1380,55 @@ const skills = [
 
     /* Only when motion is welcome (JS adds .is-armed): context rises in as each row is reached */
     .stats-section.is-armed .outcome-text,
-    .stats-section.is-armed .outcome-from {
+    .stats-section.is-armed .principle-struck {
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.6s ease 0.2s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s;
     }
 
     .stats-section.is-armed .outcome.is-reached .outcome-text,
-    .stats-section.is-armed .outcome.is-reached .outcome-from {
+    .stats-section.is-armed .outcome.is-reached .principle-struck {
       opacity: 1;
       transform: none;
     }
 
-    /* The number appears (and starts rolling) when its row is reached, never as a resting "0" */
-    .stats-section.is-armed .stat-number {
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    /* The verb starts as a blue outline and fills left to right as the pen arrives */
+    .stats-section.is-armed .principle-word {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--accent);
     }
 
-    .stats-section.is-armed .outcome.is-reached .stat-number {
-      opacity: 1;
+    .stats-section.is-armed .principle-word::before {
+      content: attr(data-word);
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--accent);
+      -webkit-text-stroke: 0;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .stats-section.is-armed .outcome.is-reached .principle-word::before {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .stats-section.is-armed .principle-anchor {
+      transform: scale(0);
+      transition: transform 0.2s ease 0.55s;
+    }
+
+    .stats-section.is-armed .outcome.is-reached .principle-anchor {
+      transform: scale(1);
+    }
+
+    .stats-section.is-armed .principle-struck s {
+      background-size: 0 1px;
+      transition: background-size 0.4s ease 0.5s;
+    }
+
+    .stats-section.is-armed .outcome.is-reached .principle-struck s {
+      background-size: 100% 1px;
     }
 
     /* ============================================
@@ -2042,46 +2091,20 @@ const skills = [
     document.addEventListener('astro:after-swap', initDraggableCarousel);
 
     // Animated Counter
-    function animateCounters() {
+    function initHowIWork() {
       const section = document.querySelector<HTMLElement>('.stats-section');
       const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-outcome]'));
       if (!section || !rows.length || section.dataset.init) return;
       section.dataset.init = 'true';
-      // Real values are rendered in the HTML; only animate when motion is welcome
+
+      // "Sketch" turns on the site's pen tool (same as pressing P)
+      section.querySelectorAll('[data-pen-toggle]').forEach((btn) => {
+        btn.addEventListener('click', () => window.dispatchEvent(new CustomEvent('pen-mode:toggle')));
+      });
+
+      // Everything is visible in the HTML; only animate when motion is welcome
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       section.classList.add('is-armed');
-
-      // Odometer: each digit becomes a clipped cell with a strip that rolls through 0-9 to its value
-      const strips = new Map<HTMLElement, HTMLElement[]>();
-      rows.forEach((row) => {
-        const el = row.querySelector<HTMLElement>('[data-count]');
-        if (!el) return;
-        const value = el.dataset.count || '';
-        const suffix = el.dataset.suffix || '';
-        el.textContent = '';
-        const rowStrips: HTMLElement[] = [];
-        for (const ch of value) {
-          const cell = document.createElement('span');
-          cell.className = 'roll-cell';
-          const ghost = document.createElement('span');
-          ghost.className = 'roll-ghost';
-          ghost.textContent = ch;
-          const strip = document.createElement('span');
-          strip.className = 'roll-strip';
-          const digits = [...'0123456789', ...Array.from({ length: Number(ch) + 1 }, (_, n) => String(n))];
-          digits.forEach((d) => {
-            const item = document.createElement('span');
-            item.textContent = d;
-            strip.appendChild(item);
-          });
-          strip.dataset.steps = String(digits.length - 1);
-          cell.append(ghost, strip);
-          el.appendChild(cell);
-          rowStrips.push(strip);
-        }
-        if (suffix) el.append(suffix);
-        strips.set(row, rowStrips);
-      });
 
       // Rows are "reached" where the pen tip sits (about 62% down the viewport): the pen selects that row
       const observer = new IntersectionObserver((entries) => {
@@ -2089,13 +2112,7 @@ const skills = [
           if (!entry.isIntersecting) return;
           const row = entry.target as HTMLElement;
           rows.forEach((r) => r.classList.toggle('is-selected', r === row));
-          if (row.classList.contains('is-reached')) return;
           row.classList.add('is-reached');
-          // Digits roll right to left, like an odometer
-          (strips.get(row) || []).slice().reverse().forEach((strip, k) => {
-            strip.style.transitionDelay = `${k * 0.08}s`;
-            strip.style.transform = `translateY(calc(-${strip.dataset.steps} * var(--cell-h)))`;
-          });
         });
       }, { rootMargin: '0px 0px -38% 0px', threshold: 0 });
 
@@ -2104,12 +2121,12 @@ const skills = [
 
     // Initialize
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', animateCounters);
+      document.addEventListener('DOMContentLoaded', initHowIWork);
     } else {
-      animateCounters();
+      initHowIWork();
     }
 
-    document.addEventListener('astro:after-swap', animateCounters);
+    document.addEventListener('astro:after-swap', initHowIWork);
 
     // Hero Parallax Effect (Dennis Snellenberg style)
     function initParallax() {
