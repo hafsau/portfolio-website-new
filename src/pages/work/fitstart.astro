@@ -3,7 +3,7 @@ import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 import BeforeAfterSlider from '../../components/BeforeAfterSlider.astro';
 
 const metrics = [
-  { value: '100%', label: 'WCAG AA Compliance' },
+  { value: 'AA', label: 'Designed to WCAG AA' },
   { value: '45%', label: 'Faster task completion' },
   { value: '40%', label: 'Higher routine adherence potential' }
 ];
@@ -30,7 +30,7 @@ const contributions = [
   {
     label: 'Validation',
     metrics: [
-      { value: '100%', text: 'WCAG AA compliance' },
+      { value: 'AA', text: 'designed to WCAG AA' },
       { value: '45%', text: 'faster task completion' },
       { value: '40%', text: 'higher adherence potential' },
       { value: '3', text: 'iteration cycles' }
@@ -498,9 +498,8 @@ const responsiveFeatures = [
 
     <div class="results-grid stagger-grid">
       <div class="result-card">
-        <span class="result-value counter" data-target="100%">100%</span>
-        <span class="result-label">WCAG AA Compliance</span>
-        <p>Full accessibility across all screens and interactions</p>
+        <span class="result-value">AA</span>
+        <span class="result-label">Designed to WCAG AA</span>
       </div>
       <div class="result-card">
         <span class="result-value counter" data-target="45%">45%</span>

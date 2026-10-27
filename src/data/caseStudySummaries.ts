@@ -112,7 +112,7 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
     "tldr": {
       "problem": "Fitness apps focus on performance metrics; beginners lose motivation and struggle to stay consistent.",
       "role": "Product Designer. Led the complete design process from research to final prototypes.",
-      "outcome": "100% WCAG AA Compliance; 45% Faster task completion; 40% Higher routine adherence potential.",
+      "outcome": "Designed to WCAG AA; 45% Faster task completion; 40% Higher routine adherence potential.",
       "timeline": "3 weeks"
     },
     "decisions": [
