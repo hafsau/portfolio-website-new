@@ -50,6 +50,11 @@ describe('Page Structure', () => {
 
     it('should have magnetic portrait component', () => {
       expect(indexContent).toContain('hero-portrait');
+      // The photo sits inline in the name: no parallax or magnet that could slide it over the letters
+      const pill = indexContent.slice(indexContent.indexOf('<h1 class="hero-name"'), indexContent.indexOf('</h1>'));
+      expect(pill).toContain('hero-pill');
+      expect(pill).not.toContain('data-parallax');
+      expect(pill).not.toContain('<Magnet');
       expect(indexContent).toContain('Magnet');
     });
 

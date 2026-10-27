@@ -176,51 +176,39 @@ const skills = [
 
       <!-- Main Hero Content: Name + Portrait -->
       <div class="hero-content" id="main-content" tabindex="-1">
-        <!-- First Name -->
-        <div class="hero-name-row">
-          <!-- One h1 for the page: the full name is announced here; the split letters are decorative -->
-          <h1 class="hero-name hero-name-first" aria-label="Hafsa Usmani">
-            <SplitTextReveal
-              text="HAFSA"
-              tag="span"
-              stagger={30}
-              duration={0.7}
-              delay={500}
-            />
-          </h1>
-        </div>
-
-        <!-- Portrait (overlaid) - with parallax -->
-        <div class="hero-portrait-container" data-parallax data-speed="0.15">
-          <BlurFadeIn delay={0.7} y={40} duration={1}>
-            <Magnet padding={150} strength={0.4}>
-              <div class="hero-portrait-wrapper">
-                <img
-                  src="/images/headshot.webp"
-                  alt="Hafsa Usmani"
-                  class="hero-portrait"
-                  loading="eager"
-                  decoding="async"
-                  fetchpriority="high"
-                  sizes="(max-width: 640px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 360px, 420px"
-                />
-              </div>
-            </Magnet>
+        <!-- One h1 for the page: the full name is announced once; the split letters and photo are decorative.
+             The photo sits inline between the names (it never splits them onto separate blocks). -->
+        <h1 class="hero-name" aria-label="Hafsa Usmani">
+          <SplitTextReveal
+            text="HAFSA"
+            tag="span"
+            stagger={30}
+            duration={0.7}
+            delay={500}
+          />
+          <BlurFadeIn tag="span" delay={0.7} y={20} class="hero-pill-fade">
+            <span class="hero-pill" aria-hidden="true">
+              <img
+                src="/images/headshot.webp"
+                alt=""
+                class="hero-portrait"
+                width="840"
+                height="840"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                sizes="(min-width: 768px) 10vw, 15vw"
+              />
+            </span>
           </BlurFadeIn>
-        </div>
-
-        <!-- Last Name -->
-        <div class="hero-name-row">
-          <div class="hero-name hero-name-last" aria-hidden="true">
-            <SplitTextReveal
-              text="USMANI"
-              tag="span"
-              stagger={30}
-              duration={0.7}
-              delay={900}
-            />
-          </div>
-        </div>
+          <SplitTextReveal
+            text="USMANI"
+            tag="span"
+            stagger={30}
+            duration={0.7}
+            delay={900}
+          />
+        </h1>
       </div>
 
       <!-- Subtitle + CTA -->
@@ -603,16 +591,14 @@ const skills = [
       margin: 2rem 0;
     }
 
-    .hero-name-row {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      overflow: visible;
-    }
-
     .hero-name {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      column-gap: 0.18em;
       font-family: var(--font-display);
-      font-size: 18vw;
+      font-size: 17vw;
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 0.85;
@@ -621,62 +607,39 @@ const skills = [
       white-space: nowrap;
     }
 
+    /* From tablet up the whole name fits on one line: it is ~9.8em wide, inside the hero's 3rem side padding */
     @media (min-width: 768px) {
       .hero-name {
-        font-size: 20vw;
+        font-size: min(calc((100vw - 6rem) / 10.2), 11.5rem);
       }
     }
 
-    @media (min-width: 1024px) {
-      .hero-name {
-        font-size: 22vw;
-      }
+    /* Headshot as a pill inside the name, sized to the letters */
+    :global(.hero-pill-fade) {
+      display: inline-flex;
     }
 
-    /* Portrait Container */
-    .hero-portrait-container {
-      position: relative;
-      z-index: 10;
-      margin: -3vw 0;
-    }
-
-    @media (min-width: 768px) {
-      .hero-portrait-container {
-        margin: -5vw 0;
-      }
-    }
-
-    .hero-portrait-wrapper {
-      border-radius: 24px;
+    .hero-pill {
+      display: inline-flex;
+      height: 0.74em;
+      aspect-ratio: 1.1;
+      border-radius: 999px;
       overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+    }
+
+    @media (min-width: 768px) {
+      .hero-pill {
+        aspect-ratio: 1.35;
+      }
     }
 
     .hero-portrait {
-      width: 200px;
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 28%;
       display: block;
-    }
-
-    @media (min-width: 640px) {
-      .hero-portrait {
-        width: 280px;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .hero-portrait {
-        width: 360px;
-      }
-      .hero-portrait-wrapper {
-        border-radius: 32px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero-portrait {
-        width: 420px;
-      }
     }
 
     /* Hero Footer */
