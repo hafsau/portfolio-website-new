@@ -1853,6 +1853,8 @@ const skills = [
       carousel.addEventListener('focusin', (e) => {
         const wrapper = (e.target as HTMLElement).closest('.project-card-wrapper') as HTMLElement | null;
         if (!wrapper) return;
+        // Keyboard focus only: a mouse click on Discover shouldn't slide the card away mid-transition
+        if (!(e.target as HTMLElement).matches(':focus-visible')) return;
         carousel.scrollLeft = 0; // undo the browser's native scroll-into-view on the overflow container
         // Sync with where the track really is (it may not have been dragged yet)
         currentX = -new DOMMatrixReadOnly(getComputedStyle(track).transform).m41;

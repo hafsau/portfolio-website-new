@@ -1,0 +1,154 @@
+---
+/**
+ * PenTransition - pen-drawn exit when opening a case study.
+ *
+ * Clicking a link to /work/<project> makes the pen trace a rounded outline around the card
+ * (or link) that was clicked, drop anchor points on its corners, then fill the shape with the
+ * project's color and grow it to cover the screen. The case study's own arrival overlay
+ * (CaseStudyLayout, same color) takes over and lifts away, so the two halves read as one move.
+ *
+ * Plain page loads, no client router: if the browser restores this page from its back/forward
+ * cache, the cover is removed on `pageshow` so it can never get stuck (the old back-button bug).
+ */
+---
+
+<script>
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const INK = '#4A5EE4';
+  // Arrival overlay color per case study (each page's --color-accent); ink blue unless overridden
+  const PROJECT_COLOR: Record<string, string> = {
+    equaltales: '#7B5EA7',
+    'portfolio-website': '#14b8a6',
+  };
+  const TRACE_MS = 520;
+  const GROW_MS = 480;
+
+  const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function roundedRectPath(x: number, y: number, w: number, h: number, r: number) {
+    r = Math.min(r, w / 2, h / 2);
+    // Starts mid-way along the top edge so the pen begins and ends on a straight run
+    return `M ${x + w / 2} ${y} H ${x + w - r} Q ${x + w} ${y} ${x + w} ${y + r} V ${y + h - r} ` +
+      `Q ${x + w} ${y + h} ${x + w - r} ${y + h} H ${x + r} Q ${x} ${y + h} ${x} ${y + h - r} ` +
+      `V ${y + r} Q ${x} ${y} ${x + r} ${y} Z`;
+  }
+
+  function animate(ms: number, step: (t: number) => void) {
+    return new Promise<void>((resolve) => {
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - t0) / ms);
+        step(ease(t));
+        if (t < 1) requestAnimationFrame(tick);
+        else resolve();
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  async function playExit(link: HTMLAnchorElement, href: string, color: string) {
+    const source = link.closest<HTMLElement>('.project-card-wrapper, .next-project-feature, .project-card') ?? link;
+    const r = source.getBoundingClientRect();
+    const W = window.innerWidth, H = window.innerHeight;
+    const pad = 10;
+    const box = { x: r.left - pad, y: r.top - pad, w: r.width + pad * 2, h: r.height + pad * 2 };
+
+    const svg = document.createElementNS(SVG_NS, 'svg') as SVGSVGElement;
+    svg.setAttribute('class', 'pen-exit');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('width', String(W));
+    svg.setAttribute('height', String(H));
+    svg.style.cssText = 'position:fixed;inset:0;z-index:99990;pointer-events:auto;cursor:progress';
+
+    const fill = document.createElementNS(SVG_NS, 'rect');
+    fill.setAttribute('fill', color);
+    fill.setAttribute('opacity', '0');
+
+    const outline = document.createElementNS(SVG_NS, 'path');
+    outline.setAttribute('d', roundedRectPath(box.x, box.y, box.w, box.h, 24));
+    outline.setAttribute('fill', 'none');
+    outline.setAttribute('stroke', INK);
+    outline.setAttribute('stroke-width', '2.2');
+    outline.setAttribute('stroke-linecap', 'round');
+
+    const anchors = document.createElementNS(SVG_NS, 'g');
+    [[box.x, box.y], [box.x + box.w, box.y], [box.x + box.w, box.y + box.h], [box.x, box.y + box.h]].forEach(([ax, ay]) => {
+      const a = document.createElementNS(SVG_NS, 'rect');
+      a.setAttribute('x', String(ax - 6)); a.setAttribute('y', String(ay - 6));
+      a.setAttribute('width', '12'); a.setAttribute('height', '12');
+      a.setAttribute('fill', '#fff'); a.setAttribute('stroke', INK); a.setAttribute('stroke-width', '2');
+      a.setAttribute('opacity', '0');
+      anchors.appendChild(a);
+    });
+
+    const nib = document.createElementNS(SVG_NS, 'g');
+    nib.innerHTML = '<path d="M0 0 L-9 -22 L0 -32 L9 -22 Z" fill="#4A5EE4" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>' +
+      '<circle cx="0" cy="-18" r="2.4" fill="#fff"/><line x1="0" y1="-18" x2="0" y2="-3" stroke="#fff" stroke-width="1.2"/>';
+
+    svg.append(fill, outline, anchors, nib);
+    document.body.appendChild(svg);
+
+    // 1. The pen traces the card
+    const len = outline.getTotalLength();
+    outline.style.strokeDasharray = String(len);
+    outline.style.strokeDashoffset = String(len);
+    const corners = Array.from(anchors.children) as SVGRectElement[];
+    await animate(TRACE_MS, (t) => {
+      const l = len * t;
+      outline.style.strokeDashoffset = String(len - l);
+      const p = outline.getPointAtLength(l), p2 = outline.getPointAtLength(Math.min(len, l + 2));
+      const angle = (Math.atan2(p2.y - p.y, p2.x - p.x) * 180) / Math.PI + 90;
+      nib.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle})`);
+      // Corners light up as the pen passes them (top-right, bottom-right, bottom-left, top-left)
+      const order = [1, 2, 3, 0];
+      order.forEach((ci, k) => { if (t > 0.125 + k * 0.25) corners[ci].setAttribute('opacity', '1'); });
+    });
+
+    // 2. The shape fills with the project's color and grows to cover the screen
+    nib.remove();
+    fill.setAttribute('opacity', '1');
+    await animate(GROW_MS, (t) => {
+      const x = box.x * (1 - t), y = box.y * (1 - t);
+      const w = box.w + (W - box.w) * t, h = box.h + (H - box.h) * t;
+      fill.setAttribute('x', String(x)); fill.setAttribute('y', String(y));
+      fill.setAttribute('width', String(w)); fill.setAttribute('height', String(h));
+      fill.setAttribute('rx', String(24 * (1 - t)));
+      outline.setAttribute('opacity', String(1 - t));
+      anchors.setAttribute('opacity', String(1 - t));
+    });
+
+    window.location.href = href;
+  }
+
+  function initPenTransition() {
+    if ((window as any).__penTransition) return;
+    (window as any).__penTransition = true;
+    let leaving = false;
+
+    document.addEventListener('click', (e) => {
+      if (leaving || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="/work/"]');
+      if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+      const url = new URL(link.href, location.href);
+      if (url.pathname === location.pathname || reduceMotion()) return; // same page, or motion off: navigate normally
+      const slug = url.pathname.split('/').filter(Boolean).pop() ?? '';
+      e.preventDefault();
+      leaving = true;
+      playExit(link, url.href, PROJECT_COLOR[slug] ?? INK);
+    });
+
+    // Restored from the back/forward cache: clear the cover so the page is usable again
+    window.addEventListener('pageshow', (e) => {
+      if (!e.persisted) return;
+      document.querySelectorAll('.pen-exit').forEach((el) => el.remove());
+      leaving = false;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPenTransition);
+  } else {
+    initPenTransition();
+  }
+</script>
