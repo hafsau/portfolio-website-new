@@ -34,8 +34,9 @@ ${SITE_CONTENT}
 
 // Limits that keep cost small and predictable
 const MAX_MESSAGES = 12;
-const MAX_MESSAGE_CHARS = 800;
-const MAX_TOTAL_CHARS = 6000;
+const MAX_MESSAGE_CHARS = 800; // what a visitor can type
+const MAX_ANSWER_CHARS = 4000; // earlier answers sent back as context can be longer
+const MAX_TOTAL_CHARS = 30000; // fits the panel's last 11 messages at their limits
 const RATE_LIMIT = { requests: 15, windowMs: 10 * 60 * 1000 };
 
 // Best-effort per-IP rate limit (per function instance)
@@ -62,7 +63,7 @@ function parseMessages(body: unknown): Anthropic.MessageParam[] | null {
     const content = (m as { content?: unknown })?.content;
     if ((role !== 'user' && role !== 'assistant') || typeof content !== 'string') return null;
     const text = content.trim();
-    if (!text || text.length > MAX_MESSAGE_CHARS) return null;
+    if (!text || text.length > (role === 'user' ? MAX_MESSAGE_CHARS : MAX_ANSWER_CHARS)) return null;
     total += text.length;
     messages.push({ role, content: text });
   }

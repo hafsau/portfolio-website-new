@@ -27,6 +27,15 @@ describe("Ask Hafsa's AI", () => {
     expect(route).toContain('rateLimited(');
   });
 
+  it('keeps follow-up questions valid after long answers and long chats', () => {
+    // Earlier answers go back as context, so they need their own (larger) limit
+    expect(route).toMatch(/role === 'user' \? MAX_MESSAGE_CHARS : MAX_ANSWER_CHARS/);
+    // The window sent must be odd so it starts on a visitor question
+    const windowSize = Number(panel.match(/history\.slice\(-(\d+)\)/)?.[1]);
+    expect(windowSize % 2).toBe(1);
+    expect(panel).toContain('ask-ai-followups');
+  });
+
   it('builds a knowledge base from every page', () => {
     execSync('node scripts/build-knowledge.mjs', { cwd: root, stdio: 'ignore' });
     expect(existsSync(resolve(root, 'src/data/knowledge.json'))).toBe(true);
