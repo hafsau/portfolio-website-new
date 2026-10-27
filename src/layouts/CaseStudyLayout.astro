@@ -162,7 +162,8 @@ const breadcrumbSchema = {
 
         <!-- Title & Subtitle -->
         <div class="case-hero-content">
-          <h1 class="case-title reveal delay-1">{title}</h1>
+          <!-- A one-word domain title ("HafsaUsmani.com") may break before its extension on narrow screens -->
+          <h1 class="case-title reveal delay-1">{!title.includes(' ') && title.includes('.') ? <>{title.slice(0, title.lastIndexOf('.'))}<wbr />{title.slice(title.lastIndexOf('.'))}</> : title}</h1>
           <p class="case-subtitle reveal delay-2">{subtitle}</p>
         </div>
 
@@ -294,7 +295,7 @@ const breadcrumbSchema = {
               </span>
             )}
             <span class="next-label">Next Project</span>
-            <h2 class="next-title">{nextProject.title}</h2>
+            <h2 class="next-title">{!nextProject.title.includes(' ') && nextProject.title.includes('.') ? <>{nextProject.title.slice(0, nextProject.title.lastIndexOf('.'))}<wbr />{nextProject.title.slice(nextProject.title.lastIndexOf('.'))}</> : nextProject.title}</h2>
             {nextProject.subtitle && (
               <p class="next-subtitle">{nextProject.subtitle}</p>
             )}

@@ -496,6 +496,7 @@ const skills = [
       --warm-bg: #FFF4E4;
       --warm-fg: #1A1A1A;
       --warm-muted: #736E68; /* 4.6:1 on --warm-bg (WCAG AA) */
+      --hero-muted: #4D4843; /* hero text sits on the gradient blobs: 4.9:1 even on their darkest point */
       --dark-bg: #0C0C0C;
       --dark-fg: #F5F5F0;
       --dark-muted: #B8B8B8;
@@ -702,12 +703,12 @@ const skills = [
       font: 500 11px/1.4 'JetBrains Mono', monospace;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: var(--warm-muted);
+      color: var(--hero-muted);
     }
 
     .hero-subtitle {
       font-size: 0.875rem;
-      color: var(--warm-muted);
+      color: var(--hero-muted);
       margin-bottom: 1.5rem;
       letter-spacing: 0.05em;
     }
