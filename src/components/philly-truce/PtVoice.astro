@@ -1,0 +1,96 @@
+---
+/** Voice: the tone for each situation (from the voice guide), then "say this, not that". */
+import { tones, vocabulary } from '../../data/philly-truce-tokens';
+---
+
+<div class="pt-voice full-width">
+  <figure class="pt-tone">
+    <ul class="pt-tone-list" aria-label="Tone by situation">
+      {tones.map((t) => (
+        <li><span class="pt-tone-ctx">{t.context}</span><span class="pt-tone-words">{t.tone}</span></li>
+      ))}
+    </ul>
+  </figure>
+  <p class="pt-fig">Fig. 12 — One voice, compassionate, inclusive, clear and forward-looking, with the tone set by the situation.</p>
+
+  <figure class="pt-vocab">
+    <div class="pt-vgrid" role="table" aria-label="Vocabulary: say this, not that">
+      <div class="pt-vrow pt-vhead" role="row">
+        <span role="columnheader">Say</span>
+        <span role="columnheader">Not</span>
+        <span role="columnheader">Why</span>
+      </div>
+      {vocabulary.map((v) => (
+        <div class="pt-vrow" role="row">
+          <span class="pt-say" role="rowheader">{v.say}</span>
+          <span class="pt-not" role="cell"><s>{v.not}</s></span>
+          <span class="pt-why" role="cell">{v.why}</span>
+        </div>
+      ))}
+    </div>
+  </figure>
+  <p class="pt-fig">Fig. 13 — From the vocabulary guide: the words Philly Truce uses for its people, and why.</p>
+</div>
+
+<style>
+  .pt-voice { margin-top: 2.5rem; }
+
+  .pt-tone {
+    margin: 0;
+    padding: clamp(20px, 3vw, 32px);
+    border-radius: 16px;
+    background: #002768;
+  }
+
+  .pt-tone-list {
+    display: grid;
+    gap: 0 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 768px) { .pt-tone-list { grid-template-columns: 1fr 1fr; } }
+
+  .pt-tone-list li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 12px;
+    align-items: baseline;
+    margin: 0;
+    padding: 12px 0;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  .pt-tone-ctx { font: 400 20px/1.25 'PT DM Serif Display', Georgia, serif; color: #FFFFFF; }
+  .pt-tone-words { font: 400 14px/1.5 'PT Inter', system-ui, sans-serif; color: #D7DEEE; }
+
+  .pt-vocab {
+    margin: 40px 0 0;
+    padding: clamp(20px, 3vw, 32px);
+    border-radius: 16px;
+    background: #FFF4DA;
+    color: #3A3A40;
+  }
+
+  .pt-vrow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px 24px;
+    padding: 14px 0;
+    border-top: 1px solid rgb(0 39 104 / 0.12);
+    font: 400 15px/1.5 'PT Inter', system-ui, sans-serif;
+  }
+
+  @media (min-width: 720px) { .pt-vrow { grid-template-columns: 220px 200px 1fr; align-items: baseline; } }
+
+  .pt-vhead { display: none; padding-top: 0; border-top: 0; font: 500 11px/1.4 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; }
+  @media (min-width: 720px) { .pt-vhead { display: grid; } }
+
+  .pt-say { font: 400 20px/1.25 'PT DM Serif Display', Georgia, serif; color: #002768; }
+  .pt-not s { text-decoration-thickness: 1px; }
+
+  @media (max-width: 719px) {
+    .pt-not::before { content: 'Not: '; }
+  }
+</style>

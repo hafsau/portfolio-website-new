@@ -1,0 +1,259 @@
+---
+/**
+ * The audit, as figures: buttons in every state, then links on every approved surface with
+ * computed contrast. The switch toggles the two fixes (focus ring, link teal on pale).
+ */
+import { contrastRatio, formatRatio } from '../../lib/contrast';
+
+const buttons = [
+  { name: 'Primary', cls: 'b-primary', label: 'Get Involved', note: 'Navy · hover #1C3F8C' },
+  { name: 'Secondary', cls: 'b-secondary', label: 'Learn More', note: 'Gold · hover #C29337' },
+  { name: 'Outline', cls: 'b-outline', label: 'Donate', note: '2px navy · fills on hover' },
+  { name: 'Text', cls: 'b-text', label: 'Read the report →', note: 'Teal · underline on hover' },
+];
+
+const r = (a: string, b: string) => formatRatio(contrastRatio(a, b));
+const pass = (a: string, b: string, min: number) => Math.floor(contrastRatio(a, b) * 100) / 100 >= min;
+
+// Link colours per surface (the guide: teal on light, gold on navy; the fix: teal 700 on pale)
+const surfaces = [
+  { id: 'white', name: 'White', bg: '#FFFFFF', link: '#1E7A8C', fixedLink: '#1E7A8C', hover: '#0F4C5C', visited: '#7A3F00' },
+  { id: 'cream', name: 'Cream', bg: '#FFF4DA', link: '#1E7A8C', fixedLink: '#1E7A8C', hover: '#0F4C5C', visited: '#7A3F00' },
+  { id: 'pale', name: 'Pale', bg: '#E8EDF7', link: '#1E7A8C', fixedLink: '#0F4C5C', hover: '#0F4C5C', visited: '#7A3F00' },
+  { id: 'navy', name: 'Navy', bg: '#002768', link: '#F4B942', fixedLink: '#F4B942', hover: '#FFF4DA', visited: '' },
+].map((s) => {
+  const ringBefore = contrastRatio('#F4B942', s.bg);
+  const ringAfter = Math.max(ringBefore, contrastRatio('#002768', s.bg));
+  return {
+    ...s,
+    before: { link: r(s.link, s.bg), linkOk: pass(s.link, s.bg, 4.5), ring: formatRatio(ringBefore), ringOk: Math.floor(ringBefore * 100) / 100 >= 3 },
+    after: { link: r(s.fixedLink, s.bg), linkOk: pass(s.fixedLink, s.bg, 4.5), ring: formatRatio(ringAfter), ringOk: Math.floor(ringAfter * 100) / 100 >= 3 },
+    visitedRatio: s.visited ? r(s.visited, s.bg) : '',
+  };
+});
+---
+
+<div class="pt-audit full-width" data-pt-audit>
+  <figure class="pt-sheet" tabindex="0" role="region" aria-label="Button states">
+    <div class="pt-btn-grid" role="table" aria-label="Button states">
+      <div class="pt-brow pt-bhead" role="row">
+        <span role="columnheader">Button</span>
+        <span role="columnheader">Default</span>
+        <span role="columnheader">Hover</span>
+        <span role="columnheader">Focus</span>
+      </div>
+      {buttons.map((b) => (
+        <div class="pt-brow" role="row">
+          <span class="pt-bname" role="rowheader">{b.name}<small>{b.note}</small></span>
+          {['', 'is-hover', 'is-focus'].map((state, i) => (
+            <span class="pt-bcell" role="cell" data-state={['Default', 'Hover', 'Focus'][i]}><span class={`pt-b ${b.cls} ${state}`}>{b.label}</span></span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </figure>
+  <p class="pt-fig">Fig. 10 — Buttons in every state. 48px minimum height, 8px radius, Inter SemiBold labels.</p>
+
+  <figure class="pt-links" data-fix="on">
+    <div class="pt-lgrid" role="table" aria-label="Link and focus contrast on every surface">
+      <div class="pt-lrow pt-lhead" role="row">
+        <span role="columnheader">Surface</span>
+        <span role="columnheader">Link</span>
+        <span role="columnheader">Hover</span>
+        <span role="columnheader">Visited</span>
+        <span role="columnheader">Focus</span>
+      </div>
+      {surfaces.map((s) => (
+        <div class="pt-lrow" role="row" style={`--bg:${s.bg};--link:${s.link};--link-fixed:${s.fixedLink};--hover:${s.hover};--visited:${s.visited || s.link}`}>
+          <span class="pt-lname" role="rowheader">{s.name}</span>
+          <span class="pt-lcell" role="cell" data-state="Link">
+            <span class="pt-l pt-l-default">volunteer with us</span>
+            <span class="pt-ratio" data-before={`${s.before.link}:1 ${s.before.linkOk ? 'AA' : 'Fails'}`} data-after={`${s.after.link}:1 ${s.after.linkOk ? 'AA' : 'Fails'}`}>{s.after.link}:1 {s.after.linkOk ? 'AA' : 'Fails'}</span>
+          </span>
+          <span class="pt-lcell" role="cell" data-state="Hover"><span class="pt-l pt-l-hover">volunteer with us</span></span>
+          <span class="pt-lcell" role="cell" data-state="Visited">
+            {s.visited ? <><span class="pt-l pt-l-visited">volunteer with us</span><span class="pt-ratio">{s.visitedRatio}:1 AA</span></> : <span class="pt-na">Not specified on navy</span>}
+          </span>
+          <span class="pt-lcell" role="cell" data-state="Focus">
+            <span class="pt-l pt-l-focus">volunteer with us</span>
+            <span class="pt-ratio" data-before={`${s.before.ring}:1 ${s.before.ringOk ? 'pass' : 'Fails 3:1'}`} data-after={`${s.after.ring}:1 ${s.after.ringOk ? 'pass' : 'Fails 3:1'}`}>{s.after.ring}:1 {s.after.ringOk ? 'pass' : 'Fails 3:1'}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  </figure>
+
+  <div class="pt-fix">
+    <button type="button" class="pt-switch" role="switch" aria-checked="true" data-pt-fix>
+      <span class="pt-switch-track" aria-hidden="true"><span></span></span>
+      Audit fixes applied
+    </button>
+    <p class="pt-fix-read" aria-live="polite" data-pt-fix-read>Fixed: a navy inner ring with a gold outer ring, and teal 700 for links on pale. Every cell passes.</p>
+  </div>
+  <p class="pt-fig">Fig. 11 — Links and focus on every approved surface, with computed contrast. Switch the fixes off to see what the audit found.</p>
+</div>
+
+<style>
+  .pt-audit { margin-top: 2.5rem; }
+
+  .pt-sheet, .pt-links {
+    margin: 0;
+    padding: clamp(16px, 3vw, 32px);
+    border-radius: 16px;
+    background: #FFFFFF;
+    color: #002768;
+  }
+
+  .pt-links { margin-top: 40px; }
+  .pt-sheet { overflow-x: auto; }
+
+  .pt-brow, .pt-lrow {
+    display: grid;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid #E8EDF7;
+  }
+
+  .pt-brow { grid-template-columns: 140px repeat(3, 1fr); }
+  .pt-lrow { grid-template-columns: 80px repeat(4, 1fr); }
+
+  .pt-bhead, .pt-lhead {
+    padding-top: 0;
+    border-top: 0;
+    font: 500 11px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3A3A40;
+  }
+
+  .pt-bname { font: 600 14px/1.3 'PT Inter', system-ui, sans-serif; }
+  .pt-bname small { display: block; margin-top: 2px; font-weight: 400; font-size: 12px; color: #3A3A40; }
+
+  .pt-b {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 8px;
+    font: 600 15px/1 'PT Inter', system-ui, sans-serif;
+    white-space: nowrap;
+  }
+
+  .b-primary { background: #002768; color: #FFFFFF; }
+  .b-primary.is-hover { background: #1C3F8C; }
+  .b-secondary { background: #F4B942; color: #002768; }
+  .b-secondary.is-hover { background: #C29337; }
+  .b-outline { background: transparent; color: #002768; box-shadow: inset 0 0 0 2px #002768; }
+  .b-outline.is-hover { background: #002768; color: #FFFFFF; }
+  .b-text { padding: 0; min-height: 0; color: #1E7A8C; white-space: normal; }
+  .b-text.is-hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .pt-sheet .is-focus { box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #002768, 0 0 0 7px #F4B942; }
+  .pt-sheet .b-outline.is-focus { box-shadow: inset 0 0 0 2px #002768, 0 0 0 2px #FFFFFF, 0 0 0 4px #002768, 0 0 0 7px #F4B942; }
+
+  /* Links on each surface */
+  .pt-lname { font: 600 14px/1.3 'PT Inter', system-ui, sans-serif; }
+
+  .pt-lcell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--bg);
+  }
+
+  .pt-l { font: 400 15px/1.4 'PT Inter', system-ui, sans-serif; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; border-radius: 2px; }
+  .pt-l-default, .pt-l-focus { color: var(--link-fixed); }
+  .pt-links[data-fix='off'] .pt-l-default, .pt-links[data-fix='off'] .pt-l-focus { color: var(--link); }
+  .pt-l-hover { color: var(--hover); text-decoration-thickness: 2px; }
+  .pt-l-visited { color: var(--visited); }
+  .pt-l-focus { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px #002768, 0 0 0 7px #F4B942; }
+  .pt-links[data-fix='off'] .pt-l-focus { box-shadow: 0 0 0 3px #F4B942; }
+
+  .pt-ratio {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #FFFFFF;
+    color: #002768;
+    font: 500 11px/1.4 'JetBrains Mono', monospace;
+    box-shadow: inset 0 0 0 1px rgb(0 39 104 / 0.15);
+  }
+
+  .pt-na { font: 400 12px/1.4 'PT Inter', system-ui, sans-serif; color: #C9D3EA; }
+
+  /* Phones: each row becomes a card with labelled cells */
+  @media (max-width: 719px) {
+    .pt-bhead, .pt-lhead { display: none; }
+    .pt-brow, .pt-lrow { grid-template-columns: 1fr 1fr; }
+    .pt-bname, .pt-lname { grid-column: 1 / -1; }
+    .pt-bcell, .pt-lcell { position: relative; padding-top: 22px; }
+    .pt-bcell::before, .pt-lcell::before {
+      content: attr(data-state);
+      position: absolute;
+      top: 4px;
+      left: 0;
+      font: 500 10px/1.4 'JetBrains Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #3A3A40;
+    }
+    .pt-lcell::before { left: 12px; color: inherit; opacity: 0.75; }
+    .pt-lrow[style*='#002768'] .pt-lcell::before { color: #FFFFFF; }
+    .pt-b { padding: 0 14px; font-size: 14px; }
+  }
+
+  .pt-fix {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-top: 16px;
+  }
+
+  .pt-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.06);
+    font: 500 14px/1 var(--font-sans, system-ui), sans-serif;
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+
+  .pt-switch-track { position: relative; width: 32px; height: 18px; border-radius: 999px; background: rgb(255 255 255 / 0.25); }
+  .pt-switch-track span { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #FFFFFF; transition: transform 0.2s ease; }
+  .pt-switch[aria-checked='true'] .pt-switch-track { background: #FFF4DA; }
+  .pt-switch[aria-checked='true'] .pt-switch-track span { transform: translateX(14px); background: #002768; }
+
+  .pt-fix .pt-fix-read { margin: 0; font-size: 0.9375rem; color: var(--color-muted); }
+
+  @media (prefers-reduced-motion: reduce) { .pt-switch-track span { transition: none; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-pt-audit]').forEach((root) => {
+    if (root.dataset.init) return;
+    root.dataset.init = 'true';
+    const links = root.querySelector<HTMLElement>('.pt-links')!;
+    const btn = root.querySelector<HTMLButtonElement>('[data-pt-fix]')!;
+    const read = root.querySelector<HTMLElement>('[data-pt-fix-read]')!;
+    btn.addEventListener('click', () => {
+      const on = btn.getAttribute('aria-checked') !== 'true';
+      btn.setAttribute('aria-checked', String(on));
+      links.dataset.fix = on ? 'on' : 'off';
+      links.querySelectorAll<HTMLElement>('.pt-ratio[data-after]').forEach((el) => {
+        el.textContent = (on ? el.dataset.after : el.dataset.before) || '';
+      });
+      read.textContent = on
+        ? 'Fixed: a navy inner ring with a gold outer ring, and teal 700 for links on pale. Every cell passes.'
+        : 'Before the fixes: a single gold focus ring fails 3:1 on white, cream and pale, and link teal fails AA on pale.';
+    });
+  });
+</script>

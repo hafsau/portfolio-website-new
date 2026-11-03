@@ -1,0 +1,254 @@
+---
+/**
+ * One page of today's phillytruce.com against the new Wix build, on desktop or phone.
+ * A native range input drives the split; dragging the image moves the same input.
+ */
+interface Props {
+  page: 'home' | 'about' | 'patrol' | 'contact';
+  fig: number;
+}
+const { page, fig } = Astro.props;
+const base = '/images/philly-truce';
+const pages = [
+  {
+    id: 'home',
+    label: 'Home',
+    desktop: { before: `${base}/before-desktop.webp`, after: `${base}/wix-home.webp` },
+    phone: { before: `${base}/before-mobile.webp`, after: `${base}/wix-mobile.webp` },
+    beforeAlt: "Today's home page on a first visit: a donation pop-up in uppercase Lato and a cookie banner cover a video embed.",
+    afterAlt: "The new home page: a cream header, a gold Donate button, and the headline \"Safety isn't a privilege, it's a basic right\" in DM Serif Display with a navy Join Peace Patrol button.",
+    note: "Today, a first visit opens on a donation pop-up and a cookie banner over a video. The new home page leads with one headline and one primary action.",
+  },
+  {
+    id: 'about',
+    label: 'About',
+    desktop: { before: `${base}/ba-about-before-desktop.webp`, after: `${base}/ba-about-after-desktop.webp` },
+    phone: { before: `${base}/ba-about-before-phone.webp`, after: `${base}/ba-about-after-phone.webp` },
+    beforeAlt: "Today's About page: an uppercase heading, ABOUT PHILLY TRUCE, above a portrait beside a dense block of small white text on navy.",
+    afterAlt: "The new About page: \"Two classmates. Thirty years. One promise.\" in DM Serif Display with a standfirst in Inter, on a warm cream background.",
+    note: "An uppercase title and a dense block of small text on navy become a serif headline, a short standfirst and room to read.",
+  },
+  {
+    id: 'patrol',
+    label: 'Peace Patrol',
+    desktop: { before: `${base}/ba-patrol-before-desktop.webp`, after: `${base}/ba-patrol-after-desktop.webp` },
+    phone: { before: `${base}/ba-patrol-before-phone.webp`, after: `${base}/ba-patrol-after-phone.webp` },
+    beforeAlt: "Today's Peace Patrol page: stacked uppercase headings and small centered paragraphs.",
+    afterAlt: "The new Peace Patrol page: \"Showing up for the community.\" in DM Serif Display with a standfirst, a photo, and a section headed \"A visible, trusted presence on the block.\"",
+    note: "Stacked uppercase headings and small centered paragraphs become one H2, a standfirst, and left-aligned sections with an eyebrow above each title.",
+  },
+  {
+    id: 'contact',
+    label: 'Contact',
+    desktop: { before: `${base}/ba-contact-before-desktop.webp`, after: `${base}/ba-contact-after-desktop.webp` },
+    phone: { before: `${base}/ba-contact-before-phone.webp`, after: `${base}/ba-contact-after-phone.webp` },
+    beforeAlt: "Today's Contact page: an uppercase heading above a form with a black Send button.",
+    afterAlt: "The new Contact page: a form over a photo of the Philadelphia skyline with a navy Send Your Message button.",
+    note: "The black Send button becomes the navy primary button from the system.",
+  },
+];
+const devices = [
+  { id: 'desktop', label: 'Desktop', w: 2000, h: 1250 },
+  { id: 'phone', label: 'Phone', w: 780, h: 1688 },
+] as const;
+const p = pages.find((x) => x.id === page)!;
+---
+
+<figure class="pt-ba full-width" data-pt-ba>
+  <div class="pt-ba-bar">
+    <div class="pt-ba-views" role="group" aria-label={`${p.label} page: device`}>
+      {devices.map((d, i) => (
+        <button type="button" class="pt-ba-view" data-device={d.id} aria-pressed={i === 0 ? 'true' : 'false'}>{d.label}</button>
+      ))}
+    </div>
+    <p class="pt-ba-legend"><span>Today: phillytruce.com</span><span>New: Wix build</span></p>
+  </div>
+
+  {devices.map((d, di) => (
+    <div class={`pt-ba-stage pt-ba-${d.id}`} data-stage={d.id} hidden={di !== 0} style="--split: 35%">
+      <img class="pt-ba-after" src={p[d.id].after} width={d.w} height={d.h} loading="lazy" decoding="async" alt={`${p.afterAlt} (${d.label})`} />
+      <img class="pt-ba-before" src={p[d.id].before} width={d.w} height={d.h} loading="lazy" decoding="async" alt={`${p.beforeAlt} (${d.label})`} />
+      <div class="pt-ba-handle" aria-hidden="true"><span></span></div>
+    </div>
+  ))}
+
+  <label class="pt-ba-range">
+    <span class="pt-ba-end">Today</span>
+    <input type="range" min="0" max="100" value="35" step="1" aria-label={`Compare today's ${p.label} page with the new Wix build`} aria-valuetext="35% today, 65% new" />
+    <span class="pt-ba-end">New</span>
+  </label>
+  <figcaption class="pt-fig">Fig. {fig} — {p.label} page. {p.note}</figcaption>
+</figure>
+
+<style>
+  .pt-ba { margin: 2.5rem 0 0; }
+
+  .pt-ba-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .pt-ba-views {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .pt-ba-view {
+    min-height: 36px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    font: 500 13px/1 var(--font-sans, system-ui), sans-serif;
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+
+  .pt-ba-view[aria-pressed='true'] { background: var(--color-fg); color: #0D0D0D; }
+
+
+
+  .pt-ba-bar .pt-ba-legend {
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    font: 500 12px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .pt-ba-stage {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+    touch-action: pan-y;
+    cursor: ew-resize;
+    user-select: none;
+  }
+
+  .pt-ba-phone {
+    max-width: 380px;
+    margin-inline: auto;
+    border-radius: 28px;
+  }
+
+  :global(.case-content) .pt-ba-stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
+    pointer-events: none;
+  }
+
+  :global(.case-content) .pt-ba-stage .pt-ba-before {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--split)) 0 0);
+  }
+
+  .pt-ba-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--split);
+    width: 2px;
+    margin-left: -1px;
+    background: #FFF4DA;
+    pointer-events: none;
+  }
+
+  .pt-ba-handle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #FFF4DA;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.35);
+  }
+
+  .pt-ba-handle span::before,
+  .pt-ba-handle span::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    transform: translateY(-50%);
+  }
+
+  .pt-ba-handle span::before { left: 6px; border-right-color: #002768; }
+  .pt-ba-handle span::after { right: 6px; border-left-color: #002768; }
+
+  .pt-ba-range {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    font: 500 12px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .pt-ba-range input { flex: 1; accent-color: #FFF4DA; min-height: 24px; }
+</style>
+
+<script>
+  function initBeforeAfter() {
+    document.querySelectorAll<HTMLElement>('[data-pt-ba]').forEach((root) => {
+      if (root.dataset.init) return;
+      root.dataset.init = 'true';
+      const range = root.querySelector<HTMLInputElement>('input[type="range"]')!;
+      const stages = Array.from(root.querySelectorAll<HTMLElement>('[data-stage]'));
+      let device = 'desktop';
+      const apply = () => {
+        const v = Number(range.value);
+        stages.forEach((s) => s.style.setProperty('--split', `${v}%`));
+        range.setAttribute('aria-valuetext', v <= 3 ? 'New Wix build' : v >= 97 ? "Today's site" : `${v}% today, ${100 - v}% new`);
+      };
+      const show = () => {
+        stages.forEach((s) => { s.hidden = s.dataset.stage !== device; });
+      };
+      range.addEventListener('input', apply);
+
+      root.querySelectorAll<HTMLButtonElement>('[data-device]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          device = btn.dataset.device!;
+          root.querySelectorAll('[data-device]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          show();
+        });
+      });
+
+      stages.forEach((stage) => {
+        let dragging = false;
+        const move = (e: PointerEvent) => {
+          const r = stage.getBoundingClientRect();
+          range.value = String(Math.round(Math.min(100, Math.max(0, ((e.clientX - r.left) / r.width) * 100))));
+          apply();
+        };
+        stage.addEventListener('pointerdown', (e) => { dragging = true; stage.setPointerCapture(e.pointerId); move(e); });
+        stage.addEventListener('pointermove', (e) => { if (dragging) move(e); });
+        stage.addEventListener('pointerup', () => { dragging = false; });
+        stage.addEventListener('pointercancel', () => { dragging = false; });
+      });
+      apply();
+    });
+  }
+  initBeforeAfter();
+  document.addEventListener('astro:after-swap', initBeforeAfter);
+</script>

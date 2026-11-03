@@ -1,0 +1,240 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import PtFonts from '../../components/philly-truce/PtFonts.astro';
+import PtBeforeAfter from '../../components/philly-truce/PtBeforeAfter.astro';
+import PtTypeRamp from '../../components/philly-truce/PtTypeRamp.astro';
+import PtPairings from '../../components/philly-truce/PtPairings.astro';
+import PtAnatomy from '../../components/philly-truce/PtAnatomy.astro';
+import PtStates from '../../components/philly-truce/PtStates.astro';
+import PtVoice from '../../components/philly-truce/PtVoice.astro';
+
+// Outcomes live in the TL;DR (caseStudySummaries); no deliverable counts up top
+const metrics: { value: string; label: string }[] = [];
+---
+
+<CaseStudyLayout
+  title="Philly Truce"
+  subtitle="A design system fit to Wix's own nine text styles, so the staff and volunteers who run Philly Truce's site pick the right style by default."
+  description="Typography, color, components, voice and a Wix build for Philly Truce, a Philadelphia nonprofit whose Peace Patrol provides community-led visible deterrence."
+  heroImage="/images/philly-truce/hero.png"
+  ogImage="/images/og/philly-truce.jpg"
+  industry="Nonprofit / Community Safety"
+  role="Product Designer"
+  timeline="Mar – Nov 2026"
+  platforms="Web (Wix)"
+  tools={[]}
+  metrics={metrics}
+  prevProject={{ title: 'EqualTales', href: '/work/equaltales' }}
+  nextProject={{
+    title: 'HafsaUsmani.com',
+    href: '/work/portfolio-website',
+    subtitle: 'AI-assisted portfolio development',
+    image: '/images/portfolio-website/after-typography.webp'
+  }}
+>
+  <PtFonts />
+
+  <!-- Before and after -->
+  <section class="case-section">
+    <p class="pt-eyebrow">Before and after</p>
+    <h2>From a wall of videos to a site with one voice</h2>
+    <PtBeforeAfter page="home" fig={1} />
+  </section>
+
+  <!-- 01 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">01 · The brief</p>
+    <h2>The site would be run by volunteers, not designers</h2>
+    <p class="lead-text">
+      Philly Truce runs Peace Patrol, which employs justice-impacted men to provide community-led visible
+      deterrence in Philadelphia neighborhoods. Its current site mixes Montserrat and Lato, leans on all caps
+      and black buttons unrelated to the brand's navy, and opens on a pop-up.
+    </p>
+    <p>
+      The new site would be built on Wix and kept up by staff and volunteers. On a manager-led team, I owned the
+      typography, color and pairings, voice and vocabulary, and the Wix build. The goal: an editor should reach
+      the right style without needing design judgment.
+    </p>
+  </section>
+
+  <!-- 02 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">02 · Typography</p>
+    <h2>Fitting the scale to Wix's nine slots instead of fighting them</h2>
+    <p>
+      Wix gives every site six heading styles and three paragraph styles. My first draft used size ranges and set
+      H2 and H3 in Inter; the final system fixes one size per slot and puts every heading in DM Serif Display, so
+      hierarchy comes from size and weight, and each slot carries a rule for when to use it.
+    </p>
+    <PtBeforeAfter page="about" fig={2} />
+    <PtTypeRamp />
+  </section>
+
+  <!-- 03 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">03 · Color</p>
+    <h2>Six pairings, and text sits on nothing else</h2>
+    <p>
+      I rebuilt the palette on Philly Truce's existing navy so the new site feels like the organization people
+      already know, which meant dropping my own draft. The draft listed combinations to avoid; the final lists
+      the only six text pairings allowed. A short allow-list is easier for an editor to follow than a list of
+      mistakes to remember.
+    </p>
+    <PtPairings />
+  </section>
+
+  <!-- 04 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">04 · In context</p>
+    <h2>Every element on the page is a named style</h2>
+    <p>
+      On the About page, each element traces back to a text theme, a brand color or a button style. That is what
+      keeps pages consistent as other people add them.
+    </p>
+    <PtBeforeAfter page="patrol" fig={7} />
+    <PtAnatomy />
+  </section>
+
+  <!-- 05 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">05 · Audit</p>
+    <h2>Auditing states found two failures in my own system</h2>
+    <p>
+      I checked every link and button state on each approved surface against WCAG 2.2: 4.5:1 for text and 3:1
+      for focus indicators. Two failed. The gold focus ring measured 1.76:1 on white, so keyboard users would
+      lose their place, and link teal reached only 4.24:1 on the pale panel. The fixes: a navy inner ring with a
+      gold outer ring, and teal 700 for links on pale.
+    </p>
+    <PtBeforeAfter page="contact" fig={9} />
+    <PtStates />
+  </section>
+
+  <!-- 06 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">06 · Voice</p>
+    <h2>Words are part of the system</h2>
+    <p>
+      The voice stays compassionate, inclusive, clear and forward-looking; the tone shifts with the situation.
+      The vocabulary guide carries the same care into the words Philly Truce uses for its people.
+    </p>
+    <PtVoice />
+  </section>
+
+  <!-- 07 -->
+  <section class="case-section">
+    <p class="pt-eyebrow">07 · Handoff</p>
+    <h2>Built, not yet launched, already used beyond the site</h2>
+    <p>
+      The new site's pages are built from the system, and the team has started using it beyond the website.
+      Next: launch the Wix site, and fold the focus-ring and link fixes into the team's working copy of the guide.
+    </p>
+    <div class="pt-gallery full-width">
+      <figure class="pt-g">
+        <img src="/images/philly-truce/about-story.webp" width="2000" height="788" loading="lazy" decoding="async"
+          alt="The About page's 'How it started' section: a photo of the two founders beside a Heading 4 and body copy in Inter." />
+      </figure>
+      <figure class="pt-g">
+        <img src="/images/philly-truce/wix-sections.webp" width="1440" height="900" loading="lazy" decoding="async"
+          alt="A pale blue band titled 'Peace starts with people. It grows through community.' above three photo cards for Mission, Vision and Culture." />
+      </figure>
+      <p class="pt-fig">Fig. 14 — More of the new site, set entirely from the nine text styles and the approved pairings.</p>
+    </div>
+
+    <div class="pt-notyet">
+      <p class="pt-eyebrow">Not covered in this version</p>
+      <ul>
+        <li>Mobile type sizes and line heights</li>
+        <li>Cards, forms and other components beyond buttons and links</li>
+        <li>Disabled and pressed states</li>
+      </ul>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  :root {
+    --color-accent: #FFF4DA;
+    --color-accent-text: #FFF4DA; /* Philly Truce cream on the dark case-study background: 17.77:1 (WCAG AAA) */
+  }
+
+  /* The arrival curve uses brand navy so its white title stays readable */
+  :global(#page-transition) {
+    --color-accent: #002768;
+  }
+
+  /* Calmer rhythm on this page: more air between chapters, no divider lines */
+  :global(.case-content) .case-section {
+    padding-bottom: 0;
+    margin-bottom: clamp(88px, 10vw, 128px);
+    border-bottom: 0;
+  }
+
+  :global(.case-content) .case-section h2 {
+    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  /* Key Decisions cards: titles sit at the top of their card */
+  :global(.decision-title) {
+    margin-top: 0;
+  }
+
+  /* Chapter label above each heading */
+  :global(.case-content) .pt-eyebrow {
+    margin: 0 0 0.75rem;
+    font: 500 12px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #FFF4DA;
+  }
+
+  /* Figure captions: always below the figure, left-aligned to its edge */
+  :global(.case-content .pt-fig) {
+    margin: 12px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .pt-gallery {
+    display: grid;
+    gap: 16px;
+    margin-top: 2.5rem;
+  }
+
+  .pt-g {
+    margin: 0;
+    padding: clamp(10px, 2vw, 16px);
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  :global(.case-content) .pt-g img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border-radius: 10px;
+  }
+
+  .pt-notyet {
+    margin-top: 2.5rem;
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  :global(.case-content) .pt-notyet ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  :global(.case-content) .pt-notyet li {
+    margin: 0 0 4px;
+    font-size: 0.9375rem;
+  }
+</style>

@@ -33,3 +33,9 @@ archive/
 
 # Generated knowledge base for Ask Hafsa's AI (built by scripts/build-knowledge.mjs)
 src/data/knowledge.json
+
+# iCloud sync-conflict copies ("file 2.ts")
+* [0-9].*
+
+# Philly Truce working folder: client source docs, research notes, raw assets (not published)
+/philly-truce/

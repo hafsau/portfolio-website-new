@@ -18,6 +18,40 @@ export interface CaseStudySummary {
 }
 
 export const caseStudySummaries: Record<string, CaseStudySummary> = {
+  "philly-truce": {
+    "tldr": {
+      "problem": "Philly Truce's new site would be kept up by staff and volunteers, not designers, and the current site had no shared rules: two typefaces, all caps and black buttons.",
+      "role": "Product Designer on a manager-led team. I owned typography, color and pairings, voice and vocabulary, and the Wix build.",
+      "outcome": "The new Wix site is built from the system and launching soon, and the team uses it beyond the website. Auditing my own states caught two contrast failures before launch.",
+      "timeline": "Mar – Nov 2026"
+    },
+    "decisions": [
+      {
+        "title": "The existing brand navy over my own draft palette",
+        "considered": ["My draft: slate navy with burnt orange accents"],
+        "chosen": "Philly Truce's existing navy, with gold and teal accents",
+        "why": "The new site needed to feel like the organization people already know. It also lifted links from 3.86:1 to 4.97:1.",
+        "cost": "Dropping the draft palette I had built.",
+        "stated": true
+      },
+      {
+        "title": "Nine fixed styles over flexible size ranges",
+        "considered": ["Size ranges (H1 48–56px) with Inter for H2 and H3"],
+        "chosen": "One fixed size per Wix text theme, every heading in DM Serif Display",
+        "why": "Editors pick a named style instead of choosing a size, so pages stay consistent.",
+        "cost": "No room for one-off sizes on special pages.",
+        "stated": true
+      },
+      {
+        "title": "An allow-list of pairings over a list of combinations to avoid",
+        "considered": ["Draft: a list of color combinations not to use"],
+        "chosen": "Six approved text pairings, all WCAG AAA; text sits on nothing else",
+        "why": "Six rules are easier for an editor to follow than a list of mistakes to remember.",
+        "cost": "Some brand colors never carry text; gold, for one, is too light on white.",
+        "stated": true
+      }
+    ]
+  },
   "immunization": {
     "tldr": {
       "problem": "Only 21% of 4,000+ medical officers showed up to routes, and field activity couldn't be tracked.",

@@ -1,0 +1,138 @@
+---
+/** The nine text styles with the guide's own rules, then what changed from the draft to the final system. */
+import { typeScale } from '../../data/philly-truce-tokens';
+
+const evolution = [
+  { topic: 'Headings', draft: 'H1 in DM Serif Display; H2 and H3 in Inter SemiBold and Medium', final: 'All six headings in DM Serif Display' },
+  { topic: 'Sizes', draft: 'Ranges (H1 48–56px, body 16–18px)', final: 'Nine fixed sizes, one per Wix text theme' },
+  { topic: 'Color', draft: 'Navy #1B3A5F with burnt orange #D35400', final: "Philly Truce's existing navy #002768, with gold and teal" },
+  { topic: 'Color rules', draft: 'A list of combinations to avoid', final: 'Six approved pairings; text sits on nothing else' },
+  { topic: 'Script', draft: 'Optional; font still to be chosen', final: 'Sacramento, for the name under a quote only' },
+];
+---
+
+<div class="pt-type full-width">
+  <figure class="pt-fig-block">
+    <div class="pt-ramp" role="table" aria-label="Text styles with usage rules">
+      <div class="pt-ramp-row pt-ramp-head" role="row">
+        <span role="columnheader">Wix text theme</span>
+        <span role="columnheader">Specimen</span>
+        <span role="columnheader">Rule</span>
+      </div>
+      {typeScale.map((s) => (
+        <div class="pt-ramp-row" role="row">
+          <span class="pt-ramp-meta" role="cell">
+            <span class="pt-ramp-wix">{s.wix}</span>
+            <span class="pt-ramp-spec">{s.size}px · {s.weight}</span>
+          </span>
+          <span role="cell" class:list={['pt-ramp-sample', s.family === 'serif' ? 'is-serif' : 'is-sans', s.weight === 'Bold' && 'is-bold', s.step === 'H6' && 'is-italic']} style={`--size:${s.size}`}>{s.sample}</span>
+          <span class="pt-ramp-rule" role="cell">
+            <span><b>Use for</b> {s.use}</span>
+            <span><b>Avoid</b> {s.avoid}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  </figure>
+  <p class="pt-fig">Fig. 3 — The nine text styles, each with the rule that tells an editor when to reach for it. Specimens are shown at 70% of the desktop sizes listed.</p>
+
+  <figure class="pt-fig-block pt-dark">
+    <div class="pt-evo" role="table" aria-label="What changed from the draft to the final system">
+      <div class="pt-evo-row pt-evo-head" role="row">
+        <span role="columnheader"></span>
+        <span role="columnheader">Draft</span>
+        <span role="columnheader">Final</span>
+      </div>
+      {evolution.map((e) => (
+        <div class="pt-evo-row" role="row">
+          <span class="pt-evo-topic" role="rowheader">{e.topic}</span>
+          <span class="pt-evo-draft" role="cell">{e.draft}</span>
+          <span class="pt-evo-final" role="cell">{e.final}</span>
+        </div>
+      ))}
+    </div>
+  </figure>
+  <p class="pt-fig">Fig. 4 — From the first draft of the guide to the final system.</p>
+</div>
+
+<style>
+  .pt-type { display: grid; gap: 0; margin-top: 2.5rem; }
+
+  .pt-fig-block {
+    margin: 0;
+    padding: clamp(20px, 3vw, 32px);
+    border-radius: 16px;
+    background: #FFF4DA;
+    color: #002768;
+  }
+
+  .pt-dark { margin-top: 40px; background: #141414; color: var(--color-fg); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07); }
+
+  .pt-ramp-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px 28px;
+    align-items: baseline;
+    padding: 16px 0;
+    border-top: 1px solid rgb(0 39 104 / 0.12);
+  }
+
+  @media (min-width: 900px) {
+    .pt-ramp-row { grid-template-columns: 130px minmax(0, 1.6fr) minmax(0, 1fr); }
+  }
+
+  .pt-ramp-head {
+    display: none;
+    padding-top: 0;
+    border-top: 0;
+    font: 500 11px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3A3A40;
+  }
+
+  @media (min-width: 900px) { .pt-ramp-head { display: grid; } }
+
+  .pt-ramp-meta { display: flex; flex-direction: column; gap: 2px; }
+  .pt-ramp-wix { font: 500 12px/1.4 'JetBrains Mono', monospace; color: #002768; }
+  .pt-ramp-spec { font: 400 12px/1.4 'PT Inter', system-ui, sans-serif; color: #3A3A40; }
+
+  .pt-ramp-sample {
+    color: #002768;
+    font-size: min(calc(var(--size) * 0.7px), calc(var(--size) * 0.05vw + 11px));
+    line-height: 1.1;
+    overflow-wrap: break-word;
+  }
+
+  .pt-ramp-sample.is-serif { font-family: 'PT DM Serif Display', Georgia, serif; font-weight: 400; }
+  .pt-ramp-sample.is-bold { font-weight: 700; font-synthesis: weight; }
+  .pt-ramp-sample.is-italic { font-style: italic; }
+  .pt-ramp-sample.is-sans { font-family: 'PT Inter', system-ui, sans-serif; line-height: 1.5; color: #3A3A40; }
+
+  .pt-ramp-rule { display: flex; flex-direction: column; gap: 4px; font: 400 13px/1.5 'PT Inter', system-ui, sans-serif; color: #3A3A40; }
+  .pt-ramp-rule b { font-weight: 600; color: #002768; }
+
+  .pt-evo-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px 24px;
+    padding: 14px 0;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) { .pt-evo-row { grid-template-columns: 130px 1fr 1fr; } }
+
+  .pt-evo-head { display: none; padding-top: 0; border-top: 0; font: 500 11px/1.4 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); }
+  @media (min-width: 768px) { .pt-evo-head { display: grid; } }
+
+  .pt-evo-topic { font: 500 12px/1.6 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent-text); }
+  .pt-evo-draft { color: var(--color-muted); }
+  .pt-evo-final { color: var(--color-fg); }
+
+  @media (max-width: 767px) {
+    .pt-evo-draft::before { content: 'Draft: '; color: var(--color-muted); }
+    .pt-evo-final::before { content: 'Final: '; color: var(--color-muted); }
+  }
+</style>

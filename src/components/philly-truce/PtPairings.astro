@@ -1,0 +1,111 @@
+---
+/** The six approved pairings with computed contrast, and where each part of the system lives. */
+import { pairings } from '../../data/philly-truce-tokens';
+import { contrastRatio, formatRatio, textLevel } from '../../lib/contrast';
+
+const tiles = pairings.map((p) => {
+  const ratio = contrastRatio(p.fg, p.bg);
+  return { ...p, ratio: formatRatio(ratio), level: textLevel(ratio) };
+});
+
+// What Wix enforces vs what the guide asks for. Wix locations are the ones named in the guide itself.
+const lives = [
+  { part: 'Nine text styles', where: 'Wix › Site Design › Text Themes', enforced: true },
+  { part: 'Link styles', where: 'Wix › Site Design › Text Themes › Link', enforced: true },
+  { part: 'Six approved pairings', where: 'Brand guide', enforced: false },
+  { part: 'Gold: one word, an eyebrow or a divider', where: 'Brand guide', enforced: false },
+  { part: 'Buttons: navy primary, gold secondary, 48px minimum', where: 'Brand guide', enforced: false },
+  { part: 'Voice, tone and vocabulary', where: 'Brand voice guide', enforced: false },
+];
+---
+
+<div class="pt-pairs-wrap full-width">
+  <ul class="pt-tiles" aria-label="Approved text and background pairings">
+    {tiles.map((t) => (
+      <li class="pt-tile" style={`background:${t.bg};color:${t.fg}`}>
+        <span class="pt-tile-aa" aria-hidden="true">Aa</span>
+        <span class="pt-tile-name">{t.name}</span>
+        <span class="pt-tile-ratio">{t.ratio}:1 · {t.level}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="pt-fig">Fig. 5 — The only six text and background pairings allowed. Every one passes WCAG AAA (7:1 or higher). Gold never carries text on light backgrounds.</p>
+
+  <figure class="pt-lives">
+    <div class="pt-lives-table" role="table" aria-label="Where each part of the system lives">
+      <div class="pt-lives-row pt-lives-head" role="row">
+        <span role="columnheader">Part of the system</span>
+        <span role="columnheader">Lives in</span>
+        <span role="columnheader">Held by</span>
+      </div>
+      {lives.map((l) => (
+        <div class="pt-lives-row" role="row">
+          <span class="pt-lives-part" role="cell">{l.part}</span>
+          <span class="pt-lives-where" role="cell">{l.where}</span>
+          <span role="cell"><span class:list={['pt-pill', l.enforced ? 'is-on' : 'is-off']}>{l.enforced ? 'Wix enforces it' : 'Guidance'}</span></span>
+        </div>
+      ))}
+    </div>
+  </figure>
+  <p class="pt-fig">Fig. 6 — Where the system lives. Named text and link styles are applied by Wix; everything else is a rule in the guide.</p>
+</div>
+
+<style>
+  .pt-pairs-wrap { margin-top: 2.5rem; }
+
+  .pt-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 768px) { .pt-tiles { grid-template-columns: repeat(3, 1fr); } }
+
+  .pt-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 168px;
+    margin: 0;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+
+  .pt-tile-aa { font: 400 44px/1 'PT DM Serif Display', Georgia, serif; }
+  .pt-tile-name { margin-top: auto; font: 600 15px/1.3 'PT Inter', system-ui, sans-serif; }
+  .pt-tile-ratio { font: 500 12px/1.4 'JetBrains Mono', monospace; }
+
+  .pt-lives {
+    margin: 40px 0 0;
+    padding: clamp(20px, 3vw, 32px);
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  .pt-lives-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px 24px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 768px) { .pt-lives-row { grid-template-columns: 1.2fr 1.2fr 160px; } }
+
+  .pt-lives-head { display: none; padding-top: 0; border-top: 0; font: 500 11px/1.4 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); }
+  @media (min-width: 768px) { .pt-lives-head { display: grid; } }
+
+  .pt-lives-part { color: var(--color-fg); }
+  .pt-lives-where { font: 400 13px/1.5 'JetBrains Mono', monospace; color: var(--color-muted); }
+
+  .pt-pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font: 500 12px/1.4 'JetBrains Mono', monospace; }
+  .pt-pill.is-on { background: #FFF4DA; color: #002768; }
+  .pt-pill.is-off { color: var(--color-muted); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2); }
+</style>
