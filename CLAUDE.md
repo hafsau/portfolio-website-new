@@ -102,23 +102,22 @@ Tests read `.astro` files directly and check for expected strings. When adding n
 
 ## AI Lab (`src/pages/work/ai-lab.astro`)
 
-Rebuilt November 2026 around one story: "I design with AI, and I build the checks that keep it honest."
+Rebuilt November 2026. The page is about the AI Lab builds only: no portfolio-site material (no hero photo review, no Ask my AI, no site audit).
 
 ### Page Sections
-1. **Deciding with AI**: `CouncilReplay` replays a real AI design review (hiring manager, art director, engineer on the homepage hero photo, October 2026) and her call ("Inline pill"), then a before/after `CompareSlider` of the hero. A pen line (rail plus branch) draws on scroll from the advice she took and the warning she acted on to her decision.
-2. **Shipped on this site**: `AskAiTranscript`, two real answers from the live Ask my AI assistant with margin notes, plus a link that opens the assistant (`data-ask-ai`, `/contact` fallback).
-3. **Checking the work**: scanner found 0, hand checks found 2 (display numerals), with the two failures as a ruled list. Backed by `scripts/a11y-audit.mjs` (`npm run audit:a11y`).
-4. **Experiments**: `ExperimentIndex`, a ruled index of earlier builds (PixelCheck, EqualTales, CarbonLint, ClimateHaven, Interview Sage, HeadshotAI) with a hover thumbnail on desktop.
-5. **What I've learned**: two lessons (drafts for Hafsa to edit).
+1. **Intro**: one line, then `CodeTerminal` (title "ai-lab") with one prompt per build, prefixed by the tool that built it (`duo:`, `zerve:`, `replit:`, `lovable:`).
+2. **01 CarbonLint** and **02 ClimateHaven** (deep chapters): the question as the h2, tool and event, screenshot, what it does, how it's built, then CarbonLint's "What broke / What fixed it" compare list or ClimateHaven's findings (one display numeral) and hard parts, then "The lesson" and a "Read the writeup" link. All facts come from their Devpost writeups.
+3. **Quick builds**: Interview Sage (Replit Agent) and HeadshotAI (Lovable), screenshot beside a short note and the one-line learning from the earlier page.
+4. **More AI work**: links to EqualTales and PixelCheck, which have their own case studies.
 
 ### Data
-All content lives in `src/data/aiLab.ts` (`labProjects`, `councilReplay`, `askAiExchange`, `auditSnapshot`, `lessons`). Link labels come from each project's `status` (live: "Try it", writeup: "Read writeup", case-study: "Case study"); the awards metric is `awards.length`. `scripts/build-knowledge.mjs` reads this file so Ask my AI stays accurate.
+All content lives in `src/data/aiLab.ts` (`terminalPrompts`, `deepBuilds`, `quickBuilds`, `moreWork`, `awards`). The awards metric is `awards.length`. `scripts/build-knowledge.mjs` reads this file so Ask my AI stays accurate. Key Decisions for ai-lab are empty on purpose.
 
 ### Rules
 - No orange (#f97316) on the page; the terminal prompt uses `--terminal-accent`.
-- No DALL-E (API shut down May 2026), no Goose, no build times. Devpost links are "Read writeup", never "View Live".
+- No DALL-E (API shut down May 2026), no Goose, no build times. Devpost links read "Read the writeup", never "View Live".
 - The two awards are CarbonLint (Sustainable Design Bonus, GitLab AI Hackathon) and EqualTales (Best AI/ML, #75HER Hackathon). Don't mention a hackathon for PixelCheck.
-- Assistant transcripts must be real captures; follow-ups must match `FOLLOW_UPS` order in `AskAI.astro`.
+- Interview Sage generates interview questions from a job description; it is not a practice coach.
 
 ## No-box vocabulary (`src/components/case/`)
 

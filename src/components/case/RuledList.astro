@@ -7,16 +7,18 @@
 interface Props {
   label?: string;
   compare?: boolean;
+  /** Rows have no label column, so headings span the content columns only. */
+  plain?: boolean;
   headings?: [string, string];
   class?: string;
 }
-const { label, compare = false, headings, class: className } = Astro.props;
+const { label, compare = false, plain = false, headings, class: className } = Astro.props;
 ---
 
-<div class:list={['rl', { 'rl-compare': compare }, className]}>
+<div class:list={['rl', { 'rl-compare': compare, 'rl-plain': plain }, className]}>
   {compare && headings && (
     <div class="rl-head" aria-hidden="true">
-      <span></span>
+      {!plain && <span></span>}
       <span>{headings[0]}</span>
       <span>{headings[1]}</span>
     </div>
@@ -47,5 +49,6 @@ const { label, compare = false, headings, class: className } = Astro.props;
       grid-template-columns: 9rem 1fr 1fr;
       gap: 2rem;
     }
+    .rl-compare.rl-plain .rl-head { grid-template-columns: 1fr 1fr; }
   }
 </style>

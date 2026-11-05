@@ -1,85 +1,79 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { labProjects, linkLabel, awards, councilReplay, askAiExchange, auditSnapshot } from '../src/data/aiLab';
+import { deepBuilds, quickBuilds, moreWork, awards, terminalPrompts } from '../src/data/aiLab';
 import { caseStudySummaries } from '../src/data/caseStudySummaries';
 
 const read = (p: string) => fs.readFileSync(path.join(process.cwd(), p), 'utf-8');
+const builds = [...deepBuilds, ...quickBuilds];
 
 describe('AI Lab page', () => {
   let page: string;
   let data: string;
-  let components: string;
 
   beforeAll(() => {
     page = read('src/pages/work/ai-lab.astro');
     data = read('src/data/aiLab.ts');
-    components = ['CouncilReplay', 'AskAiTranscript', 'ExperimentIndex']
-      .map((c) => read(`src/components/ai-lab/${c}.astro`))
-      .join('\n');
+  });
+
+  describe('Scope: AI Lab work only', () => {
+    it('covers the four lab builds and links the two with their own case studies', () => {
+      expect(deepBuilds.map((b) => b.id)).toEqual(['carbonlint', 'climatehaven']);
+      expect(quickBuilds.map((b) => b.id)).toEqual(['interview-sage', 'headshot-ai']);
+      expect(moreWork.map((w) => w.href)).toEqual(['/work/equaltales', '/work/pixelcheck']);
+    });
+
+    it('shows no portfolio-site material', () => {
+      for (const text of [page, data]) {
+        expect(text).not.toMatch(/council|hero photo|Ask my AI|a11y-audit|council-hero/i);
+      }
+    });
   });
 
   describe('Accuracy', () => {
     it('names no retired or dropped tools', () => {
-      for (const text of [page, data, components]) {
-        expect(text).not.toMatch(/DALL-?E|Bard\b|Goose/i);
+      for (const text of [page, data]) expect(text).not.toMatch(/DALL-?E|Bard\b|Goose/i);
+    });
+
+    it('labels writeups as writeups, never as live products', () => {
+      for (const b of builds) {
+        if (b.link.href.includes('devpost.com')) expect(b.link.label).toBe('Read the writeup');
+        else expect(b.link.label).toBe('Try it');
       }
     });
 
-    it('labels each link by where it goes', () => {
-      for (const p of labProjects) {
-        if (p.url.includes('devpost.com')) expect(p.status).toBe('writeup');
-        if (p.url.startsWith('/work/')) expect(p.status).toBe('case-study');
-        if (p.status === 'live') expect(p.url).toMatch(/^https:\/\//);
-        expect(linkLabel[p.status]).toBeTruthy();
-      }
+    it('prefixes each terminal prompt with the tool that built it', () => {
+      expect(terminalPrompts.map((p) => p.split(':')[0])).toEqual(['duo', 'zerve', 'replit', 'lovable']);
+      expect(builds.map((b) => b.tool)).toEqual(['GitLab Duo', 'Zerve', 'Replit Agent', 'Lovable']);
     });
 
     it('backs the awards metric with named awards', () => {
-      expect(awards.map((a) => a.id).sort()).toEqual(['carbonlint', 'equaltales']);
+      expect(awards.map((a) => a.project)).toEqual(['CarbonLint', 'EqualTales']);
       expect(page).toContain('String(awards.length)');
-      expect(caseStudySummaries['ai-lab'].tldr.outcome).toContain(`${awards.length} Hackathon Awards`);
-      for (const a of awards) expect(caseStudySummaries['ai-lab'].tldr.outcome).toContain(a.title);
+      const outcome = caseStudySummaries['ai-lab'].tldr.outcome;
+      expect(outcome).toContain(`${awards.length} Hackathon Awards`);
+      for (const a of awards) expect(outcome).toContain(a.project);
+      expect(deepBuilds[0].award).toBe('Sustainable Design Bonus');
+      expect(moreWork[0].note).toContain('#75HER');
     });
 
     it('describes Interview Sage as the question generator it is', () => {
-      const sage = labProjects.find((p) => p.id === 'interview-sage')!;
+      const sage = quickBuilds.find((b) => b.id === 'interview-sage')!;
       expect(sage.summary).toMatch(/interview questions/);
       expect(sage.summary).not.toMatch(/coach|practice/i);
     });
 
-    it('uses only real captured assistant answers and the real follow-up order', () => {
-      const askAi = read('src/components/AskAI.astro');
-      const followUps = [...askAi.matchAll(/\{ q: '([^']+)'/g)].map((m) => m[1].replace(/’/g, '’'));
-      for (const turn of askAiExchange.turns) {
-        for (const q of turn.followUps ?? []) expect(followUps).toContain(q);
-      }
-      expect(askAiExchange.model).toBe('Claude Haiku 5.5');
-      expect(read('src/pages/api/ask.ts')).toContain("claude-haiku-5-5");
-    });
-
-    it('keeps the audit numbers consistent with its findings', () => {
-      expect(auditSnapshot.scanner.found).toBe(0);
-      expect(auditSnapshot.byHand).toHaveLength(2);
-      expect(page).toContain('auditSnapshot.byHand.length');
-      expect(fs.existsSync(path.join(process.cwd(), 'scripts/a11y-audit.mjs'))).toBe(true);
-      expect(read('package.json')).toContain('"audit:a11y"');
-    });
-
-    it('replays a council with three reviewers and her decision', () => {
-      expect(councilReplay.lenses.map((l) => l.role)).toEqual(['Hiring manager', 'Art director', 'Engineer']);
-      expect(councilReplay.decision.choice).toBeTruthy();
-      expect(councilReplay.prompt.startsWith('claude:')).toBe(true);
-      for (const img of [councilReplay.before.src, councilReplay.after.src]) {
-        expect(fs.existsSync(path.join(process.cwd(), 'public', img))).toBe(true);
-      }
+    it('pairs every CarbonLint problem with the fix from its writeup', () => {
+      const carbon = deepBuilds[0];
+      expect(carbon.fixes).toHaveLength(3);
+      for (const f of carbon.fixes!) expect(f.problem && f.fix).toBeTruthy();
     });
   });
 
   describe('Design rules', () => {
     it('retires the orange accent on this page', () => {
       expect(page).not.toMatch(/#f97316/i);
-      expect(components).not.toMatch(/#f97316/i);
+      expect(page).toContain('--terminal-accent');
     });
 
     it('has no boxed cards or leftover featured-project CSS', () => {
@@ -88,18 +82,15 @@ describe('AI Lab page', () => {
 
     it('contains no emojis', () => {
       const emoji = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
-      for (const text of [page, data, components]) expect(text).not.toMatch(emoji);
+      for (const text of [page, data]) expect(text).not.toMatch(emoji);
     });
 
-    it('renders the council as an ordered list that reads without JavaScript', () => {
-      const council = read('src/components/ai-lab/CouncilReplay.astro');
-      expect(council).toContain('<ol class="cr-steps">');
-      expect(council).toContain('<del>');
-      expect(council).toContain('prefers-reduced-motion');
-    });
-
-    it('opens the live assistant from the page, with a no-JS fallback', () => {
-      expect(page).toMatch(/<a href="\/contact" data-ask-ai/);
+    it('gives every screenshot alt text and dimensions', () => {
+      for (const b of builds) {
+        expect(b.image.alt.length).toBeGreaterThan(20);
+        expect(b.image.width).toBeGreaterThan(0);
+        expect(fs.existsSync(path.join(process.cwd(), 'public', b.image.src))).toBe(true);
+      }
     });
   });
 

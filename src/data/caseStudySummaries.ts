@@ -256,43 +256,12 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
   },
   "ai-lab": {
     "tldr": {
-      "problem": "AI widens the options fast, but someone still has to choose between them and check what it gets wrong.",
-      "role": "Product Designer. She runs AI design reviews, makes the calls, and built the checks: an accessibility audit script and a site assistant limited to her own pages.",
-      "outcome": "2 Hackathon Awards (CarbonLint and EqualTales). On this site, her hand checks caught 2 accessibility failures that the automated scan missed.",
+      "problem": "Use AI to iterate faster on ambitious ideas, without skipping the design process.",
+      "role": "Product Designer. AI handled implementation; she owned the intent.",
+      "outcome": "2 Hackathon Awards: CarbonLint (Sustainable Design Bonus, GitLab AI Hackathon) and EqualTales (Best AI/ML, #75HER).",
       "timeline": "2025 - Ongoing"
     },
-    "decisions": [
-      {
-        "title": "Where the homepage photo goes",
-        "considered": [
-          "A framed photo overlapping the name (the art director's pick)",
-          "Two columns",
-          "Shrinking the photo in place"
-        ],
-        "chosen": "A small photo pill inside the name",
-        "why": "The name reads as one line and the tagline and buttons sit above the fold.",
-        "cost": "The name gives up some of its poster scale."
-      },
-      {
-        "title": "What the site's assistant may answer",
-        "considered": [
-          "General design questions",
-          "Salary, visa or availability"
-        ],
-        "chosen": "Only facts from this site's pages; everything else goes to email",
-        "why": "A recruiter should never read a number or claim she didn't write.",
-        "cost": "It says \"I don't know\" more often."
-      },
-      {
-        "title": "How to check accessibility",
-        "considered": [
-          "Trusting the automated scan alone"
-        ],
-        "chosen": "An automated scan of every page, then hand checks for contrast over gradients and narrow-screen reflow",
-        "why": "The scan found 0 problems; the hand checks found 2.",
-        "cost": "Hand checks add time to every release."
-      }
-    ]
+    "decisions": []
   },
   "pixelcheck": {
     "tldr": {

@@ -1,173 +1,128 @@
 /**
- * AI Lab content. Every fact here comes from a source noted beside it; link labels and the
- * award count are derived from this data so the page can't drift from it.
+ * AI Lab content. Facts for CarbonLint and ClimateHaven come from their Devpost writeups;
+ * Interview Sage and HeadshotAI from the live apps and the earlier AI Lab page.
  */
 
-export type LabStatus = 'live' | 'writeup' | 'case-study';
+export interface Fix {
+  /** What went wrong. */
+  problem: string;
+  /** How it was solved. */
+  fix: string;
+}
 
-export interface LabProject {
+export interface LabBuild {
   id: string;
   title: string;
   tool: string;
-  /** What it does, in one line, taken from the project's own page or app. */
-  summary: string;
-  status: LabStatus;
-  url: string;
+  event?: string;
   award?: string;
-  image: string;
+  /** The question the build set out to answer. */
+  question: string;
+  summary: string;
+  image: { src: string; alt: string; width: number; height: number };
+  link: { href: string; label: string };
+  learned: string;
 }
 
-export const linkLabel: Record<LabStatus, string> = {
-  live: 'Try it',
-  writeup: 'Read writeup',
-  'case-study': 'Case study',
-};
+export interface DeepBuild extends LabBuild {
+  built: string;
+  fixes?: Fix[];
+  /** Challenges the writeup names without a recorded fix. */
+  hardParts?: string[];
+  headline?: { value: string; label: string; note: string };
+  findings?: string[];
+}
 
-export const labProjects: LabProject[] = [
-  {
-    id: 'pixelcheck',
-    title: 'PixelCheck',
-    tool: 'Claude Code',
-    summary: 'Tests AI-built UI against the designer’s phone, tablet and desktop frames at every screen size, and writes a fix brief that a rule-based verifier checks line by line.',
-    status: 'case-study',
-    url: '/work/pixelcheck',
-    image: '/images/og/pixelcheck.jpg',
-  },
-  {
-    id: 'equaltales',
-    title: 'EqualTales',
-    tool: 'Claude',
-    summary: 'Illustrated children’s stories that counter the stereotype a child has voiced, featuring a real woman who proved it wrong.',
-    status: 'case-study',
-    url: '/work/equaltales',
-    award: 'Best AI/ML, #75HER Hackathon', // equaltales.astro `outcome.award`
-    image: '/images/equaltales/hero.png',
-  },
+export const terminalPrompts = [
+  'duo: Lint this pipeline for carbon waste',
+  'zerve: Which Florida ZIP codes will gentrify?',
+  'replit: Interview questions from a job description',
+  'lovable: Turn a selfie into a headshot',
+];
+
+export const deepBuilds: DeepBuild[] = [
   {
     id: 'carbonlint',
     title: 'CarbonLint',
     tool: 'GitLab Duo',
-    summary: 'An AI agent that lints GitLab CI/CD pipelines for carbon waste and flags inefficient jobs.', // Devpost tagline
-    status: 'writeup',
-    url: 'https://devpost.com/software/carbonlint',
-    award: 'Sustainable Design Bonus, GitLab AI Hackathon', // Devpost: "Winner"
-    image: '/images/ai-lab/carbonlint.webp',
+    event: 'GitLab AI Hackathon',
+    award: 'Sustainable Design Bonus', // Devpost: "Winner"
+    question: 'What if a pipeline had a linter for carbon, not code?',
+    summary: 'An AI agent inside GitLab Duo Chat that audits a project’s CI/CD pipeline for wasted compute: redundant jobs, oversized Docker images, missing caches, artifact bloat and pipeline structure. It scores the pipeline from 1 to 10 and recommends fixes.',
+    image: { src: '/images/ai-lab/carbonlint.webp', alt: 'CarbonLint: a green terminal-style dashboard showing a Green CI Score of 8.4 out of 10, with compute time and CO2 savings.', width: 2000, height: 1359 },
+    link: { href: 'https://devpost.com/software/carbonlint', label: 'Read the writeup' },
+    built: 'Two agents chained in a GitLab Duo flow. A Scanner with 16 tools reads files, searches the repo and analyses job logs. A Reporter with 9 tools lints the YAML, posts comments and opens merge requests with the fixes. The prompts carry a scoring rubric and a carbon formula (one compute-minute is about 0.5g of CO2), so every recommendation comes with its impact.',
+    fixes: [
+      {
+        problem: 'Long, free-form prompts made the analysis smarter but sent the agent off-script.',
+        fix: 'Numbered steps and a fixed output format the Reporter agent could parse every time.',
+      },
+      {
+        problem: 'The flow’s YAML schema wasn’t fully documented, and each failed check took about 30 seconds.',
+        fix: 'A tight commit, check, fix loop until the valid fields were clear.',
+      },
+      {
+        problem: 'The test project had no CI config, so the agent had nothing to audit.',
+        fix: 'Turned it into a feature: with no config, CarbonLint now proposes an optimised pipeline from scratch.',
+      },
+    ],
+    learned: 'Prompting a multi-agent flow is different from prompting one agent. One agent’s output is the next one’s input, so the format matters as much as the instructions.',
   },
   {
     id: 'climatehaven',
     title: 'ClimateHaven',
     tool: 'Zerve',
-    summary: 'Predicts which Florida neighborhoods will gentrify as climate change makes safe areas unaffordable.', // Devpost tagline
-    status: 'writeup',
-    url: 'https://devpost.com/software/climatehaven',
-    image: '/images/ai-lab/climatehaven.webp',
+    event: 'ZerveHack',
+    question: 'Who gets displaced when safety becomes unaffordable?',
+    summary: 'A model that predicts which Florida neighbourhoods will gentrify as climate change pushes buyers toward safer ground. It scores each ZIP code on low flood risk, current affordability and fast-rising prices.',
+    image: { src: '/images/ai-lab/climatehaven.webp', alt: 'ClimateHaven: “Who gets displaced when safety becomes expensive?” beside a map of Florida with risk markers, and figures for 2.3x appreciation, 15M Floridians at high risk, 47 affordable havens and 963 ZIP codes.', width: 2000, height: 1329 },
+    link: { href: 'https://devpost.com/software/climatehaven', label: 'Read the writeup' },
+    built: 'Four public datasets joined in Zerve: FEMA flood risk for 963 ZIP codes, 9.6 million Redfin sales, US Census demographics and NOAA sea-level projections. Cleaning, feature engineering, the risk score and a Streamlit dashboard all happened in one environment.',
+    hardParts: [
+      'Merging FEMA, Redfin and Census data that didn’t line up, which took heavy cleaning and ZIP code normalisation.',
+      'Keeping the analysis deep while telling the story clearly to people who don’t read data.',
+    ],
+    headline: { value: '47', label: 'affordable climate havens left in Florida', note: 'Down 40% from 2020, in the model’s analysis' },
+    findings: [
+      'Low-risk areas appreciated 2.3x faster than flood-prone zones since 2017.',
+      '15.2 million Floridians live in high flood-risk ZIP codes.',
+      'Hispanic communities are twice as likely to live in gentrification hotspots.',
+    ],
+    learned: 'Climate change doesn’t only create physical risk. It creates economic displacement, and the people least responsible face both.',
   },
+];
+
+export const quickBuilds: LabBuild[] = [
   {
     id: 'interview-sage',
     title: 'Interview Sage',
     tool: 'Replit Agent',
-    summary: 'Turns a job description into tailored interview questions with model answers.', // live app
-    status: 'live',
-    url: 'https://interview-sage--hafsausmani.replit.app/',
-    image: '/images/ai-lab/interview-sage.webp',
+    question: 'Can a job description become interview prep in one step?',
+    summary: 'Paste a job description and get 10 to 15 tailored interview questions with model answers, sorted by type and difficulty.',
+    image: { src: '/images/ai-lab/interview-sage.webp', alt: 'Interview Sage: a job description pasted into the generator, with 12 generated questions grouped as technical, behavioural, situational and company fit.', width: 2000, height: 1922 },
+    link: { href: 'https://interview-sage--hafsausmani.replit.app/', label: 'Try it' },
+    learned: 'Speed lowers the barrier to shipping. Ideas don’t have to stay ideas; they can become working tools.',
   },
   {
     id: 'headshot-ai',
     title: 'HeadshotAI',
     tool: 'Lovable',
-    summary: 'Turns a casual selfie into a professional headshot in one of four styles.', // live app
-    status: 'live',
-    url: 'https://heatshot-ai.lovable.app/',
-    image: '/images/ai-lab/headshot-ai.webp',
+    question: 'Can a no-code AI builder make a real image app?',
+    summary: 'Upload a casual selfie, pick one of four styles, and get a professional headshot back.',
+    image: { src: '/images/ai-lab/headshot-ai.webp', alt: 'HeadshotAI: upload a selfie, choose a style from Corporate Grey, Modern Tech, Natural Light or Creative Studio, and see the headshot.', width: 2000, height: 1912 },
+    link: { href: 'https://heatshot-ai.lovable.app/', label: 'Try it' },
+    learned: 'Visual builders force clearer thinking about the user flow. Their constraints are design decisions made for you.',
   },
 ];
 
-export const awards = labProjects.filter((p) => p.award);
+/** AI work with its own case study, linked at the end. */
+export const moreWork = [
+  { title: 'EqualTales', tool: 'Claude', note: 'Best AI/ML, #75HER Hackathon', href: '/work/equaltales' },
+  { title: 'PixelCheck', tool: 'Claude Code', note: 'Checks AI-built UI against the designer’s frames', href: '/work/pixelcheck' },
+];
 
-/**
- * A real council session, 2026-10-27: three AI reviewers on the homepage hero photo.
- * Quotes are from their written reviews; the decision is what Hafsa chose.
- */
-export const councilReplay = {
-  date: 'October 2026',
-  question: 'Feedback on my homepage: the photo is too big, and it splits my first name from my last. Where should it go?',
-  prompt: 'claude: Council, review my hero photo. Hiring manager, art director, engineer.',
-  lenses: [
-    {
-      role: 'Hiring manager',
-      pick: 'Inline pill',
-      said: 'Her face is the loudest thing on the page and her work is the quietest.',
-      reason: 'A small photo inside the name keeps it on one line and lifts the tagline and buttons above the fold.',
-    },
-    {
-      role: 'Art director',
-      pick: 'Selected frame',
-      said: 'The pill is clever, but the name loses its poster scale.',
-      reason: 'Keep the huge name and tuck a framed photo into the space beside it, like a selection in a design tool.',
-    },
-    {
-      role: 'Engineer',
-      pick: 'Pill or frame, both medium effort',
-      said: 'Parallax has to go, or the photo slides out of the text line.',
-      reason: 'Either layout is buildable. The magnet effect would drag the photo across the letters.',
-    },
-  ],
-  decision: {
-    choice: 'Inline pill.',
-    because: 'Readable beat dramatic: the name reads as one line and the buttons sit above the fold. I took the engineer’s warning and removed the parallax and magnet.',
-    overruled: {
-      who: 'Hiring manager',
-      suggestion: 'Product Designer',
-      note: 'The hiring manager wanted the job title in my tagline. I kept my own line: “From first sketch to production code: product design, built end to end.”',
-    },
-  },
-  before: { src: '/images/ai-lab/council-hero-before.webp', alt: 'The homepage hero before: a large square photo sits between HAFSA and USMANI, pushing the last name below the fold.' },
-  after: { src: '/images/ai-lab/council-hero-after.webp', alt: 'The homepage hero after: a small pill-shaped photo sits inside the name on one line, with the tagline and two buttons visible below it.' },
-};
-
-/** Real answers from the live assistant (hafsausmani.com/api/ask), captured 2026-11-04. */
-export const askAiExchange = {
-  model: 'Claude Haiku 5.5',
-  turns: [
-    {
-      question: 'What did Hafsa do on the Philly Truce project?',
-      answer: 'Hafsa was the Product Designer on a manager-led team for Philly Truce, a community-safety nonprofit. She owned the typography, color and pairings, voice and vocabulary, and the Wix build. Her work produced a nine-style type system mapped to Wix and six AAA text color pairings, and an audit caught two contrast failures in her own system before launch.',
-      link: { label: 'Philly Truce case study', href: '/work/philly-truce' },
-      note: 'Answers only from text on this site, and links the page it came from.',
-      // What the panel's showFollowUps() picks after this answer (AskAI.astro FOLLOW_UPS order)
-      followUps: ['How did she fit the Philly Truce system into Wix?', 'How does PixelCheck check a build?', 'What research went into MedRec?'],
-      followUpNote: 'Follow-ups come from a fixed list of questions the site can answer. The page the answer linked goes first.',
-    },
-    {
-      question: 'What salary is Hafsa looking for?',
-      answer: 'I’m not able to discuss salary or compensation expectations. For that, please email Hafsa directly at hafsa.usmani2@gmail.com.',
-      note: 'Salary, visa and personal questions go to email. It never guesses a number.',
-    },
-  ],
-  stored: 'Nothing is stored. The conversation lives only in the visitor’s browser tab.',
-};
-
-/** Accessibility audit of this site, 2026-10-27 (hand checks) and 2026-11-04 (script re-run on live). */
-export const auditSnapshot = {
-  pages: 12,
-  scanner: { found: 0, scope: 'axe-core, WCAG 2.0 to 2.2, levels A and AA, at 1440px and 390px, plus reflow at 320px' },
-  command: 'npm run audit:a11y',
-  byHand: [
-    {
-      issue: 'Hero text contrast',
-      before: 'Grey tagline over the coloured gradient fell to 2.8:1',
-      after: 'Darkened to 5.0:1 or better at every size',
-    },
-    {
-      issue: 'Reflow at 320px',
-      before: '“HafsaUsmani.com” is one long word and pushed the page sideways',
-      after: 'It now wraps as “HafsaUsmani” over “.com”',
-    },
-  ],
-};
-
-/** Drafts for Hafsa to edit, based on what happened above. */
-export const lessons = [
-  'AI gives me more options than I could sketch in an afternoon. Choosing between them is still the job.',
-  'The scanner said zero. Two real failures were waiting for a person to look. I automate the checks so I have time for that look.',
+/** Hackathon awards across the AI work on this page. */
+export const awards = [
+  { project: 'CarbonLint', award: 'Sustainable Design Bonus, GitLab AI Hackathon' },
+  { project: 'EqualTales', award: 'Best AI/ML, #75HER Hackathon' },
 ];

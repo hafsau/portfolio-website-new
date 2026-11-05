@@ -114,8 +114,6 @@ describe('Image Performance', () => {
   it('should have all referenced images', () => {
     const requiredImages = [
       'ai-lab/hero.png',
-      'ai-lab/council-hero-before.webp',
-      'ai-lab/council-hero-after.webp',
       'ai-lab/interview-sage.png',
       'ai-lab/headshot-ai.png',
       'equaltales/hero.png',

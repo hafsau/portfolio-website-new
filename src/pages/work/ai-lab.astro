@@ -1,24 +1,24 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
-import CouncilReplay from '../../components/ai-lab/CouncilReplay.astro';
-import AskAiTranscript from '../../components/ai-lab/AskAiTranscript.astro';
-import ExperimentIndex from '../../components/ai-lab/ExperimentIndex.astro';
-import CompareSlider from '../../components/case/CompareSlider.astro';
+import CodeTerminal from '../../components/CodeTerminal.astro';
 import Figure from '../../components/case/Figure.astro';
+import Lead from '../../components/case/Lead.astro';
 import DisplayNumeral from '../../components/case/DisplayNumeral.astro';
 import RuledList from '../../components/case/RuledList.astro';
 import RuledRow from '../../components/case/RuledRow.astro';
-import { awards, councilReplay, askAiExchange, auditSnapshot, lessons } from '../../data/aiLab';
+import { terminalPrompts, deepBuilds, quickBuilds, moreWork, awards } from '../../data/aiLab';
 
 const metrics = [
   { value: String(awards.length), label: 'Hackathon Awards' }
 ];
+
+const external = (href: string) => href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
 <CaseStudyLayout
   title="AI Lab"
-  subtitle="How I work with AI: I let it widen the options, I make the call, and I build the checks that catch what it misses."
-  description="How Hafsa Usmani designs with AI: a real AI design review and the call she made, the assistant on her site, an automated accessibility audit, and earlier AI experiments."
+  subtitle="Experiments with AI tools: an agent, a data model and two quick builds, each starting from a question."
+  description="Hafsa Usmani's AI experiments: CarbonLint, a GitLab Duo agent that audits CI/CD pipelines for carbon waste; ClimateHaven, a climate gentrification model built in Zerve; and quick builds with Replit Agent and Lovable."
   heroImage="/images/ai-lab/hero.png"
   ogImage="/images/og/ai-lab.jpg"
   industry="AI / Design Tools"
@@ -38,84 +38,116 @@ const metrics = [
     subtitle: 'Streamlined diabetes management'
   }}
 >
-  <section class="case-section">
-    <p class="lab-eyebrow">01 · Deciding with AI</p>
-    <h2>Three AI reviewers disagreed. I made the call.</h2>
-    <p>
-      When I get feedback on a design, I ask AI reviewers with different jobs to argue it out: a hiring manager,
-      an art director and an engineer. They give me more options and sharper objections than I'd get alone.
-      Choosing between them is still my job. This is one real review from {councilReplay.date}.
+  <section class="case-section lab-intro">
+    <p class="lead-in">
+      Each project started with a question and a different AI tool. Here's what each one does,
+      how it was built and what broke along the way.
     </p>
-    <CouncilReplay />
-    <Figure n={1} wide caption="The homepage hero before and after the call. Drag, or use the slider, to compare.">
-      <CompareSlider
-        before={councilReplay.before}
-        after={councilReplay.after}
-        width={1440}
-        height={900}
-        subject="the homepage hero"
-        start={50}
-      />
+    <Figure bare>
+      <CodeTerminal title="ai-lab" prompts={terminalPrompts} />
     </Figure>
   </section>
 
-  <section class="case-section">
-    <p class="lab-eyebrow">02 · Shipped on this site</p>
-    <h2>An assistant that only answers from this site</h2>
-    <p>
-      Recruiters ask the same questions about every candidate. The assistant on this site answers them from
-      my case studies and nothing else. When it doesn't know, it says so and points to my email.
-    </p>
-    <Figure n={2} wide caption={`Two real answers from the live assistant (${askAiExchange.model}), captured 4 November 2026. ${askAiExchange.stored}`}>
-      <AskAiTranscript />
-    </Figure>
-    <p class="lab-try">
-      <a href="/contact" data-ask-ai class="lab-try-link">Ask it something <span aria-hidden="true">&rarr;</span></a>
-    </p>
-  </section>
+  {deepBuilds.map((b, i) => (
+    <section class="case-section" id={b.id}>
+      <p class="lab-eyebrow">0{i + 1} · {b.title}</p>
+      <h2>{b.question}</h2>
+      <p class="lab-meta">
+        <span>{b.tool}</span>
+        {b.event && <span>{b.event}</span>}
+        {b.award && <span class="lab-award">Winner: {b.award}</span>}
+      </p>
+
+      <Figure wide>
+        <img src={b.image.src} alt={b.image.alt} width={b.image.width} height={b.image.height} loading="lazy" decoding="async" />
+      </Figure>
+
+      <p class="lab-summary">{b.summary}</p>
+
+      <h3 class="lab-h3">How it's built</h3>
+      <p>{b.built}</p>
+
+      {b.fixes && (
+        <>
+          <h3 class="lab-h3">What broke, and what fixed it</h3>
+          <RuledList compare plain headings={['What broke', 'What fixed it']} label={`${b.title}: problems and fixes`}>
+            {b.fixes.map((f) => (
+              <RuledRow>
+                <p slot="a"><span class="lab-cell-label">What broke: </span>{f.problem}</p>
+                <p slot="b" class="lab-fix"><span class="lab-cell-label">What fixed it: </span>{f.fix}</p>
+              </RuledRow>
+            ))}
+          </RuledList>
+        </>
+      )}
+
+      {b.headline && (
+        <>
+          <h3 class="lab-h3">What the model found</h3>
+          <DisplayNumeral value={b.headline.value} label={b.headline.label} note={b.headline.note} />
+          {b.findings && (
+            <RuledList label={`${b.title}: other findings`}>
+              {b.findings.map((f) => <RuledRow><p>{f}</p></RuledRow>)}
+            </RuledList>
+          )}
+        </>
+      )}
+
+      {b.hardParts && (
+        <>
+          <h3 class="lab-h3">The hard parts</h3>
+          <RuledList label={`${b.title}: hard parts`}>
+            {b.hardParts.map((h) => <RuledRow><p>{h}</p></RuledRow>)}
+          </RuledList>
+        </>
+      )}
+
+      <Lead label="The lesson"><p>{b.learned}</p></Lead>
+
+      <p class="lab-link-row">
+        <a class="lab-link" href={b.link.href} {...external(b.link.href)}>
+          {b.link.label}<span class="sr-only"> about {b.title} (opens in a new tab)</span> <span aria-hidden="true">&#8599;</span>
+        </a>
+      </p>
+    </section>
+  ))}
 
   <section class="case-section">
-    <p class="lab-eyebrow">03 · Checking the work</p>
-    <h2>The scanner found {auditSnapshot.scanner.found} problems. I found {auditSnapshot.byHand.length}.</h2>
-    <p>
-      I wrote an audit script that runs every page of this site through axe-core at desktop and phone width,
-      then checks it fits a 320px screen. It's fast and it never forgets a page. It also can't see colour over
-      a gradient, so I check those by hand.
-    </p>
-    <div class="lab-tally">
-      <DisplayNumeral value={String(auditSnapshot.scanner.found)} label="found by the scanner" note={`${auditSnapshot.pages} pages: ${auditSnapshot.scanner.scope}`} />
-      <DisplayNumeral value={String(auditSnapshot.byHand.length)} label="found by hand" note="Both fixed before release" />
+    <p class="lab-eyebrow">0{deepBuilds.length + 1} · Quick builds</p>
+    <h2>Two quick builds with AI app builders</h2>
+    <div class="lab-quick full-width">
+      {quickBuilds.map((b) => (
+        <article class="lab-quick-item" id={b.id}>
+          <Figure bare>
+            <img src={b.image.src} alt={b.image.alt} width={b.image.width} height={b.image.height} loading="lazy" decoding="async" />
+          </Figure>
+          <div class="lab-quick-text">
+            <h3 class="lab-quick-title">{b.title}</h3>
+            <p class="lab-meta"><span>{b.tool}</span></p>
+            <p class="lab-quick-q">{b.question}</p>
+            <p>{b.summary}</p>
+            <p class="lab-quick-learned">{b.learned}</p>
+            <p class="lab-link-row">
+              <a class="lab-link" href={b.link.href} {...external(b.link.href)}>
+                {b.link.label}<span class="sr-only"> {b.title} (opens in a new tab)</span> <span aria-hidden="true">&#8599;</span>
+              </a>
+            </p>
+          </div>
+        </article>
+      ))}
     </div>
-    <RuledList label="Failures found by hand">
-      {auditSnapshot.byHand.map((f) => (
-        <RuledRow label={f.issue}>
-          <p>{f.before}.</p>
-          <p class="lab-fixed">{f.after}.</p>
+  </section>
+
+  <section class="case-section">
+    <p class="lab-eyebrow">More AI work</p>
+    <h2>Built with AI, written up in full</h2>
+    <RuledList label="AI projects with their own case studies">
+      {moreWork.map((w) => (
+        <RuledRow label={w.tool}>
+          <p class="lab-more"><a href={w.href}>{w.title}</a> <span>{w.note}</span></p>
         </RuledRow>
       ))}
     </RuledList>
-    <p class="lab-after-list">
-      The script lives in the site's repo and runs with <code>{auditSnapshot.command}</code>. The same habit
-      shaped <a href="/work/philly-truce">Philly Truce</a>, where every contrast ratio on the page is computed
-      in code and pinned by tests.
-    </p>
-  </section>
-
-  <section class="case-section">
-    <p class="lab-eyebrow">04 · Experiments</p>
-    <h2>Earlier AI builds</h2>
-    <p>
-      Builds with different AI tools, from quick experiments to full case studies. Two won awards.
-    </p>
-    <ExperimentIndex />
-  </section>
-
-  <section class="case-section">
-    <p class="lab-eyebrow">05 · What I've learned</p>
-    <h2>Two things I keep relearning</h2>
-    <ol class="lab-lessons">
-      {lessons.map((l) => <li>{l}</li>)}
-    </ol>
   </section>
 </CaseStudyLayout>
 
@@ -133,10 +165,18 @@ const metrics = [
   }
 
   :global(.case-content) .case-section h2 {
-    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
     line-height: 1.15;
     text-wrap: balance;
   }
+
+  :global(.case-content) .lead-in {
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.5;
+    color: var(--color-fg);
+  }
+
+  .lab-intro :global(.fig) { margin-top: 2rem; }
 
   :global(.case-content) .lab-eyebrow {
     margin: 0 0 0.75rem;
@@ -146,11 +186,59 @@ const metrics = [
     color: var(--color-accent-text);
   }
 
-  :global(.case-content) .lab-try {
-    margin-top: 1.25rem;
+  :global(.case-content) .lab-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin: 0;
+    font: 500 12px/1.6 var(--font-mono);
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
   }
 
-  .lab-try-link {
+  .lab-award { color: var(--color-fg); }
+
+  :global(.case-content) .lab-summary {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--color-fg);
+  }
+
+  :global(.case-content) .lab-h3 {
+    margin: 2.5rem 0 0.75rem;
+    font: 500 12px/1.4 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Cell labels read on phones (where the column headings are hidden) and by screen readers */
+  .lab-cell-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font: 500 11px/1.4 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 720px) {
+    .lab-cell-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
+  :global(.case-content) .lab-fix { color: var(--color-fg); }
+
+  :global(.case-content) .lab-link-row { margin-top: 1.5rem; }
+
+  .lab-link {
     font: 500 13px/1.5 var(--font-mono);
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -161,62 +249,72 @@ const metrics = [
     text-underline-offset: 0.3em;
   }
 
-  .lab-try-link:hover { color: var(--color-accent-text); }
+  .lab-link:hover { color: var(--color-accent-text); }
 
-  .lab-tally {
+  /* Quick builds: screenshot beside its notes */
+  .lab-quick {
     display: grid;
-    gap: 0.5rem 2rem;
+    gap: 3.5rem;
+    margin-top: 2.5rem;
   }
 
-  @media (min-width: 720px) {
-    .lab-tally { grid-template-columns: 1fr 1fr; }
+  .lab-quick-item {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
   }
 
-  :global(.case-content) .lab-fixed {
-    color: var(--color-fg);
+  @media (min-width: 860px) {
+    .lab-quick-item { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3rem; }
+    .lab-quick-item:nth-child(even) > :global(:first-child) { order: 2; }
   }
 
-  :global(.case-content) .lab-after-list {
-    margin-top: 1.5rem;
+  .lab-quick-item :global(.fig) { margin: 0; }
+
+  :global(.case-content) .lab-quick-item :global(.fig-art img) {
+    max-height: 460px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 12px;
   }
 
-  :global(.case-content) .lab-after-list code {
-    font: 500 0.875em var(--font-mono);
-    color: var(--color-fg);
-  }
-
-  /* Lessons: hanging numerals, lead-size sentences, no containers */
-  .lab-lessons {
-    margin: 1.5rem 0 0;
-    padding: 0;
-    list-style: none;
-    counter-reset: lesson;
-  }
-
-  :global(.case-content) .lab-lessons li {
-    position: relative;
-    margin: 0 0 2rem;
-    padding-left: 2.5rem;
-    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-    line-height: 1.45;
-    letter-spacing: -0.01em;
-    color: var(--color-fg);
-    counter-increment: lesson;
-    text-wrap: pretty;
-  }
-
-  .lab-lessons li::before {
-    content: counter(lesson);
-    position: absolute;
-    left: 0;
-    top: 0.1em;
+  :global(.case-content) .lab-quick-title {
+    margin: 0 0 0.35rem;
     font-family: var(--font-display);
-    font-size: 1em;
-    color: var(--color-accent-text);
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--color-fg);
   }
 
-  @media (min-width: 1100px) {
-    :global(.case-content) .lab-lessons li { padding-left: 0; }
-    .lab-lessons li::before { left: -3rem; }
+  :global(.case-content) .lab-quick-q {
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.45;
+    color: var(--color-fg);
+  }
+
+  :global(.case-content) .lab-quick-learned {
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-fg) 14%, transparent);
+    font-size: 0.9375rem;
+  }
+
+  :global(.case-content) .lab-more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin: 0;
+  }
+
+  .lab-more a {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    color: var(--color-fg);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 0.2em;
   }
 </style>

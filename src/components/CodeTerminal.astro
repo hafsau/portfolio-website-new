@@ -2,9 +2,10 @@
 // CodeTerminal.astro - Animated terminal showing AI prompts
 interface Props {
   prompts?: string[];
+  title?: string;
 }
 
-const { prompts = [
+const { title = 'claude-code', prompts = [
   "claude: Help me build a children's storybook generator",
   "claude: Create a watercolor illustration style",
   "claude: Add personalization with the child's name",
@@ -19,7 +20,7 @@ const { prompts = [
       <span class="dot yellow"></span>
       <span class="dot green"></span>
     </div>
-    <span class="terminal-title">claude-code</span>
+    <span class="terminal-title">{title}</span>
   </div>
   <div class="terminal-body">
     <div class="terminal-line">
