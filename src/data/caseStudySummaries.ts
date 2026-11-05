@@ -263,6 +263,56 @@ export const caseStudySummaries: Record<string, CaseStudySummary> = {
     },
     "decisions": []
   },
+  "pixelcheck": {
+    "tldr": {
+      "problem": "AI builders turn a design into a page in minutes, but it drifts on phones, and the usual checks only ask whether the page breaks.",
+      "role": "Designer & builder, solo, with Claude Code as coding partner.",
+      "outcome": "A real AI build of FitStart fit at all 8 widths yet scored 38 on phone; PixelCheck showed why and wrote a fix brief.",
+      "timeline": "Sep – Oct 2026"
+    },
+    "decisions": [
+      {
+        "title": "The worst size as the headline",
+        "considered": [
+          "An average across phone, tablet and desktop"
+        ],
+        "chosen": "The worst size is the headline score",
+        "why": "An average of 38, 61 and 65 would hide the phone, which is the whole problem.",
+        "cost": null,
+        "stated": true
+      },
+      {
+        "title": "Explain the score instead of tuning it",
+        "considered": [
+          "Changing the scorer after seeing a result"
+        ],
+        "chosen": "Show points lost per factor and drift band by band beside the score",
+        "why": "Spacing that drifts down the page costs points on every row below; explaining that keeps the score honest.",
+        "cost": "Drift down the page still costs points on every row below it.",
+        "stated": true
+      },
+      {
+        "title": "A verifier outside the model",
+        "considered": [
+          "Trusting the language model's fix brief as written"
+        ],
+        "chosen": "Every line cites a measured fact, and a rule-based check drops what the facts don't back",
+        "why": "The first briefs looked plausible but weren't safe to paste.",
+        "cost": null,
+        "stated": true
+      },
+      {
+        "title": "Score where the build can't see the answer",
+        "considered": [
+          "Scoring in the same environment that captures the build"
+        ],
+        "chosen": "Score in a disposable sandbox with the network off, the only place the design frames go",
+        "why": "The build never sees the design it is graded against, so it can't grade itself.",
+        "cost": null,
+        "stated": true
+      }
+    ]
+  },
   "portfolio-website": {
     "tldr": {
       "problem": "The old portfolio worked but felt static and generic; it didn't show her attention to detail.",

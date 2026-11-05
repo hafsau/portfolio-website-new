@@ -1,0 +1,237 @@
+---
+/**
+ * "It fits. It doesn't match." as something you can click.
+ * Real data from PixelCheck's check of the Lovable build of the FitStart dashboard:
+ * all 8 widths fit (nothing overflows or overlaps), but the three design widths
+ * score 38.5 / 61.1 / 64.5 against the design (target 90).
+ */
+const cells = [
+  { px: 360 },
+  { px: 375 },
+  { px: 402, size: 'Phone', score: 38.5 },
+  { px: 585 },
+  { px: 768, size: 'Tablet', score: 61.1 },
+  { px: 920 },
+  { px: 1071, size: 'Desktop', score: 64.5 },
+  { px: 1600 },
+];
+
+const band = (s: number) => (s >= 90 ? 'good' : s >= 50 ? 'mid' : 'bad');
+
+const fitsVerdict = 'All 8 widths fit. Nothing overflows or overlaps, from 360 to 1600 px.';
+const matchesVerdict =
+  'Against the design: 38.5 on phone, 61.1 on tablet, 64.5 on desktop. The target is 90.';
+---
+
+<figure class="pc-strip full-width" data-mode="fits">
+  <div class="pc-strip-inner">
+    <div class="pc-strip-head">
+      <p class="pc-strip-label">Lovable's build of my FitStart dashboard</p>
+      <div class="pc-toggle" role="group" aria-label="Show the result as">
+        <button type="button" class="pc-toggle-btn" data-mode="fits" aria-pressed="true">Does it fit?</button>
+        <button type="button" class="pc-toggle-btn" data-mode="matches" aria-pressed="false">Does it match?</button>
+      </div>
+    </div>
+
+    <ol class="pc-cells" aria-label="Widths checked, 360 to 1600 px">
+      {cells.map((c) => (
+        <li class:list={['pc-cell', c.score !== undefined && 'is-design', c.score !== undefined && `band-${band(c.score)}`]}>
+          <span class="pc-cell-box">
+            {c.score !== undefined && <span class="pc-cell-score">{c.score}</span>}
+          </span>
+          <span class="pc-cell-px">{c.px}</span>
+          <span class="sr-only">
+            {c.score !== undefined ? ` px, ${c.size} design width: fits; scores ${c.score} against the design` : ' px: fits'}
+          </span>
+        </li>
+      ))}
+    </ol>
+
+    <p class="pc-strip-verdict" aria-live="polite" data-fits={fitsVerdict} data-matches={matchesVerdict}>{fitsVerdict}</p>
+  </div>
+  <figcaption class="pc-fig">
+    Fig. 1. Both views are the same build. An overflow check stops at "fits"; PixelCheck also scores each
+    design width against its frame.
+  </figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.pc-strip').forEach((strip) => {
+    const buttons = strip.querySelectorAll<HTMLButtonElement>('.pc-toggle-btn');
+    const verdict = strip.querySelector<HTMLElement>('.pc-strip-verdict');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode ?? 'fits';
+        strip.dataset.mode = mode;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        if (verdict) verdict.textContent = verdict.dataset[mode] ?? '';
+      });
+    });
+  });
+</script>
+
+<style>
+  .pc-strip {
+    margin: 2.5rem 0 0;
+  }
+
+  .pc-strip-inner {
+    padding: clamp(16px, 3vw, 28px);
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  .pc-strip-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    margin-bottom: 20px;
+  }
+
+  .pc-strip .pc-strip-label {
+    margin: 0;
+    font: 500 12px/1.5 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .pc-toggle {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 999px;
+    background: #0d0d0d;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+  }
+
+  .pc-toggle-btn {
+    min-height: 40px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-muted);
+    font: 500 0.875rem/1 inherit;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s var(--ease-out, ease), color 0.2s var(--ease-out, ease);
+  }
+
+  .pc-toggle-btn[aria-pressed='true'] {
+    background: var(--color-fg);
+    color: #0d0d0d;
+  }
+
+  .pc-toggle-btn:focus-visible {
+    outline: 2px solid var(--color-accent-text);
+    outline-offset: 2px;
+  }
+
+  .pc-strip .pc-cells {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pc-strip .pc-cell {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .pc-cell-box {
+    display: grid;
+    place-items: center;
+    height: clamp(44px, 7vw, 64px);
+    border-radius: 8px;
+    background: #1f7a4d; /* fits: 3.46:1 against #141414 (WCAG 1.4.11) */
+    transition: background-color 0.35s var(--ease-out, ease), opacity 0.35s var(--ease-out, ease);
+  }
+
+  .pc-cell-score {
+    font: 600 clamp(0.75rem, 1.6vw, 1rem)/1 'JetBrains Mono', monospace;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-out, ease);
+  }
+
+  .pc-cell-px {
+    text-align: center;
+    font: 500 clamp(0.6875rem, 1.4vw, 0.8125rem)/1 'JetBrains Mono', monospace;
+    color: var(--color-muted);
+  }
+
+  .pc-cell.is-design .pc-cell-px {
+    color: var(--color-fg);
+    font-weight: 700;
+  }
+
+  /* Matches view: only the three design widths have a design to compare with */
+  .pc-strip[data-mode='matches'] .pc-cell-box {
+    background: #262626;
+  }
+
+  .pc-strip[data-mode='matches'] .pc-cell.band-bad .pc-cell-box {
+    background: #c8261b; /* white score 5.6:1 */
+  }
+
+  .pc-strip[data-mode='matches'] .pc-cell.band-mid .pc-cell-box {
+    background: #a24a0c; /* white score 5.96:1 */
+  }
+
+  .pc-strip[data-mode='matches'] .pc-cell.band-good .pc-cell-box {
+    background: #1f7a4d;
+  }
+
+  .pc-strip[data-mode='matches'] .pc-cell-score {
+    opacity: 1;
+  }
+
+  .pc-strip .pc-strip-verdict {
+    margin: 20px 0 0;
+    min-height: 3.5em;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-fg);
+  }
+
+  .pc-fig {
+    margin: 12px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 560px) {
+    .pc-strip .pc-toggle {
+      width: 100%;
+    }
+
+    .pc-toggle-btn {
+      flex: 1;
+      padding: 0 10px;
+    }
+
+    .pc-strip .pc-cells {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      row-gap: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pc-toggle-btn,
+    .pc-cell-box,
+    .pc-cell-score {
+      transition: none;
+    }
+  }
+</style>

@@ -74,11 +74,18 @@ Case study pages can override `--color-accent` for per-project accent colors.
 - Watch: `max-width: 280px`
 
 ## Project Order (Homepage)
-1. AI Lab (#01) - Orange accent (#f97316)
-2. MedRec (#02) - Blue accent (#4a5ee4)
-3. FitStart (#03) - Purple accent (#8b5cf6)
-4. Folio (#04) - Cyan accent (#0891b2)
-5. Immunization (#05) - Blue accent (#4a5ee4)
+Source of truth: the `projects` array in `src/pages/index.astro` (numbers must run 01, 02, … in order; tested).
+1. PixelCheck (#01) - Burnt orange (#E5480F; text #FF6A2B; transition #B23A0C)
+2. EqualTales (#02) - Purple (#7B5EA7)
+3. Philly Truce (#03) - Cream (#FFF4DA; transition navy #002768)
+4. HafsaUsmani.com (#04) - Teal (#14b8a6)
+5. AI Lab (#05) - Orange (#f97316)
+6. MedRec (#06) - Blue (#4a5ee4)
+7. FitStart (#07) - Purple (#8b5cf6)
+8. Folio (#08) - Cyan (#0891b2)
+9. Immunization (#09) - Blue (#4a5ee4)
+
+Prev/next chain: PixelCheck → EqualTales → Philly Truce → HafsaUsmani.com → AI Lab → MedRec → FitStart → Folio → Immunization → PixelCheck.
 
 ## Image Organization
 Images are stored in `/public/images/[project-name]/`:
@@ -293,3 +300,11 @@ These patterns are extracted from MotionSites prompts for reference:
 - Bounce-in delays: 0.2-0.4s increments
 - Scroll scrub: value of 1-2 for smooth binding
 - Reduced motion: disable all via `prefers-reduced-motion`
+
+## PixelCheck (`src/pages/work/pixelcheck.astro`)
+Tool Hafsa designed and built solo with Claude Code (Sep – Oct 2026): measures any build against the designer's phone, tablet and desktop frames, explains each size's score, and has NVIDIA Nemotron 3 Super write a fix brief checked by a rule-based verifier.
+- **Do not mention the hackathon** it was made for (no "hackathon", "Devpost", "judges", "submission"); `tests/pixelcheck.test.ts` checks this.
+- Link only the live app and the Lovable replay. Do not link the GitHub repo or the YouTube demo (both show the hackathon).
+- Page components: `src/components/pixelcheck/` (PcWidthStrip toggle, PcScoreBreakdown, PcStack tech section).
+- Confirmed facts: Lovable build of FitStart scored 38 / 61 / 65 while all 8 widths fit; text 11–15% smaller, spacing ~20% tighter, Roboto vs Lato; ~1 min and ~5 cents per check (cached example only); Interview Sage loses 7 texts on phones; hafsausmani.com rebuild 87.4 (fonts normalised to Inter).
+- Source repo (local): `~/Nebius/pixel-check`; assets came from its `docs/devpost/` screenshots and `docs/video/thumbnail.html`.

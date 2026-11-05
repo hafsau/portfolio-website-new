@@ -1,0 +1,257 @@
+---
+/**
+ * How PixelCheck is built: the pipeline, then each technology and the job it does.
+ * Text only (no logos). Roles are taken from the PixelCheck README and kept to what it states.
+ */
+const pipeline = [
+  { step: 'Frames', what: 'Phone, tablet and desktop designs, as exported', tech: ['PNG · JPG · WebP'] },
+  { step: 'Capture', what: 'The build at each design width and 8 widths from 360 to 1600 px', tech: ['Playwright', 'Token Factory Sandbox'] },
+  { step: 'Read', what: 'Every text and block, on the frames and the build', tech: ['Gemma 3 27B', 'Tesseract OCR'] },
+  { step: 'Score', what: 'Each size against its frame, with the network off', tech: ['Python scorer', 'Token Factory Sandbox'] },
+  { step: 'Brief', what: 'A fix brief from numbered, measured facts', tech: ['NVIDIA Nemotron 3 Super'] },
+  { step: 'Verify', what: 'Drops any line the measurements do not back', tech: ['Rule-based verifier'] },
+];
+
+const groups = [
+  {
+    title: 'Runs the checks',
+    items: [
+      { name: 'Nebius Token Factory Sandboxes', kind: 'Sandbox', role: 'Capture the build with the network on, then score it in a disposable copy with the network off. That copy is the only place the design frames go, so the build never sees its own answer.' },
+      { name: 'Playwright + Chromium', kind: 'Library', role: 'Load the build at every width and capture it, with animations stopped and scrollbars hidden.' },
+      { name: 'esbuild + Tailwind CSS', kind: 'Library', role: 'Render an uploaded App.jsx offline, inside the sandbox.' },
+    ],
+  },
+  {
+    title: 'Reads and writes',
+    note: 'Every model call runs on Nebius Token Factory.',
+    items: [
+      { name: 'Gemma 3 27B', kind: 'Model', role: 'Reads the design frames: what each text says and what it is for.' },
+      { name: 'Tesseract OCR', kind: 'Library', role: 'Finds and places every line of text, so the check can say what moved and how far.' },
+      { name: 'NVIDIA Nemotron 3 Super', kind: 'Model', role: 'Writes the fix brief from numbered facts, and must cite a fact for every line.' },
+      { name: 'NVIDIA Nemotron 3 Ultra', kind: 'Model', role: 'Plans responsive layout when rebuilding from frames. Its plan is kept only if the sandbox shows it is no worse.' },
+    ],
+  },
+  {
+    title: 'Measures',
+    items: [
+      { name: 'Scorer (Python)', kind: 'Code', role: 'Compares edges, layout blocks, colour and text at each size. The worst size is the headline.' },
+      { name: 'Fix-brief verifier (Python)', kind: 'Code', role: 'Checks every number, quote, screen size and cause word against the cited facts, and drops what does not match.' },
+    ],
+  },
+  {
+    title: 'The app',
+    items: [
+      { name: 'React + TypeScript + Vite', kind: 'Front end', role: 'The web app: checks, replays and results. Hosted on Vercel.' },
+      { name: 'Tailwind CSS', kind: 'Styling', role: 'Styles the app, and is what rebuilt code is written in.' },
+      { name: 'Python + FastAPI', kind: 'API', role: 'The API behind live checks and rebuilds. Hosted on Render.' },
+      { name: 'Claude Code', kind: 'Partner', role: 'My coding partner for the build, as on this portfolio.' },
+    ],
+  },
+];
+---
+
+<div class="pc-stack full-width">
+  <ol class="pc-rail" aria-label="How a check runs">
+    {pipeline.map((p, i) => (
+      <li class="pc-rail-step">
+        <span class="pc-rail-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span class="pc-rail-name">{p.step}</span>
+        <span class="pc-rail-what">{p.what}</span>
+        <span class="pc-rail-tech">
+          {p.tech.map((t) => <span class="pc-chip">{t}</span>)}
+        </span>
+      </li>
+    ))}
+  </ol>
+
+  <div class="pc-groups">
+    {groups.map((g) => (
+      <div class="pc-group">
+        <h3 class="pc-group-title">{g.title}</h3>
+        {g.note && <p class="pc-group-note">{g.note}</p>}
+        <dl class="pc-list">
+          {g.items.map((it) => (
+            <div class="pc-item">
+              <dt>
+                <span class="pc-item-name">{it.name}</span>
+                <span class="pc-kind">{it.kind}</span>
+              </dt>
+              <dd>{it.role}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .pc-stack {
+    margin-top: 2rem;
+  }
+
+  /* Pipeline rail */
+  .pc-stack .pc-rail {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+
+  .pc-stack .pc-rail-step {
+    position: relative;
+    margin: 0;
+    padding: 0 14px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 2px solid var(--color-accent);
+    padding-top: 14px;
+  }
+
+  .pc-rail-step::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .pc-rail-num {
+    font: 500 11px/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+  }
+
+  .pc-rail-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-fg);
+  }
+
+  .pc-rail-what {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .pc-rail-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .pc-chip {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgb(229 72 15 / 0.14);
+    box-shadow: inset 0 0 0 1px rgb(229 72 15 / 0.45);
+    color: var(--color-accent-text);
+    font: 500 11px/1.4 'JetBrains Mono', monospace;
+    overflow-wrap: anywhere;
+  }
+
+  /* Groups */
+  .pc-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .pc-group {
+    margin: 0;
+    padding: clamp(16px, 2.5vw, 24px);
+    border: 0;
+    border-left: 3px solid var(--color-accent);
+    border-radius: 12px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  .pc-stack .pc-group-title {
+    margin: 0 0 4px;
+    font: 500 12px/1.5 'JetBrains Mono', monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+  }
+
+  .pc-stack .pc-group-note {
+    margin: 0 0 8px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .pc-list {
+    margin: 12px 0 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .pc-item dt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+  }
+
+  .pc-item-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    overflow-wrap: anywhere;
+  }
+
+  .pc-kind {
+    font: 500 10.5px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .pc-item dd {
+    margin: 4px 0 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 860px) {
+    .pc-stack .pc-rail {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pc-groups {
+      grid-template-columns: 1fr;
+    }
+
+    /* The rail stacks: a vertical line with the steps hanging off it */
+    .pc-stack .pc-rail {
+      grid-template-columns: 1fr;
+      row-gap: 0;
+      border-left: 2px solid var(--color-accent);
+      margin-left: 5px;
+    }
+
+    .pc-stack .pc-rail-step {
+      border-top: 0;
+      padding: 0 0 18px 20px;
+    }
+
+    .pc-rail-step::before {
+      top: 2px;
+      left: -6px;
+    }
+  }
+</style>

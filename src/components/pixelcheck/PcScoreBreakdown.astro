@@ -1,0 +1,126 @@
+---
+/**
+ * "Why mobile scored 38.5", rebuilt from PixelCheck's result page:
+ * points lost per factor, then what differs, in plain words.
+ */
+const factors = [
+  { name: 'Layout and edges', lost: 42 },
+  { name: 'Colour', lost: 13 },
+  { name: 'Text', lost: 6 },
+];
+const max = Math.max(...factors.map((f) => f.lost));
+
+const differs = [
+  'Font: Roboto, where the design uses Lato',
+  'Text 11–15% smaller than the design',
+  'Spacing about 20% tighter: by the bottom of the screen, content sits 150 px higher',
+];
+---
+
+<div class="pc-why">
+  <p class="pc-why-label">Why the phone size scored 38.5</p>
+  <dl class="pc-factors" aria-label="Points lost, by factor">
+    {factors.map((f) => (
+      <div class="pc-factor">
+        <dt>{f.name}</dt>
+        <dd>
+          <span class="pc-bar" aria-hidden="true"><span style={`width:${(f.lost / max) * 100}%`}></span></span>
+          <span class="pc-lost">&minus;{f.lost}<span class="sr-only"> points</span></span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+  <p class="pc-why-label pc-why-label--sub">What differs</p>
+  <ul class="pc-differs">
+    {differs.map((d) => <li>{d}</li>)}
+  </ul>
+</div>
+
+<style>
+  .pc-why {
+    margin: 2rem 0 0;
+    padding: clamp(16px, 3vw, 24px);
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .pc-why .pc-why-label {
+    margin: 0 0 14px;
+    font: 500 12px/1.5 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .pc-why .pc-why-label--sub {
+    margin-top: 22px;
+  }
+
+  .pc-factors {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .pc-factor {
+    display: grid;
+    grid-template-columns: minmax(7.5rem, 10rem) 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .pc-factor dt {
+    font-size: 0.9375rem;
+    color: var(--color-fg);
+  }
+
+  .pc-factor dd {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 3rem;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .pc-bar {
+    display: block;
+    height: 8px;
+    border-radius: 999px;
+    background: #262626;
+    overflow: hidden;
+  }
+
+  .pc-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #e5604a; /* the result page's "points lost" red, lifted for the dark background */
+  }
+
+  .pc-lost {
+    text-align: right;
+    font: 600 0.9375rem/1 'JetBrains Mono', monospace;
+    color: var(--color-fg);
+  }
+
+  .pc-why .pc-differs {
+    margin: 0;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+
+  .pc-why .pc-differs li {
+    margin: 0 0 6px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 420px) {
+    .pc-factor {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+</style>

@@ -1,0 +1,396 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import PcWidthStrip from '../../components/pixelcheck/PcWidthStrip.astro';
+import PcScoreBreakdown from '../../components/pixelcheck/PcScoreBreakdown.astro';
+import PcStack from '../../components/pixelcheck/PcStack.astro';
+
+const LIVE_URL = 'https://pixel-check-peach.vercel.app/';
+const REPLAY_URL = 'https://pixel-check-peach.vercel.app/check/lovable-dashboard-check/replay';
+
+const metrics = [
+  { value: '38', label: 'Phone match score, while all 8 widths fit' },
+  { value: '7', label: 'Texts my own shipped app lost on phones' },
+  { value: '~1 min', label: 'Per check, about 5 cents' },
+];
+
+const tools = [
+  'Nebius Token Factory',
+  'NVIDIA Nemotron 3 Super',
+  'Gemma 3 27B',
+  'Playwright',
+  'Python + FastAPI',
+  'React + TypeScript',
+  'Tailwind CSS',
+  'Claude Code',
+];
+---
+
+<CaseStudyLayout
+  title="PixelCheck"
+  subtitle="Holding AI-built UI to the designer's frames, at every screen size."
+  description="PixelCheck measures any build against the designer's phone, tablet and desktop frames, explains why each size scored what it did, and writes a fix brief in which every line is checked against a measurement."
+  heroImage="/images/pixelcheck/hero.png"
+  ogImage="/images/og/pixelcheck.jpg"
+  industry="AI Tooling / Design QA"
+  role="Designer & builder (with Claude Code)"
+  timeline="Sep – Oct 2026"
+  platforms="Web"
+  tools={tools}
+  metrics={metrics}
+  prevProject={{ title: 'Immunization', href: '/work/immunization' }}
+  nextProject={{
+    title: 'EqualTales',
+    href: '/work/equaltales',
+    subtitle: "AI-powered children's storybook",
+    image: '/images/equaltales/hero.png'
+  }}
+>
+  <!-- Try it -->
+  <section class="case-section pc-try">
+    <p class="pc-eyebrow">Try it</p>
+    <div class="pc-ctas">
+      <a class="pc-cta pc-cta--primary" href={REPLAY_URL} target="_blank" rel="noopener noreferrer">
+        See a real check<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+      <a class="pc-cta" href={LIVE_URL} target="_blank" rel="noopener noreferrer">
+        Open the live app<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+    <p class="pc-note">
+      The real check is a recorded run and opens instantly. Live checks run on a free server that can take up to
+      a minute to wake.
+    </p>
+  </section>
+
+  <!-- 01 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">01 · The gap</p>
+    <h2>It fits. It doesn't match.</h2>
+    <p class="lead-text">
+      AI builders like Lovable, v0 and Bolt turn a design into a working page in minutes, and it usually looks right
+      on the laptop you check it on. On a phone it quietly drifts: smaller type, tighter spacing, the wrong font, a
+      platform badge sitting on a button.
+    </p>
+    <p>
+      Designers already make phone, tablet and desktop frames. The checks we have ask whether a page breaks: does
+      anything overflow or overlap? I wanted to ask a designer's question instead: is it still my design, at every
+      size? PixelCheck treats the frames as the spec and measures the build against them.
+    </p>
+    <PcWidthStrip />
+  </section>
+
+  <!-- 02 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">02 · A real test</p>
+    <h2>My own design, built by Lovable, measured</h2>
+    <p>
+      I gave Lovable my three <a href="/work/fitstart">FitStart</a> dashboard frames and one prompt, and took its
+      first output. It looked right on my laptop. PixelCheck scored it 38 on phone, 61 on tablet and 65 on desktop,
+      while all 8 widths fit. On a phone, content sat 150 px higher than the design by the bottom of the screen,
+      yet nothing overflowed, so an overflow check would pass it.
+    </p>
+    <figure class="pc-figure full-width">
+      <img src="/images/pixelcheck/check-result.webp" width="1500" height="1000" loading="lazy" decoding="async"
+        alt="PixelCheck's result for the Lovable build: a ring showing 38.5 at the worst size (mobile), bars for mobile 38.5, tablet 61.1 and desktop 64.5 against a target of 90, an every-width strip with all 8 widths green, and a fix brief." />
+      <figcaption class="pc-fig">
+        Fig. 2. The result page. The headline is the worst size, and the strip shows every width fitting.
+      </figcaption>
+    </figure>
+    <p>
+      One example, not a ranking of tools. The point is that the drift is invisible until something measures it.
+    </p>
+  </section>
+
+  <!-- 03 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">03 · Designing the result</p>
+    <h2>A score is only useful if it says why</h2>
+    <p>
+      The result page is the product, so I designed it the way I would any dashboard: what does someone need to
+      decide, and in what order?
+    </p>
+    <ul class="pc-points">
+      <li>
+        <strong>The worst size is the headline.</strong> An average of 38, 61 and 65 would hide the phone, which is
+        the whole problem.
+      </li>
+      <li>
+        <strong>Fits and matches are kept apart.</strong> The green and red strip answers "does it break?" The score
+        answers "is it the design?" A note on the card says a page can fit everywhere and still not match.
+      </li>
+      <li>
+        <strong>Explain the score; don't tune it.</strong> The scorer lines up the whole screen once, so spacing that
+        drifts down the page costs points on every row below. Rather than change the score after seeing a result, the
+        page shows points lost per factor and the drift band by band.
+      </li>
+      <li>
+        <strong>Verdicts in plain words.</strong> "Same layout, drifting" and "Text about 11% smaller" before any
+        number a designer has to decode.
+      </li>
+    </ul>
+    <PcScoreBreakdown />
+    <figure class="pc-figure full-width">
+      <img src="/images/pixelcheck/why-overlay.webp" width="1500" height="1000" loading="lazy" decoding="async"
+        alt="The 'Why mobile scored 38.5' panel beside a side-by-side view of the design and the build, with red boxes marking text that moved and a drift reading from top to bottom of the screen." />
+      <figcaption class="pc-fig">
+        Fig. 3. Why the phone scored 38.5: points lost per factor, what differs, and the design beside the build.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 04 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">04 · A fix brief you can trust</p>
+    <h2>The model writes; the measurements decide what stays</h2>
+    <p>
+      A score tells you something is wrong. A designer handing work back to an AI builder needs to say what to
+      change. PixelCheck gives NVIDIA Nemotron 3 Super a list of numbered, measured facts, and it writes a short
+      brief to paste into Lovable, v0 or Bolt. Every line has to cite a fact.
+    </p>
+    <p>
+      Then a rule-based verifier, outside the model, checks every line: numbers and units against the cited fact,
+      quoted text, which screen size the instruction names, and words that overclaim a cause. Anything the
+      measurements don't back is dropped, and the page says what it dropped and why.
+    </p>
+    <p>
+      I built the verifier because the first briefs looked plausible but weren't safe to paste. One said "move the
+      badge"; another gave a mobile-only fix without naming a size.
+    </p>
+    <figure class="pc-figure full-width">
+      <img src="/images/pixelcheck/fix-brief.webp" width="1500" height="1000" loading="lazy" decoding="async"
+        alt="The 'What to do next' panel: a message to paste into an AI builder with three numbered instructions, each tagged with the fact it cites (F1, F2, F3), and a footer saying Nemotron 3 Super wrote it from 8 measured facts and a check outside the model dropped 1 claim." />
+      <figcaption class="pc-fig">
+        Fig. 4. Each instruction carries the fact it rests on. In this check, the verifier dropped one claim.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 05 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">05 · No designs? Audit</p>
+    <h2>Pointing it at my own shipped apps</h2>
+    <p>
+      Not every page has frames to compare with, so PixelCheck also audits a URL on its own: whether it breaks at
+      any width, whether a platform badge covers content, and what text a phone loses. I ran it on three of my own
+      deployed apps: two from my <a href="/work/ai-lab">AI Lab</a>, and <a href="/work/equaltales">EqualTales</a>.
+    </p>
+    <ul class="pc-points">
+      <li><strong>Interview Sage:</strong> 7 texts shown on larger screens are gone on phones, and the Replit badge covers part of the "Generate Questions" button.</li>
+      <li><strong>HeadshotAI:</strong> the "Edit with Lovable" badge covers part of the upload button on phones.</li>
+      <li><strong>EqualTales:</strong> nothing to fix.</li>
+    </ul>
+    <figure class="pc-figure full-width">
+      <img src="/images/pixelcheck/audit.webp" width="1500" height="1000" loading="lazy" decoding="async"
+        alt="An audit of Interview Sage with no designs: every width fits, a warning that the Replit badge covers part of the Generate Questions button on mobile, and a list of 7 texts hidden on mobile." />
+      <figcaption class="pc-fig">Fig. 5. An audit needs only a URL. It has no match score, because there is no design to compare with.</figcaption>
+    </figure>
+    <p>
+      PixelCheck can also rebuild a page from its frames as one responsive React and Tailwind codebase, and score
+      the rebuild with the same checks. Rebuilding the home page of <a href="/work/portfolio-website">this site</a>
+      scored 87.4 at its worst size, with the site and the rebuild both set in Inter for a like-for-like comparison.
+    </p>
+  </section>
+
+  <!-- 06 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">06 · How it's built</p>
+    <h2>Models read and write; code measures and decides</h2>
+    <p>
+      The split is deliberate. Language models do what they are good at: reading frames and turning facts into
+      instructions. Everything that decides a score or a claim is measured and checked in code, inside an isolated
+      sandbox.
+    </p>
+    <PcStack />
+  </section>
+
+  <!-- 07 -->
+  <section class="case-section">
+    <p class="pc-eyebrow">07 · Trying to fool my own scorer</p>
+    <h2>If a build can game the score, the score means nothing</h2>
+    <p>
+      When PixelCheck rebuilds a page, a model writes code that my scorer then grades, and code written against a
+      scorer finds its weak spots. So I attacked my own scorer first, with builds that copy text once per screen
+      size, pin a layout to one exact width, or hide text to collect points, and hardened it over two rounds. A
+      rebuild caught cheating scores zero.
+    </p>
+    <p>
+      I haven't found another tool that checks one build against phone, tablet and desktop frames at once. I don't
+      claim to be the first to check AI-built UI visually.
+    </p>
+  </section>
+
+  <!-- Closing -->
+  <section class="case-section">
+    <p class="pc-eyebrow">Honest limits</p>
+    <div class="pc-limits">
+      <ul>
+        <li>Each frame is scored on its first screen; full-page scoring is not done yet.</li>
+        <li>Text reading is Latin-script only, and fonts come from 16 open families.</li>
+        <li>About a minute and about 5 cents is for the example, whose design reading is ready ahead of time. New frames take longer to read.</li>
+        <li>The Lovable build is one real example, not a benchmark.</li>
+      </ul>
+    </div>
+
+    <h3>What I learned</h3>
+    <p>
+      Measurements are what make a language model useful and safe here. Nemotron is good at turning numbered facts
+      into instructions a builder can follow. A verifier outside the model is what makes those instructions
+      trustworthy.
+    </p>
+
+    <h3>What's next</h3>
+    <p>
+      A command-line version, so an AI coding agent can check its own UI at every size before it says "done".
+    </p>
+
+    <div class="pc-ctas pc-ctas--end">
+      <a class="pc-cta pc-cta--primary" href={REPLAY_URL} target="_blank" rel="noopener noreferrer">
+        See a real check<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+      <a class="pc-cta" href={LIVE_URL} target="_blank" rel="noopener noreferrer">
+        Open the live app<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  :root {
+    /* PixelCheck's own burnt orange */
+    --color-accent: #E5480F; /* bars, borders and the h2 rule: 4.87:1 on #0D0D0D (non-text needs 3:1) */
+    --color-accent-text: #FF6A2B; /* small text on dark: 6.8:1 on #0D0D0D (WCAG AA) */
+  }
+
+  /* The arrival curve uses the deeper orange so its white title stays readable (6:1) */
+  :global(#page-transition) {
+    --color-accent: #B23A0C;
+  }
+
+  /* Calmer rhythm, as on Philly Truce: more air between chapters, no divider lines */
+  :global(.case-content) .case-section {
+    padding-bottom: 0;
+    margin-bottom: clamp(88px, 10vw, 128px);
+    border-bottom: 0;
+  }
+
+  :global(.case-content) .case-section h2 {
+    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  :global(.decision-title) {
+    margin-top: 0;
+  }
+
+  :global(.case-content) .pc-eyebrow {
+    margin: 0 0 0.75rem;
+    font: 500 12px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+  }
+
+  :global(.case-content) .case-section a:not(.pc-cta) {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Calls to action */
+  .pc-try {
+    margin-bottom: clamp(56px, 7vw, 80px) !important;
+  }
+
+  .pc-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .pc-ctas--end {
+    margin-top: 2.5rem;
+  }
+
+  .pc-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: var(--color-fg);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
+    transition: background-color 0.2s var(--ease-out, ease), box-shadow 0.2s var(--ease-out, ease);
+  }
+
+  .pc-cta:hover {
+    box-shadow: inset 0 0 0 1px var(--color-accent-text);
+  }
+
+  .pc-cta--primary {
+    background: #B23A0C; /* white label 6:1 */
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .pc-cta--primary:hover {
+    background: #9a320a;
+    box-shadow: none;
+  }
+
+  .pc-cta:focus-visible {
+    outline: 2px solid var(--color-accent-text);
+    outline-offset: 3px;
+  }
+
+  :global(.case-content) .pc-note {
+    margin-top: 14px;
+    font-size: 0.875rem;
+  }
+
+  /* Figures */
+  .pc-figure {
+    margin: 2.5rem 0 0;
+  }
+
+  :global(.case-content) .pc-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+
+  :global(.case-content) .pc-fig {
+    margin: 12px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  :global(.case-content) .pc-points li {
+    margin-bottom: 0.75rem;
+  }
+
+  .pc-limits {
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: #141414;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+
+  :global(.case-content) .pc-limits ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  :global(.case-content) .pc-limits li {
+    margin: 0 0 4px;
+    font-size: 0.9375rem;
+  }
+</style>
