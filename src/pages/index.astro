@@ -10,6 +10,7 @@ import SplitTextReveal from '../components/SplitTextReveal.astro';
 import MultilingualGreeting from '../components/MultilingualGreeting.astro';
 import FloatingOrbs from '../components/FloatingOrbs.astro';
 import PenToolPath from '../components/PenToolPath.astro';
+import { contrastRatio } from '../lib/contrast';
 import SectionCut from '../components/SectionCut.astro';
 import TiltCard from '../components/TiltCard.astro';
 import ScrollRevealText from '../components/ScrollRevealText.astro';
@@ -28,6 +29,10 @@ const navItems = [
 ];
 
 // Project data
+// Text set on a project's accent colour: white or near-black, whichever has more contrast
+const accentInk = (accent: string) =>
+  contrastRatio('#FFFFFF', accent) >= contrastRatio('#0D0D0D', accent) ? '#FFFFFF' : '#0D0D0D';
+
 const projects = [
   {
     number: '01',
@@ -81,7 +86,7 @@ const projects = [
     outcome: '2 hackathon awards',
     image: '/images/ai-lab/card.webp',
     href: '/work/ai-lab',
-    color: '#f97316',
+    color: '#4ade80',
     year: '2026'
   },
   {
@@ -318,7 +323,7 @@ const skills = [
         <div class="projects-scroll-track" id="projects-track">
           {/* First set of cards */}
           {projects.map((project, i) => (
-            <div class="project-card-wrapper" style={`--accent: ${project.color};`}>
+            <div class="project-card-wrapper" style={`--accent: ${project.color}; --accent-ink: ${accentInk(project.color)};`}>
               <div class="project-card">
                 <div class="project-card-image">
                   <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
@@ -337,7 +342,7 @@ const skills = [
           ))}
           {/* Duplicate set for infinite loop */}
           {projects.map((project, i) => (
-            <div class="project-card-wrapper project-card-clone" style={`--accent: ${project.color};`} aria-hidden="true" inert>
+            <div class="project-card-wrapper project-card-clone" style={`--accent: ${project.color}; --accent-ink: ${accentInk(project.color)};`} aria-hidden="true" inert>
               <div class="project-card">
                 <div class="project-card-image">
                   <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
@@ -1214,7 +1219,7 @@ const skills = [
 
     .project-cta:hover {
       background: var(--accent);
-      color: #fff;
+      color: var(--accent-ink, #fff);
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }

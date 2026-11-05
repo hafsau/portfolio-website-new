@@ -79,7 +79,7 @@ Source of truth: the `projects` array in `src/pages/index.astro` (numbers must r
 2. EqualTales (#02) - Purple (#7B5EA7)
 3. Philly Truce (#03) - Cream (#FFF4DA; transition navy #002768)
 4. HafsaUsmani.com (#04) - Teal (#14b8a6)
-5. AI Lab (#05) - Orange (#f97316)
+5. AI Lab (#05) - Green (#4ade80, matching CarbonLint; orange retired)
 6. MedRec (#06) - Blue (#4a5ee4)
 7. FitStart (#07) - Purple (#8b5cf6)
 8. Folio (#08) - Cyan (#0891b2)
@@ -114,7 +114,7 @@ Rebuilt November 2026. The page is about the AI Lab builds only: no portfolio-si
 All content lives in `src/data/aiLab.ts` (`terminalPrompts`, `deepBuilds`, `quickBuilds`, `moreWork`, `awards`). The awards metric is `awards.length`. `scripts/build-knowledge.mjs` reads this file so Ask my AI stays accurate. Key Decisions for ai-lab are empty on purpose.
 
 ### Rules
-- No orange (#f97316) on the page; the terminal prompt uses `--terminal-accent`.
+- No orange (#f97316) on the page or its homepage card (the card is green, #4ade80); the terminal prompt uses `--terminal-accent`. All the lab builds were solo projects.
 - No DALL-E (API shut down May 2026), no Goose, no build times. Devpost links read "Read the writeup", never "View Live".
 - The two awards are CarbonLint (Sustainable Design Bonus, GitLab AI Hackathon) and EqualTales (Best AI/ML, #75HER Hackathon). Don't mention a hackathon for PixelCheck.
 - Interview Sage generates interview questions from a job description; it is not a practice coach.
