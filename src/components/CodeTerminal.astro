@@ -80,24 +80,26 @@ const { prompts = [
 
   .terminal-line {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.5rem;
   }
 
+  /* Pages can set --terminal-accent to match their own accent */
   .prompt {
-    color: #f97316;
+    color: var(--terminal-accent, #f97316);
     font-weight: 600;
   }
 
+  /* Long prompts wrap instead of being cut off on narrow screens */
   .typed-text {
     color: #e6edf3;
     font-size: 0.875rem;
-    white-space: nowrap;
-    overflow: hidden;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 
   .cursor {
-    color: #f97316;
+    color: var(--terminal-accent, #f97316);
     animation: blink 1s step-end infinite;
     font-weight: 300;
   }

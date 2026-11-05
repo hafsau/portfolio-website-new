@@ -1,0 +1,51 @@
+---
+/**
+ * Rows separated by hairlines: a short label column and the content beside it.
+ * Replaces card grids for prose items. Pair with RuledRow.
+ * `compare` gives each row two content columns (e.g. what failed / what worked).
+ */
+interface Props {
+  label?: string;
+  compare?: boolean;
+  headings?: [string, string];
+  class?: string;
+}
+const { label, compare = false, headings, class: className } = Astro.props;
+---
+
+<div class:list={['rl', { 'rl-compare': compare }, className]}>
+  {compare && headings && (
+    <div class="rl-head" aria-hidden="true">
+      <span></span>
+      <span>{headings[0]}</span>
+      <span>{headings[1]}</span>
+    </div>
+  )}
+  <div role="list" aria-label={label}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .rl {
+    margin: 2rem 0 0;
+    border-bottom: 1px solid var(--rule, color-mix(in srgb, var(--color-fg) 14%, transparent));
+  }
+
+  .rl-head {
+    display: none;
+    padding: 0 0 0.75rem;
+    font: 500 11px/1.4 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 720px) {
+    .rl-compare .rl-head {
+      display: grid;
+      grid-template-columns: 9rem 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

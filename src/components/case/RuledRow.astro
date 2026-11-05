@@ -1,0 +1,88 @@
+---
+/**
+ * One row of a RuledList. `label` sits in the left column (mono, small), `title` leads the
+ * content. Body goes in the default slot; in a compare list, use the `a` and `b` slots.
+ */
+interface Props {
+  label?: string;
+  title?: string;
+  /** Heading level for the title, so rows fit the page outline. */
+  level?: 3 | 4;
+}
+const { label, title, level = 3 } = Astro.props;
+const Heading = `h${level}` as 'h3' | 'h4';
+const compare = Astro.slots.has('a');
+---
+
+<div class:list={['rr', { 'rr-compare': compare, 'rr-plain': !label }]} role="listitem">
+  {label && <span class="rr-label">{label}</span>}
+  {compare ? (
+    <>
+      <div class="rr-body">
+        {title && <Heading class="rr-title">{title}</Heading>}
+        <slot name="a" />
+      </div>
+      <div class="rr-body rr-b">
+        <slot name="b" />
+      </div>
+    </>
+  ) : (
+    <div class="rr-body">
+      {title && <Heading class="rr-title">{title}</Heading>}
+      <slot />
+    </div>
+  )}
+</div>
+
+<style>
+  .rr {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.35rem 2rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--rule, color-mix(in srgb, var(--color-fg) 14%, transparent));
+  }
+
+  @media (min-width: 720px) {
+    .rr { grid-template-columns: 9rem 1fr; }
+    .rr-compare { grid-template-columns: 9rem 1fr 1fr; }
+    .rr-plain { grid-template-columns: 1fr; }
+    .rr-plain.rr-compare { grid-template-columns: 1fr 1fr; }
+  }
+
+  .rr-label {
+    padding-top: 0.3rem;
+    font: 500 12px/1.5 var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  :global(.case-content) .rr-title {
+    margin: 0 0 0.4rem;
+    font: 600 1.125rem/1.35 var(--font-sans);
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--color-fg);
+  }
+
+  :global(.case-content) .rr-body > :global(p) {
+    margin: 0 0 0.5rem;
+  }
+
+  :global(.case-content) .rr-body > :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(.case-content) .rr-body > :global(ul) {
+    margin: 0.25rem 0 0;
+  }
+
+  .rr-b {
+    padding-top: 0.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .rr-b { padding-top: 0; }
+  }
+</style>

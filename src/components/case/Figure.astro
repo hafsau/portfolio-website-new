@@ -1,0 +1,70 @@
+---
+/**
+ * An artifact (screenshot, video, diagram, transcript) on a quiet surface, with a caption below.
+ * The only kind of surface case studies use: it frames work, never paragraphs.
+ */
+interface Props {
+  n?: number;
+  caption?: string;
+  /** Break out of the 720px text column to the 1000px figure width. */
+  wide?: boolean;
+  /** No surface or padding, for artifacts that already carry their own frame. */
+  bare?: boolean;
+  class?: string;
+}
+const { n, caption, wide = false, bare = false, class: className } = Astro.props;
+---
+
+<figure class:list={['fig', { 'full-width': wide, 'fig-bare': bare }, className]}>
+  <div class="fig-art"><slot /></div>
+  {(caption || Astro.slots.has('caption')) && (
+    <figcaption class="fig-cap">
+      {n !== undefined && <span class="fig-n">Fig. {n}</span>}
+      {caption}<slot name="caption" />
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .fig {
+    margin: 2.5rem 0 0;
+  }
+
+  .fig-art {
+    padding: clamp(10px, 2vw, 16px);
+    border-radius: 16px;
+    background: var(--surface-figure, color-mix(in srgb, var(--color-fg) 4%, var(--color-bg)));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-fg) 8%, transparent);
+  }
+
+  .fig-bare .fig-art {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  :global(.case-content) .fig-art > :global(img),
+  :global(.case-content) .fig-art > :global(video) {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border-radius: 10px;
+  }
+
+  .fig-cap {
+    margin: 12px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .fig-n {
+    margin-right: 0.5em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-fg);
+  }
+</style>

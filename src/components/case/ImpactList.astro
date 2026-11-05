@@ -1,0 +1,18 @@
+---
+/** "How I Made an Impact": each point as a ruled row with its title and explanation. */
+import RuledList from './RuledList.astro';
+import RuledRow from './RuledRow.astro';
+
+interface Props {
+  points: { title: string; description: string }[];
+}
+const { points } = Astro.props;
+---
+
+<RuledList>
+  {points.map((p) => (
+    <RuledRow title={p.title}>
+      <p>{p.description}</p>
+    </RuledRow>
+  ))}
+</RuledList>

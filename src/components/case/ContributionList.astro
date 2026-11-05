@@ -1,0 +1,59 @@
+---
+/** "My Contributions": one ruled row per discipline, with its counts set as a quiet figure grid. */
+import RuledList from './RuledList.astro';
+import RuledRow from './RuledRow.astro';
+
+interface Props {
+  contributions: { label: string; metrics: { value: string; text: string }[] }[];
+}
+const { contributions } = Astro.props;
+---
+
+<RuledList label="Contributions by discipline">
+  {contributions.map((c) => (
+    <RuledRow label={c.label}>
+      <dl class="cl-figures">
+        {c.metrics.map((m) => (
+          <div class="cl-figure">
+            <dt class="cl-text">{m.text}</dt>
+            <dd class="cl-value">{m.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </RuledRow>
+  ))}
+</RuledList>
+
+<style>
+  .cl-figures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.5rem;
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .cl-figures { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .cl-figure {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 0.2rem;
+  }
+
+  .cl-value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--color-fg);
+  }
+
+  .cl-text {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+  }
+</style>

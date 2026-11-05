@@ -1,168 +1,28 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
-import CodeTerminal from '../../components/CodeTerminal.astro';
+import CouncilReplay from '../../components/ai-lab/CouncilReplay.astro';
+import AskAiTranscript from '../../components/ai-lab/AskAiTranscript.astro';
+import ExperimentIndex from '../../components/ai-lab/ExperimentIndex.astro';
+import CompareSlider from '../../components/case/CompareSlider.astro';
+import Figure from '../../components/case/Figure.astro';
+import DisplayNumeral from '../../components/case/DisplayNumeral.astro';
+import RuledList from '../../components/case/RuledList.astro';
+import RuledRow from '../../components/case/RuledRow.astro';
+import { awards, councilReplay, askAiExchange, auditSnapshot, lessons } from '../../data/aiLab';
 
 const metrics = [
-  { value: '4', label: 'Experiments Shipped' },
-  { value: '2', label: 'Hackathon Awards' }
-];
-
-// Lab experiments (compact format)
-const labProjects = [
-  {
-    id: 'carbonlint',
-    title: 'CarbonLint',
-    tags: ['GitLab Duo', 'Sustainability', 'Award Winner'],
-    image: '/images/ai-lab/carbonlint.webp',
-    url: 'https://devpost.com/software/carbonlint',
-    question: "Can AI help reduce the carbon footprint of CI/CD pipelines?",
-    tool: 'GitLab Duo',
-    keyLearning: "Agent platforms unlock powerful automation. 25+ GitLab tools working together delivered impact a single prompt never could.",
-    award: 'Sustainable Design Bonus'
-  },
-  {
-    id: 'climatehaven',
-    title: 'ClimateHaven',
-    tags: ['Zerve', 'Data Science', 'Climate'],
-    image: '/images/ai-lab/climatehaven.webp',
-    url: 'https://devpost.com/software/climatehaven',
-    question: "Can data predict which neighborhoods will gentrify due to climate change?",
-    tool: 'Zerve',
-    keyLearning: "Combining FEMA flood data, housing prices, and demographics revealed patterns invisible to any single dataset."
-  },
-  {
-    id: 'interview-sage',
-    title: 'Interview Sage',
-    tags: ['Replit Agent', 'AI Coach'],
-    image: '/images/ai-lab/interview-sage.webp',
-    url: 'https://interview-sage--hafsausmani.replit.app/',
-    question: "Can AI provide meaningful interview practice and feedback?",
-    tool: 'Replit Agent',
-    keyLearning: "Speed dramatically lowers the barrier to shipping useful products. Ideas don't have to stay ideas—they can become working tools."
-  },
-  {
-    id: 'headshot-ai',
-    title: 'HeadshotAI',
-    tags: ['Lovable', 'Image Gen'],
-    image: '/images/ai-lab/headshot-ai.webp',
-    url: 'https://heatshot-ai.lovable.app/',
-    question: "Can no-code AI tools create professional-grade image applications?",
-    tool: 'Lovable',
-    keyLearning: "Visual builders force clearer thinking about user flow. Constraints aren't limitations—they're design decisions made for you."
-  }
-];
-
-// Philosophy pillars - numbered, no emojis
-const philosophy = [
-  {
-    number: '01',
-    title: 'Intent First',
-    description: 'Define the problem clearly before prompting. The better I articulate what I want, the better the output.'
-  },
-  {
-    number: '02',
-    title: 'Fast Loops',
-    description: 'Prototype in hours, not weeks. Speed enables risk-taking—ambitious ideas become low-stakes experiments.'
-  },
-  {
-    number: '03',
-    title: 'Ship & Learn',
-    description: 'Real users teach more than assumptions. Deploy early, gather feedback, iterate with purpose.'
-  }
-];
-
-// AI Tools used - no emojis
-const aiTools = [
-  {
-    name: 'GitLab Duo',
-    bestFor: 'CI/CD automation, multi-agent workflows, DevOps tasks',
-    usedIn: ['CarbonLint'],
-    learning: 'Agent platforms shine when orchestrating multiple specialized tools'
-  },
-  {
-    name: 'Claude Code',
-    bestFor: 'Complex codebases, debugging, architecture decisions',
-    usedIn: ['HafsaUsmani.com'],
-    learning: 'Pair programming with AI that understands context across files'
-  },
-  {
-    name: 'Cursor',
-    bestFor: 'In-editor assistance, quick edits, code completion',
-    usedIn: ['HafsaUsmani.com'],
-    learning: 'Best for iterative refinement when you know what you want'
-  },
-  {
-    name: 'Replit Agent',
-    bestFor: 'Rapid prototyping, full-stack MVPs',
-    usedIn: ['Interview Sage'],
-    learning: 'Lowest friction from idea to deployed app'
-  },
-  {
-    name: 'Lovable',
-    bestFor: 'Visual-first apps, no-code builds',
-    usedIn: ['HeadshotAI'],
-    learning: 'Perfect for validating ideas without writing code'
-  },
-  {
-    name: 'DALL-E',
-    bestFor: 'Image generation, visual prototypes, illustrations',
-    usedIn: ['EqualTales'],
-    learning: 'Style consistency requires careful prompting and iteration'
-  },
-  {
-    name: 'v0 by Vercel',
-    bestFor: 'UI component generation, React prototypes',
-    usedIn: ['Experiments'],
-    learning: 'Great for quickly visualizing component ideas before building'
-  }
-];
-
-// Currently exploring
-const exploring = [
-  {
-    title: 'AI Agents for Design',
-    status: 'wip',
-    description: 'Building autonomous assistants for design system maintenance'
-  },
-  {
-    title: 'Design-to-Code Workflows',
-    status: 'wip',
-    description: 'Figma to production code with AI translation'
-  },
-  {
-    title: 'AI for Accessibility',
-    status: 'idea',
-    description: 'Automated accessibility checking and fix suggestions'
-  }
-];
-
-// Enhanced reflections with before/after examples
-const reflections = [
-  {
-    title: 'Prompting is a Design Skill',
-    description: 'The quality of AI output directly reflects the clarity of input.',
-    before: '"Make me a login page"',
-    after: '"Create a login page for elderly users with high contrast, 18px min font, single-column layout, and clear error states"'
-  },
-  {
-    title: 'Speed Changes What\'s Possible',
-    description: 'When building takes hours instead of weeks, you can chase ideas that seemed too risky before.'
-  },
-  {
-    title: 'AI Amplifies, Not Replaces',
-    description: 'Every project still required design decisions: What problem matters? What flow feels right? AI handled implementation; I owned the intent.'
-  }
+  { value: String(awards.length), label: 'Hackathon Awards' }
 ];
 ---
 
 <CaseStudyLayout
   title="AI Lab"
-  subtitle="A creative playground for AI-assisted experiments. Quick builds, rapid learning, and ideas that became working tools."
-  description="Experiments in AI-assisted design and development using Claude Code, Replit, and other AI tools"
-  heroImage="/images/ai-lab/hero-image.svg"
+  subtitle="How I work with AI: I let it widen the options, I make the call, and I build the checks that catch what it misses."
+  description="How Hafsa Usmani designs with AI: a real AI design review and the call she made, the assistant on her site, an automated accessibility audit, and earlier AI experiments."
+  heroImage="/images/ai-lab/hero.png"
   ogImage="/images/og/ai-lab.jpg"
   industry="AI / Design Tools"
-  role="Designer, Developer & Builder"
+  role="Product Designer"
   timeline="2025 - Ongoing"
   platforms="Web"
   tools={[]}
@@ -178,828 +38,185 @@ const reflections = [
     subtitle: 'Streamlined diabetes management'
   }}
 >
-  <!-- Section: Code Terminal Intro -->
-  <section class="case-section terminal-intro">
-    <CodeTerminal prompts={[
-      "claude: Build my portfolio with Astro",
-      "claude: Audit CI/CD pipelines for carbon waste",
-      "claude: Predict climate gentrification hotspots",
-      "claude: Create an AI interview coach app"
-    ]} />
-    <p class="terminal-caption">This is how it starts. A question, a prompt, and curiosity.</p>
-  </section>
-
-  <!-- Section: Philosophy -->
   <section class="case-section">
-    <h2>My Approach</h2>
-    <p class="philosophy-intro">
-      I don't use AI to skip the design process—I use it to iterate faster on more ambitious ideas.
+    <p class="lab-eyebrow">01 · Deciding with AI</p>
+    <h2>Three AI reviewers disagreed. I made the call.</h2>
+    <p>
+      When I get feedback on a design, I ask AI reviewers with different jobs to argue it out: a hiring manager,
+      an art director and an engineer. They give me more options and sharper objections than I'd get alone.
+      Choosing between them is still my job. This is one real review from {councilReplay.date}.
     </p>
-    <div class="philosophy-grid">
-      {philosophy.map(pillar => (
-        <div class="philosophy-card">
-          <span class="philosophy-number">{pillar.number}</span>
-          <h3>{pillar.title}</h3>
-          <p>{pillar.description}</p>
-        </div>
-      ))}
-    </div>
+    <CouncilReplay />
+    <Figure n={1} wide caption="The homepage hero before and after the call. Drag, or use the slider, to compare.">
+      <CompareSlider
+        before={councilReplay.before}
+        after={councilReplay.after}
+        width={1440}
+        height={900}
+        subject="the homepage hero"
+        start={50}
+      />
+    </Figure>
   </section>
 
-  <!-- Section: Experiments -->
-  <section class="case-section experiments-section">
-    <h2>Experiments</h2>
-    <p class="section-intro">
-      Quick builds that validated ideas and taught lessons.
+  <section class="case-section">
+    <p class="lab-eyebrow">02 · Shipped on this site</p>
+    <h2>An assistant that only answers from this site</h2>
+    <p>
+      Recruiters ask the same questions about every candidate. The assistant on this site answers them from
+      my case studies and nothing else. When it doesn't know, it says so and points to my email.
     </p>
-    <div class="experiments-grid">
-      {labProjects.map(project => (
-        <div id={project.id} class="experiment-card">
-          <div class="experiment-image">
-            <img src={project.image} alt={`${project.title} - AI-assisted project preview`} />
-          </div>
-          <div class="experiment-content">
-            <div class="experiment-header">
-              <h3>{project.title}</h3>
-              <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link">
-                View Live
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  <polyline points="15 3 21 3 21 9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-              </a>
-            </div>
-            <p class="experiment-question">{project.question}</p>
-            <div class="experiment-meta">
-              <span class="experiment-tool">{project.tool}</span>
-              {project.award && <span class="experiment-award">{project.award}</span>}
-            </div>
-            <p class="experiment-learning">{project.keyLearning}</p>
-          </div>
-        </div>
-      ))}
-    </div>
+    <Figure n={2} wide caption={`Two real answers from the live assistant (${askAiExchange.model}), captured 4 November 2026. ${askAiExchange.stored}`}>
+      <AskAiTranscript />
+    </Figure>
+    <p class="lab-try">
+      <a href="/contact" data-ask-ai class="lab-try-link">Ask it something <span aria-hidden="true">&rarr;</span></a>
+    </p>
   </section>
 
-  <!-- Section: AI Toolbox -->
-  <section class="case-section toolbox-section">
-    <h2>AI Toolbox</h2>
-    <p class="section-intro">
-      Different tools for different jobs. Here's what I've learned about each.
+  <section class="case-section">
+    <p class="lab-eyebrow">03 · Checking the work</p>
+    <h2>The scanner found {auditSnapshot.scanner.found} problems. I found {auditSnapshot.byHand.length}.</h2>
+    <p>
+      I wrote an audit script that runs every page of this site through axe-core at desktop and phone width,
+      then checks it fits a 320px screen. It's fast and it never forgets a page. It also can't see colour over
+      a gradient, so I check those by hand.
     </p>
-    <div class="toolbox-grid">
-      {aiTools.map(tool => (
-        <div class="tool-card">
-          <div class="tool-header">
-            <h3>{tool.name}</h3>
-          </div>
-          <div class="tool-best-for">
-            <span class="tool-label">Best for:</span>
-            <span>{tool.bestFor}</span>
-          </div>
-          <p class="tool-learning">{tool.learning}</p>
-          <div class="tool-used-in">
-            {tool.usedIn.map(project => (
-              <span class="tool-project-tag">{project}</span>
-            ))}
-          </div>
-        </div>
-      ))}
+    <div class="lab-tally">
+      <DisplayNumeral value={String(auditSnapshot.scanner.found)} label="found by the scanner" note={`${auditSnapshot.pages} pages: ${auditSnapshot.scanner.scope}`} />
+      <DisplayNumeral value={String(auditSnapshot.byHand.length)} label="found by hand" note="Both fixed before release" />
     </div>
+    <RuledList label="Failures found by hand">
+      {auditSnapshot.byHand.map((f) => (
+        <RuledRow label={f.issue}>
+          <p>{f.before}.</p>
+          <p class="lab-fixed">{f.after}.</p>
+        </RuledRow>
+      ))}
+    </RuledList>
+    <p class="lab-after-list">
+      The script lives in the site's repo and runs with <code>{auditSnapshot.command}</code>. The same habit
+      shaped <a href="/work/philly-truce">Philly Truce</a>, where every contrast ratio on the page is computed
+      in code and pinned by tests.
+    </p>
   </section>
 
-  <!-- Section: What I've Learned -->
-  <section class="case-section reflections-section">
-    <h2>What I've Learned</h2>
-    <div class="reflections-grid">
-      {reflections.map((reflection, index) => (
-        <div class="reflection-card">
-          <span class="reflection-number">0{index + 1}</span>
-          <div class="reflection-content">
-            <h3>{reflection.title}</h3>
-            <p>{reflection.description}</p>
-            {reflection.before && reflection.after && (
-              <div class="before-after">
-                <div class="before">
-                  <span class="ba-label">Before</span>
-                  <code>{reflection.before}</code>
-                </div>
-                <div class="after">
-                  <span class="ba-label">After</span>
-                  <code>{reflection.after}</code>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
+  <section class="case-section">
+    <p class="lab-eyebrow">04 · Experiments</p>
+    <h2>Earlier AI builds</h2>
+    <p>
+      Builds with different AI tools, from quick experiments to full case studies. Two won awards.
+    </p>
+    <ExperimentIndex />
   </section>
 
-  <!-- Section: Currently Exploring -->
-  <section class="case-section exploring-section">
-    <h2>Currently Exploring</h2>
-    <p class="section-intro">
-      Work in progress. Ideas taking shape.
-    </p>
-    <div class="exploring-grid">
-      {exploring.map(item => (
-        <div class="exploring-card">
-          <div class="exploring-header">
-            <span class={`status-badge status-${item.status}`}>
-              {item.status === 'wip' ? 'In Progress' : 'Idea'}
-            </span>
-            <h3>{item.title}</h3>
-          </div>
-          <p>{item.description}</p>
-        </div>
-      ))}
-    </div>
-    <div class="exploring-cta">
-      <p>Have a project idea? <a href="/#contact">Let's chat.</a></p>
-    </div>
+  <section class="case-section">
+    <p class="lab-eyebrow">05 · What I've learned</p>
+    <h2>Two things I keep relearning</h2>
+    <ol class="lab-lessons">
+      {lessons.map((l) => <li>{l}</li>)}
+    </ol>
   </section>
 </CaseStudyLayout>
 
 <style>
-  /* Orange accent color override for AI Lab */
-  :global(:root) {
-    --ai-lab-accent: #f97316;
+  /* The terminal's prompt marker follows the site accent, not the retired orange */
+  :global(.case-content) {
+    --terminal-accent: var(--color-accent-text);
   }
 
-  h2 {
-    color: var(--color-fg);
+  /* Calmer rhythm: more air between chapters, no divider lines */
+  :global(.case-content) .case-section {
+    padding-bottom: 0;
+    margin-bottom: clamp(88px, 10vw, 128px);
+    border-bottom: 0;
   }
 
-  .reflection-number,
-  .lab-tag {
-    color: #f97316;
+  :global(.case-content) .case-section h2 {
+    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+    line-height: 1.15;
+    text-wrap: balance;
   }
 
-  /* Terminal Intro Section */
-  .terminal-intro {
-    text-align: center;
-    padding-bottom: 2rem;
-  }
-
-  .terminal-caption {
-    margin-top: 1.5rem;
-    color: var(--color-muted);
-    font-style: normal;
-    font-size: 1rem;
-  }
-
-  /* Philosophy Section */
-  .philosophy-intro {
-    font-size: 1.25rem;
-    color: var(--color-fg);
-    margin-bottom: 2rem;
-    font-style: normal;
-    border-left: 3px solid #f97316;
-    padding-left: 1.5rem;
-  }
-
-  .philosophy-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .philosophy-card {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 3px solid #f97316;
-  }
-
-  .philosophy-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
-  }
-
-  .philosophy-number {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: #f97316;
-    display: block;
-    margin-bottom: 0.75rem;
-  }
-
-  .philosophy-card h3 {
-    font-size: 1.125rem;
-    color: var(--color-fg);
-    margin-bottom: 0.5rem;
-  }
-
-  .philosophy-card p {
-    color: var(--color-muted);
-    line-height: 1.6;
-    margin: 0;
-    font-size: 0.9375rem;
-  }
-
-  /* Featured Project Section */
-  .featured-project-section {
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .featured-header {
-    margin-bottom: 1.5rem;
-  }
-
-  .featured-badge {
-    display: inline-block;
-    font-size: 0.75rem;
+  :global(.case-content) .lab-eyebrow {
+    margin: 0 0 0.75rem;
+    font: 500 12px/1.4 var(--font-mono);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #f97316;
-    background: rgba(249, 115, 22, 0.1);
-    padding: 0.375rem 0.75rem;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
+    color: var(--color-accent-text);
   }
 
-  .featured-header h2 {
-    margin-bottom: 0.5rem;
+  :global(.case-content) .lab-try {
+    margin-top: 1.25rem;
   }
 
-  .featured-question {
-    font-size: 1.125rem;
-    color: var(--color-muted);
-    font-style: normal;
-  }
-
-  .featured-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    align-items: center;
-  }
-
-  .featured-meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .meta-label {
-    font-size: 0.75rem;
+  .lab-try-link {
+    font: 500 13px/1.5 var(--font-mono);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-muted);
-  }
-
-  .meta-value {
     color: var(--color-fg);
-    font-weight: 500;
-  }
-
-  .featured-link {
-    margin-left: auto;
-  }
-
-  .featured-image {
-    margin-bottom: 2rem;
-    border-radius: 1rem;
-    overflow: hidden;
-    background: #1a1a24;
-  }
-
-  .featured-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .featured-narrative {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .narrative-block {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-  }
-
-  .narrative-block h4 {
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .challenge-block p {
-    color: var(--color-fg);
-    line-height: 1.6;
-    margin: 0;
-    font-size: 1.0625rem;
-  }
-
-  .decision-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    padding: 0;
-    background: transparent;
-  }
-
-  .decision-column {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-  }
-
-  .decision-column.failed {
-    border-left: 3px solid #ef4444;
-  }
-
-  .decision-column.failed h4 {
-    color: #ef4444;
-  }
-
-  .decision-column.worked {
-    border-left: 3px solid #22c55e;
-  }
-
-  .decision-column.worked h4 {
-    color: #22c55e;
-  }
-
-  .decision-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .decision-column li {
-    color: var(--color-fg);
-    line-height: 1.6;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .decision-column li:last-child {
-    border-bottom: none;
-  }
-
-  .tradeoff-block blockquote {
-    margin: 0;
-    font-size: 1.0625rem;
-    font-style: normal;
-    color: var(--color-fg);
-    line-height: 1.6;
-    border-left: 3px solid #f97316;
-    padding-left: 1rem;
-  }
-
-  /* Other Experiments */
-  .experiments-grid {
-    display: grid;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .experiment-card {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 2rem;
-    background: var(--color-border);
-    border-radius: 1rem;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .experiment-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  }
-
-  .experiment-image {
-    aspect-ratio: 16/10;
-    overflow: hidden;
-    background: #1a1a24;
-  }
-
-  .experiment-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    transition: transform 0.3s ease;
-  }
-
-  .experiment-card:hover .experiment-image img {
-    transform: scale(1.05);
-  }
-
-  .experiment-content {
-    padding: 1.5rem 1.5rem 1.5rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 0; /* Allow content to shrink */
-  }
-
-  .experiment-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .experiment-header h3 {
-    font-size: 1.25rem;
-    color: var(--color-fg);
-    margin: 0;
-  }
-
-  .experiment-question {
-    font-style: normal;
-    color: var(--color-muted);
-    margin-bottom: 0.75rem;
-    word-wrap: break-word;
-  }
-
-  .experiment-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .experiment-tool {
-    font-size: 0.8125rem;
-    color: #f97316;
-    background: rgba(249, 115, 22, 0.1);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    white-space: nowrap;
-  }
-
-  .experiment-award {
-    font-size: 0.8125rem;
-    color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    white-space: nowrap;
-  }
-
-  .experiment-learning {
-    color: var(--color-fg);
-    line-height: 1.6;
-    margin: 0;
-    font-size: 0.9375rem;
-    word-wrap: break-word;
-  }
-
-  /* Project Link */
-  .project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    background: transparent;
-    border: 1px solid #f97316;
-    border-radius: 1rem;
-    color: #f97316;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-
-  .project-link:hover {
-    background: #f97316;
-    color: white;
-  }
-
-  /* AI Toolbox */
-  .toolbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .tool-card {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .tool-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
-  }
-
-  .tool-header {
-    margin-bottom: 1rem;
-  }
-
-  .tool-header h3 {
-    font-size: 1.125rem;
-    color: var(--color-fg);
-    margin: 0;
-  }
-
-  .tool-best-for {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .tool-label {
-    color: #f97316;
-    font-weight: 500;
-    margin-right: 0.25rem;
-  }
-
-  .tool-learning {
-    color: var(--color-fg);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    font-size: 0.9375rem;
-  }
-
-  .tool-used-in {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .tool-project-tag {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 0.5rem;
-    color: var(--color-muted);
-  }
-
-  /* Other Experiments Section - extra spacing after featured projects */
-  .experiments-section {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  /* AI Toolbox Section - extra spacing */
-  .toolbox-section {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  /* Reflections Section */
-  .reflections-section {
-    margin-top: 5rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  /* Reflections Grid */
-  .reflections-grid {
-    display: grid;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .reflection-card {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    background: var(--color-border);
-    border-radius: 1rem;
-    border-left: 3px solid #f97316;
-  }
-
-  .reflection-number {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: #f97316;
-    flex-shrink: 0;
-  }
-
-  .reflection-content h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-fg);
-  }
-
-  .reflection-content p {
-    color: var(--color-muted);
-    line-height: 1.6;
-    margin: 0 0 1rem 0;
-  }
-
-  .before-after {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .before, .after {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .ba-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .before .ba-label {
-    color: #ef4444;
-  }
-
-  .after .ba-label {
-    color: #22c55e;
-  }
-
-  .before-after code {
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    color: var(--color-fg);
-    line-height: 1.5;
-    white-space: pre-wrap;
-  }
-
-  /* Currently Exploring Section - extra spacing */
-  .exploring-section {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  /* Currently Exploring */
-  .exploring-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .exploring-card {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border: 1px dashed rgba(249, 115, 22, 0.3);
-    transition: border-color 0.3s ease;
-  }
-
-  .exploring-card:hover {
-    border-color: #f97316;
-  }
-
-  .exploring-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .status-badge {
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-weight: 500;
-  }
-
-  .status-wip {
-    background: rgba(234, 179, 8, 0.15);
-    color: #eab308;
-  }
-
-  .status-idea {
-    background: rgba(139, 92, 246, 0.15);
-    color: #a78bfa;
-  }
-
-  .exploring-header h3 {
-    font-size: 1.125rem;
-    color: var(--color-fg);
-    margin: 0;
-  }
-
-  .exploring-card p {
-    color: var(--color-muted);
-    line-height: 1.6;
-    margin: 0;
-    font-size: 0.9375rem;
-  }
-
-  .exploring-cta {
-    margin-top: 2rem;
-    text-align: center;
-  }
-
-  .exploring-cta p {
-    color: var(--color-muted);
-    font-size: 1.0625rem;
-  }
-
-  .exploring-cta a {
-    color: #f97316;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-
-  .exploring-cta a:hover {
-    color: #fb923c;
     text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
   }
 
-  /* Section intro */
-  .section-intro {
-    color: var(--color-muted);
-    margin-bottom: 1rem;
+  .lab-try-link:hover { color: var(--color-accent-text); }
+
+  .lab-tally {
+    display: grid;
+    gap: 0.5rem 2rem;
   }
 
-  /* Respect reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .philosophy-card,
-    .tool-card,
-    .experiment-card,
-    .exploring-card {
-      transition: none;
-    }
-
-    .philosophy-card:hover,
-    .tool-card:hover,
-    .experiment-card:hover {
-      transform: none;
-    }
-
-    .experiment-card:hover .experiment-image img {
-      transform: none;
-    }
+  @media (min-width: 720px) {
+    .lab-tally { grid-template-columns: 1fr 1fr; }
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .philosophy-grid {
-      grid-template-columns: 1fr;
-    }
+  :global(.case-content) .lab-fixed {
+    color: var(--color-fg);
+  }
 
-    .decision-card {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
+  :global(.case-content) .lab-after-list {
+    margin-top: 1.5rem;
+  }
 
-    .featured-meta {
-      gap: 1rem;
-    }
+  :global(.case-content) .lab-after-list code {
+    font: 500 0.875em var(--font-mono);
+    color: var(--color-fg);
+  }
 
-    .featured-link {
-      margin-left: 0;
-      width: 100%;
-      justify-content: center;
-      margin-top: 0.5rem;
-    }
+  /* Lessons: hanging numerals, lead-size sentences, no containers */
+  .lab-lessons {
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: lesson;
+  }
 
-    .experiment-card {
-      grid-template-columns: 1fr;
-    }
+  :global(.case-content) .lab-lessons li {
+    position: relative;
+    margin: 0 0 2rem;
+    padding-left: 2.5rem;
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+    counter-increment: lesson;
+    text-wrap: pretty;
+  }
 
-    .experiment-content {
-      padding: 0 1.5rem 1.5rem 1.5rem;
-    }
+  .lab-lessons li::before {
+    content: counter(lesson);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-family: var(--font-display);
+    font-size: 1em;
+    color: var(--color-accent-text);
+  }
 
-    .toolbox-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .reflection-card {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .before-after {
-      grid-template-columns: 1fr;
-    }
-
-    .exploring-grid {
-      grid-template-columns: 1fr;
-    }
+  @media (min-width: 1100px) {
+    :global(.case-content) .lab-lessons li { padding-left: 0; }
+    .lab-lessons li::before { left: -3rem; }
   }
 </style>

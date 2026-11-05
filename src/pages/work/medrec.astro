@@ -1,5 +1,11 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import Lead from '../../components/case/Lead.astro';
+import ContributionList from '../../components/case/ContributionList.astro';
+import ImpactList from '../../components/case/ImpactList.astro';
+import RuledList from '../../components/case/RuledList.astro';
+import RuledRow from '../../components/case/RuledRow.astro';
+import Figure from '../../components/case/Figure.astro';
 import BeforeAfterSlider from '../../components/BeforeAfterSlider.astro';
 
 const metrics = [
@@ -122,6 +128,47 @@ const designPrinciples = [
     description: 'Copy avoids medical jargon and judgment. Celebrates small wins. Acknowledges the emotional weight of daily management.'
   }
 ];
+
+const wireframeLearnings = [
+  'Early sketches helped us eliminate a cluttered onboarding flow before investing in code.',
+  'Mid-fidelity testing revealed that users preferred a bottom nav over a hamburger menu.',
+  'High-fidelity prototypes validated that calming colors reduced reported anxiety during glucose tracking.',
+  'Iterating on micro-interactions early helped us prioritize meaningful feedback over flashy animations.'
+];
+
+const conclusionLearnings = [
+  {
+    title: 'Emotional needs come first',
+    description: 'Healthcare design requires understanding feelings before features. Users need to feel supported, not surveilled.'
+  },
+  {
+    title: 'Progressive disclosure prevents overwhelm',
+    description: 'Start simple, reveal complexity gradually. Power users get depth; beginners get clarity.'
+  },
+  {
+    title: 'Cross-platform consistency builds trust',
+    description: 'When the mobile, web, and watch experiences feel unified, users feel confident in the entire ecosystem.'
+  },
+  {
+    title: 'Test early, test often',
+    description: 'Every assumption I had was challenged by real users. The best designs emerged from listening, not guessing.'
+  }
+];
+
+const aboutMe = [
+  {
+    title: 'Empathy-Driven Design',
+    description: 'I approach health tech with sensitivity, understanding that users aren\'t just completing tasks—they\'re managing their lives.'
+  },
+  {
+    title: 'End-to-End Ownership',
+    description: 'From research to final UI, I led the full design process, ensuring consistency and intentionality at every step.'
+  },
+  {
+    title: 'Design System Expertise',
+    description: 'I built scalable, accessible components that can grow with the product and serve as a foundation for future features.'
+  }
+];
 ---
 
 <CaseStudyLayout
@@ -154,53 +201,25 @@ const designPrinciples = [
       <p class="lead-text secondary">
         In healthcare tech, usability directly impacts patient retention, daily active use, and reduced support costs.
       </p>
-      <div class="challenge-box">
-        <span class="challenge-label">The Problem</span>
+      <Lead label="The Problem">
         <p>
           Design an interface that feels <strong>supportive rather than burdensome</strong>,
           turning a daily chore into a moment of self-care while reducing error rates and improving task efficiency across three platforms.
         </p>
-      </div>
+      </Lead>
     </div>
   </section>
 
   <!-- Section: My Contributions -->
   <section class="case-section">
     <h2>My Contributions</h2>
-    <div class="contributions-stack">
-      {contributions.map((contribution, index) => (
-        <div class="contribution-row reveal">
-          <span class="contribution-number">0{index + 1}</span>
-          <div class="contribution-content">
-            <h3 class="contribution-label">{contribution.label}</h3>
-            <div class="contribution-metrics">
-              {contribution.metrics.map((metric) => (
-                <div class="contribution-metric">
-                  <span class="metric-value">{metric.value}</span>
-                  <span class="metric-text">{metric.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <ContributionList contributions={contributions} />
   </section>
 
   <!-- Section: How I Made an Impact -->
   <section class="case-section">
     <h2>How I Made an Impact</h2>
-    <div class="impact-stack">
-      {impactPoints.map((point, index) => (
-        <div class="impact-row">
-          <span class="impact-number">0{index + 1}</span>
-          <div class="impact-content">
-            <h3>{point.title}</h3>
-            <p>{point.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
+    <ImpactList points={impactPoints} />
   </section>
 
   <!-- Hero Images Grid -->
@@ -223,40 +242,44 @@ const designPrinciples = [
       Three distinct personas emerged to guide design decisions:
     </p>
 
-    <div class="persona-stack">
+    <RuledList label="Personas">
       {personas.map(persona => (
-        <div class="persona-card">
+        <RuledRow label={persona.type}>
           <div class="persona-header">
-            <div class="persona-avatar">
+            <span class="persona-avatar">
               <img src={persona.image} alt={`${persona.name}, ${persona.type}`} />
-            </div>
-            <div class="persona-title">
-              <h3>{persona.name}</h3>
-              <span class="persona-type">{persona.type} · Age {persona.age}</span>
-            </div>
-          </div>
-          <p class="persona-context">{persona.context}</p>
-          <div class="persona-goal">
-            <span class="persona-label">Goal</span>
-            <p>{persona.goal}</p>
-          </div>
-          <div class="persona-lists">
-            <div class="persona-list-item">
-              <span class="persona-label">Key Needs</span>
-              <ul>
-                {persona.needs.map(need => <li>{need}</li>)}
-              </ul>
-            </div>
-            <div class="persona-list-item">
-              <span class="persona-label">Frustrations</span>
-              <ul class="frustrations">
-                {persona.frustrations.map(f => <li>{f}</li>)}
-              </ul>
+            </span>
+            <div>
+              <h3 class="persona-name">{persona.name}</h3>
+              <span class="persona-age">Age {persona.age}</span>
             </div>
           </div>
-        </div>
+          <p>{persona.context}</p>
+          <dl class="persona-facts">
+            <div class="persona-fact persona-goal">
+              <dt>Goal</dt>
+              <dd>{persona.goal}</dd>
+            </div>
+            <div class="persona-fact">
+              <dt>Key Needs</dt>
+              <dd>
+                <ul>
+                  {persona.needs.map(need => <li>{need}</li>)}
+                </ul>
+              </dd>
+            </div>
+            <div class="persona-fact">
+              <dt>Frustrations</dt>
+              <dd>
+                <ul>
+                  {persona.frustrations.map(f => <li>{f}</li>)}
+                </ul>
+              </dd>
+            </div>
+          </dl>
+        </RuledRow>
       ))}
-    </div>
+    </RuledList>
   </section>
 
   <!-- Section: Wireframing & Iteration -->
@@ -315,24 +338,13 @@ const designPrinciples = [
 
     <div class="key-learnings">
       <h3>Key Learnings from Wireframing</h3>
-      <div class="learnings-grid">
-        <div class="learning-item">
-          <span class="learning-number">01</span>
-          <p>Early sketches helped us eliminate a cluttered onboarding flow before investing in code.</p>
-        </div>
-        <div class="learning-item">
-          <span class="learning-number">02</span>
-          <p>Mid-fidelity testing revealed that users preferred a bottom nav over a hamburger menu.</p>
-        </div>
-        <div class="learning-item">
-          <span class="learning-number">03</span>
-          <p>High-fidelity prototypes validated that calming colors reduced reported anxiety during glucose tracking.</p>
-        </div>
-        <div class="learning-item">
-          <span class="learning-number">04</span>
-          <p>Iterating on micro-interactions early helped us prioritize meaningful feedback over flashy animations.</p>
-        </div>
-      </div>
+      <RuledList label="Key learnings from wireframing">
+        {wireframeLearnings.map(learning => (
+          <RuledRow>
+            <p>{learning}</p>
+          </RuledRow>
+        ))}
+      </RuledList>
     </div>
   </section>
 
@@ -390,25 +402,22 @@ const designPrinciples = [
       Usability testing with <strong>6 potential users</strong> across all three personas revealed critical issues that shaped the final design:
     </p>
 
-    <div class="validation-grid">
+    <RuledList label="Usability findings">
       {usabilityFindings.map(finding => (
-        <div class="validation-card">
-          <div class="validation-header">
-            <span class="validation-issue">{finding.issue}</span>
-          </div>
-          <div class="validation-content">
-            <div class="validation-problem">
-              <span class="validation-label">Problem</span>
-              <p>{finding.problem}</p>
+        <RuledRow title={finding.issue}>
+          <dl class="finding">
+            <div class="finding-part">
+              <dt>Problem</dt>
+              <dd>{finding.problem}</dd>
             </div>
-            <div class="validation-solution">
-              <span class="validation-label">Solution</span>
-              <p>{finding.solution}</p>
+            <div class="finding-part finding-solution">
+              <dt>Solution</dt>
+              <dd>{finding.solution}</dd>
             </div>
-          </div>
-        </div>
+          </dl>
+        </RuledRow>
       ))}
-    </div>
+    </RuledList>
   </section>
 
   <!-- Section: Deliverables -->
@@ -476,17 +485,13 @@ const designPrinciples = [
       Three core principles guided every design decision:
     </p>
 
-    <div class="philosophy-stack">
-      {designPrinciples.map((principle, index) => (
-        <div class="philosophy-row">
-          <span class="philosophy-number">0{index + 1}</span>
-          <div class="philosophy-content">
-            <h3>{principle.title}</h3>
-            <p>{principle.description}</p>
-          </div>
-        </div>
+    <RuledList label="Design principles">
+      {designPrinciples.map(principle => (
+        <RuledRow title={principle.title}>
+          <p>{principle.description}</p>
+        </RuledRow>
       ))}
-    </div>
+    </RuledList>
   </section>
 
   <!-- Section: Visual Direction -->
@@ -496,36 +501,38 @@ const designPrinciples = [
       The visual system was designed to feel calming and supportive—never clinical or alarming.
     </p>
 
-    <div class="style-guide-block">
-      <div class="style-guide-item">
-        <span class="style-label">Colors</span>
-        <div class="color-swatches">
-          <span class="swatch" style="background: #E6D3FF"></span>
-          <span class="swatch" style="background: #B87EFF"></span>
-          <span class="swatch" style="background: #5F6366"></span>
+    <Figure>
+      <div class="style-guide-block">
+        <div class="style-guide-item">
+          <span class="style-label">Colors</span>
+          <div class="color-swatches">
+            <span class="swatch" style="background: #E6D3FF"></span>
+            <span class="swatch" style="background: #B87EFF"></span>
+            <span class="swatch" style="background: #5F6366"></span>
+          </div>
+          <span class="style-desc">Soft, Vibrant, Grounded</span>
         </div>
-        <span class="style-desc">Soft, Vibrant, Grounded</span>
-      </div>
 
-      <div class="style-guide-item">
-        <span class="style-label">Typography</span>
-        <div class="type-preview">
-          <span class="type-display">Estedad</span>
-          <span class="type-secondary">Variable Font</span>
+        <div class="style-guide-item">
+          <span class="style-label">Typography</span>
+          <div class="type-preview">
+            <span class="type-display">Estedad</span>
+            <span class="type-secondary">Variable Font</span>
+          </div>
+          <span class="style-desc">Clarity + Trust</span>
         </div>
-        <span class="style-desc">Clarity + Trust</span>
-      </div>
 
-      <div class="style-guide-item">
-        <span class="style-label">Spacing</span>
-        <div class="spacing-preview">
-          <span class="space-unit">8</span>
-          <span class="space-unit">16</span>
-          <span class="space-unit">24</span>
+        <div class="style-guide-item">
+          <span class="style-label">Spacing</span>
+          <div class="spacing-preview">
+            <span class="space-unit">8</span>
+            <span class="space-unit">16</span>
+            <span class="space-unit">24</span>
+          </div>
+          <span class="style-desc">Breathing Room</span>
         </div>
-        <span class="style-desc">Breathing Room</span>
       </div>
-    </div>
+    </Figure>
   </section>
 
   <!-- Section: Website Walkthrough -->
@@ -545,32 +552,19 @@ const designPrinciples = [
   <!-- Section: Conclusion & Learnings -->
   <section class="case-section">
     <h2>Conclusion & Learnings</h2>
-    <div class="reflections-container">
-      <blockquote class="reflection-quote">
-        <p>
-          "Designing for healthcare goes beyond usability—it's about addressing the emotional weight users carry every day."
-        </p>
-      </blockquote>
+    <blockquote>
+      <p>
+        "Designing for healthcare goes beyond usability—it's about addressing the emotional weight users carry every day."
+      </p>
+    </blockquote>
 
-      <div class="learnings-grid">
-        <div class="learning-card">
-          <h3>Emotional needs come first</h3>
-          <p>Healthcare design requires understanding feelings before features. Users need to feel supported, not surveilled.</p>
-        </div>
-        <div class="learning-card">
-          <h3>Progressive disclosure prevents overwhelm</h3>
-          <p>Start simple, reveal complexity gradually. Power users get depth; beginners get clarity.</p>
-        </div>
-        <div class="learning-card">
-          <h3>Cross-platform consistency builds trust</h3>
-          <p>When the mobile, web, and watch experiences feel unified, users feel confident in the entire ecosystem.</p>
-        </div>
-        <div class="learning-card">
-          <h3>Test early, test often</h3>
-          <p>Every assumption I had was challenged by real users. The best designs emerged from listening, not guessing.</p>
-        </div>
-      </div>
-    </div>
+    <RuledList label="Learnings">
+      {conclusionLearnings.map(learning => (
+        <RuledRow title={learning.title}>
+          <p>{learning.description}</p>
+        </RuledRow>
+      ))}
+    </RuledList>
   </section>
 
   <!-- Section: What This Shows About Me -->
@@ -580,20 +574,13 @@ const designPrinciples = [
       This project shows that I can take a deeply personal, emotionally-charged topic and translate it into a design that's both functional and human.
     </p>
 
-    <div class="about-me-stack">
-      <div class="about-me-row">
-        <h3>Empathy-Driven Design</h3>
-        <p>I approach health tech with sensitivity, understanding that users aren't just completing tasks—they're managing their lives.</p>
-      </div>
-      <div class="about-me-row">
-        <h3>End-to-End Ownership</h3>
-        <p>From research to final UI, I led the full design process, ensuring consistency and intentionality at every step.</p>
-      </div>
-      <div class="about-me-row">
-        <h3>Design System Expertise</h3>
-        <p>I built scalable, accessible components that can grow with the product and serve as a foundation for future features.</p>
-      </div>
-    </div>
+    <RuledList label="What this shows">
+      {aboutMe.map(point => (
+        <RuledRow title={point.title}>
+          <p>{point.description}</p>
+        </RuledRow>
+      ))}
+    </RuledList>
   </section>
 
   <!-- Section: Mobile App Demo -->
@@ -677,263 +664,93 @@ const designPrinciples = [
     color: var(--color-fg);
   }
 
-  .challenge-box {
-    background: linear-gradient(135deg, rgba(74, 94, 228, 0.12) 0%, rgba(74, 94, 228, 0.04) 100%);
-    border-left: 3px solid var(--color-accent);
-    padding: 1rem 1.25rem;
-    border-radius: 0 0.5rem 0.5rem 0;
-    margin-top: 1.5rem;
-  }
-
-  .challenge-label {
-    display: block;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-text);
-    margin-bottom: 0.5rem;
-  }
-
-  .challenge-box p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-fg);
-    line-height: 1.6;
-  }
-
-  /* Contributions Stack - Compact */
-  .contributions-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-
-  .contribution-row {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.5rem;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .contribution-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 32px;
-  }
-
-  .contribution-content {
-    flex: 1;
-  }
-
-  .contribution-label {
-    margin: 0 0 0.75rem;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--color-fg);
-  }
-
-  .contribution-metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-  }
-
-  @media (max-width: 768px) {
-    .contribution-metrics {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .contribution-metrics {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .contribution-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-
-  .contribution-metric .metric-value {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-  }
-
-  .contribution-metric .metric-text {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    line-height: 1.4;
-  }
-
-  /* Impact Stack - Compact */
-  .impact-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-
-  .impact-row {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.5rem;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .impact-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 32px;
-  }
-
-  .impact-content h3 {
-    margin: 0 0 0.375rem;
-    font-size: 0.9375rem;
-    color: var(--color-fg);
-  }
-
-  .impact-content p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Persona Stack - Compact */
-  .persona-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .persona-card {
-    background: var(--color-border);
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
+  /* Personas: one ruled row each, persona type in the label column */
   .persona-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    gap: 0.875rem;
+    margin-bottom: 0.875rem;
   }
 
   .persona-avatar {
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
   }
 
-  .persona-avatar img {
+  .case-section .persona-avatar img {
     width: 100%;
-    height: 130%;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
     object-fit: cover;
-    object-position: center bottom;
-    transform: translateY(-40%);
+    object-position: center top;
   }
 
-  .persona-title h3 {
+  .case-section .persona-name {
     margin: 0;
-    font-size: 1.25rem;
+    font: 600 1.125rem/1.35 var(--font-sans);
+    letter-spacing: -0.01em;
+    text-transform: none;
     color: var(--color-fg);
   }
 
-  .persona-type {
+  .persona-age {
     font-size: 0.875rem;
-    color: var(--color-accent-text);
-    font-weight: 500;
+    color: var(--color-muted);
   }
 
-  .persona-context {
-    font-size: 1rem;
-    color: var(--color-muted);
-    font-style: normal;
-    margin: 0 0 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+  .persona-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
+    margin: 1rem 0 0;
   }
 
   .persona-goal {
-    margin-bottom: 1.5rem;
-  }
-
-  .persona-label {
-    display: block;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-text);
-    margin-bottom: 0.5rem;
-  }
-
-  .persona-goal p {
-    margin: 0;
-    color: var(--color-fg);
-    font-size: 1rem;
-  }
-
-  .persona-lists {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-column: 1 / -1;
   }
 
   @media (max-width: 600px) {
-    .persona-lists {
+    .persona-facts {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
     }
   }
 
-  .persona-list-item ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .persona-list-item li {
+  .persona-fact dt,
+  .finding-part dt {
+    margin-bottom: 0.25rem;
+    font: 500 11px/1.4 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--color-muted);
-    padding-left: 1rem;
-    position: relative;
-    margin-bottom: 0.375rem;
+  }
+
+  .persona-fact dd,
+  .finding-part dd {
+    margin: 0;
     font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-muted);
   }
 
-  .persona-list-item li::before {
-    content: '+';
-    position: absolute;
-    left: 0;
-    color: var(--color-accent-text);
-    font-weight: 600;
+  .persona-goal dd,
+  .finding-solution dd {
+    color: var(--color-fg);
   }
 
-  .persona-list-item .frustrations li::before {
-    content: '-';
-    color: #e57373;
+  .case-section .persona-fact ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .case-section .persona-fact li {
+    margin-bottom: 0.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
   /* Fidelity Stages */
@@ -992,10 +809,6 @@ const designPrinciples = [
     display: block;
   }
 
-  .stage-image .image-placeholder {
-    aspect-ratio: 3/4;
-  }
-
   .fidelity-stage > p {
     font-size: 0.875rem;
     color: var(--color-muted);
@@ -1012,8 +825,6 @@ const designPrinciples = [
   /* Key Learnings from Wireframing */
   .key-learnings {
     margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
   }
 
   .key-learnings h3 {
@@ -1021,42 +832,6 @@ const designPrinciples = [
     color: var(--color-accent-text);
     margin: 0 0 1.5rem;
     font-weight: 600;
-  }
-
-  .learnings-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .learnings-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .learning-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.25rem;
-  }
-
-  .learning-item .learning-number {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    flex-shrink: 0;
-    width: 30px;
-  }
-
-  .learning-item p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.5;
   }
 
   /* Evolution Sections with Before/After Slider */
@@ -1105,72 +880,18 @@ const designPrinciples = [
     margin-right: auto;
   }
 
-  /* Validation Grid */
-  .validation-grid {
+  /* Usability findings: problem and solution side by side inside each ruled row */
+  .finding {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
+    margin: 0;
   }
 
-  @media (max-width: 768px) {
-    .validation-grid {
+  @media (max-width: 600px) {
+    .finding {
       grid-template-columns: 1fr;
     }
-  }
-
-  .validation-card {
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    overflow: hidden;
-  }
-
-  .validation-header {
-    background: rgba(74, 94, 228, 0.15);
-    padding: 1rem 1.25rem;
-  }
-
-  .validation-issue {
-    font-weight: 600;
-    color: var(--color-fg);
-    font-size: 0.9375rem;
-  }
-
-  .validation-content {
-    padding: 1.25rem;
-  }
-
-  .validation-problem,
-  .validation-solution {
-    margin-bottom: 1rem;
-  }
-
-  .validation-solution {
-    margin-bottom: 0;
-  }
-
-  .validation-label {
-    display: block;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
-    margin-bottom: 0.25rem;
-  }
-
-  .validation-solution .validation-label {
-    color: var(--color-accent-text);
-  }
-
-  .validation-content p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-  }
-
-  .validation-solution p {
-    color: var(--color-fg);
   }
 
   /* Deliverables */
@@ -1211,11 +932,6 @@ const designPrinciples = [
   .gallery-item {
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-
-  .gallery-item:hover {
-    transform: translateY(-4px);
   }
 
   .gallery-item.wide {
@@ -1225,11 +941,6 @@ const designPrinciples = [
   .gallery-image {
     width: 100%;
     border-radius: 0.75rem;
-    transition: box-shadow 0.3s ease;
-  }
-
-  .gallery-item:hover .gallery-image {
-    box-shadow: 0 8px 30px rgba(74, 94, 228, 0.2);
   }
 
   .gallery-image.mobile {
@@ -1255,73 +966,6 @@ const designPrinciples = [
     margin-top: 0.75rem;
   }
 
-  /* Image Placeholders */
-  .image-placeholder {
-    background: linear-gradient(135deg, var(--color-border) 0%, rgba(74, 94, 228, 0.1) 100%);
-    border: 1px dashed var(--color-muted);
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-muted);
-    font-size: 0.8125rem;
-  }
-
-  .image-placeholder.mobile {
-    aspect-ratio: 9/16;
-  }
-
-  .image-placeholder.desktop {
-    aspect-ratio: 16/10;
-  }
-
-  .image-placeholder.watch {
-    width: 120px;
-    height: 120px;
-    border-radius: 1.5rem;
-    margin: 0 auto;
-  }
-
-  /* Philosophy Stack (3 rows) */
-  .philosophy-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .philosophy-row {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .philosophy-number {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 40px;
-  }
-
-  .philosophy-content h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.0625rem;
-    color: var(--color-fg);
-  }
-
-  .philosophy-content p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
   /* Recording Section */
   .recording-container {
     width: 100%;
@@ -1344,60 +988,6 @@ const designPrinciples = [
     border-radius: 24px;
   }
 
-  /* Reflections Section */
-  .reflections-container {
-    margin-top: 1.5rem;
-  }
-
-  .reflection-quote {
-    background: linear-gradient(135deg, rgba(74, 94, 228, 0.15) 0%, rgba(74, 94, 228, 0.05) 100%);
-    border-left: 4px solid var(--color-accent);
-    padding: 1.5rem 2rem;
-    border-radius: 0 0.75rem 0.75rem 0;
-    margin-bottom: 2rem;
-  }
-
-  .reflection-quote p {
-    font-size: 1.25rem !important;
-    color: var(--color-fg) !important;
-    font-style: normal;
-    margin: 0 !important;
-    line-height: 1.6;
-  }
-
-  .learnings-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    .learnings-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .learning-card {
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-  }
-
-  .learning-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-fg);
-  }
-
-  .learning-card p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
   /* Conclusion / What This Shows About Me */
   .conclusion {
     border-top: 1px solid var(--color-border);
@@ -1411,56 +1001,11 @@ const designPrinciples = [
     margin-bottom: 2rem;
   }
 
-  .about-me-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .about-me-row {
-    padding: 1.5rem 2rem;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .about-me-row h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.0625rem;
-    color: var(--color-accent-text);
-  }
-
-  .about-me-row p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Blockquote (general) */
-  blockquote {
-    background: linear-gradient(135deg, rgba(74, 94, 228, 0.1) 0%, transparent 100%);
-    padding: 2rem;
-    border-radius: 0 0.75rem 0.75rem 0;
-    margin: 2rem 0;
-  }
-
-  blockquote p {
-    font-size: 1.25rem !important;
-    color: var(--color-fg) !important;
-    font-style: normal;
-    margin: 0 !important;
-  }
-
   /* Style Guide Block */
   .style-guide-block {
     display: flex;
     justify-content: space-between;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 2rem;
-    margin-top: 2rem;
-    border: 1px solid rgba(74, 94, 228, 0.2);
+    padding: 1.5rem 1rem;
   }
 
   @media (max-width: 768px) {
@@ -1542,70 +1087,6 @@ const designPrinciples = [
     font-weight: 600;
     color: var(--color-accent-text);
   }
-
-  /* Onboarding Steps */
-  .onboarding-intro {
-    color: var(--color-muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .onboarding-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .onboarding-step {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.25rem 1.5rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .onboarding-step .step-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    opacity: 0.6;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 30px;
-  }
-
-  .onboarding-step .step-info h4 {
-    margin: 0 0 0.375rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-fg);
-  }
-
-  .onboarding-step .step-info p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
-
-  /* Onboarding Demo */
-  .onboarding-demo {
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .demo-label {
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  /* ========================================
-     SECTION & HEADING STYLES
-     ======================================== */
 
   /* Section spacing with visual dividers */
   .case-section {

@@ -949,14 +949,13 @@ const breadcrumbSchema = {
     /* Key decisions */
     .decision-list {
       display: grid;
-      gap: 1rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-fg) 14%, transparent);
     }
 
+    /* Ruled rows, not cards: a surface frames artifacts, never paragraphs */
     .decision-card {
-      padding: 1.5rem 1.5rem 1.25rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.025);
+      padding: 1.75rem 0;
+      border-top: 1px solid color-mix(in srgb, var(--color-fg) 14%, transparent);
     }
 
     .decision-title {
@@ -1194,15 +1193,18 @@ const breadcrumbSchema = {
       margin-bottom: 0.5rem;
     }
 
+    /* Pull quote: set large, no side bar */
     .case-content :global(blockquote) {
-      border-left: 3px solid var(--color-accent);
-      padding-left: 1.5rem;
-      margin: 2rem 0;
+      margin: 2.5rem 0;
+      padding: 0;
+      border: 0;
       font-style: normal;
     }
 
     .case-content :global(blockquote p) {
-      font-size: 1.125rem;
+      font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
       color: var(--color-fg);
     }
 
@@ -1278,10 +1280,7 @@ const breadcrumbSchema = {
       display: block;
       text-align: center;
       text-decoration: none;
-      padding: 3rem;
-      background: var(--color-border);
-      border-radius: 1.5rem;
-      transition: all 0.4s ease;
+      padding: 1rem 0 0;
     }
 
     .next-image-frame {
@@ -1306,10 +1305,11 @@ const breadcrumbSchema = {
       transform: scale(1.03);
     }
 
-    .next-project-feature:hover {
-      background: rgba(74, 94, 228, 0.08);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(74, 94, 228, 0.15);
+    .next-project-feature:hover .next-title,
+    .next-project-feature:focus-visible .next-title {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
     }
 
     .next-label {

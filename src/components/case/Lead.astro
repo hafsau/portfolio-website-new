@@ -1,0 +1,44 @@
+---
+/**
+ * A labelled lead statement: the "problem" or "trade-off" line of a case study, set large
+ * instead of boxed. The label is a small mono line above it.
+ */
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<div class="lead">
+  <p class="lead-label">{label}</p>
+  <div class="lead-body"><slot /></div>
+</div>
+
+<style>
+  .lead {
+    margin: 2.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-fg) 14%, transparent);
+  }
+
+  :global(.case-content) .lead-label {
+    margin: 0 0 0.75rem;
+    font: 500 12px/1.4 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  :global(.case-content) .lead-body > :global(p) {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+    text-wrap: pretty;
+  }
+
+  :global(.case-content) .lead-body > :global(p + p) {
+    margin-top: 0.75rem;
+  }
+</style>

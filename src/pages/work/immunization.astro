@@ -1,5 +1,11 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import Lead from '../../components/case/Lead.astro';
+import ContributionList from '../../components/case/ContributionList.astro';
+import ImpactList from '../../components/case/ImpactList.astro';
+import RuledList from '../../components/case/RuledList.astro';
+import RuledRow from '../../components/case/RuledRow.astro';
+import DisplayNumeral from '../../components/case/DisplayNumeral.astro';
 
 const metrics = [
   { value: '21% → 91%', label: 'Medical officer attendance increase' },
@@ -112,6 +118,59 @@ const learnings = [
     description: 'Securing £250k from DFID proved our methodology was sound—external validation that opened doors for province-wide expansion.'
   }
 ];
+
+const stakeholders = [
+  {
+    title: 'Chief Minister Office',
+    description: 'Prepared data-driven presentations demonstrating ROI and public health impact. Secured executive sponsorship for province-wide rollout.'
+  },
+  {
+    title: 'World Bank (PPMR Program)',
+    description: 'Aligned project outcomes with funding requirements. Demonstrated measurable results that justified additional budget allocation.'
+  },
+  {
+    title: 'District Health Officers',
+    description: 'Trained supervisors on dashboard usage and established feedback loops for continuous improvement.'
+  }
+];
+
+const results = [
+  {
+    value: '21% → 91%',
+    label: 'Medical Officer Attendance',
+    description: 'Real-time GPS tracking created accountability that paper reports never could'
+  },
+  {
+    value: '3M',
+    label: 'Children\'s Records Digitized',
+    description: 'National Child Vaccination Card redesign enabled province-wide digital records'
+  },
+  {
+    value: '£250k',
+    label: 'DFID Funding Awarded',
+    description: 'International validation of our approach from UK Department for International Development'
+  }
+];
+const [headlineResult, ...otherResults] = results;
+
+const aboutMe = [
+  {
+    title: 'Cross-Functional Leadership',
+    description: 'Led development of two major products (eVaccs 2.0 and Child Vaccination Card app) coordinating across Health, Irrigation, and Education departments.'
+  },
+  {
+    title: 'Designing for Constraints',
+    description: 'Advocated for radical simplicity based on user research. The solution worked because it was designed for real-world limitations, not ideal conditions.'
+  },
+  {
+    title: 'Stakeholder Management',
+    description: 'Worked with CM Roadmap Team consultants, secured £250k DFID funding, and coordinated requirements gathering across multiple government departments.'
+  },
+  {
+    title: 'Measurable Impact at Scale',
+    description: 'Delivered results that mattered: medical officer attendance up from 21% to 91%, 3 million children\'s records digitized, 4,000+ medical officers monitored.'
+  }
+];
 ---
 
 <CaseStudyLayout
@@ -144,52 +203,24 @@ const learnings = [
       <p class="lead-text secondary">
         Paper-based reporting was unreliable, easily falsified, and arrived weeks late. Meanwhile, children's vaccination records existed only on paper cards that were frequently lost or damaged.
       </p>
-      <div class="challenge-box">
-        <span class="challenge-label">The Problem</span>
+      <Lead label="The Problem">
         <p>
           The government needed <strong>real-time visibility into field operations</strong> and a way to digitize immunization records for millions of children—a dual challenge requiring coordination across Health, Irrigation, and Education departments.
         </p>
-      </div>
+      </Lead>
     </div>
   </section>
 
   <!-- Section: My Contributions -->
   <section class="case-section">
     <h2>My Contributions</h2>
-    <div class="contributions-stack">
-      {contributions.map((contribution, index) => (
-        <div class="contribution-row reveal">
-          <span class="contribution-number">0{index + 1}</span>
-          <div class="contribution-content">
-            <h3 class="contribution-label">{contribution.label}</h3>
-            <div class="contribution-metrics">
-              {contribution.metrics.map((metric) => (
-                <div class="contribution-metric">
-                  <span class="metric-value">{metric.value}</span>
-                  <span class="metric-text">{metric.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <ContributionList contributions={contributions} />
   </section>
 
   <!-- Section: How I Made an Impact -->
   <section class="case-section">
     <h2>How I Made an Impact</h2>
-    <div class="impact-stack">
-      {impactPoints.map((point, index) => (
-        <div class="impact-row">
-          <span class="impact-number">0{index + 1}</span>
-          <div class="impact-content">
-            <h3>{point.title}</h3>
-            <p>{point.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
+    <ImpactList points={impactPoints} />
   </section>
 
   <!-- Section: Understanding Constraints -->
@@ -199,59 +230,47 @@ const learnings = [
       Before building anything, we needed to understand our users—medical officers in rural areas with very different contexts than our own:
     </p>
 
-    <div class="constraints-grid">
+    <RuledList label="Constraints">
       {constraints.map(item => (
-        <div class="constraint-card">
-          <h3>{item.constraint}</h3>
+        <RuledRow title={item.constraint}>
           <p>{item.detail}</p>
-        </div>
+        </RuledRow>
       ))}
-    </div>
+    </RuledList>
   </section>
 
-  <!-- Section: Key Decisions -->
+  <!-- Section: Decisions in detail -->
   <section class="case-section">
-    <h2>Key Decisions</h2>
+    <h2>Decisions in detail</h2>
     <p>
       Based on field research and stakeholder needs, we advocated for these core product decisions:
     </p>
 
-    <div class="decisions-stack">
-      {designDecisions.map((decision, index) => (
-        <div class="decision-row">
-          <span class="decision-number">0{index + 1}</span>
-          <div class="decision-content">
-            <h3>{decision.title}</h3>
-            <p>{decision.description}</p>
-          </div>
-        </div>
+    <RuledList label="Product decisions">
+      {designDecisions.map(decision => (
+        <RuledRow title={decision.title}>
+          <p>{decision.description}</p>
+        </RuledRow>
       ))}
-    </div>
+    </RuledList>
   </section>
 
   <!-- Section: Stakeholder Management -->
   <section class="case-section">
     <h2>Stakeholder Management</h2>
-    <blockquote class="stakeholder-quote">
+    <blockquote>
       <p>
         "A critical part of this project was navigating government bureaucracy—translating technical capabilities into policy outcomes that politicians and bureaucrats could understand and champion."
       </p>
     </blockquote>
 
-    <div class="stakeholder-details">
-      <div class="stakeholder-item">
-        <h3>Chief Minister Office</h3>
-        <p>Prepared data-driven presentations demonstrating ROI and public health impact. Secured executive sponsorship for province-wide rollout.</p>
-      </div>
-      <div class="stakeholder-item">
-        <h3>World Bank (PPMR Program)</h3>
-        <p>Aligned project outcomes with funding requirements. Demonstrated measurable results that justified additional budget allocation.</p>
-      </div>
-      <div class="stakeholder-item">
-        <h3>District Health Officers</h3>
-        <p>Trained supervisors on dashboard usage and established feedback loops for continuous improvement.</p>
-      </div>
-    </div>
+    <RuledList label="Stakeholders">
+      {stakeholders.map(stakeholder => (
+        <RuledRow title={stakeholder.title}>
+          <p>{stakeholder.description}</p>
+        </RuledRow>
+      ))}
+    </RuledList>
   </section>
 
   <!-- Section: Results -->
@@ -261,47 +280,37 @@ const learnings = [
       The impact was dramatic and measurable:
     </p>
 
-    <div class="results-grid">
-      <div class="result-card">
-        <span class="result-value">21% → 91%</span>
-        <span class="result-label">Medical Officer Attendance</span>
-        <p>Real-time GPS tracking created accountability that paper reports never could</p>
-      </div>
-      <div class="result-card">
-        <span class="result-value">3M</span>
-        <span class="result-label">Children's Records Digitized</span>
-        <p>National Child Vaccination Card redesign enabled province-wide digital records</p>
-      </div>
-      <div class="result-card">
-        <span class="result-value">£250k</span>
-        <span class="result-label">DFID Funding Awarded</span>
-        <p>International validation of our approach from UK Department for International Development</p>
-      </div>
-    </div>
+    <DisplayNumeral
+      value={headlineResult.value}
+      label={headlineResult.label}
+      note={headlineResult.description}
+    />
+
+    <RuledList label="Other results" class="results-list">
+      {otherResults.map(result => (
+        <RuledRow label={result.value} title={result.label}>
+          <p>{result.description}</p>
+        </RuledRow>
+      ))}
+    </RuledList>
   </section>
 
   <!-- Section: Reflection -->
   <section class="case-section">
     <h2>Reflection</h2>
-    <div class="reflections-container">
-      <blockquote class="reflection-quote">
-        <p>
-          "This project taught me that great design isn't about features—it's about understanding constraints and designing within them. The technology was invisible; the outcome was what mattered."
-        </p>
-      </blockquote>
+    <blockquote>
+      <p>
+        "This project taught me that great design isn't about features—it's about understanding constraints and designing within them. The technology was invisible; the outcome was what mattered."
+      </p>
+    </blockquote>
 
-      <div class="learnings-stack">
-        {learnings.map((learning, index) => (
-          <div class="learning-row">
-            <span class="learning-icon">0{index + 1}</span>
-            <div class="learning-content">
-              <h3>{learning.title}</h3>
-              <p>{learning.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <RuledList label="Learnings">
+      {learnings.map(learning => (
+        <RuledRow title={learning.title}>
+          <p>{learning.description}</p>
+        </RuledRow>
+      ))}
+    </RuledList>
   </section>
 
   <!-- Section: What This Shows About Me -->
@@ -311,24 +320,13 @@ const learnings = [
       This project demonstrates my ability to lead complex, high-stakes initiatives from concept to scale—working with diverse stakeholders, constrained environments, and real-world impact.
     </p>
 
-    <div class="about-me-stack">
-      <div class="about-me-row">
-        <h3>Cross-Functional Leadership</h3>
-        <p>Led development of two major products (eVaccs 2.0 and Child Vaccination Card app) coordinating across Health, Irrigation, and Education departments.</p>
-      </div>
-      <div class="about-me-row">
-        <h3>Designing for Constraints</h3>
-        <p>Advocated for radical simplicity based on user research. The solution worked because it was designed for real-world limitations, not ideal conditions.</p>
-      </div>
-      <div class="about-me-row">
-        <h3>Stakeholder Management</h3>
-        <p>Worked with CM Roadmap Team consultants, secured £250k DFID funding, and coordinated requirements gathering across multiple government departments.</p>
-      </div>
-      <div class="about-me-row">
-        <h3>Measurable Impact at Scale</h3>
-        <p>Delivered results that mattered: medical officer attendance up from 21% to 91%, 3 million children's records digitized, 4,000+ medical officers monitored.</p>
-      </div>
-    </div>
+    <RuledList label="What this shows">
+      {aboutMe.map(point => (
+        <RuledRow title={point.title}>
+          <p>{point.description}</p>
+        </RuledRow>
+      ))}
+    </RuledList>
   </section>
 </CaseStudyLayout>
 
@@ -348,30 +346,6 @@ const learnings = [
     margin-bottom: 2rem;
   }
 
-  /* Context Note */
-  .context-note {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.25rem 1.5rem;
-    border-left: 3px solid #10B981;
-  }
-
-  .context-icon {
-    flex-shrink: 0;
-    color: #34d399;
-    opacity: 0.7;
-  }
-
-  .context-note p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    font-style: normal;
-  }
-
   /* Problem Statement */
   .problem-statement {
     margin-top: 1.5rem;
@@ -389,368 +363,12 @@ const learnings = [
     color: var(--color-fg);
   }
 
-  .challenge-box {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
-    border-left: 4px solid #10B981;
-    padding: 1.5rem 2rem;
-    border-radius: 0 0.75rem 0.75rem 0;
-    margin-top: 2rem;
-  }
-
-  .challenge-label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #34d399;
-    margin-bottom: 0.75rem;
-  }
-
-  .challenge-box p {
-    margin: 0;
-    font-size: 1.125rem;
-    color: var(--color-fg);
-    line-height: 1.7;
-  }
-
-  /* Contributions Stack */
-  .contributions-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .contribution-row {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    border-left: 3px solid #10B981;
-  }
-
-  .contribution-number {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #34d399;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 40px;
-  }
-
-  .contribution-content {
-    flex: 1;
-  }
-
-  .contribution-label {
-    margin: 0 0 1rem;
-    font-size: 1.0625rem;
-    font-weight: 600;
-    color: var(--color-fg);
-  }
-
-  .contribution-metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .contribution-metrics {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .contribution-metrics {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .contribution-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .contribution-metric .metric-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #34d399;
-    line-height: 1;
-  }
-
-  .contribution-metric .metric-text {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    line-height: 1.4;
-  }
-
-  /* Impact Stack */
-  .impact-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .impact-row {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    border-left: 3px solid #10B981;
-  }
-
-  .impact-number {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #34d399;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 40px;
-  }
-
-  .impact-content h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.0625rem;
-    color: var(--color-fg);
-  }
-
-  .impact-content p {
-    margin: 0;
+  /* Results: the figure is the row label, kept in its own case (e.g. £250k) */
+  :global(.case-content .results-list .rr-label) {
     font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Constraints Grid */
-  .constraints-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    .constraints-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .constraint-card {
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    border-top: 3px solid #10B981;
-  }
-
-  .constraint-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    color: #34d399;
-  }
-
-  .constraint-card p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.5;
-  }
-
-  /* Decisions Stack */
-  .decisions-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .decision-row {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    border-left: 3px solid #10B981;
-  }
-
-  .decision-number {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #34d399;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 40px;
-  }
-
-  .decision-content h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.0625rem;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--color-fg);
-  }
-
-  .decision-content p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Stakeholder Quote */
-  .stakeholder-quote {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
-    border-left: 4px solid #10B981;
-    padding: 1.5rem 2rem;
-    border-radius: 0 0.75rem 0.75rem 0;
-    margin: 0 0 2rem;
-  }
-
-  .stakeholder-quote p {
-    font-size: 1.125rem;
-    color: var(--color-fg);
-    font-style: normal;
-    margin: 0;
-    line-height: 1.7;
-  }
-
-  .stakeholder-details {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .stakeholder-details {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .stakeholder-item {
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-  }
-
-  .stakeholder-item h3 {
-    margin: 0 0 0.75rem;
-    font-size: 1rem;
-    color: #34d399;
-  }
-
-  .stakeholder-item p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Results Grid */
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    .results-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .result-card {
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    text-align: center;
-    border-top: 3px solid #10B981;
-  }
-
-  .result-value {
-    display: block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #34d399;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .result-label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-fg);
-    margin-bottom: 0.5rem;
-  }
-
-  .result-card p {
-    margin: 0;
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-  }
-
-  /* Reflections */
-  .reflections-container {
-    margin-top: 1.5rem;
-  }
-
-  .reflection-quote {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
-    border-left: 4px solid #10B981;
-    padding: 1.5rem 2rem;
-    border-radius: 0 0.75rem 0.75rem 0;
-    margin-bottom: 2rem;
-  }
-
-  .reflection-quote p {
-    font-size: 1.25rem;
-    color: var(--color-fg);
-    font-style: normal;
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  .learnings-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .learning-row {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    padding: 1.25rem 1.5rem;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-  }
-
-  .learning-icon {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #34d399;
-    flex-shrink: 0;
-    width: 30px;
-  }
-
-  .learning-content h3 {
-    margin: 0 0 0.25rem;
-    font-size: 1rem;
-    color: var(--color-fg);
-  }
-
-  .learning-content p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.5;
   }
 
   /* Conclusion */
@@ -764,32 +382,6 @@ const learnings = [
     line-height: 1.7;
     color: var(--color-muted);
     margin-bottom: 2rem;
-  }
-
-  .about-me-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .about-me-row {
-    padding: 1.5rem 2rem;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    border-left: 3px solid #10B981;
-  }
-
-  .about-me-row h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.0625rem;
-    color: #34d399;
-  }
-
-  .about-me-row p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.6;
   }
 
   /* ========================================

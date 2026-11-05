@@ -1,0 +1,47 @@
+---
+/**
+ * A short aside. On wide screens it hangs in the right margin beside the paragraph that
+ * precedes it; below 1240px it sits inline, indented under that paragraph.
+ */
+interface Props {
+  label?: string;
+}
+const { label } = Astro.props;
+---
+
+<aside class="mn">
+  {label && <span class="mn-label">{label}</span>}
+  <slot />
+</aside>
+
+<style>
+  .mn {
+    margin: 0.75rem 0 1.5rem 1.25rem;
+    font: 400 13px/1.55 var(--font-mono);
+    color: var(--color-muted);
+  }
+
+  .mn-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+  }
+
+  :global(.case-content) .mn :global(p) {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+
+  @media (min-width: 1240px) {
+    .mn {
+      float: right;
+      clear: right;
+      width: 200px;
+      margin: 0.25rem -260px 1rem 0;
+    }
+  }
+</style>

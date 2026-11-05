@@ -1,5 +1,11 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import Lead from '../../components/case/Lead.astro';
+import ContributionList from '../../components/case/ContributionList.astro';
+import ImpactList from '../../components/case/ImpactList.astro';
+import RuledList from '../../components/case/RuledList.astro';
+import RuledRow from '../../components/case/RuledRow.astro';
+import Figure from '../../components/case/Figure.astro';
 import CodeTerminal from '../../components/CodeTerminal.astro';
 
 const equalTalesPrompts = [
@@ -130,8 +136,9 @@ const aboutMePoints = [
 
   <!-- Terminal Animation -->
   <section class="case-section terminal-section">
-    <CodeTerminal prompts={equalTalesPrompts} />
-    <p class="terminal-caption">This is how it starts. A question, a prompt, and curiosity.</p>
+    <Figure bare caption="This is how it starts. A question, a prompt, and curiosity.">
+      <CodeTerminal prompts={equalTalesPrompts} />
+    </Figure>
   </section>
 
   <!-- Section: Problem Statement -->
@@ -144,75 +151,41 @@ const aboutMePoints = [
       <p class="lead-text secondary">
         Research shows that representation matters. Girls who see women in STEM are more likely to pursue those careers themselves.
       </p>
-      <div class="challenge-box">
-        <span class="challenge-label">The Question</span>
+      <Lead label="The Question">
         <p>
           Can AI create <strong>meaningful children's content</strong> that challenges stereotypes and inspires young girls to see themselves as scientists, engineers, and leaders?
         </p>
-      </div>
+      </Lead>
     </div>
   </section>
 
   <!-- Section: My Contributions -->
   <section class="case-section">
     <h2>My Contributions</h2>
-    <div class="contributions-stack">
-      {contributions.map((contribution, index) => (
-        <div class="contribution-row reveal">
-          <span class="contribution-number">0{index + 1}</span>
-          <div class="contribution-content">
-            <h3 class="contribution-label">{contribution.label}</h3>
-            <div class="contribution-metrics">
-              {contribution.metrics.map((metric) => (
-                <div class="contribution-metric">
-                  <span class="metric-value">{metric.value}</span>
-                  <span class="metric-text">{metric.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <ContributionList contributions={contributions} />
   </section>
 
   <!-- Section: How I Made an Impact -->
   <section class="case-section">
     <h2>How I Made an Impact</h2>
-    <div class="impact-stack">
-      {impactPoints.map((point, index) => (
-        <div class="impact-row">
-          <span class="impact-number">0{index + 1}</span>
-          <div class="impact-content">
-            <h3>{point.title}</h3>
-            <p>{point.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
+    <ImpactList points={impactPoints} />
   </section>
 
   <!-- Product Gallery -->
   <section class="case-section">
     <h2>The Product</h2>
-    <div class="product-gallery">
-      <div class="gallery-item gallery-item-large">
-        <img src="/images/equaltales/hero.webp" alt="EqualTales landing page - AI-powered stories that change what children believe is possible" loading="lazy" />
-        <span class="gallery-caption">Landing Page</span>
-      </div>
-      <div class="gallery-item">
-        <img src="/images/equaltales/equaltales-selection.webp" alt="Stereotype selection screen - Type the stereotype your child has expressed" loading="lazy" />
-        <span class="gallery-caption">Stereotype Input</span>
-      </div>
-      <div class="gallery-item">
-        <img src="/images/equaltales/equaltales-historical-figure.webp" alt="Historical figure selection - Real women who broke barriers" loading="lazy" />
-        <span class="gallery-caption">Historical Figures</span>
-      </div>
-      <div class="gallery-item gallery-item-full">
-        <img src="/images/equaltales/equaltales-storytelling.webp" alt="AI-generated personalized story with watercolor illustrations" loading="lazy" />
-        <span class="gallery-caption">Generated Story</span>
-      </div>
-    </div>
+    <Figure n={1} caption="Landing Page">
+      <img src="/images/equaltales/hero.webp" alt="EqualTales landing page - AI-powered stories that change what children believe is possible" loading="lazy" />
+    </Figure>
+    <Figure n={2} caption="Stereotype Input">
+      <img src="/images/equaltales/equaltales-selection.webp" alt="Stereotype selection screen - Type the stereotype your child has expressed" loading="lazy" />
+    </Figure>
+    <Figure n={3} caption="Historical Figures">
+      <img src="/images/equaltales/equaltales-historical-figure.webp" alt="Historical figure selection - Real women who broke barriers" loading="lazy" />
+    </Figure>
+    <Figure n={4} caption="Generated Story">
+      <img src="/images/equaltales/equaltales-storytelling.webp" alt="AI-generated personalized story with watercolor illustrations" loading="lazy" />
+    </Figure>
   </section>
 
   <!-- Section: Design Evolution -->
@@ -222,24 +195,26 @@ const aboutMePoints = [
       Building with AI requires iteration. Here's what I learned through trial and error:
     </p>
 
-    <div class="decision-card">
-      <div class="decision-column failed">
-        <h3>What I Tried That Didn't Work</h3>
-        <ul>
-          {designEvolution.triedAndFailed.map(item => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </div>
-      <div class="decision-column worked">
-        <h3>What Actually Worked</h3>
-        <ul>
-          {designEvolution.whatWorked.map(item => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <RuledList compare label="Design evolution">
+      <RuledRow>
+        <Fragment slot="a">
+          <h3 class="evo-heading">What I Tried That Didn't Work</h3>
+          <ul class="evo-list">
+            {designEvolution.triedAndFailed.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </Fragment>
+        <Fragment slot="b">
+          <h3 class="evo-heading">What Actually Worked</h3>
+          <ul class="evo-list">
+            {designEvolution.whatWorked.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </Fragment>
+      </RuledRow>
+    </RuledList>
   </section>
 
   <!-- Section: Visual Direction -->
@@ -249,60 +224,47 @@ const aboutMePoints = [
       The watercolor illustration style was a deliberate choice to solve AI's consistency problem while creating warm, inviting visuals.
     </p>
 
-    <div class="style-guide-block">
-      <div class="style-guide-item">
-        <span class="style-label">Art Style</span>
-        <div class="style-preview">
-          <span class="style-value">Watercolor</span>
-        </div>
-        <span class="style-desc">Soft, warm, forgiving of AI inconsistencies</span>
-      </div>
-
-      <div class="style-guide-item">
-        <span class="style-label">Palette</span>
-        <div class="color-swatches">
+    <RuledList label="Visual direction">
+      <RuledRow label="Art Style" title="Watercolor">
+        <p>Soft, warm, forgiving of AI inconsistencies</p>
+      </RuledRow>
+      <RuledRow label="Palette">
+        <div class="color-swatches" aria-hidden="true">
           <span class="swatch" style="background: #7B5EA7"></span>
           <span class="swatch" style="background: #C4766D"></span>
           <span class="swatch" style="background: #D4A853"></span>
           <span class="swatch" style="background: #FDF6ED"></span>
         </div>
-        <span class="style-desc">Purple, coral, gold on warm cream</span>
-      </div>
-
-      <div class="style-guide-item">
-        <span class="style-label">Characters</span>
-        <div class="style-preview">
-          <span class="style-value">Historical</span>
-        </div>
-        <span class="style-desc">Real women, real stories</span>
-      </div>
-    </div>
+        <p>Purple, coral, gold on warm cream</p>
+      </RuledRow>
+      <RuledRow label="Characters" title="Historical">
+        <p>Real women, real stories</p>
+      </RuledRow>
+    </RuledList>
   </section>
 
   <!-- Section: Key Trade-off -->
   <section class="case-section">
     <h2>Key Trade-off</h2>
-    <div class="tradeoff-block">
-      <blockquote>{keyTradeoff}</blockquote>
-      <p class="tradeoff-explanation">
-        By anchoring stories to real historical figures, we limited the variety of narratives we could tell. But the authenticity of real women's achievements—Marie Curie discovering radium, Mae Jemison traveling to space—creates a deeper emotional impact than any fictional character could.
-      </p>
-    </div>
+    <Lead label="What I chose">
+      <p>{keyTradeoff}</p>
+    </Lead>
+    <p class="tradeoff-explanation">
+      By anchoring stories to real historical figures, we limited the variety of narratives we could tell. But the authenticity of real women's achievements—Marie Curie discovering radium, Mae Jemison traveling to space—creates a deeper emotional impact than any fictional character could.
+    </p>
   </section>
 
   <!-- Section: Outcome -->
   <section class="case-section outcome-section">
     <h2>Outcome</h2>
-    <div class="outcome-grid">
-      <div class="outcome-card">
-        <span class="outcome-label">Recognition</span>
-        <span class="outcome-value">{outcome.award}</span>
-      </div>
-      <div class="outcome-card">
-        <span class="outcome-label">Impact</span>
-        <span class="outcome-value">{outcome.reach}</span>
-      </div>
-    </div>
+    <RuledList label="Outcome">
+      <RuledRow label="Recognition">
+        <p class="outcome-value">{outcome.award}</p>
+      </RuledRow>
+      <RuledRow label="Impact">
+        <p class="outcome-value">{outcome.reach}</p>
+      </RuledRow>
+    </RuledList>
     <p class="outcome-note">
       The judges recognized that EqualTales wasn't just a technical achievement—it was a meaningful application of AI to address a real social challenge.
     </p>
@@ -325,14 +287,7 @@ const aboutMePoints = [
       This project demonstrates my ability to combine design thinking, AI tools, and social impact into a cohesive product under extreme time pressure.
     </p>
 
-    <div class="about-me-stack">
-      {aboutMePoints.map(point => (
-        <div class="about-me-row">
-          <h3>{point.title}</h3>
-          <p>{point.description}</p>
-        </div>
-      ))}
-    </div>
+    <ImpactList points={aboutMePoints} />
   </section>
 
   <!-- CTA -->
@@ -361,16 +316,8 @@ const aboutMePoints = [
 
   /* Terminal Section */
   .terminal-section {
-    text-align: center;
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-
-  .terminal-caption {
-    margin-top: 1.5rem;
-    font-size: 1.125rem;
-    color: var(--color-muted);
-    font-style: italic;
   }
 
   /* Problem Statement */
@@ -390,386 +337,53 @@ const aboutMePoints = [
     color: var(--color-fg);
   }
 
-  .challenge-box {
-    background: linear-gradient(135deg, rgba(123, 94, 167, 0.12) 0%, rgba(123, 94, 167, 0.04) 100%);
-    border-left: 3px solid var(--color-accent);
-    padding: 1rem 1.25rem;
-    border-radius: 0 0.5rem 0.5rem 0;
-    margin-top: 1.5rem;
-  }
-
-  .challenge-label {
-    display: block;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-text);
-    margin-bottom: 0.5rem;
-  }
-
-  .challenge-box p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-fg);
-    line-height: 1.6;
-  }
-
-  /* Contributions Stack */
-  .contributions-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-
-  .contribution-row {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.5rem;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .contribution-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 32px;
-  }
-
-  .contribution-content {
-    flex: 1;
-  }
-
-  .contribution-label {
+  /* Design Evolution: two columns in one ruled row */
+  :global(.case-content) .evo-heading {
     margin: 0 0 0.75rem;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--color-fg);
-  }
-
-  .contribution-metrics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-  }
-
-  @media (max-width: 768px) {
-    .contribution-metrics {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .contribution-metrics {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .contribution-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-
-  .contribution-metric .metric-value {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-  }
-
-  .contribution-metric .metric-text {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    line-height: 1.4;
-  }
-
-  /* Impact Stack */
-  .impact-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-
-  .impact-row {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    background: var(--color-border);
-    border-radius: 0.5rem;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .impact-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-accent-text);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 32px;
-  }
-
-  .impact-content h3 {
-    margin: 0 0 0.375rem;
-    font-size: 0.9375rem;
-    color: var(--color-fg);
-  }
-
-  .impact-content p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Hero Image Showcase */
-  /* Product Gallery */
-  .product-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .gallery-item {
-    position: relative;
-    border-radius: 1rem;
-    overflow: hidden;
-    background: var(--equaltales-cream);
-    border: 1px solid rgba(123, 94, 167, 0.15);
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-
-  .gallery-item:hover img {
-    transform: scale(1.01);
-  }
-
-  .gallery-item-large,
-  .gallery-item-full {
-    /* All items are now full width by default */
-  }
-
-  .gallery-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-    color: white;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .product-gallery {
-      grid-template-columns: 1fr;
-    }
-
-    .gallery-item-large,
-    .gallery-item-full {
-      grid-column: span 1;
-    }
-  }
-
-  /* Decision Card */
-  .decision-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .decision-column {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-  }
-
-  .decision-column.failed {
-    border-left: 3px solid #ef4444;
-  }
-
-  .decision-column.failed h3 {
-    color: #ef4444;
-  }
-
-  .decision-column.worked {
-    border-left: 3px solid #22c55e;
-  }
-
-  .decision-column.worked h3 {
-    color: #22c55e;
-  }
-
-  .decision-column h3 {
-    font-size: 0.875rem;
+    font: 500 11px/1.4 var(--font-mono);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
+    color: var(--color-muted);
   }
 
-  .decision-column ul {
-    list-style: none;
-    padding: 0;
+  :global(.case-content) .evo-list {
     margin: 0;
   }
 
-  .decision-column li {
-    color: var(--color-fg);
-    line-height: 1.6;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .decision-column li:last-child {
-    border-bottom: none;
-  }
-
-  @media (max-width: 768px) {
-    .decision-card {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-  }
-
-  /* Style Guide Block */
-  .style-guide-block {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    padding: 2rem;
-    margin-top: 2rem;
-    border: 1px solid rgba(123, 94, 167, 0.2);
-  }
-
-  @media (max-width: 768px) {
-    .style-guide-block {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-  }
-
-  .style-guide-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    text-align: center;
-    padding: 0 0.5rem;
-  }
-
-  .style-label {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-text);
-  }
-
-  .style-desc {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-    text-align: center;
-  }
-
-  .style-preview {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .style-value {
-    font-size: 1.5rem;
-    font-weight: 700;
+  :global(.case-content) .evo-list li {
     color: var(--color-fg);
   }
 
+  /* Visual Direction palette */
   .color-swatches {
     display: flex;
     gap: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .swatch {
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-fg) 12%, transparent);
   }
 
-  /* Trade-off Block */
-  .tradeoff-block {
-    background: var(--color-border);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    margin-top: 1.5rem;
+  /* Trade-off */
+  :global(.case-content) .tradeoff-explanation {
+    margin-top: 1.25rem;
+    color: var(--color-muted);
+    line-height: 1.6;
   }
 
-  .tradeoff-block blockquote {
-    margin: 0;
+  /* Outcome */
+  :global(.case-content) .outcome-value {
     font-size: 1.125rem;
-    font-style: normal;
+    font-weight: 600;
     color: var(--color-fg);
-    line-height: 1.6;
-    border-left: 3px solid var(--color-accent);
-    padding-left: 1rem;
-  }
-
-  .tradeoff-explanation {
-    margin-top: 1rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* Outcome Grid */
-  .outcome-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-
-  @media (max-width: 640px) {
-    .outcome-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .outcome-card {
-    background: linear-gradient(135deg, rgba(123, 94, 167, 0.15) 0%, rgba(123, 94, 167, 0.05) 100%);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid rgba(123, 94, 167, 0.2);
-  }
-
-  .outcome-label {
-    display: block;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-muted);
-    margin-bottom: 0.5rem;
   }
 
   .outcome-link {
     margin-top: 1.5rem;
-    text-align: center;
   }
 
   .devpost-link {
@@ -787,18 +401,9 @@ const aboutMePoints = [
     text-decoration: underline;
   }
 
-  .outcome-value {
-    display: block;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-fg);
-  }
-
-  .outcome-note {
+  :global(.case-content) .outcome-note {
     margin-top: 1.5rem;
     color: var(--color-muted);
-    text-align: center;
-    font-style: normal;
   }
 
   /* Conclusion / What This Shows About Me */
@@ -814,33 +419,6 @@ const aboutMePoints = [
     margin-bottom: 2rem;
   }
 
-  .about-me-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .about-me-row {
-    padding: 1.5rem 2rem;
-    background: var(--color-border);
-    border-radius: 0.75rem;
-    border-left: 3px solid var(--color-accent);
-  }
-
-  .about-me-row h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.0625rem;
-    color: var(--color-accent-text);
-  }
-
-  .about-me-row p {
-    margin: 0;
-    font-size: 0.9375rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-
-  /* CTA Section */
   /* Top CTA Section */
   .cta-section-top {
     text-align: center;
@@ -869,12 +447,11 @@ const aboutMePoints = [
     text-decoration: none;
     border-radius: 0.5rem;
     font-weight: 600;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.2s ease;
   }
 
   .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(123, 94, 167, 0.3);
+    background: color-mix(in srgb, var(--color-accent) 82%, black);
   }
 
   /* Section styling */

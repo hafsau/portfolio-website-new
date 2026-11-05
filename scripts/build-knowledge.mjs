@@ -50,6 +50,11 @@ function templateText(tpl) {
   ).replace(/\s+/g, ' ').trim();
 }
 
+// Pages whose content lives in a data module rather than their own frontmatter
+const DATA_FILES = {
+  '/work/ai-lab': 'src/data/aiLab.ts',
+};
+
 const entries = PAGES.map(([file, url, fallbackTitle]) => {
   const src = readFileSync(file, 'utf8');
   const parts = src.split(/^---\s*$/m);
@@ -57,7 +62,8 @@ const entries = PAGES.map(([file, url, fallbackTitle]) => {
   const tpl = parts.length >= 3 ? parts.slice(2).join('---') : src;
   const titleMatch = tpl.match(/title="([^"]+)"/);
   const title = titleMatch ? titleMatch[1] : fallbackTitle ?? url;
-  const text = [...frontmatterStrings(fm), templateText(tpl)].join('\n');
+  const data = DATA_FILES[url] ? frontmatterStrings(readFileSync(DATA_FILES[url], 'utf8').replace(/\/\/[^\n]*|\/\*[\s\S]*?\*\//g, '')) : [];
+  const text = [...frontmatterStrings(fm), ...data, templateText(tpl)].join('\n');
   return { url, title, text };
 });
 
