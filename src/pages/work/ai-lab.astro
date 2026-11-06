@@ -152,6 +152,15 @@ const external = (href: string) => href.startsWith('http') ? { target: '_blank',
 </CaseStudyLayout>
 
 <style>
+  /* Arrival curve in the AI Lab's acid lime, with dark text so the title stays readable (14.7:1) */
+  :global(#page-transition) {
+    --color-accent: #C4F04A;
+  }
+
+  :global(#page-transition .transition-content) {
+    color: #0D0D0D;
+  }
+
   /* The terminal's prompt marker follows the site accent, not the retired orange */
   :global(.case-content) {
     --terminal-accent: var(--color-accent-text);
