@@ -81,8 +81,8 @@ Source of truth: the `projects` array in `src/pages/index.astro` (numbers must r
 4. HafsaUsmani.com (#04) - Teal (#14b8a6)
 5. AI Lab (#05) - Acid lime (#C4F04A, echoes CarbonLint; orange retired)
 6. MedRec (#06) - Blue (#4a5ee4)
-7. FitStart (#07) - Purple (#8b5cf6)
-8. Folio (#08) - Cyan (#0891b2)
+7. FitStart (#07) - Purple (#8b5cf6; small text #a78bfa; transition #8b5cf6 with dark text)
+8. Folio (#08) - Cyan (#0891b2; small text #22b8cf; transition #0891b2 with dark text)
 9. Immunization (#09) - Blue (#4a5ee4)
 
 Prev/next chain: PixelCheck → EqualTales → Philly Truce → HafsaUsmani.com → AI Lab → MedRec → FitStart → Folio → Immunization → PixelCheck.

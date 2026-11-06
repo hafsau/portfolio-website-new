@@ -513,6 +513,21 @@ const responsiveFeatures = [
 </CaseStudyLayout>
 
 <style>
+  /* FitStart's project colour, matching its homepage card and pen transition */
+  :root {
+    --color-accent: #8b5cf6;
+    --color-accent-text: #a78bfa; /* small text on the dark page, WCAG AA */
+  }
+
+  /* Arrival curve in the project colour; dark text reads better on it than white */
+  :global(#page-transition .transition-content) {
+    color: #0D0D0D;
+  }
+
+  :global(#page-transition .transition-label) {
+    opacity: 1;
+  }
+
   /* Section styling */
   .case-section {
     margin-bottom: 5rem;

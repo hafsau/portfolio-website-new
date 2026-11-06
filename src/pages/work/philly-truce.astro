@@ -6,7 +6,6 @@ import PtTypeRamp from '../../components/philly-truce/PtTypeRamp.astro';
 import PtPairings from '../../components/philly-truce/PtPairings.astro';
 import PtAnatomy from '../../components/philly-truce/PtAnatomy.astro';
 import PtStates from '../../components/philly-truce/PtStates.astro';
-import PtVoice from '../../components/philly-truce/PtVoice.astro';
 
 // Outcomes live in the TL;DR (caseStudySummaries); no deliverable counts up top
 const metrics: { value: string; label: string }[] = [];
@@ -111,18 +110,7 @@ const metrics: { value: string; label: string }[] = [];
 
   <!-- 06 -->
   <section class="case-section">
-    <p class="pt-eyebrow">06 · Voice</p>
-    <h2>Words are part of the system</h2>
-    <p>
-      The voice stays compassionate, inclusive, clear and forward-looking; the tone shifts with the situation.
-      The vocabulary guide carries the same care into the words Philly Truce uses for its people.
-    </p>
-    <PtVoice />
-  </section>
-
-  <!-- 07 -->
-  <section class="case-section">
-    <p class="pt-eyebrow">07 · Handoff</p>
+    <p class="pt-eyebrow">06 · Handoff</p>
     <h2>Built, not yet launched, already used beyond the site</h2>
     <p>
       The new site's pages are built from the system, and the team has started using it beyond the website.
@@ -137,17 +125,9 @@ const metrics: { value: string; label: string }[] = [];
         <img src="/images/philly-truce/wix-sections.webp" width="1440" height="900" loading="lazy" decoding="async"
           alt="A pale blue band titled 'Peace starts with people. It grows through community.' above three photo cards for Mission, Vision and Culture." />
       </figure>
-      <p class="pt-fig">Fig. 14 — More of the new site, set entirely from the nine text styles and the approved pairings.</p>
+      <p class="pt-fig">Fig. 12 — More of the new site, set entirely from the nine text styles and the approved pairings.</p>
     </div>
 
-    <div class="pt-notyet">
-      <p class="pt-eyebrow">Not covered in this version</p>
-      <ul>
-        <li>Mobile type sizes and line heights</li>
-        <li>Cards, forms and other components beyond buttons and links</li>
-        <li>Disabled and pressed states</li>
-      </ul>
-    </div>
   </section>
 </CaseStudyLayout>
 
@@ -220,21 +200,4 @@ const metrics: { value: string; label: string }[] = [];
     border-radius: 10px;
   }
 
-  .pt-notyet {
-    margin-top: 2.5rem;
-    padding: 20px 24px;
-    border-radius: 16px;
-    background: #141414;
-    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
-  }
-
-  :global(.case-content) .pt-notyet ul {
-    margin: 0;
-    padding-left: 1.1rem;
-  }
-
-  :global(.case-content) .pt-notyet li {
-    margin: 0 0 4px;
-    font-size: 0.9375rem;
-  }
 </style>

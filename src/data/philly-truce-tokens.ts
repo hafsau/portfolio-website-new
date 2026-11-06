@@ -68,23 +68,3 @@ export const fixes = {
     after: 'On pale panels, links use teal 700 (#0F4C5C).',
   },
 };
-
-// Tone by situation, from the brand voice guide (the voice stays the same; the tone shifts)
-export const tones = [
-  { context: 'Crisis', tone: 'Solemn, steady' },
-  { context: 'Community outreach', tone: 'Encouraging, inclusive, conversational' },
-  { context: 'Volunteer recruitment', tone: 'Inviting, empowering, action-oriented' },
-  { context: 'Fundraising appeals', tone: 'Urgent, hopeful, direct and personal' },
-  { context: 'Impact and reports', tone: 'Confident, transparent, factual' },
-  { context: 'Gala and events', tone: 'Warm, celebratory, reflective' },
-  { context: 'Calls to action', tone: 'Hopeful, motivating, respectful' },
-  { context: 'Social media', tone: 'Conversational, proud' },
-];
-
-// Vocabulary guide: say this, not that (only terms where the guide names what to avoid)
-export const vocabulary = [
-  { say: 'Peace Patrollers', not: 'guards, officers', why: 'Our identity. Not guards, not officers: peacemakers.' },
-  { say: 'Community members', not: 'residents, citizens', why: 'Everyone belongs. "Residents" is transactional; "citizens" excludes.' },
-  { say: 'Mediate, de-escalate', not: 'intervene, police', why: 'We create space for resolution.' },
-  { say: 'Healing, transformation', not: 'rehabilitation, redemption', why: 'We believe in change, without clinical or religious framing.' },
-];

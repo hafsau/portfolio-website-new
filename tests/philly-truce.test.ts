@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
 import { contrastRatio, formatRatio, textLevel } from '../src/lib/contrast';
-import { pairings, typeScale, vocabulary } from '../src/data/philly-truce-tokens';
+import { pairings, typeScale } from '../src/data/philly-truce-tokens';
 
 const root = resolve(__dirname, '..');
 const read = (p: string) => readFileSync(resolve(root, p), 'utf-8');
@@ -35,11 +35,6 @@ describe('Philly Truce: system data', () => {
   it('has nine type steps that map to Wix text themes', () => {
     expect(typeScale.map((s) => s.step)).toEqual(['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P1', 'P2', 'P3']);
     typeScale.forEach((s) => expect(s.wix).toMatch(/^(Heading [1-6]|Paragraph [1-3])$/));
-  });
-
-  it('has a vocabulary guide', () => {
-    expect(vocabulary.length).toBeGreaterThanOrEqual(4);
-    vocabulary.forEach((v) => expect(v.not).toBeTruthy()); // only rows the guide backs with a "not" term
   });
 });
 
