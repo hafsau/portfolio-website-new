@@ -5,11 +5,11 @@
  */
 const W = 1440, H = 604;
 const parts = [
-  { id: 'surface', n: 1, style: 'Cream surface', note: 'Header background, #FFF4DA', box: [0, 0, 1440, 100] },
+  { id: 'surface', n: 1, style: 'Cream surface', note: 'Header background, #FFF4DA', box: [0, 0, 1440, 88] },
   { id: 'menu', n: 2, style: 'Menu', note: "Wix's menu, set in Inter", box: [400, 22, 594, 42] },
-  { id: 'donate', n: 3, style: 'Button · Secondary', note: 'Gold, 48px tall', box: [1206, 18, 158, 60] },
-  { id: 'heading', n: 4, style: 'Heading 2', note: 'DM Serif Display', box: [44, 224, 884, 254] },
-  { id: 'standfirst', n: 5, style: 'Paragraph 1', note: 'The standfirst, in Inter', box: [44, 484, 748, 104] },
+  { id: 'donate', n: 3, style: 'Button · Secondary', note: 'Gold, 48px tall', box: [1212, 18, 158, 60] },
+  { id: 'heading', n: 4, style: 'Heading 2', note: 'DM Serif Display', box: [44, 163, 673, 254] },
+  { id: 'standfirst', n: 5, style: 'Paragraph 1', note: 'The standfirst, in Inter', box: [44, 431, 702, 104] },
 ];
 const pct = (b: number[]) => `left:${(b[0] / W) * 100}%;top:${(b[1] / H) * 100}%;width:${(b[2] / W) * 100}%;height:${(b[3] / H) * 100}%`;
 ---
@@ -17,7 +17,7 @@ const pct = (b: number[]) => `left:${(b[0] / W) * 100}%;top:${(b[1] / H) * 100}%
 <figure class="pt-anat full-width" data-pt-anat>
   <div class="pt-anat-shot">
     <img src="/images/philly-truce/about-hero.webp" width="2000" height="839" loading="lazy" decoding="async"
-      alt="The Philly Truce About page with five numbered labels: the cream header, the menu, the gold Donate button, the headline 'Two classmates. Thirty years. One promise.' and the standfirst below it." />
+      alt="The Philly Truce About page with five numbered labels: the cream header, the menu, the gold Donate button, the headline 'Two classmates. Thirty years. One promise.' and the standfirst below it, beside a portrait of the two founders." />
     {parts.map((p) => (
       <span class="pt-box" data-part={p.id} style={pct(p.box)} aria-hidden="true"><b>{p.n}</b></span>
     ))}
